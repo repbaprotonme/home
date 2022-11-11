@@ -1,4 +1,6 @@
 //TODO: safair slicewidth
+//TODO: chromium crash in gmail and twitter and enterting custome url in android chromium
+//TODO: thumbnail crash after resize
 
 /* +=
 Copyright 2017 Tom Brinkman
@@ -11,7 +13,7 @@ const FIREFOX = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 const IFRAME = window !== window.parent;
 const VIRTCONST = 0.8;
 const MAXVIRTUAL = 5760*2;
-const SWIPETIME = 100;
+const SWIPETIME = 10;
 const THUMBLINE = 1;
 const THUMBLINEIN = 4.0;
 const THUMBLINEOUT = 4.0;
@@ -37,7 +39,7 @@ const MENUCOLOR = "rgba(0,0,0,0.50)";
 const BUTTONBACK = "rgba(0,0,0,0.25)";
 const OPTIONFILL = "rgba(255,255,255,0.75)"
 const THUMBFILL = "rgba(0,0,0,0.25)"
-const THUMBFILL2 = "rgba(0,0,0,0.4)"
+const THUMBFILL2 = "rgba(0,0,0,0.40)"
 const THUMBSTROKE = "rgba(255,255,235,0.35)"
 const ARROWFILL = "rgb(255,255,255)";
 const TIMEBEGIN = 0;
@@ -57,6 +59,7 @@ globalobj.hide = 0;
 globalobj.showheader = 1;
 globalobj.autodirect = -1;
 globalobj.picture = 1;
+globalobj.locked = 0;
 
 let photo = {}
 photo.image = 0;
@@ -436,6 +439,9 @@ let helplst =
     { title:"4", path: "NAME", func: function() {menuhide(); } },
     { title:"5", path: "NAME", func: function() {menuhide(); } },
     { title:"6", path: "NAME", func: function() {menuhide(); } },
+    { title:"7", path: "NAME", func: function() {menuhide(); } },
+    { title:"8", path: "NAME", func: function() {menuhide(); } },
+    { title:"9", path: "NAME", func: function() {menuhide(); } },
 ];
 
 let debuglst =
@@ -498,42 +504,6 @@ let footcnvctx = footcnv.getContext("2d", opts);
 
 let contextlst = [_1cnvctx,_2cnvctx,_3cnvctx,_4cnvctx,_5cnvctx,_6cnvctx,_7cnvctx,_8cnvctx,_9cnvctx];
 let canvaslst = [];
-
-function setPixelDensity(canvas)
-{
-    let pixelRatio = window.devicePixelRatio;
-    console.log(`Device Pixel Ratio: ${pixelRatio}`);
-    let sizeOnScreen = canvas.getBoundingClientRect();
-    canvas.width = sizeOnScreen.width * pixelRatio;
-    canvas.height = sizeOnScreen.height * pixelRatio;
-    canvas.style.width = (canvas.width / pixelRatio) + 'px';
-    canvas.style.height = (canvas.height / pixelRatio) + 'px';
-    let context = canvas.getContext('2d');
-    context.scale(pixelRatio, pixelRatio);
-    return context;
-}
-
-function releaseCanvas(canvas)
-{
-    canvas.width = 1;
-    canvas.height = 1;
-    const ctx = canvas.getContext('2d');
-    ctx && ctx.clearRect(0, 0, 1, 1);
-}
-
-function limitSize(size, maximumPixels)
-{
-    const { width, height } = size;
-
-    const requiredPixels = width * height;
-    if (requiredPixels <= maximumPixels) return { width, height };
-
-    const scalar = Math.sqrt(maximumPixels) / Math.sqrt(requiredPixels);
-    return {
-        width: Math.floor(width * scalar),
-        height: Math.floor(height * scalar),
-    };
-}
 
 function calculateAspectRatioFit(imgwidth, imgheight, rectwidth, rectheight)
 {
@@ -879,18 +849,18 @@ CanvasRenderingContext2D.prototype.movepage = function(j)
 {
     if (globalobj.promptedfile)
         return;
-    _4cnvctx.movingpage = j;
     projectobj.rotate(j);
     var path = url.filepath() + projectobj.getcurrent();
     projectobj.rotate(-j);
-    if (!loaded.has(path) || projectobj.length() == 1)
+    if (_4cnvctx.movingpage || !loaded.has(path) || projectobj.length() == 1)
     {
         _4cnvctx.movingpage = 0;
          headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
+        _4cnvctx.tab();
         return;
     }
 
-
+    _4cnvctx.movingpage = j;
     this.refresh();
     clearTimeout(globalobj.move);
     globalobj.move = setTimeout(function()
@@ -1253,13 +1223,13 @@ var wheelst =
     name: "MENU",
     up: function (context, ctrl, shift)
     {
-        var k = (5/context.virtualheight)*context.timeobj.length();
+        var k = (8/context.virtualheight)*context.timeobj.length();
         context.timeobj.rotate(-k);
         context.refresh()
     },
  	down: function (context, ctrl, shift)
     {
-        var k = (5/context.virtualheight)*context.timeobj.length();
+        var k = (8/context.virtualheight)*context.timeobj.length();
         context.timeobj.rotate(k);
         context.refresh()
     },
@@ -1499,17 +1469,17 @@ var panlst =
         context.pantype = type;
 
         var zoom = zoomobj.getcurrent()
-        var b = (context.shifthit || !Number(zoom.getcurrent()/100) && !zoom.current())
         if (context.isthumbrect)
         {
             var pt = context.getweightedpoint(x,y);
             x = pt?pt.x:x;
             y = pt?pt.y:y;
             context.hithumb(x,y);
+            var b = !globalobj.locked && (zoom.current() || Number(zoom.getcurrent()));
             if (b)
-                context.refresh();
-            else
                 contextobj.reset()
+            else
+                context.refresh();
         }
         else if (type == "panleft" || type == "panright")
         {
@@ -1529,10 +1499,7 @@ var panlst =
         }
         else if (type == "panup" || type == "pandown")
         {
-            if (!Number(zoom.getcurrent()))
-            {
-            }
-            else
+            if (Number(zoom.getcurrent()))
             {
                 var pt = context.getweightedpoint(x,y);
                 y = pt?pt.y:y;
@@ -1553,11 +1520,18 @@ var panlst =
         context.startx = x;
         context.starty = y;
         context.startt = context.timeobj.current();
+        var zoom = zoomobj.getcurrent()
+        context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
+        if (globalobj.locked && context.isthumbrect)
+        {
+            context.hithumb(x,y);
+            contextobj.reset();
+        }
+
         clearInterval(context.timemain);
         context.timemain = 0;
         context.clearpoints();
         context.panning = 1;
-        context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
     },
     panend: function (context, rect, x, y)
 	{
@@ -1618,22 +1592,14 @@ var presslst =
     name: "BOSS",
     pressup: function (context, rect, x, y)
     {
-        clearTimeout(context.presstime);
-        context.presstime = 0;
     },
     press: function (context, rect, x, y)
     {
+        if (globalobj.locked)
+            return;
         globalobj.showheader = globalobj.showheader?0:1;
         pageresize();
         context.refresh();
-        clearTimeout(context.presstime);
-        context.presstime = setTimeout(function()
-        {
-            if (screenfull.isEnabled && !screenfull.isFullscreen)
-                screenfull.request();
-            else
-                screenfull.exit();
-        }, 1000);
     }
 },
 ];
@@ -1669,7 +1635,6 @@ var swipelst =
                 return;
             globalobj.autodirect = evt.type == "swipeleft"?-1:1;
             context.tab();
-
         }, SWIPETIME);
     },
 
@@ -1759,10 +1724,14 @@ var keylst =
         {
             globalobj.hide = globalobj.hide?0:1;
             globalobj.showheader = globalobj.hide?0:1;
-            if (screenfull.isEnabled && !screenfull.isFullscreen)
-                screenfull.request();
-            else
-                screenfull.exit();
+            if (screenfull.isEnabled)
+            {
+                if (screenfull.isFullscreen)
+                    screenfull.exit();
+                else
+                    screenfull.request();
+            }
+
             pageresize();
             context.refresh();
             evt.preventDefault();
@@ -2329,7 +2298,7 @@ var thumblst =
         }
 
         context.lineWidth = 8;
-        var whitestroke = new StrokeRect(THUMBSTROKE);
+        var whitestroke = new StrokeRect(globalobj.locked?"rgba(0,0,0,0)":THUMBSTROKE);
         var r = new rectangle(x-4,y-4,w+8,h+8)
         whitestroke.draw(context, r, 0, 0);
 
@@ -2453,6 +2422,11 @@ var drawlst =
                 if (screenfull.isFullscreen)
                     clr = MENUSELECT;
             }
+            else if (user.path == "LOCKED")
+            {
+                if (globalobj.locked)
+                    clr = MENUSELECT;
+            }
         }
 
         var a = new Layer(
@@ -2566,6 +2540,11 @@ function resetcanvas()
 
     var canvas = _4cnv;
     var context = _4cnvctx;
+    var h = window.innerHeight;
+    var w = window.innerWidth + globalobj.slicewidth*2;
+    var l = -globalobj.slicewidth;
+    var t = 0;
+    context.show(l, t, w, h);
 
     var z = zoomobj.getcurrent().getcurrent();
     var zoom = (100-z)/100;
@@ -2579,8 +2558,12 @@ function resetcanvas()
     context.virtualsize = ((context.virtualwidth * context.virtualheight)/1000000).toFixed(1) + "MP";
     var y = Math.clamp(0,context.canvas.height-1,context.canvas.height*rowobj.berp());
     context.nuby = Math.nub(y, context.canvas.height, context.imageheight, photo.image.height);
-    globalobj.slicewidth = (SAFARI)?4:context.virtualwidth/12;
 
+    globalobj.slicewidth = (SAFARI)?6:context.virtualwidth/12;
+    if (globalobj.slicewidth > window.innerWidth/2)
+        globalobj.slicewidth = window.innerWidth/2;
+    if (context.pinching)
+        globalobj.slicewidth = 1;
     var ks = 0;
     for (var n = 0; n < slicelst.length; ++n)
     {
@@ -2603,8 +2586,6 @@ function resetcanvas()
     context.colwidth = context.bwidth/slices;
     var slice = 0;
     context.sliceobj.data_ = []
-    for (var n = 0; n < canvaslst.length; ++n)
-        releaseCanvas(canvaslst[n]);
     canvaslst = []
 
     var j = 0;
@@ -2743,8 +2724,6 @@ var templatelst =
         var a = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 100;
         traitobj.split(e, "0.1-1.0", traitobj.length());
         scapeobj.split(a, "0.1-1.0", scapeobj.length());
-        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
-        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
     }
 },
 {
@@ -2762,8 +2741,6 @@ var templatelst =
         var a = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 100;
         traitobj.split(e, "0.1-1.0", traitobj.length());
         scapeobj.split(a, "0.1-1.0", scapeobj.length());
-        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
-        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
     }
 },
 {
@@ -2781,8 +2758,6 @@ var templatelst =
         var a = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 60;
         traitobj.split(e, "0.1-1.0", traitobj.length());
         scapeobj.split(a, "0.1-1.0", scapeobj.length());
-        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
-        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
     }
 },
 {
@@ -2790,18 +2765,16 @@ var templatelst =
     init: function ()
     {
         globalobj.slidetop = 28;
-        globalobj.slidefactor = 144;
+        globalobj.slidefactor = 96;
         positobj.begin = 7;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        loomobj.split(y, "0-25", loomobj.length());
-        poomobj.split(z, "0-25", poomobj.length());
+        loomobj.split(y, "0-10", loomobj.length());
+        poomobj.split(z, "0-10", poomobj.length());
         var e = url.searchParams.has("e") ? Number(url.searchParams.get("e")) : 100;
         var a = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 60;
         traitobj.split(e, "0.1-1.0", traitobj.length());
         scapeobj.split(a, "0.1-1.0", scapeobj.length());
-        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
-        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
     }
 },
 {
@@ -2813,22 +2786,20 @@ var templatelst =
         positobj.begin = 7;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        loomobj.split(y, "0-50", loomobj.length());
-        poomobj.split(z, "0-50", poomobj.length());
+        loomobj.split(y, "25-75", loomobj.length());
+        poomobj.split(z, "0-75", poomobj.length());
         var e = url.searchParams.has("e") ? Number(url.searchParams.get("e")) : 100;
         var a = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 75;
         traitobj.split(e, "0.1-1.0", traitobj.length());
         scapeobj.split(a, "0.1-1.0", scapeobj.length());
-        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
-        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
     }
 },
 {
     name: "LANDSCAPE",
     init: function (j)
     {
-        globalobj.slidetop = 28;
-        globalobj.slidefactor = 72;
+        globalobj.slidetop = 36;
+        globalobj.slidefactor = 36;
         positobj.begin = 7;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 25;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 25;
@@ -2838,8 +2809,6 @@ var templatelst =
         var a = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 60;
         traitobj.split(e, "0.1-1.0", traitobj.length());
         scapeobj.split(a, "0.1-1.0", scapeobj.length());
-        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
-        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
    }
 },
 {
@@ -2857,8 +2826,6 @@ var templatelst =
         var a = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 100;
         traitobj.split(e, "0.1-1.0", traitobj.length());
         scapeobj.split(a, "0.1-1.0", scapeobj.length());
-        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
-        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
     }
 },
 {
@@ -2876,8 +2843,6 @@ var templatelst =
         var a = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 100;
         traitobj.split(e, "0.1-1.0", traitobj.length());
         scapeobj.split(a, "0.1-1.0", scapeobj.length());
-        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
-        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
     }
 },
 {
@@ -2895,8 +2860,6 @@ var templatelst =
         var a = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 100;
         traitobj.split(e, "0.1-1.0", traitobj.length());
         scapeobj.split(a, "0.1-1.0", scapeobj.length());
-        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
-        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
     }
 },
 ];
@@ -2916,6 +2879,11 @@ fetch(path)
   })
   .then(function (data)
   {
+        setfavicon();
+
+        letchobj.split(Math.floor(letchobj.length()/2), "40-80", letchobj.length());
+        pretchobj.split(Math.floor(pretchobj.length()/2), "40-80", pretchobj.length());
+
         url.template = data.template;
         var j = templatelst.findIndex(function(a){return a.name == url.template;})
         templateobj.set(j);
@@ -2939,7 +2907,7 @@ fetch(path)
             globalobj.crossorigin = data.crossorigin;
 
         photo.help = new Image();
-        photo.help.src = url.filepath() + ((typeof data.help === "undefined") ? "HELP.jpg" : data.help); 
+        photo.help.src = url.filepath() + ((typeof data.help === "undefined") ? "HELP.jpg" : data.help);
 
         if (typeof data.list !== "undefined")
         {
@@ -3072,10 +3040,7 @@ fetch(path)
         slices.data_.push({title:"Open...", path: "LOAD", func: function()
         {
             menuhide();
-            promptFile().then(function(files)
-            {
-                dropfiles(files);
-            })
+            promptFile().then(function(files) { dropfiles(files); })
         }});
 
         slices.data_.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
@@ -3086,6 +3051,13 @@ fetch(path)
             var tab = window.open('about:blank', '_blank');
             tab.document.write("<pre>"+str+"</pre>");
             tab.document.close();
+        }});
+
+        slices.data_.push({title:"Locked", path: "LOCKED", func: function()
+        {
+            globalobj.showheader = 0;
+            globalobj.locked = globalobj.locked?0:1;
+            pageresize();
         }});
 
         slices.data_.push({title:"Help", path: "HELP", func: function(){ menushow(_7cnvctx); }})
@@ -3105,7 +3077,7 @@ fetch(path)
         seteventspanel(new YollPanel());
         _4cnvctx.enabled = 1;
         pageresize();
-        reset()
+        contextobj.reset();
   })
 
 var ContextObj = (function ()
@@ -3142,11 +3114,6 @@ var ContextObj = (function ()
 
 			if (context.index == 3)//boss
             {
-                var h = window.innerHeight;
-                var w = window.innerWidth + globalobj.slicewidth*2;
-                var l = -globalobj.slicewidth;
-                var t = 0;
-				context.show(l, t, w, h);
             }
             else if (context.index == 4 || context.index == 6)
             {
@@ -3195,12 +3162,12 @@ var ContextObj = (function ()
                 if (globalobj.crossorigin)
                     photo.image.crossOrigin = globalobj.crossorigin;
                 photo.image.original = path;
+                path += "?" + (new Date().getTime());
                 photo.image.src = path;
 
                 photo.image.onerror =
                     photo.image.onabort = function(e)
                 {
-                    location.reload();
                     _4cnvctx.setcolumncomplete = 1;
                     contextobj.resize(context);
                     context.refresh();
@@ -3237,21 +3204,30 @@ var ContextObj = (function ()
                     contextobj.resize(context);
                     resetcanvas(context);
                     seteventspanel(new YollPanel());
-                    reset();
+                    contextobj.reset();
 
-                    photo.menu = new Image();
-                    photo.menu.src = url.filepath() + url.shortname();
+                    if (!globalobj.locked)
+                        setTimeout(function()
+                        {
+                            _4cnvctx.tab();
+                        }, 20);
 
-                    var k = projectobj.current();
-                    projectobj.rotate(1);
-                    var img = new Image();
-                    img.src = url.filepath() + projectobj.getcurrent();
-                    projectobj.rotate(-2);
-                    img.onload = function() { loaded.add(this.src); }
-                    var img = new Image();
-                    img.onload = function() { loaded.add(this.src); }
-                    img.src = url.filepath() + projectobj.getcurrent();
-                    projectobj.set(k);
+                    setTimeout(function()
+                    {
+                        photo.menu = new Image();
+                        photo.menu.src = url.filepath() + url.shortname();
+
+                        var k = projectobj.current();
+                        projectobj.rotate(1);
+                        var img = new Image();
+                        img.src = url.filepath() + projectobj.getcurrent();
+                        projectobj.rotate(-2);
+                        img.onload = function() { loaded.add(this.src); }
+                        var img = new Image();
+                        img.onload = function() { loaded.add(this.src); }
+                        img.src = url.filepath() + projectobj.getcurrent();
+                        projectobj.set(k);
+                    }, 600);
                 }
 			}
 
@@ -4005,8 +3981,6 @@ var headlst =
 		{
             if (context.page.hitest(x,y))
             {
-                if (!window.navigator.onLine)
-                    return;
                 if (photo.menu.complete && photo.menu.naturalHeight)
                     menushow(_5cnvctx)
                 else
@@ -4032,6 +4006,11 @@ var headlst =
             else if (context.option.hitest(x,y))
             {
                 menushow(_7cnvctx);
+            }
+            else
+            {
+                globalobj.autodirect = x<rect.width/2 ? 1 : -1;
+                _4cnvctx.tab();
             }
 
             _4cnvctx.refresh();
@@ -4076,8 +4055,7 @@ var headlst =
                         [
                             _4cnvctx.movingpage == -1 ?
                                 new Shrink(new Circle(SCROLLNAB,"white",4),4,4) : 0,
-                            new Shrink(new Arrow(_4cnvctx.movingpage == -1?"WHITE":
-                                ARROWFILL,270),ARROWBORES,ARROWBORES-HNUB),
+                            new Shrink(new Arrow(_4cnvctx.movingpage == -1?"WHITE":ARROWFILL,270),ARROWBORES,ARROWBORES-HNUB),
                             new Rectangle(context.prevpage),
                         ]),
                         0,
@@ -4100,8 +4078,7 @@ var headlst =
                         [
                             _4cnvctx.movingpage == 1 ?
                                 new Shrink(new Circle(SCROLLNAB,"white",4),4,4) : 0,
-                            new Shrink(new Arrow(_4cnvctx.movingpage == 1?"WHITE":
-                                ARROWFILL,90),ARROWBORES,ARROWBORES-HNUB),
+                            new Shrink(new Arrow(_4cnvctx.movingpage == 1?"WHITE":ARROWFILL,90),ARROWBORES,ARROWBORES-HNUB),
                             new Rectangle(context.nextpage),
                         ]),
                         0,
@@ -4184,36 +4161,20 @@ var footlst =
 [
     new function()
     {
-        this.wheeldown = function (context, x, y)
-        {
-            var obj = x<window.innerWidth/2?zoomobj.getcurrent():stretchobj.getcurrent();
-            obj.add(10)
-            contextobj.reset();
-        }
-
-        this.wheelup = function (context, x, y)
-        {
-            var obj = x<window.innerWidth/2?zoomobj.getcurrent():stretchobj.getcurrent();
-            obj.add(-10)
-            contextobj.reset();
-        }
-
         this.panstart = function (context, rect, x, y)
         {
-            globalobj.hide = 1;
-            pageresize();
-            globalobj.picture = 0;
+            delete photo.cached;
             _4cnvctx.pinching = 1;
             context.panobj = x<rect.width/2?zoomobj.getcurrent():stretchobj.getcurrent();
+            _4cnvctx.refresh();
         }
 
         this.panend = function (context, rect, x, y)
         {
             delete context.panobj.offset;
-            globalobj.picture = 1;
             _4cnvctx.pinching = 0;
-            _4cnvctx.refresh();
             addressobj.update();
+            reset();
         };
 
         this.pan = function (context, rect, x, y, type)
@@ -4223,7 +4184,6 @@ var footlst =
                 return;
             if (k == context.panobj.anchor())
                 return;
-            delete photo.cached;
             context.panobj.set(Math.floor(k));
             contextobj.reset();
         };
@@ -4240,7 +4200,6 @@ var footlst =
                 x = x - context.leftab.x
                 var k = Math.floor(obj.length()*(x/context.leftab.width))
                 obj.set(k);
-                globalobj.hide = 1;
                 pageresize();
                 contextobj.reset();
             }
@@ -4250,7 +4209,6 @@ var footlst =
                 x = x - context.rightab.x
                 var k = Math.floor(obj.length()*(x/context.rightab.width))
                 obj.set(k);
-                globalobj.hide = 1;
                 pageresize();
                 contextobj.reset();
             }
@@ -4505,21 +4463,22 @@ window.addEventListener("pagehide", (evt) =>
 {
 });
 
-var element = document.querySelector("link[rel='icon']");
 const darkModeListener = (event) =>
 {
-    if (event.matches)
-      element.setAttribute("href","res/favicon-dark.svg");
-    else
-      element.setAttribute("href","res/favicon-light.svg");
+    setfavicon();
 };
 
+//todo
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', darkModeListener);
 
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  element.setAttribute("href","res/favicon-light.svg");
-else
-  element.setAttribute("href","res/favicon-dark.svg");
+function setfavicon()
+{
+    var element = document.querySelector("link[rel='icon']");
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      element.setAttribute("href","res/favicon-light.svg");
+    else
+      element.setAttribute("href","res/favicon-dark.svg");
+}
 
 window.addEventListener("load", async () =>
 {
