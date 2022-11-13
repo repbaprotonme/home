@@ -1,6 +1,4 @@
 //TODO: safair slicewidth
-//TODO: chromium crash in gmail and twitter and enterting custome url in android chromium
-//TODO: thumbnail crash after resize
 
 /* +=
 Copyright 2017 Tom Brinkman
@@ -13,7 +11,7 @@ const FIREFOX = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 const IFRAME = window !== window.parent;
 const VIRTCONST = 0.8;
 const MAXVIRTUAL = 5760*2;
-const SWIPETIME = 10;
+const SWIPETIME = 40;
 const THUMBLINE = 1;
 const THUMBLINEIN = 4.0;
 const THUMBLINEOUT = 4.0;
@@ -50,16 +48,15 @@ localobj = {};
 
 globalobj.cols = 1;
 globalobj.rows = 1;
-globalobj.timemain = 8;
+globalobj.timemain = 1;
 globalobj.slidefactor = 12;
-globalobj.thumbnail = 1;
 globalobj.footerheight = ALIEXTENT+THUMBORDER;
 globalobj.tabtime = 600;
 globalobj.hide = 0;
 globalobj.showheader = 1;
 globalobj.autodirect = -1;
 globalobj.picture = 1;
-globalobj.locked = 0;
+globalobj.lockedy = 0;
 
 let photo = {}
 photo.image = 0;
@@ -246,6 +243,9 @@ let makeoption = function (title, data)
     }
 };
 
+var colobj = new makeoption("cols", [2,26,50,74,98]);
+globalobj.rowlst = [2,26,50,74,98]
+
 var positobj = new makeoption("POSITION", 9);
 positobj.begin = 7;
 
@@ -335,7 +335,6 @@ function drawslices()
         context.drawslicescount++;
         delete context.expandthumb;
         delete context.thumbrect;
-        delete context.selectrect;
         delete context.prevpage;
         delete context.nextpage;
         context.headrect = new rectangle(0,0,rect.width,ALIEXTENT);
@@ -351,7 +350,7 @@ function drawslices()
         rect.x += globalobj.slicewidth;
         rect.width -= globalobj.slicewidth*2;
 
-        if (globalobj.thumbnail && !globalobj.hide)
+        if (!globalobj.hide)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
 
         context.setcolumncomplete = 1;
@@ -825,11 +824,10 @@ CanvasRenderingContext2D.prototype.moveup = function()
 {
     var context = this;
     var k = rowobj.berp()*100-1;
-    var lst = [0,10,20,30,40,50,60,70,80,90,100]
-    var index = lst.findLastIndex(a=>{return a < k;})
+    var index = globalobj.rowlst.findLastIndex(a=>{return a < k;})
     if (index == -1)
         return;
-    var j = (lst[index]/100)*rowobj.length();
+    var j = (globalobj.rowlst[index]/100)*rowobj.length();
     rowobj.set(j);
 }
 
@@ -837,11 +835,10 @@ CanvasRenderingContext2D.prototype.movedown = function()
 {
     var context = this;
     var k = rowobj.berp()*100;
-    var lst = [0,10,20,30,40,50,60,70,80,90,100]
-    var index = lst.findIndex(a=>{return a > k;})
+    var index = globalobj.rowlst.findIndex(a=>{return a > k;})
     if (index == -1)
         return;
-    var j = (lst[index]/100)*rowobj.length();
+    var j = (globalobj.rowlst[index]/100)*rowobj.length();
     rowobj.set(j);
 }
 
@@ -1475,11 +1472,36 @@ var panlst =
             x = pt?pt.x:x;
             y = pt?pt.y:y;
             context.hithumb(x,y);
-            var b = !globalobj.locked && (zoom.current() || Number(zoom.getcurrent()));
-            if (b)
-                contextobj.reset()
+            if (globalobj.lockedx)
+            {
+                var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
+                if (colobj.current() != col)
+                {
+                    colobj.set(col);
+                    var time = (colobj.getcurrent()/100)*context.timeobj.length();
+                    context.timeobj.set(time);
+                    context.refresh();
+                }
+            }
+            else if (globalobj.lockedy)
+            {
+                var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
+                        *globalobj.rowlst.length);
+                var row = (globalobj.rowlst[index]/100)*rowobj.length();
+                if (rowobj.current() != row)
+                {
+                    rowobj.set(row);
+                    contextobj.reset()
+                }
+            }
             else
-                context.refresh();
+            {
+                var b = !globalobj.lockedy && (zoom.current() || Number(zoom.getcurrent()));
+                if (b)
+                    contextobj.reset()
+                else
+                    context.refresh();
+            }
         }
         else if (type == "panleft" || type == "panright")
         {
@@ -1522,10 +1544,13 @@ var panlst =
         context.startt = context.timeobj.current();
         var zoom = zoomobj.getcurrent()
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-        if (globalobj.locked && context.isthumbrect)
+        if (context.isthumbrect)
         {
             context.hithumb(x,y);
-            contextobj.reset();
+            if (globalobj.lockedx)
+                context.refresh();
+            else if (globalobj.lockedy)
+                contextobj.reset();
         }
 
         clearInterval(context.timemain);
@@ -1595,8 +1620,6 @@ var presslst =
     },
     press: function (context, rect, x, y)
     {
-        if (globalobj.locked)
-            return;
         globalobj.showheader = globalobj.showheader?0:1;
         pageresize();
         context.refresh();
@@ -1643,8 +1666,7 @@ var swipelst =
         setTimeout(function()
         {
             var k = evt.type == "swipeup"?1:-1;
-            rowobj.add(k*rowobj.length()/20);
-            contextobj.reset();
+            k ? context.moveup(): context.movedown();
         }, SWIPETIME);
     },
 },
@@ -2093,13 +2115,24 @@ var taplst =
         }
         else if (context.thumbrect && context.thumbrect.hitest(x,y))
         {
-            context.hithumb(x,y);
-            var zoom = zoomobj.getcurrent()
-            var b = (context.shifthit || !Number(zoom.getcurrent()/100) && !zoom.current())
-            if (b)
-                context.refresh();
-            else
+            if (globalobj.lockedy)
+            {
+                var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
+                        *globalobj.rowlst.length);
+                var j = (globalobj.rowlst[index]/100)*rowobj.length();
+                rowobj.set(j);
                 contextobj.reset()
+            }
+            else
+            {
+                context.hithumb(x,y);
+                var zoom = zoomobj.getcurrent()
+                var b = (context.shifthit || !Number(zoom.getcurrent()/100) && !zoom.current())
+                if (b)
+                    context.refresh();
+                else
+                    contextobj.reset()
+             }
         }
         else if (context.footrect && context.footrect.hitest(x,y))
         {
@@ -2110,12 +2143,6 @@ var taplst =
         else if (context.headrect && context.headrect.hitest(x,y))
         {
             globalobj.showheader = 1;
-            pageresize();
-            context.refresh();
-        }
-        else if (context.selectrect && context.selectrect.hitest(x,y))
-        {
-            globalobj.picture = globalobj.picture?0:1;
             pageresize();
             context.refresh();
         }
@@ -2271,36 +2298,40 @@ var thumblst =
         context.expandthumb = context.thumbrect;
         if (jp)
             context.expandthumb = new rectangle(x,y-15,w,h+30);
-        if (!globalobj.picture || context.pinching)
+        if (!context.shifthit)
         {
-            blackfill.draw(context, context.thumbrect, 0, 0);
-        }
-        else if (context.isthumbrect && (jp || context.panning))
-        {
-            blackfill.draw(context, context.thumbrect, 0, 0);
-        }
-        else if (photo.cached && w == context.oldwidth && h == context.oldheight)
-        {
-            context.drawImage(photo.cached, x, y, w, h);
-        }
-        else
-        {
-            context.drawImage(photo.image, 0, 0, photo.image.width, photo.image.height, x, y, w, h);
-            photo.cached = new Image();
-            var c = document.createElement('canvas');
-            var o = c.getContext('2d');
-            c.width=w;
-            c.height=h;
-            o.drawImage(photo.image, 0, 0, w, h);
-            photo.cached.src = o.canvas.toDataURL();
-            context.oldheight = h;
-            context.oldwidth = w;
+            if (!globalobj.picture || context.pinching)
+            {
+                blackfill.draw(context, context.thumbrect, 0, 0);
+            }
+            else if (context.isthumbrect && (jp || context.panning))
+            {
+                blackfill.draw(context, context.thumbrect, 0, 0);
+            }
+            else if (photo.cached && w == context.oldwidth && h == context.oldheight)
+            {
+                context.drawImage(photo.cached, x, y, w, h);
+            }
+            else
+            {
+                context.drawImage(photo.image, 0, 0, photo.image.width, photo.image.height, x, y, w, h);
+                photo.cached = new Image();
+                var c = document.createElement('canvas');
+                var o = c.getContext('2d');
+                c.width=w;
+                c.height=h;
+                o.drawImage(photo.image, 0, 0, w, h);
+                photo.cached.src = o.canvas.toDataURL();
+                context.oldheight = h;
+                context.oldwidth = w;
+            }
         }
 
         context.lineWidth = 8;
-        var whitestroke = new StrokeRect(globalobj.locked?"rgba(0,0,0,0)":THUMBSTROKE);
-        var r = new rectangle(x-4,y-4,w+8,h+8)
-        whitestroke.draw(context, r, 0, 0);
+        var whitestroke = new StrokeRect(THUMBSTROKE);
+        var r = new rectangle(x-4,y-4,w+8,h+8);
+        if (!context.shifthit)
+            whitestroke.draw(context, r, 0, 0);
 
         var region = new Path2D();
         region.rect(x,y,w,h);
@@ -2323,7 +2354,6 @@ var thumblst =
 
         var berp = Math.berp(0,photo.image.height,context.imageheight);
         var hh = Math.lerp(0,h,berp);
-
         var jj = context.timeobj.berp();
         var bb = Math.lerp(x,x+w,1-jj);
         var xx = bb-ww/2;
@@ -2333,26 +2363,29 @@ var thumblst =
             return;
         if (yy < 1)
             return;
-        context.selectrect = new rectangle(xx,yy,ww,hh);
 
         context.lineWidth = 3;
-        blackfill2.draw(context, context.selectrect, 0, 0);
-        whitestroke.draw(context, context.selectrect, 0, 0);
-
-        var ee = (xx+ww) - (x+w);
-        if (ee > 0)
+        if (!context.shifthit)
         {
-            var r = new rectangle(x-ww+ee,yy,ww,hh);
-            blackfill2.draw(context, r, 0, 0);
-            whitestroke.draw(context, r, 0, 0);
-        }
+            var selectrect = new rectangle(xx,yy,ww,hh);
+            blackfill2.draw(context, selectrect, 0, 0);
+            whitestroke.draw(context, selectrect, 0, 0);
 
-        var ee = xx-x;
-        if (ee < 0)
-        {
-            var r = new rectangle(x+w+ee,yy,ww,hh);
-            blackfill2.draw(context, r, 0, 0);
-            whitestroke.draw(context, r, 0, 0);
+            var ee = (xx+ww) - (x+w);
+            if (ee > 0)
+            {
+                var r = new rectangle(x-ww+ee,yy,ww,hh);
+                blackfill2.draw(context, r, 0, 0);
+                whitestroke.draw(context, r, 0, 0);
+            }
+
+            var ee = xx-x;
+            if (ee < 0)
+            {
+                var r = new rectangle(x+w+ee,yy,ww,hh);
+                blackfill2.draw(context, r, 0, 0);
+                whitestroke.draw(context, r, 0, 0);
+            }
         }
 
         context.restore();
@@ -2422,9 +2455,19 @@ var drawlst =
                 if (screenfull.isFullscreen)
                     clr = MENUSELECT;
             }
-            else if (user.path == "LOCKED")
+            else if (user.path == "SHIFT")
             {
-                if (globalobj.locked)
+                if (_4cnvctx.shifthit)
+                    clr = MENUSELECT;
+            }
+            else if (user.path == "LOCKEDY")
+            {
+                if (globalobj.lockedy)
+                    clr = MENUSELECT;
+            }
+            else if (user.path == "LOCKEDX")
+            {
+                if (globalobj.lockedx)
                     clr = MENUSELECT;
             }
         }
@@ -2540,11 +2583,9 @@ function resetcanvas()
 
     var canvas = _4cnv;
     var context = _4cnvctx;
-    var h = window.innerHeight;
-    var w = window.innerWidth + globalobj.slicewidth*2;
     var l = -globalobj.slicewidth;
-    var t = 0;
-    context.show(l, t, w, h);
+    var w = window.innerWidth + globalobj.slicewidth*2;
+    context.show(l, 0, w, window.innerHeight);
 
     var z = zoomobj.getcurrent().getcurrent();
     var zoom = (100-z)/100;
@@ -2781,8 +2822,8 @@ var templatelst =
     name: "WIDE",
     init: function ()
     {
-        globalobj.slidetop = 24;
-        globalobj.slidefactor = 72;
+        globalobj.slidetop = 18;
+        globalobj.slidefactor = 216;
         positobj.begin = 7;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
@@ -2798,8 +2839,8 @@ var templatelst =
     name: "LANDSCAPE",
     init: function (j)
     {
-        globalobj.slidetop = 36;
-        globalobj.slidefactor = 36;
+        globalobj.slidetop = 30;
+        globalobj.slidefactor = 72;
         positobj.begin = 7;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 25;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 25;
@@ -2850,8 +2891,8 @@ var templatelst =
     init: function ()
     {
         positobj.begin = 4;
-        globalobj.slidetop = 28;
-        globalobj.slidefactor = 72;
+        globalobj.slidetop = 36;
+        globalobj.slidefactor = 36;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.8;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.8;
         loomobj.split(y, "80-90", loomobj.length());
@@ -2875,7 +2916,7 @@ var path = url.origin + "/data/" + url.path + ".json";
 fetch(path)
   .then(function (response)
   {
-        return response.json();
+     return response.json();
   })
   .then(function (data)
   {
@@ -2891,8 +2932,6 @@ fetch(path)
 
         if (typeof data.hide !== "undefined")
             globalobj.hide = Number(data.hide);
-        if (typeof data.thumbnail !== "undefined")
-            globalobj.thumbnail = Number(data.thumbnail);
         if (typeof data.footerheight !== "undefined")
             globalobj.footerheight = Number(data.footerheight);
         if (typeof data.showheader !== "undefined")
@@ -3053,10 +3092,22 @@ fetch(path)
             tab.document.close();
         }});
 
-        slices.data_.push({title:"Locked", path: "LOCKED", func: function()
+        slices.data_.push({title:"Shift", path: "SHIFT", func: function()
+        {
+            _4cnvctx.shifthit = _4cnvctx.shifthit?0:1;
+        }});
+
+        slices.data_.push({title:"Lock.X", path: "LOCKEDX", func: function()
         {
             globalobj.showheader = 0;
-            globalobj.locked = globalobj.locked?0:1;
+            globalobj.lockedx = globalobj.lockedx?0:1;
+            pageresize();
+        }});
+
+        slices.data_.push({title:"Lock.Y", path: "LOCKEDY", func: function()
+        {
+            globalobj.showheader = 0;
+            globalobj.lockedy = globalobj.lockedy?0:1;
             pageresize();
         }});
 
@@ -3162,17 +3213,18 @@ var ContextObj = (function ()
                 if (globalobj.crossorigin)
                     photo.image.crossOrigin = globalobj.crossorigin;
                 photo.image.original = path;
-                path += "?" + (new Date().getTime());
                 photo.image.src = path;
 
                 photo.image.onerror =
                     photo.image.onabort = function(e)
                 {
+                    location.reload();
                     _4cnvctx.setcolumncomplete = 1;
                     contextobj.resize(context);
                     context.refresh();
                     delete globalobj.promptedfile;
                     seteventspanel(new YollPanel());
+                    contextobj.reset();
                 }
 
                 photo.image.onload = function()
@@ -3206,7 +3258,7 @@ var ContextObj = (function ()
                     seteventspanel(new YollPanel());
                     contextobj.reset();
 
-                    if (!globalobj.locked)
+                    if (!globalobj.lockedy)
                         setTimeout(function()
                         {
                             _4cnvctx.tab();
@@ -3815,12 +3867,15 @@ function menuhide()
 
 function reset()
 {
+    seteventspanel(new Empty());
     contextobj.reset()
-    setTimeout(contextobj.reset,50);
-    setTimeout(contextobj.reset,100);
-    setTimeout(contextobj.reset,200);
-    setTimeout(contextobj.reset,500);
-    setTimeout(contextobj.reset,1000);
+    setTimeout(contextobj.reset,150);
+    setTimeout(contextobj.reset,300);
+    setTimeout(function()
+    {
+        contextobj.reset();
+        seteventspanel(new YollPanel());
+    }, 450);
 }
 
 function resize()
@@ -4429,7 +4484,7 @@ function pageresize()
     var h = globalobj.showheader ? ALIEXTENT : 0;
     headcnvctx.show(0,y,window.innerWidth,h);
     headham.panel = headobj.getcurrent();
-    var k = (!globalobj.thumbnail || globalobj.hide) ? 1 : 0;
+    var k = globalobj.hide ? 1 : 0;
     var h = globalobj.showheader ? ALIEXTENT : 0;
     footham.panel = footobj.getcurrent();
     footcnvctx.show(0,window.innerHeight-h, window.innerWidth, h);
@@ -4457,6 +4512,10 @@ window.addEventListener("visibilitychange", (evt) =>
     else
     {
     }
+});
+
+window.addEventListener("beforeunload", (evt) =>
+{
 });
 
 window.addEventListener("pagehide", (evt) =>
