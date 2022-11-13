@@ -243,7 +243,7 @@ let makeoption = function (title, data)
     }
 };
 
-var colobj = new makeoption("cols", [2,26,50,74,98]);
+var colobj = new makeoption("cols", [75,50,25]);
 globalobj.rowlst = [2,26,50,74,98]
 
 var positobj = new makeoption("POSITION", 9);
@@ -342,13 +342,10 @@ function drawslices()
 
         context.restore();
         context.save();
-        if (!context.panning && headcnv.height)
+        if (headcnv.height)
             headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
         if (footcnv.height)
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
-
-        rect.x += globalobj.slicewidth;
-        rect.width -= globalobj.slicewidth*2;
 
         if (!globalobj.hide)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
@@ -1468,12 +1465,12 @@ var panlst =
         var zoom = zoomobj.getcurrent()
         if (context.isthumbrect)
         {
-            var pt = context.getweightedpoint(x,y);
-            x = pt?pt.x:x;
-            y = pt?pt.y:y;
-            context.hithumb(x,y);
             if (globalobj.lockedx)
             {
+                var b = (y-context.thumbrect.y)/context.thumbrect.height;
+                var e = b*rowobj.length();
+                rowobj.set(e);
+                contextobj.reset();
                 var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
                 if (colobj.current() != col)
                 {
@@ -1485,6 +1482,10 @@ var panlst =
             }
             else if (globalobj.lockedy)
             {
+                var pt = context.getweightedpoint(x,y);
+                x = pt?pt.x:x;
+                y = pt?pt.y:y;
+                context.hithumb(x,y);
                 var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
                         *globalobj.rowlst.length);
                 var row = (globalobj.rowlst[index]/100)*rowobj.length();
@@ -1496,7 +1497,11 @@ var panlst =
             }
             else
             {
-                var b = !globalobj.lockedy && (zoom.current() || Number(zoom.getcurrent()));
+                var pt = context.getweightedpoint(x,y);
+                x = pt?pt.x:x;
+                y = pt?pt.y:y;
+                context.hithumb(x,y);
+                var b = zoom.current() || Number(zoom.getcurrent());
                 if (b)
                     contextobj.reset()
                 else
@@ -1723,8 +1728,10 @@ var keylst =
 	name: "BOSS",
 	keyup: function (evt)
 	{
-        _4cnvctx.ctrlhit = 0;
-        _4cnvctx.shifthit = 0;
+		var context = _4cnvctx;
+        context.ctrlhit = 0;
+        context.shifthit = 0;
+        context.refresh();
 	},
 	keydown: function (evt)
 	{
@@ -1734,6 +1741,7 @@ var keylst =
             context.ctrlhit = 1;
         if (evt.shiftKey)
             context.shifthit = 1;
+        context.refresh();
 
         if (evt.key != " " && isFinite(evt.key))
         {
@@ -2084,6 +2092,7 @@ CanvasRenderingContext2D.prototype.hithumb = function(x,y)
     var k = time % DELAYCENTER;
     var e = this.timeobj.length()*(k/DELAYCENTER);
     this.timeobj.set(e);
+
     var b = (y-rect.y)/rect.height;
     var e = b*rowobj.length();
     rowobj.set(e);
@@ -2122,6 +2131,21 @@ var taplst =
                 var j = (globalobj.rowlst[index]/100)*rowobj.length();
                 rowobj.set(j);
                 contextobj.reset()
+            }
+            else if (globalobj.lockedx)
+            {
+                var b = (y-context.thumbrect.y)/context.thumbrect.height;
+                var e = b*rowobj.length();
+                rowobj.set(e);
+                contextobj.reset();
+                var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
+                if (colobj.current() != col)
+                {
+                    colobj.set(col);
+                    var time = (colobj.getcurrent()/100)*context.timeobj.length();
+                    context.timeobj.set(time);
+                    context.refresh();
+                }
             }
             else
             {
@@ -2330,8 +2354,9 @@ var thumblst =
         context.lineWidth = 8;
         var whitestroke = new StrokeRect(THUMBSTROKE);
         var r = new rectangle(x-4,y-4,w+8,h+8);
+        var r = new rectangle(x,y,w,h);
         if (!context.shifthit)
-            whitestroke.draw(context, r, 0, 0);
+          whitestroke.draw(context, r, 0, 0);
 
         var region = new Path2D();
         region.rect(x,y,w,h);
@@ -2355,8 +2380,8 @@ var thumblst =
         var berp = Math.berp(0,photo.image.height,context.imageheight);
         var hh = Math.lerp(0,h,berp);
         var jj = context.timeobj.berp();
-        var bb = Math.lerp(x,x+w,1-jj);
-        var xx = bb-ww/2;
+        var bb = w*(1-jj);
+        var xx = x+bb-ww/2;
         var berp = Math.berp(0,photo.image.height,context.nuby);
         var yy = y+Math.lerp(0,h,berp);
         if (xx < 1)
@@ -2585,7 +2610,7 @@ function resetcanvas()
     var context = _4cnvctx;
     var l = -globalobj.slicewidth;
     var w = window.innerWidth + globalobj.slicewidth*2;
-    context.show(l, 0, w, window.innerHeight);
+    context.show(0, 0, window.innerWidth, window.innerHeight);
 
     var z = zoomobj.getcurrent().getcurrent();
     var zoom = (100-z)/100;
@@ -2601,10 +2626,8 @@ function resetcanvas()
     context.nuby = Math.nub(y, context.canvas.height, context.imageheight, photo.image.height);
 
     globalobj.slicewidth = (SAFARI)?6:context.virtualwidth/12;
-    if (globalobj.slicewidth > window.innerWidth/2)
-        globalobj.slicewidth = window.innerWidth/2;
-    if (context.pinching)
-        globalobj.slicewidth = 1;
+    if (globalobj.slicewidth > window.innerWidth)// /2)
+        globalobj.slicewidth = window.innerWidth;///2;
     var ks = 0;
     for (var n = 0; n < slicelst.length; ++n)
     {
@@ -2839,8 +2862,8 @@ var templatelst =
     name: "LANDSCAPE",
     init: function (j)
     {
-        globalobj.slidetop = 30;
-        globalobj.slidefactor = 72;
+        globalobj.slidetop = 36;
+        globalobj.slidefactor = 36;
         positobj.begin = 7;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 25;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 25;
@@ -4154,7 +4177,7 @@ var headlst =
            var f = projectobj.current();
            var s = extentobj.data_[f];
            var k = extentobj.length() ? s.join("x") : j;
-           var h = headinfo.current();
+           var h = 7;//7;//7;//7;//7;//7;//7;//headinfo.current();
             if (h == 1)
                 k = jt;
             else if (h == 2)
@@ -4182,7 +4205,7 @@ var headlst =
                 k = globalobj.slicewidth.toFixed(0);
 
             a.draw(context, rect, k, time);
-           context.restore()
+            context.restore()
 		};
 	},
 	new function ()
@@ -4229,7 +4252,6 @@ var footlst =
             delete context.panobj.offset;
             _4cnvctx.pinching = 0;
             addressobj.update();
-            reset();
         };
 
         this.pan = function (context, rect, x, y, type)
