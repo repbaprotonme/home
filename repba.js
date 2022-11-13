@@ -3115,7 +3115,7 @@ fetch(path)
             tab.document.close();
         }});
 
-        slices.data_.push({title:"Shift", path: "SHIFT", func: function()
+        slices.data_.push({title:"Hide Thumbnail", path: "SHIFT", func: function()
         {
             _4cnvctx.shifthit = _4cnvctx.shifthit?0:1;
         }});
@@ -3124,12 +3124,14 @@ fetch(path)
         {
             globalobj.showheader = 0;
             globalobj.lockedx = globalobj.lockedx?0:1;
+            globalobj.lockedy = 0;
             pageresize();
         }});
 
         slices.data_.push({title:"Lock.Y", path: "LOCKEDY", func: function()
         {
             globalobj.showheader = 0;
+            globalobj.lockedx = 0;
             globalobj.lockedy = globalobj.lockedy?0:1;
             pageresize();
         }});
