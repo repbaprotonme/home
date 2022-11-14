@@ -1436,8 +1436,11 @@ var panlst =
         var zoom = zoomobj.getcurrent()
         if (context.isthumbrect)
         {
+            var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
             if (globalobj.lockedx)
             {
+                if (!isthumbrect)
+                    return;
                 var b = (y-context.thumbrect.y)/context.thumbrect.height;
                 var e = b*rowobj.length();
                 rowobj.set(e);
@@ -1453,6 +1456,8 @@ var panlst =
             }
             else if (globalobj.lockedy)
             {
+                if (!isthumbrect)
+                    return;
                 var pt = context.getweightedpoint(x,y);
                 x = pt?pt.x:x;
                 y = pt?pt.y:y;
@@ -1537,7 +1542,7 @@ var panlst =
     panend: function (context, rect, x, y)
 	{
         if (context.isthumbrect &&
-            (globalobj.lockedx || globalobj.lockedy) )
+            (globalobj.lockedx || globalobj.lockedy))
         {
             if (globalobj.lockedx)
             {
@@ -2116,39 +2121,13 @@ var taplst =
         else if (context.thumbrect && context.thumbrect.hitest(x,y))
         {
             url.thumbnail = 1;
-            if (globalobj.lockedy)
-            {
-                var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
-                        *channelobj.data_.length);
-                var j = (channelobj.data_[index]/100)*rowobj.length();
-                rowobj.set(j);
-                contextobj.reset()
-            }
-            else if (globalobj.lockedx)
-            {
-                var b = (y-context.thumbrect.y)/context.thumbrect.height;
-                var e = b*rowobj.length();
-                rowobj.set(e);
-                contextobj.reset();
-                var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
-                if (colobj.current() != col)
-                {
-                    colobj.set(col);
-                    var time = (colobj.getcurrent()/100)*context.timeobj.length();
-                    context.timeobj.set(time);
-                    context.refresh();
-                }
-            }
+            context.hithumb(x,y);
+            var zoom = zoomobj.getcurrent()
+            var b = !Number(zoom.getcurrent()/100) && !zoom.current()
+            if (b)
+                context.refresh();
             else
-            {
-                context.hithumb(x,y);
-                var zoom = zoomobj.getcurrent()
-                var b = !Number(zoom.getcurrent()/100) && !zoom.current()
-                if (b)
-                    context.refresh();
-                else
-                    contextobj.reset()
-             }
+                contextobj.reset()
         }
         else if (context.headrect && context.headrect.hitest(x,y))
         {
