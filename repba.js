@@ -42,15 +42,9 @@ const THUMBSTROKE = "rgba(255,255,235,0.35)"
 const ARROWFILL = "rgb(255,255,255)";
 const TIMEBEGIN = 0;
 
-dropobj = {};
 globalobj = {};
-localobj = {};
-
-globalobj.cols = 1;
-globalobj.rows = 1;
-globalobj.timemain = 1;
+globalobj.timemain = 8;
 globalobj.slidefactor = 12;
-globalobj.footerheight = ALIEXTENT+THUMBORDER;
 globalobj.tabtime = 600;
 globalobj.autodirect = -1;
 globalobj.lockedy = 0;
@@ -242,11 +236,9 @@ let makeoption = function (title, data)
     }
 };
 
-var colobj = new makeoption("cols", [75,50,25]);
-globalobj.rowlst = [2,26,50,74,98]
-
-var positobj = new makeoption("POSITION", 9);
-positobj.begin = 7;
+var colobj = new makeoption("COLUMNS", [75,50,25]);
+var channelobj = new makeoption("CHANNELS", [2,26,50,74,98]);
+var positobj = new makeoption("POSITION", [0,0,0,0,0,0,0,0,0]);
 
 function drawslices()
 {
@@ -332,12 +324,12 @@ function drawslices()
         }
 
         context.drawslicescount++;
-        delete context.expandthumb;
-        delete context.thumbrect;
-        delete context.prevpage;
-        delete context.nextpage;
+        //delete context.expandthumb;
+        //delete context.thumbrect;
+        //delete context.prevpage;
+        //delete context.nextpage;
         context.headrect = new rectangle(0,0,rect.width,ALIEXTENT);
-        context.footrect = new rectangle(0,rect.height-ALIEXTENT,rect.width,ALIEXTENT);
+        //context.footrect = new rectangle(0,rect.height-ALIEXTENT,rect.width,ALIEXTENT);
 
         context.restore();
         context.save();
@@ -798,10 +790,10 @@ CanvasRenderingContext2D.prototype.moveup = function()
 {
     var context = this;
     var k = rowobj.berp()*100-1;
-    var index = globalobj.rowlst.findLastIndex(a=>{return a < k;})
+    var index = channelobj.data_.findLastIndex(a=>{return a < k;})
     if (index == -1)
         return;
-    var j = (globalobj.rowlst[index]/100)*rowobj.length();
+    var j = (channelobj.data_[index]/100)*rowobj.length();
     rowobj.set(j);
 }
 
@@ -809,10 +801,10 @@ CanvasRenderingContext2D.prototype.movedown = function()
 {
     var context = this;
     var k = rowobj.berp()*100;
-    var index = globalobj.rowlst.findIndex(a=>{return a > k;})
+    var index = channelobj.data_.findIndex(a=>{return a > k;})
     if (index == -1)
         return;
-    var j = (globalobj.rowlst[index]/100)*rowobj.length();
+    var j = (channelobj.data_[index]/100)*rowobj.length();
     rowobj.set(j);
 }
 
@@ -1209,6 +1201,7 @@ var wheelst =
     name: "BOSS",
     up: function (context, x, y, ctrl, shift)
     {
+        url.thumbnail = 1;
         context.pinching = 1;
         clearTimeout(globalobj.pinch);
         globalobj.pinch = setTimeout(function()
@@ -1244,6 +1237,7 @@ var wheelst =
 	},
  	down: function (context, x, y, ctrl, shift)
     {
+        url.thumbnail = 1;
         context.pinching = 1;
         clearTimeout(globalobj.pinch);
         globalobj.pinch = setTimeout(function()
@@ -1464,8 +1458,8 @@ var panlst =
                 y = pt?pt.y:y;
                 context.hithumb(x,y);
                 var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
-                        *globalobj.rowlst.length);
-                var row = (globalobj.rowlst[index]/100)*rowobj.length();
+                        *channelobj.data_.length);
+                var row = (channelobj.data_[index]/100)*rowobj.length();
                 if (rowobj.current() != row)
                 {
                     rowobj.set(row);
@@ -1542,6 +1536,21 @@ var panlst =
     },
     panend: function (context, rect, x, y)
 	{
+        if (context.isthumbrect &&
+            (globalobj.lockedx || globalobj.lockedy) )
+        {
+            if (globalobj.lockedx)
+            {
+                globalobj.lockedx = 0
+                globalobj.lockedy = 1
+            }
+            else
+            {
+                globalobj.lockedx = 1
+                globalobj.lockedy = 0
+            }
+        }
+
         context.pantype = 0;
         context.panning = 0;
         context.isthumbrect = 0;
@@ -2106,11 +2115,12 @@ var taplst =
         }
         else if (context.thumbrect && context.thumbrect.hitest(x,y))
         {
+            url.thumbnail = 1;
             if (globalobj.lockedy)
             {
                 var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
-                        *globalobj.rowlst.length);
-                var j = (globalobj.rowlst[index]/100)*rowobj.length();
+                        *channelobj.data_.length);
+                var j = (channelobj.data_[index]/100)*rowobj.length();
                 rowobj.set(j);
                 contextobj.reset()
             }
@@ -2139,12 +2149,6 @@ var taplst =
                 else
                     contextobj.reset()
              }
-        }
-        else if (context.footrect && context.footrect.hitest(x,y))
-        {
-            url.header = 1;
-            pageresize();
-            context.refresh();
         }
         else if (context.headrect && context.headrect.hitest(x,y))
         {
@@ -2180,6 +2184,12 @@ var taplst =
             clearInterval(_4cnvctx.timemain);
             _4cnvctx.timemain = 0;
             url.thumbnail = url.thumbnail?0:1;
+            if (url.thumbnail)
+            {
+                var k = positobj.data_.hitest(x,y);
+                positobj.set(k);
+            }
+
             pageresize();
             _4cnvctx.refresh();
         }
@@ -2453,14 +2463,9 @@ var drawlst =
                 if (screenfull.isFullscreen)
                     clr = MENUSELECT;
             }
-            else if (user.path == "LOCKEDY")
+            else if (user.path == "ASSISTED")
             {
-                if (globalobj.lockedy)
-                    clr = MENUSELECT;
-            }
-            else if (user.path == "LOCKEDX")
-            {
-                if (globalobj.lockedx)
+                if (globalobj.lockedx || globalobj.lockedy)
                     clr = MENUSELECT;
             }
         }
@@ -2594,8 +2599,8 @@ function resetcanvas()
     context.nuby = Math.nub(y, context.canvas.height, context.imageheight, photo.image.height);
 
     globalobj.slicewidth = (SAFARI)?6:context.virtualwidth/12;
-    if (globalobj.slicewidth > window.innerWidth)// /2)
-        globalobj.slicewidth = window.innerWidth;///2;
+    if (globalobj.slicewidth > window.innerWidth)
+        globalobj.slicewidth = window.innerWidth;
     var ks = 0;
     for (var n = 0; n < slicelst.length; ++n)
     {
@@ -2655,6 +2660,11 @@ function resetcanvas()
     heightobj.set(window.landscape?1:0);
     stretchobj.set(window.landscape?1:0);
     zoomobj.set(window.landscape?1:0);
+
+    positobj.data_ = []
+    var a = new Grid (3, 3, 0, new Push());
+    a.draw(context, window.rect, positobj.data_, 0);
+
     context.refresh();
 }
 
@@ -2744,9 +2754,10 @@ var templatelst =
     name: "COMIC",
     init: function ()
     {
+        globalobj.lockedy = 1;
         globalobj.slidetop = 24;
         globalobj.slidefactor = 48;
-        positobj.begin = 4;
+        positobj.set(4);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.4;
         loomobj.split(y, "70-85", loomobj.length());
@@ -2761,7 +2772,7 @@ var templatelst =
     name: "PORTRAIT",
     init: function ()
     {
-        positobj.begin = 4;
+        positobj.set(4);
         globalobj.slidetop = 28;
         globalobj.slidefactor = 72;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
@@ -2780,7 +2791,7 @@ var templatelst =
     {
         globalobj.slidetop = 28;
         globalobj.slidefactor = 36;
-        positobj.begin = 7;
+        positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "0-25", loomobj.length());
@@ -2797,7 +2808,7 @@ var templatelst =
     {
         globalobj.slidetop = 28;
         globalobj.slidefactor = 96;
-        positobj.begin = 7;
+        positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "0-10", loomobj.length());
@@ -2814,7 +2825,7 @@ var templatelst =
     {
         globalobj.slidetop = 36;
         globalobj.slidefactor = 72;
-        positobj.begin = 7;
+        positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "25-75", loomobj.length());
@@ -2831,7 +2842,7 @@ var templatelst =
     {
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
-        positobj.begin = 7;
+        positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 25;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 25;
         loomobj.split(y, "50-90", loomobj.length());
@@ -2846,7 +2857,7 @@ var templatelst =
     name: "EXTRATALL",
     init: function ()
     {
-        positobj.begin = 4;
+        positobj.set(4);
         globalobj.slidetop = 36;
         globalobj.slidefactor = 18;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.5;
@@ -2863,7 +2874,7 @@ var templatelst =
     name: "TALL",
     init: function ()
     {
-        positobj.begin = 4;
+        positobj.set(4);
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.5;
@@ -2880,7 +2891,7 @@ var templatelst =
     name: "LEGEND",
     init: function ()
     {
-        positobj.begin = 4;
+        positobj.set(4);
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.8;
@@ -2920,12 +2931,10 @@ fetch(path)
         templateobj.set(j);
         templateobj.getcurrent().init();
 
-        if (typeof data.footerheight !== "undefined")
-            globalobj.footerheight = Number(data.footerheight);
-        if (typeof data.showheader !== "undefined")
-            url.header = Number(data.showheader);
-        if (typeof data.cols !== "undefined")
-            globalobj.cols = Number(data.cols);
+        if (typeof data.channelobj !== "undefined")
+            channelobj.data_ = data.channelobj.split(",");
+        if (typeof data.colobj !== "undefined")
+            colobj.data_ = data.colobj.split(",").reverse();
         if (typeof data.extension !== "undefined")
             url.extension = data.extension;
         if (typeof data.path !== "undefined")
@@ -2955,7 +2964,6 @@ fetch(path)
         globalobj.config.list = projectobj.data_;
 
         projectobj.set(url.project);
-        positobj.set(positobj.begin);
 
         if (data.extents)
         {
@@ -3101,20 +3109,10 @@ fetch(path)
             }, 1000);
         }});
 
-        slices.data_.push({title:"Lock.X", path: "LOCKEDX", func: function()
+        slices.data_.push({title:"Assisted", path: "ASSISTED", func: function()
         {
-            url.header = 0;
-            globalobj.lockedx = globalobj.lockedx?0:1;
-            globalobj.lockedy = 0;
-            pageresize();
-        }});
-
-        slices.data_.push({title:"Lock.Y", path: "LOCKEDY", func: function()
-        {
-            url.header = 0;
             globalobj.lockedx = 0;
-            globalobj.lockedy = globalobj.lockedy?0:1;
-            pageresize();
+            globalobj.lockedy = 1;
         }});
 
         slices.data_.push({title:"Help", path: "HELP", func: function(){ menushow(_7cnvctx); }})
@@ -3262,7 +3260,7 @@ var ContextObj = (function ()
                     contextobj.resize(context);
                     resetcanvas(context);
                     seteventspanel(new YollPanel());
-                    contextobj.reset();
+                    reset();
 
                     if (!globalobj.lockedy)
                         setTimeout(function()
@@ -3449,34 +3447,13 @@ var Rectangle = function (r)
     }
 }
 
-var Rects = function (rects)
+var Push = function ()
 {
     this.draw = function (context, rect, user, time)
     {
-        rects.push(rect);
+        user.push(rect);
     }
 }
-
-var DotsA = function (cols,j,panel)
-{
-     this.draw = function (context, rect, user, time)
-     {
-        var a =
-                new Row( [j,0,j],
-                [
-                    0,
-                    new Grid(cols,1,0,panel),
-                    0,
-                ]);
-
-        context.save();
-        context.shadowOffsetX = 1;
-        context.shadowOffsetY = 1;
-        context.shadowColor = "black"
-        a.draw(context, rect, user, time);
-        context.restore();
-    };
-};
 
 var Circle = function (color, scolor, width)
 {
@@ -3681,21 +3658,7 @@ var Grid = function (cols, rows, margin, panel)
         {
             var r = rect.get(rects[n].x, rects[n].y,
                 rects[n].width, rects[n].height);
-            panel.draw(context, r, n, time);
-        }
-    };
-};
-
-var GridA = function (cols, rows, margin, panel)
-{
-    this.draw = function (context, rect, user, time)
-    {
-        var rects = new gridToRect(cols, rows, margin, rect.width, rect.height);
-        for (var n = 0; n < cols*rows; ++n)
-        {
-            var r = rect.get(rects[n].x, rects[n].y,
-                rects[n].width, rects[n].height);
-            panel.draw(context, r, user[n], time);
+            panel.draw(context, r, user, time);
         }
     };
 };
@@ -4527,7 +4490,6 @@ const darkModeListener = (event) =>
     setfavicon();
 };
 
-//todo
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', darkModeListener);
 
 function setfavicon()
