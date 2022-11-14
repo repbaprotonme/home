@@ -47,7 +47,6 @@ globalobj.timemain = 8;
 globalobj.slidefactor = 12;
 globalobj.tabtime = 600;
 globalobj.autodirect = -1;
-globalobj.lockedy = 0;
 
 let photo = {}
 photo.image = 0;
@@ -236,6 +235,7 @@ let makeoption = function (title, data)
     }
 };
 
+var assistobj = new makeoption("ASSIST", ["rgba(0,0,0,0.4)","rgba(200,0,0,0.4)","rgba(0,0,200,0.4)"]);
 var colobj = new makeoption("COLUMNS", [75,50,25]);
 var channelobj = new makeoption("CHANNELS", [2,26,50,74,98]);
 var positobj = new makeoption("POSITION", [0,0,0,0,0,0,0,0,0]);
@@ -1437,7 +1437,7 @@ var panlst =
         if (context.isthumbrect)
         {
             var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-            if (globalobj.lockedx)
+            if (assistobj.current() == 1)
             {
                 if (!isthumbrect)
                     return;
@@ -1454,7 +1454,7 @@ var panlst =
                     context.refresh();
                 }
             }
-            else if (globalobj.lockedy)
+            else if (assistobj.current() == 2)
             {
                 if (!isthumbrect)
                     return;
@@ -1527,11 +1527,11 @@ var panlst =
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
         if (context.isthumbrect)
         {
-            context.hithumb(x,y);
-            if (globalobj.lockedx)
-                context.refresh();
-            else if (globalobj.lockedy)
-                contextobj.reset();
+        //    context.hithumb(x,y);
+          //  if (assistobj.current() == 1)
+            //    context.refresh();
+            //else if (assistobj.current() == 2)
+        //      contextobj.reset();
         }
 
         clearInterval(context.timemain);
@@ -1541,19 +1541,12 @@ var panlst =
     },
     panend: function (context, rect, x, y)
 	{
-        if (context.isthumbrect &&
-            (globalobj.lockedx || globalobj.lockedy))
+        if (context.isthumbrect)
         {
-            if (globalobj.lockedx)
-            {
-                globalobj.lockedx = 0
-                globalobj.lockedy = 1
-            }
-            else
-            {
-                globalobj.lockedx = 1
-                globalobj.lockedy = 0
-            }
+            if (assistobj.current() == 1)
+                assistobj.set(2);
+            else if (assistobj.current() == 2)
+                assistobj.set(1);
         }
 
         context.pantype = 0;
@@ -1616,10 +1609,22 @@ var presslst =
     },
     press: function (context, rect, x, y)
     {
-        url.header = url.header?0:1;
-        pageresize();
-        context.refresh();
-        addressobj.update();
+        var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
+        if (isthumbrect)
+        {
+            if (assistobj.current())
+                assistobj.set(0);
+            else
+                assistobj.set(2);
+            context.refresh()
+        }
+        else
+        {
+            url.header = url.header?0:1;
+            pageresize();
+            context.refresh();
+            addressobj.update();
+        }
     }
 },
 ];
@@ -2287,7 +2292,7 @@ var thumblst =
         }
 
         var blackfill = new Fill(THUMBFILL);
-        var blackfill2 = new Fill(THUMBFILL2);
+        var blackfill2 = new Fill(assistobj.getcurrent());
 
         context.thumbrect = new rectangle(x,y,w,h);
         context.expandthumb = context.thumbrect;
@@ -2444,7 +2449,7 @@ var drawlst =
             }
             else if (user.path == "ASSISTED")
             {
-                if (globalobj.lockedx || globalobj.lockedy)
+                if (assistobj.current())
                     clr = MENUSELECT;
             }
         }
@@ -2733,7 +2738,7 @@ var templatelst =
     name: "COMIC",
     init: function ()
     {
-        globalobj.lockedy = 1;
+        assistobj.set(2);
         globalobj.slidetop = 24;
         globalobj.slidefactor = 48;
         positobj.set(4);
@@ -3090,8 +3095,11 @@ fetch(path)
 
         slices.data_.push({title:"Assisted", path: "ASSISTED", func: function()
         {
-            globalobj.lockedx = 0;
-            globalobj.lockedy = 1;
+            if (assistobj.current())
+                assistobj.set(0);
+            else
+                assistobj.set(2);
+            _4cnvctx.refresh()
         }});
 
         slices.data_.push({title:"Help", path: "HELP", func: function(){ menushow(_7cnvctx); }})
@@ -3240,12 +3248,7 @@ var ContextObj = (function ()
                     resetcanvas(context);
                     seteventspanel(new YollPanel());
                     reset();
-
-                    if (!globalobj.lockedy)
-                        setTimeout(function()
-                        {
-                            _4cnvctx.tab();
-                        }, 20);
+                    setTimeout(function() { _4cnvctx.tab(); }, 20);
 
                     setTimeout(function()
                     {
