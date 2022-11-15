@@ -1411,6 +1411,8 @@ var pinchlst =
     pinchstart: function (context, rect, x, y)
     {
         url.thumbnail = 1;
+        var k = positobj.data_.hitest(x,y);
+        positobj.set(k);
         context.pinching = 1;
         context.heightsave = heightobj.getcurrent().getcurrent()
         var zoom = zoomobj.getcurrent()
@@ -1423,7 +1425,7 @@ var pinchlst =
             context.pinching = 0;
             context.refresh();
             addressobj.update();
-        }, 100);
+        }, 400);
     },
 },
 ];
@@ -1581,6 +1583,8 @@ var panlst =
     },
 	panstart: function (context, rect, x, y)
 	{
+        url.thumbnail = 1;
+        context.refresh();
         context.startx = x;
         context.starty = y;
         context.startt = context.timeobj.current();
@@ -2226,12 +2230,6 @@ var taplst =
             clearInterval(_4cnvctx.timemain);
             _4cnvctx.timemain = 0;
             url.thumbnail = url.thumbnail?0:1;
-            if (url.thumbnail)
-            {
-                var k = positobj.data_.hitest(x,y);
-                positobj.set(k);
-            }
-
             pageresize();
             _4cnvctx.refresh();
         }
@@ -2358,12 +2356,12 @@ var thumblst =
             context.expandthumb = new rectangle(x,y-15,w,h+30);
         if (url.thumbnail)
         {
-            if (context.pinching)
+            if (context.isthumbrect && (jp || context.panning))
             {
                 blackfill.draw(context, context.thumbrect, 0, 0);
                 assistobj.getcurrent().draw(context, context.thumbrect, 0, 0);
             }
-            else if (context.isthumbrect && (jp || context.panning))
+            else if (context.pinching)
             {
                 blackfill.draw(context, context.thumbrect, 0, 0);
                 assistobj.getcurrent().draw(context, context.thumbrect, 0, 0);
@@ -2388,9 +2386,16 @@ var thumblst =
 
             context.lineWidth = 8;
             var whitestroke = new StrokeRect(THUMBSTROKE);
-            var r = new rectangle(x-4,y-4,w+8,h+8);
             var r = new rectangle(x,y,w,h);
             whitestroke.draw(context, r, 0, 0);
+            if (assistobj.current())
+            {
+                var r = new rectangle(x-8,y-8,w+16,h+16);
+                var whitestroke = new StrokeRect("black");
+                whitestroke.draw(context, r, 0, 0);
+            }
+
+            var whitestroke = new StrokeRect(THUMBSTROKE);
 
             var region = new Path2D();
             region.rect(x,y,w,h);
@@ -3153,7 +3158,7 @@ fetch(path)
             }, 1000);
         }});
 
-        slices.data_.push({title:"Assisted", path: "ASSISTED", func: function()
+        slices.data_.push({title:"Assistant", path: "ASSISTED", func: function()
         {
             if (assistobj.current())
                 assistobj.set(0);
