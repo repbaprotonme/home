@@ -24,7 +24,7 @@ const ARROWBORES = 20;
 const DELAYCENTER = 3.926;
 const TIMEOBJ = 3926;
 const FONTHEIGHT = 16;
-const MENUSELECT = "rgba(0,0,100,0.75)";
+const MENUSELECT = "rgba(0,0,100,0.85)";
 const MENUTAP = "rgba(200,0,0,0.75)";
 const THUMBSELECT = "rgba(0,0,255,0.3)";
 const PROGRESSFILL = "rgba(255,255,255,0.75)";
@@ -235,7 +235,7 @@ let makeoption = function (title, data)
     }
 };
 
-var assistlst =
+var guidelst =
 [
     {
         draw: function (context, rect, user, time)
@@ -254,47 +254,6 @@ var assistlst =
                 contextobj.reset()
             else
                 context.refresh();
-        }
-    },
-    {
-        draw: function (context, rect, user, time)
-        {
-            context.beginPath();
-            context.save();
-            for (var n = 0; n < colobj.length(); n++)
-            {
-                var k = colobj.data()[n];
-                context.strokeStyle = "rgba(255,255,255,0.4)";
-                context.lineWidth = 3;
-                var j = rect.x + (k/100)*rect.width;
-                context.moveTo(j, rect.y);
-                context.lineTo(j, rect.y+rect.height);
-            }
-            context.stroke();
-            context.restore();
-        },
-
-        pan: function (context, rect, x, y, type)
-        {
-            var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-            if (!isthumbrect)
-                return;
-            var b = (y-context.thumbrect.y)/context.thumbrect.height;
-            var e = Math.floor(b*rowobj.length());
-            if (e != rowobj.current() && (type == "panup" || type == "pandown"))
-            {
-                rowobj.set(e);
-                contextobj.reset();
-            }
-
-            var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
-            if (colobj.current() != col)
-            {
-                colobj.set(col);
-                var time = (colobj.getcurrent()/100)*context.timeobj.length();
-                context.timeobj.set(time);
-                context.refresh();
-            }
         }
     },
     {
@@ -339,9 +298,50 @@ var assistlst =
             }
         }
     },
+    {
+        draw: function (context, rect, user, time)
+        {
+            context.beginPath();
+            context.save();
+            for (var n = 0; n < colobj.length(); n++)
+            {
+                var k = colobj.data()[n];
+                context.strokeStyle = "rgba(255,255,255,0.4)";
+                context.lineWidth = 3;
+                var j = rect.x + (k/100)*rect.width;
+                context.moveTo(j, rect.y);
+                context.lineTo(j, rect.y+rect.height);
+            }
+            context.stroke();
+            context.restore();
+        },
+
+        pan: function (context, rect, x, y, type)
+        {
+            var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
+            if (!isthumbrect)
+                return;
+            var b = (y-context.thumbrect.y)/context.thumbrect.height;
+            var e = Math.floor(b*rowobj.length());
+            if (e != rowobj.current() && (type == "panup" || type == "pandown"))
+            {
+                rowobj.set(e);
+                contextobj.reset();
+            }
+
+            var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
+            if (colobj.current() != col)
+            {
+                colobj.set(col);
+                var time = (colobj.getcurrent()/100)*context.timeobj.length();
+                context.timeobj.set(time);
+                context.refresh();
+            }
+        }
+    },
 ]
 
-var assistobj = new makeoption("ASSIST", assistlst);
+var guideobj = new makeoption("ASSIST", guidelst);
 var colobj = new makeoption("COLUMNS", [75,50,25]);
 var channelobj = new makeoption("CHANNELS", [2,26,50,74,98]);
 var positobj = new makeoption("POSITION", [0,0,0,0,0,0,0,0,0]);
@@ -430,12 +430,7 @@ function drawslices()
         }
 
         context.drawslicescount++;
-        //delete context.expandthumb;
-        //delete context.thumbrect;
-        //delete context.prevpage;
-        //delete context.nextpage;
         context.headrect = new rectangle(0,0,rect.width,ALIEXTENT);
-        //context.footrect = new rectangle(0,rect.height-ALIEXTENT,rect.width,ALIEXTENT);
 
         context.restore();
         context.save();
@@ -534,17 +529,6 @@ let helplst =
     { title:"7", path: "NAME", func: function() {menuhide(); } },
     { title:"8", path: "NAME", func: function() {menuhide(); } },
     { title:"9", path: "NAME", func: function() {menuhide(); } },
-];
-
-let debuglst =
-[
-    {
-        title:"Wire", path: "WIRE", func: function()
-        {
-            //var line = new Fill("black");
-            //line.draw(context, new rectangle(slice.xx+stretchwidth/2-1,0,2,rect.height), 0, 0);
-        }
-    }
 ];
 
 const opts = {synchronized: true, };
@@ -873,6 +857,7 @@ addressobj.full = function ()
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&e="+traitobj.current()+
         "&a="+scapeobj.current()+
+        "&u="+positobj.current()+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
     return out;
 };
@@ -925,7 +910,6 @@ CanvasRenderingContext2D.prototype.movepage = function(j)
     {
         _4cnvctx.movingpage = 0;
          headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
-        _4cnvctx.tab();
         return;
     }
 
@@ -1541,9 +1525,9 @@ var panlst =
              return;
         context.pantype = type;
 
-        if (context.isthumbrect)
+        if (context.isthumbrect && (url.thumbnail || globalobj.minimalui))
         {
-            var assist = assistobj.getcurrent();
+            var assist = guideobj.getcurrent();
             assist.pan(context, rect, x, y, type);
         }
         else if (type == "panleft" || type == "panright")
@@ -1583,7 +1567,6 @@ var panlst =
     },
 	panstart: function (context, rect, x, y)
 	{
-        url.thumbnail = 1;
         context.refresh();
         context.startx = x;
         context.starty = y;
@@ -1597,14 +1580,6 @@ var panlst =
     },
     panend: function (context, rect, x, y)
 	{
-        if (context.isthumbrect)
-        {
-            if (assistobj.current() == 1)
-                assistobj.set(2);
-            else if (assistobj.current() == 2)
-                assistobj.set(1);
-        }
-
         context.pantype = 0;
         context.panning = 0;
         context.isthumbrect = 0;
@@ -1662,19 +1637,20 @@ var presslst =
     name: "BOSS",
     pressup: function (context, rect, x, y)
     {
+        context.isthumbrect = 0;
+        context.panning = 0;
+        context.refresh()
     },
     press: function (context, rect, x, y)
     {
-        var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-        if (isthumbrect)
+        context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
+        if (context.isthumbrect)
         {
-            if (assistobj.current())
-                assistobj.set(0);
-            else
-                assistobj.set(2);
+            guideobj.rotate(1);
+            context.panning = 1;
             context.refresh()
         }
-        else
+        else if (!globalobj.minimalui)
         {
             url.header = url.header?0:1;
             pageresize();
@@ -1859,6 +1835,11 @@ var keylst =
             else
                 rowobj.add(rowobj.length()/150);
             contextobj.reset();
+            evt.preventDefault();
+        }
+        else if (evt.key == "m")
+        {
+            minimalui();
             evt.preventDefault();
         }
         else if (evt.key == "Pageup" || evt.key == "o")
@@ -2185,9 +2166,8 @@ var taplst =
         {
             _4cnvctx.movepage(1);
         }
-        else if (context.thumbrect && context.thumbrect.hitest(x,y))
+        else if (url.thumbnail && context.thumbrect && context.thumbrect.hitest(x,y))
         {
-            url.thumbnail = 1;
             context.hithumb(x,y);
             var zoom = zoomobj.getcurrent()
             var b = !Number(zoom.getcurrent()/100) && !zoom.current()
@@ -2201,16 +2181,6 @@ var taplst =
             url.header = 1;
             pageresize();
             context.refresh();
-        }
-        else if (context.expandthumb && context.expandthumb.hitest(x,y))
-        {
-            context.hithumb(x,context.thumbrect.y);
-            var zoom = zoomobj.getcurrent()
-            var b = !Number(zoom.getcurrent()/100) && !zoom.current()
-            if (b)
-                context.refresh();
-            else
-                contextobj.reset()
         }
         else
         {
@@ -2229,7 +2199,8 @@ var taplst =
             context.sliceobj.set(k);
             clearInterval(_4cnvctx.timemain);
             _4cnvctx.timemain = 0;
-            url.thumbnail = url.thumbnail?0:1;
+            var k = positobj.data_.hitest(x,y);
+            positobj.set(k);
             pageresize();
             _4cnvctx.refresh();
         }
@@ -2299,72 +2270,39 @@ var thumblst =
             jp = 1;
         }
 
-        var w = r.width;
+        var cols = 3;
         var pos = positobj.current();
-        if (pos == 0)
-        {
-            var x = rect.x+THUMBORDER;
-            var y = headcnv.height+THUMBORDER;
-        }
-        else if (pos == 1)
-        {
-            var x = rect.x+(rect.width-w)/2;
-            var y = headcnv.height+THUMBORDER;
-        }
-        else if (pos == 2)
-        {
-            var x = rect.x+rect.width-w-THUMBORDER;
-            var y = headcnv.height+THUMBORDER;
-        }
-        else if (pos == 3)
-        {
-            var x = rect.x+THUMBORDER;
-            var y = (rect.height-h)/2;
-        }
-        else if (pos == 4)
-        {
-            var x = rect.x+(rect.width-w)/2;
-            var y = (rect.height-h)/2;
-        }
-        else if (pos == 5)
-        {
-            var x = rect.x+rect.width-w-THUMBORDER;
-            var y = (rect.height-h)/2;
-        }
-        else if (pos == 6)
-        {
-            var x = rect.x+THUMBORDER;
-            var y = rect.height-h-footcnv.height-THUMBORDER;
-        }
-        else if (pos == 7)
-        {
-            var x = rect.x+(rect.width-w)/2;
-            var y = rect.height-h-footcnv.height-THUMBORDER;
-        }
-        else if (pos == 8)
-        {
-            var x = rect.x+rect.width-w-THUMBORDER;
-            var y = rect.height-h-footcnv.height-THUMBORDER;
-        }
+        var row = Math.floor(pos/cols);
+        var col = pos%cols;
+        var w = r.width;
+
+        var y = headcnv.height+THUMBORDER;
+        if (row == 1)
+            y = (rect.height-h)/2;
+        else if (row == 2)
+            y = rect.height-h-footcnv.height-THUMBORDER;
+
+        var x = rect.x+THUMBORDER;
+        if (col == 1)
+            x = rect.x+(rect.width-w)/2;
+        else if (col == 2)
+            x = rect.x+rect.width-w-THUMBORDER;
 
         var blackfill = new Fill(THUMBFILL);
         var blackfill2 = new Fill("rgba(0,0,0,0.4)");
 
         context.thumbrect = new rectangle(x,y,w,h);
-        context.expandthumb = context.thumbrect;
-        if (jp)
-            context.expandthumb = new rectangle(x,y-15,w,h+30);
         if (url.thumbnail)
         {
-            if (context.isthumbrect && (jp || context.panning))
+            if (context.isthumbrect && (jp || context.panning || guideobj.current()))
             {
                 blackfill.draw(context, context.thumbrect, 0, 0);
-                assistobj.getcurrent().draw(context, context.thumbrect, 0, 0);
+                guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
             }
             else if (context.pinching)
             {
                 blackfill.draw(context, context.thumbrect, 0, 0);
-                assistobj.getcurrent().draw(context, context.thumbrect, 0, 0);
+                guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
             }
             else if (photo.cached && w == context.oldwidth && h == context.oldheight)
             {
@@ -2388,13 +2326,6 @@ var thumblst =
             var whitestroke = new StrokeRect(THUMBSTROKE);
             var r = new rectangle(x,y,w,h);
             whitestroke.draw(context, r, 0, 0);
-            if (assistobj.current())
-            {
-                var r = new rectangle(x-8,y-8,w+16,h+16);
-                var whitestroke = new StrokeRect("black");
-                whitestroke.draw(context, r, 0, 0);
-            }
-
             var whitestroke = new StrokeRect(THUMBSTROKE);
 
             var region = new Path2D();
@@ -2512,9 +2443,29 @@ var drawlst =
                 if (screenfull.isFullscreen)
                     clr = MENUSELECT;
             }
-            else if (user.path == "ASSISTED")
+            else if (user.path == "MINIMAL")
             {
-                if (assistobj.current())
+                if (globalobj.minimalui)
+                    clr = MENUSELECT;
+            }
+            else if (user.path == "THUMB")
+            {
+                if (url.thumbnail)
+                    clr = MENUSELECT;
+            }
+            else if (user.path == "GUIDENONE")
+            {
+                if (guideobj.current() == 0)
+                    clr = MENUSELECT;
+            }
+            else if (user.path == "GUIDEHORZ")
+            {
+                if (guideobj.current() == 1)
+                    clr = MENUSELECT;
+            }
+            else if (user.path == "GUIDEVERT")
+            {
+                if (guideobj.current() == 2)
                     clr = MENUSELECT;
             }
         }
@@ -2803,10 +2754,11 @@ var templatelst =
     name: "COMIC",
     init: function ()
     {
-        assistobj.set(2);
+        guideobj.set(1);
         globalobj.slidetop = 24;
         globalobj.slidefactor = 48;
-        positobj.set(4);
+        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
+        positobj.set(u);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.4;
         loomobj.split(y, "70-85", loomobj.length());
@@ -2821,7 +2773,8 @@ var templatelst =
     name: "PORTRAIT",
     init: function ()
     {
-        positobj.set(4);
+        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
+        positobj.set(u);
         globalobj.slidetop = 28;
         globalobj.slidefactor = 72;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
@@ -2840,7 +2793,8 @@ var templatelst =
     {
         globalobj.slidetop = 28;
         globalobj.slidefactor = 36;
-        positobj.set(7);
+        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
+        positobj.set(u);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "0-25", loomobj.length());
@@ -2857,7 +2811,8 @@ var templatelst =
     {
         globalobj.slidetop = 28;
         globalobj.slidefactor = 96;
-        positobj.set(7);
+        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
+        positobj.set(u);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "0-10", loomobj.length());
@@ -2874,7 +2829,8 @@ var templatelst =
     {
         globalobj.slidetop = 36;
         globalobj.slidefactor = 72;
-        positobj.set(7);
+        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
+        positobj.set(u);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "25-75", loomobj.length());
@@ -2891,7 +2847,8 @@ var templatelst =
     {
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
-        positobj.set(7);
+        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
+        positobj.set(u);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 25;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 25;
         loomobj.split(y, "50-90", loomobj.length());
@@ -2906,7 +2863,8 @@ var templatelst =
     name: "EXTRATALL",
     init: function ()
     {
-        positobj.set(4);
+        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
+        positobj.set(u);
         globalobj.slidetop = 36;
         globalobj.slidefactor = 18;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.5;
@@ -2923,7 +2881,8 @@ var templatelst =
     name: "TALL",
     init: function ()
     {
-        positobj.set(4);
+        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
+        positobj.set(u);
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.5;
@@ -2940,7 +2899,8 @@ var templatelst =
     name: "LEGEND",
     init: function ()
     {
-        positobj.set(4);
+        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
+        positobj.set(u);
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.8;
@@ -3087,8 +3047,33 @@ fetch(path)
         _5cnvctx.rvalue = 10;
         _5cnvctx.virtualheight = slices.data_.length*_5cnvctx.buttonheight;
 
+        let lst =
+        [
+            {
+                title:"None", path: "GUIDENONE", func: function()
+                {
+                    guideobj.set(0);
+                    _4cnvctx.refresh()
+                }
+            },
+            {
+                title:"Horizontal", path: "GUIDEHORZ", func: function()
+                {
+                    guideobj.set(1);
+                    _4cnvctx.refresh()
+                }
+            },
+            {
+                title:"Vertical", path: "GUIDEVERT", func: function()
+                {
+                    guideobj.set(2);
+                    _4cnvctx.refresh()
+                }
+            },
+        ];
+
         var slices = _6cnvctx.sliceobj;
-        slices.data_= debuglst;
+        slices.data_= lst;
         _6cnvctx.delayinterval = DELAYCENTER / slices.data_.length;
         _6cnvctx.virtualheight = slices.data_.length*_6cnvctx.buttonheight;
         _6cnvctx.rvalue = 2;
@@ -3142,7 +3127,22 @@ fetch(path)
            window.location.href = photo.image.original;
         }});
 
-        slices.data_.push({ title:"Screenshot", path: "SCREENSHOT", func: function()
+        slices.data_.push({title:"Thumbnail", path: "THUMB", func: function()
+        {
+            url.thumbnail = url.thumbnail?0:1;
+            _4cnvctx.refresh()
+        }});
+
+        slices.data_.push({title:"Help", path: "HELP", func: function(){ menushow(_7cnvctx); }})
+        slices.data_.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
+        slices.data_.push({title: "Minimal UI", path: "MINIMAL", func: function () { minimalui(); }})
+        slices.data_.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
+        {
+            if (screenfull.isEnabled)
+                screenfull.toggle();
+        }})
+
+        slices.data_.push({ title: "Screenshot", path: "SCREENSHOT", func: function()
         {
             _4cnvctx.refresh()
             _4cnvctx.screenshot = 1;
@@ -3157,23 +3157,6 @@ fetch(path)
                 _4cnvctx.refresh()
             }, 1000);
         }});
-
-        slices.data_.push({title:"Assistant", path: "ASSISTED", func: function()
-        {
-            if (assistobj.current())
-                assistobj.set(0);
-            else
-                assistobj.set(2);
-            _4cnvctx.refresh()
-        }});
-
-        slices.data_.push({title:"Help", path: "HELP", func: function(){ menushow(_7cnvctx); }})
-//        slices.data_.push({title:"Debug", path: "DEBUG", func: function(){ menushow(_6cnvctx); }})
-        slices.data_.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
-        {
-            if (screenfull.isEnabled)
-                screenfull.toggle();
-        }})
 
         _9cnvctx.delayinterval = DELAYCENTER / slices.data_.length;
         _9cnvctx.virtualheight = slices.data_.length*_9cnvctx.buttonheight;
@@ -3313,7 +3296,6 @@ var ContextObj = (function ()
                     resetcanvas(context);
                     seteventspanel(new YollPanel());
                     reset();
-                    setTimeout(function() { _4cnvctx.tab(); }, 20);
 
                     setTimeout(function()
                     {
@@ -3906,6 +3888,8 @@ function resize()
 
 function escape()
 {
+    url.header = 1;
+    globalobj.minimalui = 0;
     clearInterval(_4cnvctx.timemain);
     _4cnvctx.timemain = 0;
     menuhide();
@@ -4048,7 +4032,7 @@ var headlst =
 [
 	new function ()
 	{
-		this.tap = function (context, rect, x, y)
+    	this.tap = function (context, rect, x, y)
 		{
             if (context.page.hitest(x,y))
             {
@@ -4064,6 +4048,7 @@ var headlst =
             else if (context.picture.hitest(x,y))
             {
                 url.thumbnail = url.thumbnail?0:1;
+                addressobj.update();
                 reset();
             }
             else if (context.nextpage.hitest(x,y))
@@ -4559,4 +4544,18 @@ window.addEventListener("load", async () =>
     {
     }
 });
+
+function minimalui()
+{
+    globalobj.minimalui = globalobj.minimalui?0:1;
+    url.thumbnail = !globalobj.minimalui;
+    url.header = !globalobj.minimalui;
+    if (globalobj.minimalui)
+        screenfull.request();
+    else
+        screenfull.exit();
+    _4cnvctx.refresh();
+    pageresize();
+}
+
 
