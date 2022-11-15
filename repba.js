@@ -235,7 +235,113 @@ let makeoption = function (title, data)
     }
 };
 
-var assistobj = new makeoption("ASSIST", ["rgba(0,0,0,0.4)","rgba(200,0,0,0.4)","rgba(0,0,200,0.4)"]);
+var assistlst =
+[
+    {
+        draw: function (context, rect, user, time)
+        {
+        },
+
+        pan: function (context, rect, x, y, type)
+        {
+            var zoom = zoomobj.getcurrent()
+            var pt = context.getweightedpoint(x,y);
+            x = pt?pt.x:x;
+            y = pt?pt.y:y;
+            context.hithumb(x,y);
+            var b = zoom.current() || Number(zoom.getcurrent());
+            if (b)
+                contextobj.reset()
+            else
+                context.refresh();
+        }
+    },
+    {
+        draw: function (context, rect, user, time)
+        {
+            context.beginPath();
+            context.save();
+            for (var n = 0; n < colobj.length(); n++)
+            {
+                var k = colobj.data()[n];
+                context.strokeStyle = "rgba(255,255,255,0.4)";
+                context.lineWidth = 3;
+                var j = rect.x + (k/100)*rect.width;
+                context.moveTo(j, rect.y);
+                context.lineTo(j, rect.y+rect.height);
+            }
+            context.stroke();
+            context.restore();
+        },
+
+        pan: function (context, rect, x, y, type)
+        {
+            var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
+            if (!isthumbrect)
+                return;
+            var b = (y-context.thumbrect.y)/context.thumbrect.height;
+            var e = Math.floor(b*rowobj.length());
+            if (e != rowobj.current() && (type == "panup" || type == "pandown"))
+            {
+                rowobj.set(e);
+                contextobj.reset();
+            }
+
+            var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
+            if (colobj.current() != col)
+            {
+                colobj.set(col);
+                var time = (colobj.getcurrent()/100)*context.timeobj.length();
+                context.timeobj.set(time);
+                context.refresh();
+            }
+        }
+    },
+    {
+        draw: function (context, rect, user, time)
+        {
+            context.beginPath();
+            context.save();
+            for (var n = 0; n < channelobj.length(); n++)
+            {
+                var k = channelobj.data()[n];
+                context.strokeStyle = "rgba(255,255,255,0.4)";
+                context.lineWidth = 3;
+                var j = rect.y + (k/100)*rect.height;
+                context.moveTo(rect.x, j);
+                context.lineTo(rect.x+rect.width, j);
+            }
+            context.stroke();
+            context.restore();
+        },
+
+        pan: function (context, rect, x, y, type)
+        {
+            var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
+            if (!isthumbrect)
+                return;
+            var pt = context.getweightedpoint(x,y);
+            x = pt?pt.x:x;
+            y = pt?pt.y:y;
+            var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
+                    *channelobj.data_.length);
+            var row = (channelobj.data_[index]/100)*rowobj.length();
+            if (rowobj.current() != row)
+            {
+                context.hithumb(x);
+                rowobj.set(row);
+                contextobj.reset()
+            }
+            else if (type == "panleft" || type == "panright")
+            {
+                context.hithumb(x,y);
+                context.refresh();
+            }
+        }
+    },
+]
+
+var assistobj = new makeoption("ASSIST", assistlst);
 var colobj = new makeoption("COLUMNS", [75,50,25]);
 var channelobj = new makeoption("CHANNELS", [2,26,50,74,98]);
 var positobj = new makeoption("POSITION", [0,0,0,0,0,0,0,0,0]);
@@ -1433,56 +1539,10 @@ var panlst =
              return;
         context.pantype = type;
 
-        var zoom = zoomobj.getcurrent()
         if (context.isthumbrect)
         {
-            var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-            if (assistobj.current() == 1)
-            {
-                if (!isthumbrect)
-                    return;
-                var b = (y-context.thumbrect.y)/context.thumbrect.height;
-                var e = b*rowobj.length();
-                rowobj.set(e);
-                contextobj.reset();
-                var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
-                if (colobj.current() != col)
-                {
-                    colobj.set(col);
-                    var time = (colobj.getcurrent()/100)*context.timeobj.length();
-                    context.timeobj.set(time);
-                    context.refresh();
-                }
-            }
-            else if (assistobj.current() == 2)
-            {
-                if (!isthumbrect)
-                    return;
-                var pt = context.getweightedpoint(x,y);
-                x = pt?pt.x:x;
-                y = pt?pt.y:y;
-                context.hithumb(x,y);
-                var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
-                        *channelobj.data_.length);
-                var row = (channelobj.data_[index]/100)*rowobj.length();
-                if (rowobj.current() != row)
-                {
-                    rowobj.set(row);
-                    contextobj.reset()
-                }
-            }
-            else
-            {
-                var pt = context.getweightedpoint(x,y);
-                x = pt?pt.x:x;
-                y = pt?pt.y:y;
-                context.hithumb(x,y);
-                var b = zoom.current() || Number(zoom.getcurrent());
-                if (b)
-                    contextobj.reset()
-                else
-                    context.refresh();
-            }
+            var assist = assistobj.getcurrent();
+            assist.pan(context, rect, x, y, type);
         }
         else if (type == "panleft" || type == "panright")
         {
@@ -1502,6 +1562,7 @@ var panlst =
         }
         else if (type == "panup" || type == "pandown")
         {
+            var zoom = zoomobj.getcurrent()
             if (Number(zoom.getcurrent()))
             {
                 var pt = context.getweightedpoint(x,y);
@@ -1525,15 +1586,6 @@ var panlst =
         context.startt = context.timeobj.current();
         var zoom = zoomobj.getcurrent()
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-        if (context.isthumbrect)
-        {
-        //    context.hithumb(x,y);
-          //  if (assistobj.current() == 1)
-            //    context.refresh();
-            //else if (assistobj.current() == 2)
-        //      contextobj.reset();
-        }
-
         clearInterval(context.timemain);
         context.timemain = 0;
         context.clearpoints();
@@ -2083,20 +2135,26 @@ CanvasRenderingContext2D.prototype.getweightedpoint = function(x,y)
 
 CanvasRenderingContext2D.prototype.hithumb = function(x,y)
 {
-    var rect = this.thumbrect;
-    var c = (x-rect.x) % rect.width;
-    var b = c/rect.width;
-    var e = this.sliceobj.length();
-    var m = (1-b)*e;
-    var j = DELAYCENTER/e;
-    var time = j*m;
-    var k = time % DELAYCENTER;
-    var e = this.timeobj.length()*(k/DELAYCENTER);
-    this.timeobj.set(e);
+    if (typeof x !== "undefined")
+    {
+        var rect = this.thumbrect;
+        var c = (x-rect.x) % rect.width;
+        var b = c/rect.width;
+        var e = this.sliceobj.length();
+        var m = (1-b)*e;
+        var j = DELAYCENTER/e;
+        var time = j*m;
+        var k = time % DELAYCENTER;
+        var e = this.timeobj.length()*(k/DELAYCENTER);
+        this.timeobj.set(e);
+    }
 
-    var b = (y-rect.y)/rect.height;
-    var e = b*rowobj.length();
-    rowobj.set(e);
+    if (typeof y !== "undefined")
+    {
+        var b = (y-rect.y)/rect.height;
+        var e = b*rowobj.length();
+        rowobj.set(e);
+    }
 }
 
 var taplst =
@@ -2292,7 +2350,7 @@ var thumblst =
         }
 
         var blackfill = new Fill(THUMBFILL);
-        var blackfill2 = new Fill(assistobj.getcurrent());
+        var blackfill2 = new Fill("rgba(0,0,0,0.4)");
 
         context.thumbrect = new rectangle(x,y,w,h);
         context.expandthumb = context.thumbrect;
@@ -2303,10 +2361,12 @@ var thumblst =
             if (context.pinching)
             {
                 blackfill.draw(context, context.thumbrect, 0, 0);
+                assistobj.getcurrent().draw(context, context.thumbrect, 0, 0);
             }
             else if (context.isthumbrect && (jp || context.panning))
             {
                 blackfill.draw(context, context.thumbrect, 0, 0);
+                assistobj.getcurrent().draw(context, context.thumbrect, 0, 0);
             }
             else if (photo.cached && w == context.oldwidth && h == context.oldheight)
             {
