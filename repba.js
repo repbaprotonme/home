@@ -1525,7 +1525,7 @@ var panlst =
              return;
         context.pantype = type;
 
-        if (context.isthumbrect && (url.thumbnail || globalobj.minimalui))
+        if (context.isthumbrect && (url.thumbnail))
         {
             var assist = guideobj.getcurrent();
             assist.pan(context, rect, x, y, type);
@@ -1646,11 +1646,11 @@ var presslst =
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
         if (context.isthumbrect)
         {
+            url.thumbnail = 1;
             guideobj.rotate(1);
-            context.panning = 1;
             context.refresh()
         }
-        else if (!globalobj.minimalui)
+        else
         {
             url.header = url.header?0:1;
             pageresize();
@@ -1699,8 +1699,7 @@ var swipelst =
     {
         setTimeout(function()
         {
-            var k = evt.type == "swipeup"?1:-1;
-            k ? context.moveup(): context.movedown();
+            evt.type == "swipedown" ? context.moveup(): context.movedown();
         }, SWIPETIME);
     },
 },
@@ -1835,11 +1834,6 @@ var keylst =
             else
                 rowobj.add(rowobj.length()/150);
             contextobj.reset();
-            evt.preventDefault();
-        }
-        else if (evt.key == "m")
-        {
-            minimalui();
             evt.preventDefault();
         }
         else if (evt.key == "Pageup" || evt.key == "o")
@@ -2443,11 +2437,6 @@ var drawlst =
                 if (screenfull.isFullscreen)
                     clr = MENUSELECT;
             }
-            else if (user.path == "MINIMAL")
-            {
-                if (globalobj.minimalui)
-                    clr = MENUSELECT;
-            }
             else if (user.path == "THUMB")
             {
                 if (url.thumbnail)
@@ -2754,7 +2743,6 @@ var templatelst =
     name: "COMIC",
     init: function ()
     {
-        guideobj.set(1);
         globalobj.slidetop = 24;
         globalobj.slidefactor = 48;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
@@ -3135,7 +3123,6 @@ fetch(path)
 
         slices.data_.push({title:"Help", path: "HELP", func: function(){ menushow(_7cnvctx); }})
         slices.data_.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
-        slices.data_.push({title: "Minimal UI", path: "MINIMAL", func: function () { minimalui(); }})
         slices.data_.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
         {
             if (screenfull.isEnabled)
@@ -3889,7 +3876,6 @@ function resize()
 function escape()
 {
     url.header = 1;
-    globalobj.minimalui = 0;
     clearInterval(_4cnvctx.timemain);
     _4cnvctx.timemain = 0;
     menuhide();
@@ -4032,6 +4018,13 @@ var headlst =
 [
 	new function ()
 	{
+    	this.press = function (context, rect, x, y)
+        {
+            url.header = url.header?0:1;
+            pageresize();
+            _4cnvctx.refresh();
+        }
+
     	this.tap = function (context, rect, x, y)
 		{
             if (context.page.hitest(x,y))
@@ -4213,6 +4206,13 @@ var footlst =
 [
     new function()
     {
+      	this.press = function (context, rect, x, y)
+        {
+            url.header = url.header?0:1;
+            pageresize();
+            _4cnvctx.refresh();
+        }
+
         this.panstart = function (context, rect, x, y)
         {
             delete photo.cached;
@@ -4545,17 +4545,5 @@ window.addEventListener("load", async () =>
     }
 });
 
-function minimalui()
-{
-    globalobj.minimalui = globalobj.minimalui?0:1;
-    url.thumbnail = !globalobj.minimalui;
-    url.header = !globalobj.minimalui;
-    if (globalobj.minimalui)
-        screenfull.request();
-    else
-        screenfull.exit();
-    _4cnvctx.refresh();
-    pageresize();
-}
 
 
