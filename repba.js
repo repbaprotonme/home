@@ -47,6 +47,8 @@ globalobj.timemain = 8;
 globalobj.slidefactor = 12;
 globalobj.tabtime = 600;
 globalobj.autodirect = -1;
+globalobj.panjx = 2;
+globalobj.panjy = 2;
 
 let photo = {}
 photo.image = 0;
@@ -327,6 +329,60 @@ var guidelst =
             {
                 rowobj.set(e);
                 contextobj.reset();
+            }
+
+            var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
+            if (colobj.current() != col)
+            {
+                colobj.set(col);
+                var time = (colobj.getcurrent()/100)*context.timeobj.length();
+                context.timeobj.set(time);
+                context.refresh();
+            }
+        }
+    },
+    {
+        draw: function (context, rect, user, time)
+        {
+            context.beginPath();
+            context.save();
+            for (var n = 0; n < colobj.length(); n++)
+            {
+                var k = colobj.data()[n];
+                context.strokeStyle = "rgba(255,255,255,0.4)";
+                context.lineWidth = 3;
+                var j = rect.x + (k/100)*rect.width;
+                context.moveTo(j, rect.y);
+                context.lineTo(j, rect.y+rect.height);
+            }
+
+            for (var n = 0; n < channelobj.length(); n++)
+            {
+                var k = channelobj.data()[n];
+                context.strokeStyle = "rgba(255,255,255,0.4)";
+                context.lineWidth = 3;
+                var j = rect.y + (k/100)*rect.height;
+                context.moveTo(rect.x, j);
+                context.lineTo(rect.x+rect.width, j);
+            }
+            context.stroke();
+            context.restore();
+        },
+
+        pan: function (context, rect, x, y, type)
+        {
+            var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
+            if (!isthumbrect)
+                return;
+
+            var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
+                    *channelobj.data_.length);
+            var row = (channelobj.data_[index]/100)*rowobj.length();
+            if (rowobj.current() != row)
+            {
+                context.hithumb(x);
+                rowobj.set(row);
+                contextobj.reset()
             }
 
             var col = Math.floor(((x-context.thumbrect.x)/context.thumbrect.width)*colobj.length());
@@ -1304,12 +1360,12 @@ var wheelst =
         var isthumbrect = thumbobj.current()==0 && thumb;
         if (isthumbrect)
         {
-            heightobj.getcurrent().add(-2);
+            heightobj.getcurrent().add(-1);
             context.refresh();
         }
         else if (shift)
         {
-            rowobj.add(-rowobj.length()/150);
+            rowobj.add(-rowobj.length()/100);
             contextobj.reset();
         }
         else if (ctrl)
@@ -1341,12 +1397,12 @@ var wheelst =
         if (isthumbrect)
         {
             delete photo.cached;
-            heightobj.getcurrent().add(2);
+            heightobj.getcurrent().add(1);
             context.refresh();
         }
         else if (shift)
         {
-            rowobj.add(rowobj.length()/150);
+            rowobj.add(rowobj.length()/100);
             contextobj.reset();
         }
         else if (ctrl)
@@ -1537,7 +1593,7 @@ var panlst =
             x = pt?pt.x:x;
             var len = context.timeobj.length();
             var diff = context.startx-x;
-            var jvalue = (len/context.virtualwidth)*diff;
+            var jvalue = (len/context.virtualwidth*globalobj.panjx)*diff;
             var j = context.startt - jvalue;
             if (j < 0)
                 j = len+j-1;
@@ -1554,7 +1610,7 @@ var panlst =
                 var pt = context.getweightedpoint(x,y);
                 y = pt?pt.y:y;
                 var h = (rect.height*(1-zoom.getcurrent()/100))*2;
-                y = (y/rect.height)*h;
+                y = (y/rect.height*globalobj.panjy)*h;
                 var k = panvert(rowobj, h-y);
                 if (k == -1)
                     return;
@@ -1644,8 +1700,9 @@ var presslst =
     press: function (context, rect, x, y)
     {
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-        if (context.isthumbrect)
+        if (url.thumbnail && context.isthumbrect)
         {
+            context.panning = 1;
             url.thumbnail = 1;
             guideobj.rotate(1);
             context.refresh()
@@ -2288,7 +2345,7 @@ var thumblst =
         context.thumbrect = new rectangle(x,y,w,h);
         if (url.thumbnail)
         {
-            if (context.isthumbrect && (jp || context.panning || guideobj.current()))
+            if (context.isthumbrect && (jp || context.panning))
             {
                 blackfill.draw(context, context.thumbrect, 0, 0);
                 guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
@@ -2455,6 +2512,11 @@ var drawlst =
             else if (user.path == "GUIDEVERT")
             {
                 if (guideobj.current() == 2)
+                    clr = MENUSELECT;
+            }
+            else if (user.path == "GUIDEGRID")
+            {
+                if (guideobj.current() == 3)
                     clr = MENUSELECT;
             }
         }
@@ -2743,6 +2805,8 @@ var templatelst =
     name: "COMIC",
     init: function ()
     {
+        globalobj.panjx = 2;
+        globalobj.panjy = 2;
         globalobj.slidetop = 24;
         globalobj.slidefactor = 48;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
@@ -2761,6 +2825,8 @@ var templatelst =
     name: "PORTRAIT",
     init: function ()
     {
+        globalobj.panjx = 2;
+        globalobj.panjy = 2;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
         positobj.set(u);
         globalobj.slidetop = 28;
@@ -2779,6 +2845,8 @@ var templatelst =
     name: "SIDESCROLL",
     init: function ()
     {
+        globalobj.panjx = 8;
+        globalobj.panjy = 1;
         globalobj.slidetop = 28;
         globalobj.slidefactor = 36;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
@@ -2797,6 +2865,8 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
+        globalobj.panjx = 8;
+        globalobj.panjy = 1;
         globalobj.slidetop = 28;
         globalobj.slidefactor = 96;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
@@ -2815,6 +2885,8 @@ var templatelst =
     name: "WIDE",
     init: function ()
     {
+        globalobj.panjx = 3;
+        globalobj.panjy = 2;
         globalobj.slidetop = 36;
         globalobj.slidefactor = 72;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
@@ -2833,6 +2905,8 @@ var templatelst =
     name: "LANDSCAPE",
     init: function (j)
     {
+        globalobj.panjx = 4;
+        globalobj.panjy = 2;
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
@@ -2851,6 +2925,8 @@ var templatelst =
     name: "EXTRATALL",
     init: function ()
     {
+        globalobj.panjx = 2;
+        globalobj.panjy = 2;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
         positobj.set(u);
         globalobj.slidetop = 36;
@@ -2869,6 +2945,8 @@ var templatelst =
     name: "TALL",
     init: function ()
     {
+        globalobj.panjx = 2;
+        globalobj.panjy = 2;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
         positobj.set(u);
         globalobj.slidetop = 36;
@@ -2887,6 +2965,8 @@ var templatelst =
     name: "LEGEND",
     init: function ()
     {
+        globalobj.panjx = 6;
+        globalobj.panjy = 2;
         var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
         positobj.set(u);
         globalobj.slidetop = 36;
@@ -3037,27 +3117,10 @@ fetch(path)
 
         let lst =
         [
-            {
-                title:"None", path: "GUIDENONE", func: function()
-                {
-                    guideobj.set(0);
-                    _4cnvctx.refresh()
-                }
-            },
-            {
-                title:"Horizontal", path: "GUIDEHORZ", func: function()
-                {
-                    guideobj.set(1);
-                    _4cnvctx.refresh()
-                }
-            },
-            {
-                title:"Vertical", path: "GUIDEVERT", func: function()
-                {
-                    guideobj.set(2);
-                    _4cnvctx.refresh()
-                }
-            },
+            { title:"None", path: "GUIDENONE", func: function() { guideobj.set(0); _4cnvctx.refresh() } },
+            { title:"Horizontal", path: "GUIDEHORZ", func: function() { guideobj.set(1); _4cnvctx.refresh() } },
+            { title:"Vertical", path: "GUIDEVERT", func: function() { guideobj.set(2); _4cnvctx.refresh() } },
+            { title:"Grid", path: "GUIDEGRID", func: function() { guideobj.set(3); _4cnvctx.refresh() } },
         ];
 
         var slices = _6cnvctx.sliceobj;
