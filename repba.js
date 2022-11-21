@@ -475,6 +475,12 @@ function drawslices()
                 continue;
             }
 
+            if (bx2 < 0)
+            {
+                bx = bx2;
+                continue;
+            }
+
             slice.stretchwidth = stretchwidth;
             slice.bx = bx;
             slice.xx = xx;
@@ -491,10 +497,8 @@ function drawslices()
 
         context.restore();
         context.save();
-        if (!context.panning && headcnv.height)
+        if (headcnv.height)
             headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
-        else
-            headcnvctx.clear();
         if (footcnv.height)
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
 
@@ -502,7 +506,7 @@ function drawslices()
 
         context.setcolumncomplete = 1;
         context.restore();
-    }
+   }
 
     var data = [_3cnvctx,  _5cnvctx, _6cnvctx, _7cnvctx, _8cnvctx, _9cnvctx, ];
     for (var n = 0; n < data.length; n++)
@@ -1015,16 +1019,6 @@ CanvasRenderingContext2D.prototype.tab = function ()
     context.slidestart = context.timeobj.current();
     context.slidestop = (context.timeobj.length()/context.virtualwidth)*globalobj.slidetop;
     context.slidereduce = context.slidestop/globalobj.slidefactor;
-    if (!extentobj.length() && context.allowpage == globalobj.autodirect)
-    {
-        context.allowpage = 0;
-        context.movepage(-globalobj.autodirect);
-        return;
-    }
-
-    context.allowpage = globalobj.autodirect;
-    clearInterval(context.timepage);
-    context.timepage = setTimeout(function () { context.allowpage = 0; }, globalobj.tabtime);
     clearInterval(context.timemain);
     context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
 }
@@ -1067,7 +1061,7 @@ var makehammer = function (context, v, t)
 	context.ham = ham;
     ham.get("pan").set({ direction: Hammer.DIRECTION_ALL });
     ham.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
-    ham.get('swipe').set({ velocity: 0.7});//0.30
+    ham.get('swipe').set({ velocity: 0.5});//0.30
 	ham.get('swipe').set({ threshold: 10});//10
 	ham.get('press').set({ time: 500 });//251
 	//ham.get('pan').set({ threshold: 10 });
@@ -2230,9 +2224,8 @@ var taplst =
         else if ((context.headrect && context.headrect.hitest(x,y)) ||
             (context.footrect && context.footrect.hitest(x,y)))
         {
-            url.header = 1;
-            pageresize();
-            context.refresh();
+            globalobj.autodirect = x > rect.width/2 ? -1 : 1;
+            context.tab();
         }
         else
         {
@@ -2601,8 +2594,8 @@ function resetcanvas()
 
     var canvas = _4cnv;
     var context = _4cnvctx;
-    var l = -globalobj.slicewidth;
-    var w = window.innerWidth + globalobj.slicewidth*2;
+    var l = 0;//-globalobj.slicewidth;
+    var w = window.innerWidth;// + globalobj.slicewidth*2;
     context.show(0, 0, window.innerWidth, window.innerHeight);
 
     var z = zoomobj.getcurrent().getcurrent();
@@ -2776,8 +2769,8 @@ var templatelst =
     {
         globalobj.panjx = 2;
         globalobj.panjy = 2;
-        globalobj.slidetop = 24;
-        globalobj.slidefactor = 48;
+        globalobj.slidetop = 28;
+        globalobj.slidefactor = 56;
         positobj.set(4);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.4;
@@ -2797,7 +2790,7 @@ var templatelst =
         globalobj.panjy = 2;
         positobj.set(4);
         globalobj.slidetop = 28;
-        globalobj.slidefactor = 72;
+        globalobj.slidefactor = 56;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.4;
         loomobj.split(y, "70-85", loomobj.length());
@@ -2812,10 +2805,10 @@ var templatelst =
     name: "SIDESCROLL",
     init: function ()
     {
-        globalobj.panjx = 3;
+        globalobj.panjx = 2;
         globalobj.panjy = 1;
         globalobj.slidetop = 36;
-        globalobj.slidefactor = 144;
+        globalobj.slidefactor = 72;
         positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
@@ -2833,8 +2826,8 @@ var templatelst =
     {
         globalobj.panjx = 3;
         globalobj.panjy = 1;
-        globalobj.slidetop = 12;
-        globalobj.slidefactor = 144;
+        globalobj.slidetop = 36;
+        globalobj.slidefactor = 72;
         positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
@@ -2872,7 +2865,7 @@ var templatelst =
         globalobj.panjx = 2;
         globalobj.panjy = 2;
         globalobj.slidetop = 36;
-        globalobj.slidefactor = 36;
+        globalobj.slidefactor = 72;
         positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 25;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 25;
@@ -2892,7 +2885,7 @@ var templatelst =
         globalobj.panjy = 2;
         positobj.set(4);
         globalobj.slidetop = 36;
-        globalobj.slidefactor = 18;
+        globalobj.slidefactor = 36;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.5;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.5;
         loomobj.split(y, "90-95", loomobj.length());
@@ -4110,17 +4103,17 @@ var headlst =
             var s = _5cnvctx.enabled || _8cnvctx.enabled;
             var a = new Layer(
             [
-                _4cnvctx.isthumbrect?0:new Fill(HEADBACK),
+                new Fill(HEADBACK),
                 new Col([ALIEXTENT,0,ALIEXTENT,j,ALIEXTENT,0,ALIEXTENT],
                 [
-                    _4cnvctx.isthumbrect?0:new Layer(
+                    new Layer(
                     [
                         s ? new Fill(BUTTONBACK) : 0,
                         new PagePanel(s?0.125:0.1),
                         new Rectangle(context.page),
                     ]),
                     new Rectangle(context.extent),
-                    (_4cnvctx.isthumbrect)?0:new Row([HNUB,0,HNUB],
+                    new Row([HNUB,0,HNUB],
                     [
                         0,
                         new Layer(
@@ -4132,7 +4125,7 @@ var headlst =
                         ]),
                         0,
                     ]),
-                    (headinfo.current() == 0 && (_4cnvctx.isthumbrect))?0:new Row([HNUB,0,HNUB],
+                    new Row([HNUB,0,HNUB],
                     [
                         0,
                         new Layer(
@@ -4143,7 +4136,7 @@ var headlst =
                         ]),
                         0,
                     ]),
-                    (_4cnvctx.isthumbrect)?0:new Row([HNUB,0,HNUB],
+                    new Row([HNUB,0,HNUB],
                     [
                         0,
                         new Layer(
@@ -4155,9 +4148,8 @@ var headlst =
                         ]),
                         0,
                     ]),
-                    (_4cnvctx.isthumbrect||rect.width<510)?0:
                     new Rectangle(context.size),
-                    _4cnvctx.isthumbrect?0:new Layer(
+                    new Layer(
                     [
                         _7cnvctx.enabled ? new Fill(BUTTONBACK):0,
                         new OptionPanel((!_9cnvctx.enabled)?0.1:0.125),
@@ -4301,7 +4293,7 @@ var footlst =
             context.progresscircle = new rectangle();
             context.leftab = new rectangle()
             context.rightab = new rectangle()
-            var j = _4cnvctx.panning || stretchobj.getcurrent().length() <= 1;
+            var j = stretchobj.getcurrent().length() <= 1;
             var e = 0;
             var f = 360;
             if (rect.width < 360*2+20*4+ALIEXTENT)
@@ -4536,14 +4528,11 @@ window.addEventListener("load", async () =>
 {
     try
     {
-//        if ("serviceWorker" in navigator && url.hostname == "reportbase.com")
-//           navigator.serviceWorker.register("sw.js");
+        if ("serviceWorker" in navigator && url.hostname == "reportbase.com")
+           navigator.serviceWorker.register("sw.js");
     }
     catch(error)
     {
     }
 });
-
-
-
 
