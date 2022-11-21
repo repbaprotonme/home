@@ -35,10 +35,10 @@ const SCROLLBACK = "rgba(0,0,0,0.5)";
 const HEADBACK = "rgba(0,0,0,0.15)";
 const MENUCOLOR = "rgba(0,0,0,0.50)";
 const BUTTONBACK = "rgba(0,0,0,0.25)";
-const OPTIONFILL = "rgba(255,255,255,0.75)"
-const THUMBFILL = "rgba(0,0,0,0.25)"
-const THUMBFILL2 = "rgba(0,0,0,0.40)"
-const THUMBSTROKE = "rgba(255,255,235,0.35)"
+const OPTIONFILL = "rgba(255,255,255,0.75)";
+const THUMBFILL = "rgba(0,0,0,0.25)";
+const THUMBFILL2 = "rgba(0,0,0,0.40)";
+const THUMBSTROKE = "rgba(255,255,235,0.35)";
 const ARROWFILL = "rgb(255,255,255)";
 const TIMEBEGIN = 0;
 
@@ -57,7 +57,7 @@ photo.menu = 0;
 
 let slicelst = [];
 for (let n = 399; n >= 1; n=n-1)
-    slicelst.push({slices: n*3, delay: 131000/n});
+    slicelst.push({slices: n*3, delay: 125700/n});
 
 let loaded = new Set()
 
@@ -398,8 +398,8 @@ var guidelst =
 ]
 
 var guideobj = new makeoption("ASSIST", guidelst);
-var colobj = new makeoption("COLUMNS", [75,50,25]);
-var channelobj = new makeoption("CHANNELS", [2,26,50,74,98]);
+var colobj = new makeoption("COLUMNS", [0,20,40,60,80,99].reverse());
+var channelobj = new makeoption("CHANNELS", [0,20,40,60,80,99]);
 var positobj = new makeoption("POSITION", [0,0,0,0,0,0,0,0,0]);
 
 function drawslices()
@@ -487,11 +487,14 @@ function drawslices()
 
         context.drawslicescount++;
         context.headrect = new rectangle(0,0,rect.width,ALIEXTENT);
+        context.footrect = new rectangle(0,rect.height-ALIEXTENT,rect.width,ALIEXTENT);
 
         context.restore();
         context.save();
         if (!context.panning && headcnv.height)
             headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
+        else
+            headcnvctx.clear();
         if (footcnv.height)
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
 
@@ -582,12 +585,24 @@ let helplst =
     { title:"4", path: "NAME", func: function() {menuhide(); } },
     { title:"5", path: "NAME", func: function() {menuhide(); } },
     { title:"6", path: "NAME", func: function() {menuhide(); } },
-    { title:"7", path: "NAME", func: function() {menuhide(); } },
-    { title:"8", path: "NAME", func: function() {menuhide(); } },
-    { title:"9", path: "NAME", func: function() {menuhide(); } },
 ];
 
-const opts = {synchronized: true, };
+const opts =
+{
+    synchronized: true,
+    alpha: true,
+    antialias: false,
+    depth: false,
+};
+
+const opts4 =
+{
+    synchronized: true,
+//    alpha: false,
+    antialias: false,
+    depth: false,
+};
+
 let _1cnv = document.getElementById("_1");
 let _1cnvctx = _1cnv.getContext("2d", opts);
 let _2cnv = document.getElementById("_2");
@@ -595,7 +610,7 @@ let _2cnvctx = _2cnv.getContext("2d", opts);
 let _3cnv = document.getElementById("_3");
 let _3cnvctx = _3cnv.getContext("2d", opts);
 let _4cnv = document.getElementById("_4");
-let _4cnvctx = _4cnv.getContext("2d", opts);
+let _4cnvctx = _4cnv.getContext("2d", opts4);
 let _5cnv = document.getElementById("_5");
 let _5cnvctx = _5cnv.getContext("2d", opts);
 let _6cnv = document.getElementById("_6");
@@ -913,7 +928,6 @@ addressobj.full = function ()
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&e="+traitobj.current()+
         "&a="+scapeobj.current()+
-        "&u="+positobj.current()+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
     return out;
 };
@@ -1055,7 +1069,7 @@ var makehammer = function (context, v, t)
     ham.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
     ham.get('swipe').set({ velocity: 0.7});//0.30
 	ham.get('swipe').set({ threshold: 10});//10
-	ham.get('press').set({ time: 375 });//251
+	ham.get('press').set({ time: 500 });//251
 	//ham.get('pan').set({ threshold: 10 });
 	ham.get('pinch').set({ enable: false });
 
@@ -1450,9 +1464,6 @@ var pinchlst =
     },
     pinchstart: function (context, rect, x, y)
     {
-        url.thumbnail = 1;
-        var k = positobj.data_.hitest(x,y);
-        positobj.set(k);
         context.pinching = 1;
         context.heightsave = heightobj.getcurrent().getcurrent()
         var zoom = zoomobj.getcurrent()
@@ -1699,21 +1710,10 @@ var presslst =
     },
     press: function (context, rect, x, y)
     {
-        context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-        if (url.thumbnail && context.isthumbrect)
-        {
-            context.panning = 1;
-            url.thumbnail = 1;
-            guideobj.rotate(1);
-            context.refresh()
-        }
-        else
-        {
-            url.header = url.header?0:1;
-            pageresize();
-            context.refresh();
-            addressobj.update();
-        }
+        url.header = url.header?0:1;
+        pageresize();
+        context.refresh();
+        addressobj.update();
     }
 },
 ];
@@ -1865,14 +1865,14 @@ var keylst =
         {
             globalobj.autodirect = 1;
             evt.preventDefault();
-            _4cnvctx.timeobj.rotate(TIMEOBJ/300);
+            _4cnvctx.timeobj.rotate(TIMEOBJ/250);
             context.refresh();
         }
         else if (evt.key == "ArrowRight" || evt.key == "l")
         {
             globalobj.autodirect = -1;
             evt.preventDefault();
-            _4cnvctx.timeobj.rotate(-TIMEOBJ/300);
+            _4cnvctx.timeobj.rotate(-TIMEOBJ/250);
             context.refresh();
         }
         else if (evt.key == "ArrowUp" || evt.key == "k")
@@ -2227,7 +2227,8 @@ var taplst =
             else
                 contextobj.reset()
         }
-        else if (context.headrect && context.headrect.hitest(x,y))
+        else if ((context.headrect && context.headrect.hitest(x,y)) ||
+            (context.footrect && context.footrect.hitest(x,y)))
         {
             url.header = 1;
             pageresize();
@@ -2235,25 +2236,7 @@ var taplst =
         }
         else
         {
-            var slicelst = context.sliceobj.data();
-            var k;
-            for (k = 0; k < slicelst.length; k++)
-            {
-                var slice = slicelst[k];
-                var r = new rectangle(slice.xxx,0,slice.stretchwidth,rect.height)
-                if (!slice.xxx)
-                    continue
-                if (r.hitest(x,y))
-                    break;
-            }
-
-            context.sliceobj.set(k);
-            clearInterval(_4cnvctx.timemain);
-            _4cnvctx.timemain = 0;
-            var k = positobj.data_.hitest(x,y);
-            positobj.set(k);
-            pageresize();
-            _4cnvctx.refresh();
+            context.movepage(x<rect.width/2?-1:1);
         }
 
         addressobj.update();
@@ -2386,42 +2369,33 @@ var thumblst =
             var ww = Math.max(30,(rect.width/context.virtualwidth)*w);
             var stretch = stretchobj.getcurrent();
             if (stretch < 50)
-            {
                 stretch = (50-stretch.getcurrent())/100;
-                stretch = 1-stretch;
-                ww *= stretch;
-            }
             else
-            {
                 stretch = (stretch.getcurrent()-50)/100;
-                stretch = 1-stretch;
-                ww *= stretch;
-            }
+            stretch = 1-stretch;
+            ww *= stretch;
 
-            var berp = Math.berp(0,photo.image.height,context.imageheight);
-            var hh = Math.lerp(0,h,berp);
+            var b = Math.berp(0,photo.image.height,context.imageheight);
+            var hh = Math.lerp(0,h,b);
+            var b = Math.berp(0,photo.image.height,context.nuby);
+            var yy = y+Math.lerp(0,h,b);
             var jj = context.timeobj.berp();
             var bb = w*(1-jj);
             var xx = x+bb-ww/2;
-            var berp = Math.berp(0,photo.image.height,context.nuby);
-            var yy = y+Math.lerp(0,h,berp);
             context.lineWidth = 3;
-            var selectrect = new rectangle(xx,yy,ww,hh);
-            blackfill2.draw(context, selectrect, 0, 0);
-            whitestroke.draw(context, selectrect, 0, 0);
+            var r = new rectangle(xx,yy,ww,hh);
+            blackfill2.draw(context, r, 0, 0);
+            whitestroke.draw(context, r, 0, 0);
 
-            var ee = (xx+ww) - (x+w);
-            if (ee > 0)
+            if (xx > x)//leftside
             {
-                var r = new rectangle(x-ww+ee,yy,ww,hh);
+                var r = new rectangle(xx-w,yy,ww,hh);
                 blackfill2.draw(context, r, 0, 0);
                 whitestroke.draw(context, r, 0, 0);
             }
-
-            var ee = xx-x;
-            if (ee < 0)
+            else if (xx < x)//right side
             {
-                var r = new rectangle(x+w+ee,yy,ww,hh);
+                var r = new rectangle(w+xx,yy,ww,hh);
                 blackfill2.draw(context, r, 0, 0);
                 whitestroke.draw(context, r, 0, 0);
             }
@@ -2474,7 +2448,7 @@ var drawlst =
         context.translate(-rect.width/2, -rect.height/2);
         user.fitwidth = rect.width;
         user.fitheight = rect.height;
-        context.font = "16px Archivo Black";
+        context.font = "1rem Archivo Black";
         var clr = SCROLLNAB;
         var str = user.title;
 
@@ -2492,11 +2466,6 @@ var drawlst =
             else if (user.path == "FULLSCREEN")
             {
                 if (screenfull.isFullscreen)
-                    clr = MENUSELECT;
-            }
-            else if (user.path == "THUMB")
-            {
-                if (url.thumbnail)
                     clr = MENUSELECT;
             }
             else if (user.path == "GUIDENONE")
@@ -2545,7 +2514,7 @@ var drawlst =
         var tap = "rgba(200,0,0,0.75)";
         var select = "rgba(200,0,0,0.75)";
 
-        context.font = "16px Archivo Black";
+        context.font = "1rem Archivo Black";
         var hh = photo.menu.height/projectobj.length();
         var r = calculateAspectRatioFit(photo.menu.width, hh, rect.width-20, rect.height+120-20);
         var x = rect.x+(rect.width-r.width)/2;
@@ -2579,7 +2548,6 @@ var drawlst =
         ]);
 
         a.draw(context, rect, user.title, time);
-
         context.restore();
     }
 },
@@ -2597,7 +2565,7 @@ var drawlst =
         var tap = "rgba(200,0,0,0.75)";
         var select = "rgba(200,0,0,0.75)";
 
-        context.font = "16px Archivo Black";
+        context.font = "1rem Archivo Black";
         var hh = photo.help.height/helplst.length;
         var r = calculateAspectRatioFit(photo.help.width, hh, rect.width-20, rect.height+120-20);
         var x = rect.x+(rect.width-r.width)/2;
@@ -2615,6 +2583,7 @@ var drawlst =
             x, y, r.width, r.height);
 
         context.restore();
+
     }
 },
 {
@@ -2722,7 +2691,7 @@ function resetcanvas()
 var eventlst =
 [
     {name: "_1cnvctx", mouse: "DEFAULT", guide: "DEFAULT", thumb: "DEFAULT", tap: "DEFAULT", pan: "DEFAULT", swipe: "DEFAULT", draw: "DEFAULT", wheel: "DEFAULT", drop: "DEFAULT", key: "DEFAULT", press: "DEFAULT", pinch: "DEFAULT", fillwidth: 0},
-    {name: "_2cnvctx", mouse: "DEFAULT", guide: "DEFAULT", thumb: "DEFAULT", tap: "DEFAULT", pan: "DEFAULT", swipe: "DEFAULT", draw: "DEFAULT", wheel: "DEFAULT", drop: "DEFAULT", key: "DEFAULT", press: "DEFAULT", pinch: "DEFAULT", fillwidth: 0},
+    {name: "_2cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
     {name: "_3cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(420,window.innerWidth)},
     {name: "_4cnvctx", mouse: "BOSS", guide: "GUIDE", thumb: "BOSS",  tap: "BOSS", pan: "BOSS", swipe: "BOSS", draw: "BOSS", wheel: "BOSS", drop: "BOSS", key: "BOSS", press: "BOSS", pinch: "BOSS", fillwidth: 0},
     {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(420,window.innerWidth)},
@@ -2809,8 +2778,7 @@ var templatelst =
         globalobj.panjy = 2;
         globalobj.slidetop = 24;
         globalobj.slidefactor = 48;
-        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
-        positobj.set(u);
+        positobj.set(4);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.4;
         loomobj.split(y, "70-85", loomobj.length());
@@ -2827,8 +2795,7 @@ var templatelst =
     {
         globalobj.panjx = 2;
         globalobj.panjy = 2;
-        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
-        positobj.set(u);
+        positobj.set(4);
         globalobj.slidetop = 28;
         globalobj.slidefactor = 72;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
@@ -2845,12 +2812,11 @@ var templatelst =
     name: "SIDESCROLL",
     init: function ()
     {
-        globalobj.panjx = 8;
+        globalobj.panjx = 3;
         globalobj.panjy = 1;
-        globalobj.slidetop = 28;
-        globalobj.slidefactor = 36;
-        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
-        positobj.set(u);
+        globalobj.slidetop = 36;
+        globalobj.slidefactor = 144;
+        positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "0-25", loomobj.length());
@@ -2865,12 +2831,11 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
-        globalobj.panjx = 8;
+        globalobj.panjx = 3;
         globalobj.panjy = 1;
-        globalobj.slidetop = 28;
-        globalobj.slidefactor = 96;
-        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
-        positobj.set(u);
+        globalobj.slidetop = 12;
+        globalobj.slidefactor = 144;
+        positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "0-10", loomobj.length());
@@ -2885,12 +2850,11 @@ var templatelst =
     name: "WIDE",
     init: function ()
     {
-        globalobj.panjx = 3;
+        globalobj.panjx = 2;
         globalobj.panjy = 2;
         globalobj.slidetop = 36;
         globalobj.slidefactor = 72;
-        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
-        positobj.set(u);
+        positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "25-75", loomobj.length());
@@ -2905,12 +2869,11 @@ var templatelst =
     name: "LANDSCAPE",
     init: function (j)
     {
-        globalobj.panjx = 4;
+        globalobj.panjx = 2;
         globalobj.panjy = 2;
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
-        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 7;
-        positobj.set(u);
+        positobj.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 25;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 25;
         loomobj.split(y, "50-90", loomobj.length());
@@ -2927,8 +2890,7 @@ var templatelst =
     {
         globalobj.panjx = 2;
         globalobj.panjy = 2;
-        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
-        positobj.set(u);
+        positobj.set(4);
         globalobj.slidetop = 36;
         globalobj.slidefactor = 18;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.5;
@@ -2947,8 +2909,7 @@ var templatelst =
     {
         globalobj.panjx = 2;
         globalobj.panjy = 2;
-        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
-        positobj.set(u);
+        positobj.set(4);
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.5;
@@ -2965,10 +2926,9 @@ var templatelst =
     name: "LEGEND",
     init: function ()
     {
-        globalobj.panjx = 6;
+        globalobj.panjx = 3;
         globalobj.panjy = 2;
-        var u = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 4;
-        positobj.set(u);
+        positobj.set(4);
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.8;
@@ -3073,17 +3033,16 @@ fetch(path)
 		{
             context = contextlst[n];
 			context.index = n;
-			context.id = n == 0 ? "" : "_" + (n+1);
             context.imageSmoothingEnabled = false;
             context.imageSmoothingQuality = "low";
 		    context.enabled = 0;
 			context.canvas.width = 1;
 			context.canvas.height = 1;
-			context.font = "400 100px Russo One";
+			context.font = "400 1rem Russo One";
 			context.fillText("  ", 0, 0);
-			context.font = "400 100px Archivo Black";
+			context.font = "400 1rem Archivo Black";
 			context.fillText("  ", 0, 0);
-			context.font = "400 100px Source Code Pro";
+			context.font = "400 1rem Source Code Pro";
 			context.fillText("  ", 0, 0);
 			context.slideshow = 0;
 	        context.lastime = 0;
@@ -3115,7 +3074,7 @@ fetch(path)
         _5cnvctx.rvalue = 10;
         _5cnvctx.virtualheight = slices.data_.length*_5cnvctx.buttonheight;
 
-        let lst =
+        var lst =
         [
             { title:"None", path: "GUIDENONE", func: function() { guideobj.set(0); _4cnvctx.refresh() } },
             { title:"Horizontal", path: "GUIDEHORZ", func: function() { guideobj.set(1); _4cnvctx.refresh() } },
@@ -3176,12 +3135,6 @@ fetch(path)
         slices.data_.push({ title:"Original", path: "ORIGINAL", func: function()
         {
            window.location.href = photo.image.original;
-        }});
-
-        slices.data_.push({title:"Thumbnail", path: "THUMB", func: function()
-        {
-            url.thumbnail = url.thumbnail?0:1;
-            _4cnvctx.refresh()
         }});
 
         slices.data_.push({title:"Help", path: "HELP", func: function(){ menushow(_7cnvctx); }})
@@ -3332,8 +3285,11 @@ var ContextObj = (function ()
                             k = "PORTRAIT"
                         else if (this.aspect < 3.0)
                             k = "LANDSCAPE"
-                        else
+                        else if (this.aspect < 6.0)
                             k = "WIDE"
+                        else
+                            k = "ULTRAWIDE"
+
                         var j = templatelst.findIndex(function(a){return a.name == k;})
                         templateobj.set(j);
                         templateobj.getcurrent().init();
@@ -3356,13 +3312,21 @@ var ContextObj = (function ()
                         projectobj.rotate(1);
                         var img = new Image();
                         img.src = url.filepath() + projectobj.getcurrent();
-                        projectobj.rotate(-2);
                         img.onload = function() { loaded.add(this.src); }
+                        projectobj.rotate(1);
                         var img = new Image();
-                        img.onload = function() { loaded.add(this.src); }
                         img.src = url.filepath() + projectobj.getcurrent();
+                        img.onload = function() { loaded.add(this.src); }
+                        projectobj.rotate(1);
+                        var img = new Image();
+                        img.src = url.filepath() + projectobj.getcurrent();
+                        img.onload = function() { loaded.add(this.src); }
+                        projectobj.rotate(-5);
+                        var img = new Image();
+                        img.src = url.filepath() + projectobj.getcurrent();
+                        img.onload = function() { loaded.add(this.src); }
                         projectobj.set(k);
-                    }, 600);
+                    }, 250);
                 }
 			}
 
@@ -4113,7 +4077,7 @@ var headlst =
             }
             else if (context.option.hitest(x,y))
             {
-                menushow(_7cnvctx);
+                menushow(_9cnvctx);
             }
             else
             {
@@ -4141,7 +4105,7 @@ var headlst =
             context.prevpage2 = new rectangle()
             context.nextpage2 = new rectangle()
             context.picture = new rectangle()
-            context.font = "15px Archivo Black";
+            context.font = "1rem Archivo Black";
             var j = rect.width < 375 ? 60:120;
             var s = _5cnvctx.enabled || _8cnvctx.enabled;
             var a = new Layer(
@@ -4249,7 +4213,7 @@ var headlst =
 		{
             context.clear()
             context.save()
-            context.font = "16px Archivo Black";
+            context.font = "1rem Archivo Black";
             var a = new Layer(
             [
                 new Fill("black"),
@@ -4306,7 +4270,7 @@ var footlst =
         {
             if (context.progresscircle.hitest(x,y))
             {
-                menushow(_9cnvctx);
+                menushow(_7cnvctx);
             }
             else if (context.leftab.hitest(x,y))
             {
@@ -4337,7 +4301,7 @@ var footlst =
             context.progresscircle = new rectangle();
             context.leftab = new rectangle()
             context.rightab = new rectangle()
-            var j = _4cnvctx.isthumbrect || stretchobj.getcurrent().length() <= 1;
+            var j = _4cnvctx.panning || stretchobj.getcurrent().length() <= 1;
             var e = 0;
             var f = 360;
             if (rect.width < 360*2+20*4+ALIEXTENT)
@@ -4503,8 +4467,6 @@ var OptionPanel = function (size)
     }
 };
 
-window.addEventListener("touchend", function (evt) { });
-
 window.addEventListener("keyup", function (evt)
 {
 	if (evt.key == "Escape")
@@ -4553,39 +4515,13 @@ window.onerror = function(message, source, lineno, colno, error)
 //    window.alert( error+","+lineno+","+console.trace());
 };
 
-
-document.addEventListener("touchstart", function(evt)
-{
-}, {passive: false});
-
-document.addEventListener('touchmove', function (evt)
-{
-}, { passive: false });
-
-window.addEventListener("visibilitychange", (evt) =>
-{
-    if (document.visibilityState === 'hidden')
-    {
-    }
-    else
-    {
-    }
-});
-
-window.addEventListener("beforeunload", (evt) =>
-{
-});
-
-window.addEventListener("pagehide", (evt) =>
-{
-});
-
-const darkModeListener = (event) =>
-{
-    setfavicon();
-};
-
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', darkModeListener);
+document.addEventListener("touchstart", function(evt) { }, {passive: false});
+document.addEventListener('touchmove', function (evt) { }, { passive: false });
+window.addEventListener("touchend", function (evt) { });
+window.addEventListener("visibilitychange", (evt) => { if (document.visibilityState === 'hidden') { } });
+window.addEventListener("beforeunload", (evt) => { });
+window.addEventListener("pagehide", (evt) => { });
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() { setfavicon(); });
 
 function setfavicon()
 {
@@ -4607,6 +4543,7 @@ window.addEventListener("load", async () =>
     {
     }
 });
+
 
 
 
