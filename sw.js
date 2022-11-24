@@ -1,4 +1,4 @@
-const VERSION = "0006"
+const VERSION = "0007"
 const precacheResources =
 [
     '/',
