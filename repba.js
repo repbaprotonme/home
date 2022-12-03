@@ -1,5 +1,3 @@
-//TODO: safair slicewidth
-
 /* +=
 Copyright 2017 Tom Brinkman
 http://www.reportbase.com
@@ -19,7 +17,7 @@ const DELAY = 10000000;
 const HNUB = 10;
 const THUMBORDER = 16;
 const ALIEXTENT = 60;
-const ARROWBORES = 20;
+const ARROWBORES = 22;
 const DELAYCENTER = 3.926;
 const TIMEOBJ = 3926;
 const FONTHEIGHT = 16;
@@ -39,14 +37,16 @@ const THUMBFILL = "rgba(0,0,0,0.25)";
 const THUMBFILL2 = "rgba(0,0,0,0.40)";
 const THUMBSTROKE = "rgba(255,255,235,0.35)";
 const ARROWFILL = "white";
+const SLICERADIUS = 129000;
+const TIMEMAIN = 9;
 
 globalobj = {};
-globalobj.timemain = 12;
+globalobj.slicewidth = 60;
 globalobj.slidetop = 36;
 globalobj.slidefactor = 36;
 globalobj.autodirect = -1;
-globalobj.panjx = 1.5;
-globalobj.panjy = 1.5;
+globalobj.panx = 1.5;
+globalobj.pany = 1.5;
 
 let photo = {}
 photo.image = 0;
@@ -499,6 +499,39 @@ function drawslices()
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
         if (thumbpos.enabled)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
+        if (!headcnv.height)
+        {
+            context.moveprev = new rectangle()
+            context.movenext = new rectangle()
+            var a = new Col([60,0,60],
+            [
+                new Row([0,60,0],
+                [
+                    0,
+                    new Shrink(new Layer(
+                    [
+                        new Rectangle(context.moveprev),
+                        new Circle(_4cnvctx.movingpage == -1?"rgba(0,0,255,0.5)":SCROLLNAB),
+                        new Shrink(new Arrow(ARROWFILL,270),12,12),
+                    ]),10,10),
+                    0
+                ]),
+                0,
+                new Row([0,60,0],
+                [
+                    0,
+                    new Shrink(new Layer(
+                    [
+                        new Rectangle(context.movenext),
+                        new Circle(_4cnvctx.movingpage == 1?"rgba(0,0,255,0.5)":SCROLLNAB),
+                        new Shrink(new Arrow(ARROWFILL,90),12,12),
+                    ]),10,10),
+                    0
+                ]),
+            ]);
+
+            a.draw(context, rect, 0, 0);
+        }
    }
 
     var data = [_3cnvctx,  _5cnvctx, _6cnvctx, _7cnvctx, _8cnvctx, _9cnvctx, ];
@@ -875,8 +908,6 @@ addressobj.full = function ()
         "&n="+letchobj.current()+
         "&e="+traitobj.current()+
         "&a="+scapeobj.current()+
-        "&sw="+url.slicewidth+
-        "&sr="+url.sliceradius+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
         if (thumbpos.enabled)
             out+="&b="+thumbpos.current();
@@ -972,7 +1003,7 @@ CanvasRenderingContext2D.prototype.tab = function ()
     context.timemain = setInterval(function ()
     {
         drawslices()
-    }, globalobj.timemain);
+    }, TIMEMAIN);
 }
 
 CanvasRenderingContext2D.prototype.refresh = function ()
@@ -1393,21 +1424,35 @@ var pinchlst =
     name: "BOSS",
     pinch: function (context, scale)
     {
-        var obj = heightobj.getcurrent();
-        var data = obj.data_;
-        var k = Math.clamp(data[0], data[data.length-1], scale*context.heightsave);
-        var j = Math.berp(data[0], data[data.length-1], k);
-        var e = Math.lerp(0,obj.length(),j)/100;
-        var f = Math.max(20,Math.floor(obj.length()*e));
-        obj.set(f);
+        if (thumbpos.enabled)
+        {
+            var obj = heightobj.getcurrent();
+            var data = obj.data_;
+            var k = Math.clamp(data[0], data[data.length-1], scale*context.heightsave);
+            var j = Math.berp(data[0], data[data.length-1], k);
+            var e = Math.lerp(0,obj.length(),j)/100;
+            var f = Math.max(20,Math.floor(obj.length()*e));
+            obj.set(f);
+        }
+        else
+        {
+            var obj = stretchobj.getcurrent();
+            var data = obj.data_;
+            var k = Math.clamp(data[0], data[data.length-1], scale*context.pinchsave);
+            var j = Math.berp(data[0], data[data.length-1], k);
+            var e = Math.lerp(0,obj.length(),j)/100;
+            var f = Math.max(20,Math.floor(obj.length()*e));
+            obj.set(f);
+        }
+
         context.refresh();
     },
     pinchstart: function (context, rect, x, y)
     {
         context.pinching = 1;
         context.heightsave = heightobj.getcurrent().getcurrent()
-        var zoom = zoomobj.getcurrent()
-        context.pinchsave = zoom.getcurrent()
+        var stretch = stretchobj.getcurrent()
+        context.pinchsave = stretch.getcurrent()
     },
     pinchend: function (context)
     {
@@ -1540,7 +1585,7 @@ var panlst =
             globalobj.autodirect = type == "panleft"?-1:1;
             var len = context.timeobj.length();
             var diff = context.startx-x;
-            var jvalue = ((len/context.virtualwidth)*globalobj.panjx)*diff;
+            var jvalue = ((len/context.virtualwidth)*globalobj.panx)*diff;
             var j = context.startt - jvalue;
             if (j < 0)
                 j = len+j-1;
@@ -1555,7 +1600,7 @@ var panlst =
             if (Number(zoom.getcurrent()))
             {
                 var h = (rect.height*(1-zoom.getcurrent()/100))*2;
-                y = ((y/rect.height)*globalobj.panjy)*h;
+                y = ((y/rect.height)*globalobj.pany)*h;
                 var k = panvert(rowobj, h-y);
                 if (k == -1)
                     return;
@@ -2161,7 +2206,15 @@ var taplst =
             return;
         }
 
-        if (thumbpos.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
+        if (context.moveprev && context.moveprev.hitest(x,y))
+        {
+            _4cnvctx.movepage(-1);
+        }
+        else if (context.movenext && context.movenext.hitest(x,y))
+        {
+            _4cnvctx.movepage(1);
+        }
+        else if (thumbpos.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
             context.hithumb(x,y);
             var zoom = zoomobj.getcurrent()
@@ -2176,21 +2229,20 @@ var taplst =
             headobj.enabled = 1;
             pageresize();
             context.refresh();
-            addressobj.update();
         }
         else if (window.footrect.hitest(x,y))
         {
             footobj.enabled = 1;
             pageresize();
             context.refresh();
-            addressobj.update();
         }
         else
         {
             thumbpos.enabled = thumbpos.enabled?0:1;
-            addressobj.update();
             reset();
         }
+
+        addressobj.update();
     }
 },
 {
@@ -2270,8 +2322,6 @@ var thumblst =
         else if (col == 2)
             x = rect.x+rect.width-w-THUMBORDER;
         context.thumbrect = new rectangle(x,y,w,h);
-        if (context.shifthit)
-            return;
 
         context.save();
         context.shadowOffsetX = 0;
@@ -2597,14 +2647,14 @@ function resetcanvas()
 
     let slicelst = [];
     for (let n = 399; n >= 1; n=n-1)
-        slicelst.push({slices: n*3, delay: url.sliceradius/n});
+        slicelst.push({slices: n*3, delay: SLICERADIUS/n});
 
     var ks = 0;
     for (var n = 0; n < slicelst.length; ++n)
     {
         var k = slicelst[n];
         var fw = context.virtualwidth / k.slices;
-        if (fw < url.slicewidth)
+        if (fw < globalobj.slicewidth)
             continue;
         ks = n;
         break;
@@ -2743,9 +2793,11 @@ var templatelst =
     {
         thumbpos.set(4);
         footobj.enabled = 1;
-        url.slicewidth = 60;
+        globalobj.slicewidth = 60;
         globalobj.slidetop = 36;
         globalobj.slidefactor = 36;
+        globalobj.panx = 1.0;
+        globalobj.pany = 1.0;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.4;
         loomobj.split(y, "70-85", loomobj.length());
@@ -2762,7 +2814,7 @@ var templatelst =
     {
         thumbpos.set(4);
         footobj.enabled = 1;
-        url.slicewidth = 60;
+        globalobj.slicewidth = 60;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.4;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.4;
         loomobj.split(y, "70-85", loomobj.length());
@@ -2778,7 +2830,7 @@ var templatelst =
     init: function ()
     {
         thumbpos.set(7);
-        url.slicewidth = 240;
+        globalobj.slicewidth = 240;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "0-25", loomobj.length());
@@ -2794,7 +2846,7 @@ var templatelst =
     init: function ()
     {
         thumbpos.set(7);
-        url.slicewidth = 240;
+        globalobj.slicewidth = 240;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "0-25", loomobj.length());
@@ -2810,7 +2862,7 @@ var templatelst =
     init: function ()
     {
         thumbpos.set(7);
-        url.slicewidth = 180;
+        globalobj.slicewidth = 180;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 0;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(y, "40-75", loomobj.length());
@@ -2825,7 +2877,7 @@ var templatelst =
     name: "LANDSCAPE",
     init: function (j)
     {
-        url.slicewidth = 120;
+        globalobj.slicewidth = 120;
         thumbpos.set(7);
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : 25;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 25;
@@ -2843,7 +2895,7 @@ var templatelst =
     {
         thumbpos.set(4);
         footobj.enabled = 1;
-        url.slicewidth = 60;
+        globalobj.slicewidth = 60;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.5;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.5;
         loomobj.split(y, "90-95", loomobj.length());
@@ -2860,7 +2912,7 @@ var templatelst =
     {
         footobj.enabled = 1;
         thumbpos.set(4);
-        url.slicewidth = 60;
+        globalobj.slicewidth = 60;
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.5;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.5;
         loomobj.split(y, "80-95", loomobj.length());
@@ -2877,7 +2929,7 @@ var templatelst =
     {
         thumbpos.set(4);
         footobj.enabled = 1;
-        url.slicewidth = 60;
+        globalobj.slicewidth = 60;
 
         var y = url.searchParams.has("y") ? Number(url.searchParams.get("y")) : loomobj.length()*0.8;
         var z = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : loomobj.length()*0.8;
@@ -2919,9 +2971,6 @@ fetch(path)
         templateobj.set(j);
         templateobj.getcurrent().init();
 
-        url.slicewidth = url.searchParams.has("sw") ? Number(url.searchParams.get("sw")) : url.slicewidth;
-        url.sliceradius = url.searchParams.has("sr") ? Number(url.searchParams.get("sr")) : 129000;
-
         if (url.searchParams.has("h"))
         {
             headobj.enabled = 1;
@@ -2946,6 +2995,10 @@ fetch(path)
             colobj.data_ = data.colobj.split(",").reverse();
         if (typeof data.extension !== "undefined")
             url.extension = data.extension;
+        if (typeof data.panx !== "undefined")
+            globalobj.panx = data.panx;
+        if (typeof data.pany !== "undefined")
+            globalobj.pany = data.pany;
         if (typeof data.path !== "undefined")
             url.basepath = data.path;
         if (typeof data.crossorigin !== "undefined")
@@ -3309,6 +3362,7 @@ var ContextObj = (function ()
                     contextobj.resize(context);
                     resetcanvas(context);
                     seteventspanel(new YollPanel());
+                    reset();
                     setTimeout(function()
                     {
                         photo.menu = new Image();
@@ -4128,7 +4182,7 @@ var headlst =
                         new Layer(
                         [
                             _4cnvctx.movingpage == -1 ?
-                                new Shrink(new Circle(SCROLLNAB,"white",4),0,0) : 0,
+                                new Shrink(new Circle(SCROLLNAB),0,0) : 0,
                             new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES-HNUB),
                             new Rectangle(context.prevpage),
                         ]),
@@ -4151,7 +4205,7 @@ var headlst =
                         new Layer(
                         [
                             _4cnvctx.movingpage == 1 ?
-                                new Shrink(new Circle(SCROLLNAB,"white",4),0,0) : 0,
+                                new Shrink(new Circle(SCROLLNAB),0,0) : 0,
                             new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES-HNUB),
                             new Rectangle(context.nextpage),
                         ]),
@@ -4233,13 +4287,20 @@ var footlst =
 
         this.pan = function (context, rect, x, y, type)
         {
-            if (context.leftab.hitest(x,y))
+            if (x<rect.width/2)
+            {
+                if (context.panobj == stretchobj.getcurrent())
+                    return;
                 var k = (x-context.leftab.x)/context.leftab.width;
-            else if (context.rightab.hitest(x,y))
-               var k = (x-context.rightab.x)/context.rightab.width;
+            }
             else
-                return;
+            {
+                if (context.panobj == zoomobj.getcurrent())
+                    return;
+                var k = (x-context.rightab.x)/context.rightab.width;
+            }
 
+            k = Math.clamp(0,1,k);
             k = Math.floor(k*context.panobj.length());
             context.panobj.set(k);
             contextobj.reset();
@@ -4249,7 +4310,7 @@ var footlst =
         {
             if (context.progresscircle.hitest(x,y))
             {
-                promptFile().then(function(files) { dropfiles(files); })
+                //promptFile().then(function(files) { dropfiles(files); })
             }
             else if (context.leftab.hitest(x,y))
             {
@@ -4314,7 +4375,7 @@ var footlst =
             new Layer(
             [
                new Fill(HEADBACK),
-               new ColA([16,0,16,ALIEXTENT-16,16,0,16],
+               new ColA([24,0,24,ALIEXTENT-16,24,0,24],
                [
                     0,
                    new Row([0,8,0],
@@ -4542,8 +4603,8 @@ window.addEventListener("load", async () =>
 {
     try
     {
-//        if ("serviceWorker" in navigator && url.hostname == "reportbase.com")
-//           navigator.serviceWorker.register("sw.js");
+        if ("serviceWorker" in navigator && url.hostname == "reportbase.com")
+           navigator.serviceWorker.register("sw.js");
     }
     catch(error)
     {
