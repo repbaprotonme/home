@@ -1,0 +1,15 @@
+{
+  "background_color": "white",
+  "description": "Interactive fullscreen sidescroller.",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "res/favicon.png",
+      "sizes": "360x360",
+      "type": "image/png"
+    }
+  ],
+  "name": "Image Sidescroller",
+  "short_name": "Sidescroller",
+  "start_url": "./index.html"
+}
