@@ -1,3 +1,5 @@
+
+
 []
 command line
 https://www.commandlinefu.com/commands/browse
@@ -14,10 +16,12 @@ https://onlinepngtools.com
 []
 icons
 https://www.iconsdb.com/custom-color/fullscreen-enter-icon.html
+https://thenounproject.com/
 
 []
 https://freemusicarchive.org
 https://spotify.com
+https://soundcloud.com/ 
 music player
 
 []
@@ -54,7 +58,10 @@ https://stackblitz.com/edit/node-ekxhjb
 https://onecompiler.com/javascript/3xksew9sp
 https://playcode.io/771387/
 https://codepen.io/reportbase/pen/JjprZjy
-javascript editor
+javascript 
+
+[]
+https://jsonhero.io/j/JZw4Wx9Mgj6r/editor  #json editor
 
 []
 auth
@@ -151,6 +158,8 @@ https://sketch.io/sketchpad/
 https://yqnn.github.io/svg-path-editor/
 https://editor.method.ac/
 https://pqina.nl/  #has good blog about canvas and js
+https://editor.method.ac/  #svg editor
+https://boxy-svg.com/app
 
 []
 https://dropbox.com
@@ -182,7 +191,8 @@ https://contributor.stock.adobe.com/en/uploads
 https://www.pexels.com
 https://www.pixabay.com
 https://www.gettyimages.com
-image sites
+https://picsart.com/
+https://unsplash.com/plus
 
 []
 https://play.google.com/books
@@ -200,7 +210,7 @@ https://play.google.com/movies?hl=en_US
 google
 
 []
- https://www.desmos.com/
+https://www.desmos.com/    #calcualor
 Equation Visualizer.  Math
 
 []
