@@ -1297,7 +1297,6 @@ var wheelst =
     name: "BOSS",
     up: function (context, x, y, ctrl, shift)
     {
-        thumbpos.enabled = 1;
         context.pinching = 1;
         clearTimeout(globalobj.pinch);
         globalobj.pinch = setTimeout(function()
@@ -1333,7 +1332,6 @@ var wheelst =
 	},
  	down: function (context, x, y, ctrl, shift)
     {
-        thumbpos.enabled = 1;
         context.pinching = 1;
         clearTimeout(globalobj.pinch);
         globalobj.pinch = setTimeout(function()
@@ -4026,9 +4024,6 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                thumbpos.enabled = thumbpos.enabled?0:1;
-                addressobj.update();
-                reset();
             }
             else if (context.nextpage.hitest(x,y))
             {
@@ -4097,7 +4092,6 @@ var headlst =
                         0,
                         new Layer(
                         [
-                            thumbpos.enabled ? new Fill(THUMBSELECT) : 0,
                             new Text("white", "center", "middle",0,1,1),
                             new Rectangle(context.picture),
                         ]),
@@ -4108,8 +4102,7 @@ var headlst =
                         0,
                         globalobj.promptedfile?0:new Layer(
                         [
-                            _4cnvctx.movingpage == 1 ?
-                                new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
+                            _4cnvctx.movingpage == 1 ? new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
                             new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES-HNUB),
                             new Rectangle(context.nextpage),
                         ]),
