@@ -1,51 +1,70 @@
 {
-  "background_color": "#3367D6",
+  "background_color": "#fcb603",
   "scope": "/",
-  "theme_color": "#3367D6",
-  "description": "High Resolution Image Browser",
+  "theme_color": "#fcb603",
+  "description": "Image Sidescroller",
   "display": "fullscreen",
   "icons": [
     {
-      "src": "res/favicon.svg",
+      "src": "res/logo.svg",
       "type": "image/svg+xml",
-      "sizes": "360x360"
-    },
-    {
-      "src": "res/favicon.png",
-      "sizes": "360x360",
-      "type": "image/png"
+      "sizes": "36x36 48x48 57x57 60x60 72x72 76x76 96x96 114x114 120x120 128x128 144x144 152x152 180x180 192x192 256x256 384x384 512x512"
     }
   ],
-  "shortcuts": [
+  "shortcuts": 
+  [
     {
-      "name": "How's weather today?",
-      "short_name": "Today",
-      "description": "View weather information for today",
-      "url": "./index.html?source=pwa",
-      "icons": [{ "src": "res/favicon.png", "sizes": "360x360" }]
+      "name": "Ultrawide Landscapes",
+      "url": "./index.html?p=pino&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
     },
     {
-      "name": "How's weather tomorrow?",
-      "short_name": "Tomorrow",
-      "description": "View weather information for tomorrow",
-      "url": "./index.html?source=pwa",
-      "icons": [{ "src": "res/favicon.png", "sizes": "360x360" }]
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "res/screenshot1.jpg",
-      "type": "image/jpg",
-      "sizes": "540x720"
+      "name": "Willow Comic Book",
+      "url": "./index.html?p=will&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
     },
     {
-      "src": "res/screenshot2.jpg",
-      "type": "image/jpg",
-      "sizes": "540x720"
+      "name": "Cyberpunk Art",
+      "url": "./index.html?p=skye&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Legacy Paintings I",
+      "url": "./index.html?p=dash&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Legacy Paintings II",
+      "url": "./index.html?p=goat&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Political Comics - Landscape",
+      "url": "./index.html?p=puck&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Political Comics - Portrait",
+      "url": "./index.html?p=pump&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Posters",
+      "url": "./index.html?p=post&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "WWII Posters",
+      "url": "./index.html?p=bond&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Landscapes",
+      "url": "./index.html?p=hope&source=pwa",
+      "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
     }
   ],
-  "name": "Image Browser",
-  "short_name": "Image Browser",
+  "name": "Repba Sidescroller",
   "id": "./index.html?source=pwa",
   "start_url": "./index.html?source=pwa"
 }

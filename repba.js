@@ -1315,7 +1315,7 @@ var wheelst =
         }
         else if (shift)
         {
-            rowobj.add(-rowobj.length()/100);
+            rowobj.add(-rowobj.length()/25);
             contextobj.reset();
         }
         else if (ctrl)
@@ -1352,7 +1352,7 @@ var wheelst =
         }
         else if (shift)
         {
-            rowobj.add(rowobj.length()/100);
+            rowobj.add(rowobj.length()/25);
             contextobj.reset();
         }
         else if (ctrl)
