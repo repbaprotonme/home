@@ -1,15 +1,52 @@
 {
-  "background_color": "white",
-  "description": "Interactive fullscreen sidescroller.",
+  "background_color": "#3367D6",
+  "scope": "/",
+  "theme_color": "#3367D6",
+  "description": "High Resolution Image Browser",
   "display": "fullscreen",
   "icons": [
+    {
+      "src": "res/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "360x360"
+    },
     {
       "src": "res/favicon.png",
       "sizes": "360x360",
       "type": "image/png"
     }
   ],
-  "name": "Image Sidescroller",
-  "short_name": "Sidescroller",
-  "start_url": "./index.html"
+  "shortcuts": [
+    {
+      "name": "How's weather today?",
+      "short_name": "Today",
+      "description": "View weather information for today",
+      "url": "./index.html?source=pwa",
+      "icons": [{ "src": "res/favicon.png", "sizes": "360x360" }]
+    },
+    {
+      "name": "How's weather tomorrow?",
+      "short_name": "Tomorrow",
+      "description": "View weather information for tomorrow",
+      "url": "./index.html?source=pwa",
+      "icons": [{ "src": "res/favicon.png", "sizes": "360x360" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "res/screenshot1.jpg",
+      "type": "image/jpg",
+      "sizes": "540x720"
+    },
+    {
+      "src": "res/screenshot2.jpg",
+      "type": "image/jpg",
+      "sizes": "540x720"
+    }
+  ],
+  "name": "Image Browser",
+  "short_name": "Image Browser",
+  "id": "./index.html?source=pwa",
+  "start_url": "./index.html?source=pwa"
 }
+
