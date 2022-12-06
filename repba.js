@@ -47,7 +47,6 @@ globalobj.slidefactor = 36;
 globalobj.autodirect = -1;
 globalobj.panx = 1.5;
 globalobj.pany = 1.5;
-globalobj.loadimages = 1;
 
 let photo = {}
 photo.image = 0;
@@ -493,7 +492,6 @@ function drawslices()
         context.drawslicescount++;
         context.setcolumncomplete = 1;
         context.restore();
-        delete context.loadimage;
         delete context.moveprev;
         delete context.movenext;
         if (!context.panning && !context.timemain && headcnv.height)
@@ -912,8 +910,6 @@ CanvasRenderingContext2D.prototype.movedown = function()
 
 CanvasRenderingContext2D.prototype.movepage = function(j)
 {
-    if (globalobj.promptedfile)
-        return;
     projectobj.rotate(j);
     var path = url.filepath() + projectobj.getcurrent();
     projectobj.rotate(-j);
@@ -1467,6 +1463,7 @@ function dropfiles(files)
     if (!files || !files.length)
         return;
     delete photo.image;
+    footobj.enabled = 1;
     _4cnvctx.setcolumncomplete = 0;
     globalobj.promptedfile = URL.createObjectURL(files[0]);
     contextobj.reset();
@@ -1539,7 +1536,7 @@ var panlst =
         }
         else if (type == "panleft" || type == "panright")
         {
-            globalobj.autodirect = type == "panleft"?-1:1;
+            globalobj.autodirect = (type == "panleft")?-1:1;
             var len = context.timeobj.length();
             var diff = context.startx-x;
             var jvalue = ((len/context.virtualwidth)*globalobj.panx)*diff;
@@ -1709,8 +1706,8 @@ var swipelst =
         setTimeout(function()
         {
             evt.preventDefault();
-            var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-            if (isthumbrect)
+            var zoom = zoomobj.getcurrent()
+            if (Number(zoom.getcurrent()))
                 return;
             globalobj.autodirect = evt.type == "swipeup"?-1:1;
             context.tab();
@@ -2170,17 +2167,6 @@ var taplst =
         else if (context.movenext && context.movenext.hitest(x,y))
         {
             _4cnvctx.movepage(1);
-        }
-        else if (context.loadimage && context.loadimage.hitest(x,y))
-        {
-            globalobj.loadimage = 1;
-            context.refresh();
-            setTimeout(function()
-                {
-                    globalobj.loadimage = 0;
-                    context.refresh();
-                    promptFile().then(function(files) { dropfiles(files); })
-                }, 400);
         }
         else if (thumbpos.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
@@ -2748,7 +2734,6 @@ var templatelst =
     name: "COMIC",
     init: function ()
     {
-        globalobj.loadimages = 0;
         headobj.enabled = 0;
         thumbpos.set(4);
         globalobj.slicewidth = 60;
@@ -2787,6 +2772,7 @@ var templatelst =
     init: function ()
     {
         thumbpos.set(7);
+        globalobj.slidefactor = 144;
         globalobj.slicewidth = 240;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
@@ -2902,6 +2888,10 @@ fetch(path)
             globalobj.slidetop = data.slidetop;
         if (typeof data.slidefactor !== "undefined")
             globalobj.slidefactor = data.slidefactor;
+        if (typeof data.head !== "undefined")
+            headobj.enabled = Number(data.head);
+        if (typeof data.foot !== "undefined")
+            footobj.enabled = Number(data.foot);
 
         photo.help = new Image();
         photo.help.src = url.filepath() + ((typeof data.help === "undefined") ? "HELP.jpg" : data.help);
@@ -3255,6 +3245,7 @@ var ContextObj = (function ()
                         var j = templatelst.findIndex(function(a){return a.name == k;})
                         templateobj.set(j);
                         templateobj.getcurrent().init();
+                        delete globalobj.promptedfile;
                     }
 
                     clearInterval(context.timemain);
@@ -4024,6 +4015,7 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
+                promptFile().then(function(files) { dropfiles(files); })
             }
             else if (context.nextpage.hitest(x,y))
             {
@@ -4078,7 +4070,7 @@ var headlst =
                     new Row([HNUB,0,HNUB],
                     [
                         0,
-                        globalobj.promptedfile?0:new Layer(
+                        new Layer(
                         [
                             _4cnvctx.movingpage == -1 ?
                                 new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
@@ -4100,7 +4092,7 @@ var headlst =
                     new Row([HNUB,0,HNUB],
                     [
                         0,
-                        globalobj.promptedfile?0:new Layer(
+                        new Layer(
                         [
                             _4cnvctx.movingpage == 1 ? new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
                             new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES-HNUB),
@@ -4118,12 +4110,7 @@ var headlst =
                 ])
            ]);
 
-           var j = (projectobj.current()+1).toFixed(0);
-           var jt = (projectobj.current()+1).toFixed(0)+" of "+projectobj.length();
-           var f = projectobj.current();
-           var s = extentobj.data_[f];
-           var k = extentobj.length() ? s.join("x") : j;
-            k = globalobj.promptedfile?"":k;
+           var k = (projectobj.current()+1).toFixed(0);
             a.draw(context, rect, k, time);
             context.restore()
 		};
@@ -4150,7 +4137,7 @@ var headlst =
 ];
 
 var headobj = new makeoption("", headlst);
-headobj.enabled = 1;
+headobj.enabled = 0;
 
 var bodylst =
 [
@@ -4158,50 +4145,38 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
-            context.loadimage = new rectangle()
             context.moveprev = new rectangle()
             context.movenext = new rectangle()
             var a = new Col([60,0,60],
             [
-                globalobj.promptedfile?0:new Row([0,60,0],
+                new Layer(
                 [
-                    0,
-                    new Shrink(new Layer(
-                    [
-                        new Rectangle(context.moveprev),
-                        new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),
-                        new Shrink(new Arrow(ARROWFILL,270),12,12),
-                    ]),10,10),
-                    0
-                ]),
-                (!globalobj.loadimages)?0:new Row([60,0],
-                [
-                    new Col([0,70,0],
+                    new Rectangle(context.moveprev),
+                    new Row([0,60,0],
                     [
                         0,
-                        new Layer(
+                        new Shrink(new Layer(
                         [
-                            new Rectangle(context.loadimage),
-                            new Col([0,0,0],
-                            [
-                                new Shrink(new Circle(globalobj.loadimage?"red":SCROLLNAB,"white",3),22,22),
-                                new Shrink(new Circle(globalobj.loadimage?"red":SCROLLNAB,"white",3),22,22),
-                                new Shrink(new Circle(globalobj.loadimage?"red":SCROLLNAB,"white",3),22,22),
-                            ]),
-                        ]),
-                        0,
-                    ])
+                            new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),
+                            new Shrink(new Arrow(ARROWFILL,270),12,12),
+                        ]),10,10),
+                        0
+                    ]),
                 ]),
-                globalobj.promptedfile?0:new Row([0,60,0],
+                0,
+                new Layer(
                 [
-                    0,
-                    new Shrink(new Layer(
+                    new Rectangle(context.movenext),
+                    new Row([0,60,0],
                     [
-                        new Rectangle(context.movenext),
-                        new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),
-                        new Shrink(new Arrow(ARROWFILL,90),12,12),
-                    ]),10,10),
-                    0
+                        0,
+                        new Shrink(new Layer(
+                        [
+                            new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),
+                            new Shrink(new Arrow(ARROWFILL,90),12,12),
+                        ]),10,10),
+                        0
+                    ]),
                 ]),
             ]);
 
