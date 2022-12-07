@@ -393,7 +393,7 @@ var guidelst =
     },
 ]
 
-var guideobj = new makeoption("ASSIST", guidelst);
+var guideobj = new makeoption("GUIDE", guidelst);
 var colobj = new makeoption("COLUMNS", [0,20,40,60,80,99].reverse());
 var channelobj = new makeoption("CHANNELS", [0,20,40,60,80,99]);
 
@@ -490,10 +490,11 @@ function drawslices()
 
         context.coverage = (context.colwidth*context.visibles)/rect.width;
         context.drawslicescount++;
-        context.setcolumncomplete = 1;
         context.restore();
         delete context.moveprev;
         delete context.movenext;
+        delete context.tableft;
+        delete context.tabright;
         if (!context.panning && !context.timemain && headcnv.height)
             headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
         if (footcnv.height)
@@ -502,6 +503,7 @@ function drawslices()
             thumbobj.getcurrent().draw(context, rect, 0, 0);
         if (!context.pressed && !headcnv.height)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
+        context.setcolumncomplete = 1;
    }
 
     var data = [_3cnvctx,  _5cnvctx, _6cnvctx, _7cnvctx, _8cnvctx, _9cnvctx, ];
@@ -627,6 +629,87 @@ let footcnvctx = footcnv.getContext("2d", opts);
 
 let contextlst = [_1cnvctx,_2cnvctx,_3cnvctx,_4cnvctx,_5cnvctx,_6cnvctx,_7cnvctx,_8cnvctx,_9cnvctx];
 let canvaslst = [];
+
+var eventlst =
+[
+    {name: "_1cnvctx", mouse: "DEFAULT", guide: "DEFAULT", thumb: "DEFAULT", tap: "DEFAULT", pan: "DEFAULT", swipe: "DEFAULT", draw: "DEFAULT", wheel: "DEFAULT", drop: "DEFAULT", key: "DEFAULT", press: "DEFAULT", pinch: "DEFAULT", fillwidth: 0},
+    {name: "_2cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
+    {name: "_3cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
+    {name: "_4cnvctx", mouse: "BOSS", guide: "GUIDE", thumb: "BOSS",  tap: "BOSS", pan: "BOSS", swipe: "BOSS", draw: "BOSS", wheel: "BOSS", drop: "BOSS", key: "BOSS", press: "BOSS", pinch: "BOSS", fillwidth: 0},
+    {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(420,window.innerWidth)},
+    {name: "_6cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
+    {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "HMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(420,window.innerWidth)},
+    {name: "_8cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
+    {name: "_9cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
+];
+
+function seteventspanel(panel)
+{
+    _1ham.panel = panel;
+    _2ham.panel = panel;
+    _3ham.panel = panel;
+    _4ham.panel = panel;
+    _5ham.panel = panel;
+    _6ham.panel = panel;
+    _7ham.panel = panel;
+    _8ham.panel = panel;
+    _9ham.panel = panel;
+}
+
+function setevents(context, obj)
+{
+    var k = pinchlst.findIndex(function (a) { return a.name == obj.pinch });
+    k = pinchlst[k];
+    context.pinch_ = k.pinch;
+    context.pinchstart_ = k.pinchstart;
+    context.pinchend_ = k.pinchend;
+
+    var k = droplst.findIndex(function (a) { return a.name == obj.drop });
+    k = droplst[k];
+    context.drop = k.drop;
+
+    var k = keylst.findIndex(function (a) { return a.name == obj.key });
+    k = keylst[k];
+    context.keyup_ = k.keyup;
+    context.keydown_ = k.keydown;
+
+    var k = wheelst.findIndex(function (a) { return a.name == obj.wheel });
+    k = wheelst[k];
+    context.wheelup_ = k.up;
+    context.wheeldown_ = k.down;
+
+    var k = mouselst.findIndex(function (a) {return a.name == obj.mouse});
+    k = mouselst[k];
+    context.mouse = k;
+
+    var k = presslst.findIndex(function (a) {return a.name == obj.press});
+    k = presslst[k];
+    context.pressup_ = k.pressup;
+    context.press_ = k.press;
+
+    var k = swipelst.findIndex(function (a) {return a.name == obj.swipe});
+    k = swipelst[k];
+    context.swipeleftright_ = k.swipeleftright;
+    context.swipeupdown_ = k.swipeupdown;
+
+    var k = drawlst.findIndex(function (a) {return a.name == obj.draw});
+    k = drawlst[k];
+    context.draw = k.draw;
+
+    var k = taplst.findIndex(function (a) {return a.name == obj.tap});
+    k = taplst[k];
+    context.tap_ = k.tap;
+
+    var k = panlst.findIndex(function (a) {return a.name == obj.pan});
+    k = panlst[k];
+    context.panstart_ = k.panstart;
+    context.pan_ = k.pan;
+    context.panupdown_ = k.updown;
+    context.panleftright_ = k.leftright;
+    context.panend_ = k.panend;
+    context.fillwidth = obj.fillwidth;
+}
+
 
 function calculateAspectRatioFit(imgwidth, imgheight, rectwidth, rectheight)
 {
@@ -1377,7 +1460,7 @@ var pinchlst =
     name: "BOSS",
     pinch: function (context, scale)
     {
-        if (thumbpos.enabled)
+        if (thumbpos.enabled && context.isthumbrect)
         {
             var obj = heightobj.getcurrent();
             var data = obj.data_;
@@ -1402,6 +1485,7 @@ var pinchlst =
     },
     pinchstart: function (context, rect, x, y)
     {
+        context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
         context.pinching = 1;
         context.heightsave = heightobj.getcurrent().getcurrent()
         var stretch = stretchobj.getcurrent()
@@ -1528,11 +1612,10 @@ var panlst =
 	{
         if ( context.pinching )
              return;
-
-        if (context.isthumbrect && (thumbpos.enabled))
+        if (context.isthumbrect && thumbpos.enabled)
         {
-            var assist = guideobj.getcurrent();
-            assist.pan(context, rect, x, y, type);
+            var k = guideobj.getcurrent();
+            k.pan(context, rect, x, y, type);
         }
         else if (type == "panleft" || type == "panright")
         {
@@ -1540,7 +1623,7 @@ var panlst =
             var len = context.timeobj.length();
             var diff = context.startx-x;
             var jvalue = ((len/context.virtualwidth)*globalobj.panx)*diff;
-            var j = context.startt - jvalue;
+            var j = context.startt - jvalue;//todo
             if (j < 0)
                 j = len+j-1;
             else if (j >= len)
@@ -1967,152 +2050,128 @@ CanvasRenderingContext2D.prototype.getweightedpoint = function(x,y)
     var x,y;
     if (this.x25)
     {
-        var count = 25+24+23+22+21+20+19+18+17+16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x25*1+this.x24*2+this.x23*3+this.x22*4+this.x21*5+this.x20*6+this.x19*7+this.x18*8+this.x17*9+this.x16*10+this.x15*11+this.x14*12+this.x13*13+this.x12*14+this.x11*15+this.x10*16+this.x9*17+this.x8*18+this.x7*19+this.x6*20+this.x5*21+this.x4*22+this.x3*23+this.x2*24+this.x1*25)/count;
-        y = (this.y25*1+this.y24*2+this.y23*3+this.y22*4+this.y21*5+this.y20*6+this.y19*7+this.y18*8+this.y17*9+this.y16*10+this.y15*11+this.y14*12+this.y13*13+this.y12*14+this.y11*15+this.y10*16+this.y9*17+this.y8*18+this.y7*19+this.y6*20+this.y5*21+this.y4*22+this.y3*23+this.y2*24+this.y1*25)/count;
+        x = (this.x25+this.x24+this.x23+this.x22+this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/25;
+        y = (this.y25+this.y24+this.y23+this.y22+this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/25;
     }
     else if (this.x24)
     {
-        var count = 24+23+22+21+20+19+18+17+16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x24*1+this.x23*2+this.x22*3+this.x21*4+this.x20*5+this.x19*6+this.x18*7+this.x17*8+this.x16*9+this.x15*10+this.x14*11+this.x13*12+this.x12*13+this.x11*14+this.x10*15+this.x9*16+this.x8*17+this.x7*18+this.x6*19+this.x5*20+this.x4*21+this.x3*22+this.x2*23+this.x1*24)/count;
-        y = (this.y24*1+this.y23*2+this.y22*3+this.y21*4+this.y20*5+this.y19*6+this.y18*7+this.y17*8+this.y16*9+this.y15*10+this.y14*11+this.y13*12+this.y12*13+this.y11*14+this.y10*15+this.y9*16+this.y8*17+this.y7*18+this.y6*19+this.y5*20+this.y4*21+this.y3*22+this.y2*23+this.y1*24)/count;
+        x = (this.x24+this.x23+this.x22+this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/24;
+        y = (this.y24+this.y23+this.y22+this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/24;
     }
     else if (this.x23)
     {
-        var count = 23+22+21+20+19+18+17+16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x23*1+this.x22*2+this.x21*3+this.x20*4+this.x19*5+this.x18*6+this.x17*7+this.x16*8+this.x15*9+this.x14*10+this.x13*11+this.x12*12+this.x11*13+this.x10*14+this.x9*15+this.x8*16+this.x7*17+this.x6*18+this.x5*19+this.x4*20+this.x3*21+this.x2*22+this.x1*23)/count;
-        y = (this.y23*1+this.y22*2+this.y21*3+this.y20*4+this.y19*5+this.y18*6+this.y17*7+this.y16*8+this.y15*9+this.y14*10+this.y13*11+this.y12*12+this.y11*13+this.y10*14+this.y9*15+this.y8*16+this.y7*17+this.y6*18+this.y5*19+this.y4*20+this.y3*21+this.y2*22+this.y1*23)/count;
+        x = (this.x23+this.x22+this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/23;
+        y = (this.y23+this.y22+this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/23;
     }
     else if (this.x22)
     {
-        var count = 22+21+20+19+18+17+16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x22*1+this.x21*2+this.x20*3+this.x19*4+this.x18*5+this.x17*6+this.x16*7+this.x15*8+this.x14*9+this.x13*10+this.x12*11+this.x11*12+this.x10*13+this.x9*14+this.x8*15+this.x7*16+this.x6*17+this.x5*18+this.x4*19+this.x3*20+this.x2*21+this.x1*22)/count;
-        y = (this.y22*1+this.y21*2+this.y20*3+this.y19*4+this.y18*5+this.y17*6+this.y16*7+this.y15*8+this.y14*9+this.y13*10+this.y12*11+this.y11*12+this.y10*13+this.y9*14+this.y8*15+this.y7*16+this.y6*17+this.y5*18+this.y4*19+this.y3*20+this.y2*21+this.y1*22)/count;
+        x = (this.x22+this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/22;
+        y = (this.y22+this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/22;
     }
     else if (this.x21)
     {
-        var count = 21+20+19+18+17+16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x21*1+this.x20*2+this.x19*3+this.x18*4+this.x17*5+this.x16*6+this.x15*7+this.x14*8+this.x13*9+this.x12*10+this.x11*11+this.x10*12+this.x9*13+this.x8*14+this.x7*15+this.x6*16+this.x5*17+this.x4*18+this.x3*19+this.x2*20+this.x1*21)/count;
-        y = (this.y21*1+this.y20*2+this.y19*3+this.y18*4+this.y17*5+this.y16*6+this.y15*7+this.y14*8+this.y13*9+this.y12*10+this.y11*11+this.y10*12+this.y9*13+this.y8*14+this.y7*15+this.y6*16+this.y5*17+this.y4*18+this.y3*19+this.y2*20+this.y1*21)/count;
+        x = (this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/21;
+        y = (this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/21;
     }
     else if (this.x20)
     {
-        var count = 20+19+18+17+16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x20*1+this.x19*2+this.x18*3+this.x17*4+this.x16*5+this.x15*6+this.x14*7+this.x13*8+this.x12*9+this.x11*10+this.x10*11+this.x9*12+this.x8*13+this.x7*14+this.x6*15+this.x5*16+this.x4*17+this.x3*18+this.x2*19+this.x1*20)/count;
-        y = (this.y20*1+this.y19*2+this.y18*3+this.y17*4+this.y16*5+this.y15*6+this.y14*7+this.y13*8+this.y12*9+this.y11*10+this.y10*11+this.y9*12+this.y8*13+this.y7*14+this.y6*15+this.y5*16+this.y4*17+this.y3*18+this.y2*19+this.y1*20)/count;
+        x = (this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/20;
+        y = (this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/20;
     }
     else if (this.x19)
     {
-        var count = 19+18+17+16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x19*1+this.x18*2+this.x17*3+this.x16*4+this.x15*5+this.x14*6+this.x13*7+this.x12*8+this.x11*9+this.x10*10+this.x9*11+this.x8*12+this.x7*13+this.x6*14+this.x5*15+this.x4*16+this.x3*17+this.x2*18+this.x1*19)/count;
-        y = (this.y19*1+this.y18*2+this.y17*3+this.y16*4+this.y15*5+this.y14*6+this.y13*7+this.y12*8+this.y11*9+this.y10*10+this.y9*11+this.y8*12+this.y7*13+this.y6*14+this.y5*15+this.y4*16+this.y3*17+this.y2*18+this.y1*19)/count;
+        x = (this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/19;
+        y = (this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/19;
     }
     else if (this.x18)
     {
-        var count = 18+17+16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x18*1+this.x17*2+this.x16*3+this.x15*4+this.x14*5+this.x13*6+this.x12*7+this.x11*8+this.x10*9+this.x9*10+this.x8*11+this.x7*12+this.x6*13+this.x5*14+this.x4*15+this.x3*16+this.x2*17+this.x1*18)/count;
-        y = (this.y18*1+this.y17*2+this.y16*3+this.y15*4+this.y14*5+this.y13*6+this.y12*7+this.y11*8+this.y10*9+this.y9*10+this.y8*11+this.y7*12+this.y6*13+this.y5*14+this.y4*15+this.y3*16+this.y2*17+this.y1*18)/count;
+        x = (this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/18;
+        y = (this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/18;
     }
     else if (this.x17)
     {
-        var count = 17+16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x17*1+this.x16*2+this.x15*3+this.x14*4+this.x13*5+this.x12*6+this.x11*7+this.x10*8+this.x9*9+this.x8*10+this.x7*11+this.x6*12+this.x5*13+this.x4*14+this.x3*15+this.x2*16+this.x1*17)/count;
-        y = (this.y17*1+this.y16*2+this.y15*3+this.y14*4+this.y13*5+this.y12*6+this.y11*7+this.y10*8+this.y9*9+this.y8*10+this.y7*11+this.y6*12+this.y5*13+this.y4*14+this.y3*15+this.y2*16+this.y1*17)/count;
+        x = (this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/17;
+        y = (this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/17;
     }
     else if (this.x16)
     {
-        var count = 16+15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x16*1+this.x15*2+this.x14*3+this.x13*4+this.x12*5+this.x11*6+this.x10*7+this.x9*8+this.x8*9+this.x7*10+this.x6*11+this.x5*12+this.x4*13+this.x3*14+this.x2*15+this.x1*16)/count;
-        y = (this.y16*1+this.y15*2+this.y14*3+this.y13*4+this.y12*5+this.y11*6+this.y10*7+this.y9*8+this.y8*9+this.y7*10+this.y6*11+this.y5*12+this.y4*13+this.y3*14+this.y2*15+this.y1*16)/count;
+        x = (this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/16;
+        y = (this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/16;
     }
     else if (this.x15)
     {
-        var count = 15+14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x15*1+this.x14*2+this.x13*3+this.x12*4+this.x11*5+this.x10*6+this.x9*7+this.x8*8+this.x7*9+this.x6*10+this.x5*11+this.x4*12+this.x3*13+this.x2*14+this.x1*15)/count;
-        y = (this.y15*1+this.y14*2+this.y13*3+this.y12*4+this.y11*5+this.y10*6+this.y9*7+this.y8*8+this.y7*9+this.y6*10+this.y5*11+this.y4*12+this.y3*13+this.y2*14+this.y1*15)/count;
+        x = (this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/15;
+        y = (this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/15;
     }
     else if (this.x14)
     {
-        var count = 14+13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x14*1+this.x13*2+this.x12*3+this.x11*4+this.x10*5+this.x9*6+this.x8*7+this.x7*8+this.x6*9+this.x5*10+this.x4*11+this.x3*12+this.x2*13+this.x1*14)/count;
-        y = (this.y14*1+this.y13*2+this.y12*3+this.y11*4+this.y10*5+this.y9*6+this.y8*7+this.y7*8+this.y6*9+this.y5*10+this.y4*11+this.y3*12+this.y2*13+this.y1*14)/count;
+        x = (this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/14;
+        y = (this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/14;
     }
     else if (this.x13)
     {
-        var count = 13+12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x13*1+this.x12*2+this.x11*3+this.x10*4+this.x9*5+this.x8*6+this.x7*7+this.x6*8+this.x5*9+this.x4*10+this.x3*11+this.x2*12+this.x1*13)/count;
-        y = (this.y13*1+this.y12*2+this.y11*3+this.y10*4+this.y9*5+this.y8*6+this.y7*7+this.y6*8+this.y5*9+this.y4*10+this.y3*11+this.y2*12+this.y1*13)/count;
+        x = (this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/13;
+        y = (this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/13;
     }
     else if (this.x12)
     {
-        var count = 12+11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x12*1+this.x11*2+this.x10*3+this.x9*4+this.x8*5+this.x7*6+this.x6*7+this.x5*8+this.x4*9+this.x3*10+this.x2*11+this.x1*12)/count;
-        y = (this.y12*1+this.y11*2+this.y10*3+this.y9*4+this.y8*5+this.y7*6+this.y6*7+this.y5*8+this.y4*9+this.y3*10+this.y2*11+this.y1*12)/count;
+        x = (this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/12;
+        y = (this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/12;
      }
     else if (this.x11)
      {
-        var count = 11+10+9+8+7+6+5+4+3+2+1;
-        x = (this.x11*1+this.x10*2+this.x9*3+this.x8*4+this.x7*5+this.x6*6+this.x5*7+this.x4*8+this.x3*9+this.x2*10+this.x1*11)/count;
-        y = (this.y11*1+this.y10*2+this.y9*3+this.y8*4+this.y7*5+this.y6*6+this.y5*7+this.y4*8+this.y3*9+this.y2*10+this.y1*11)/count;
+        x = (this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/11;
+        y = (this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/11;
      }
     else if (this.x10)
      {
-        var count = 10+9+8+7+6+5+4+3+2+1;
-        x = (this.x10*1+this.x9*2+this.x8*3+this.x7*4+this.x6*5+this.x5*6+this.x4*7+this.x3*8+this.x2*9+this.x1*10)/count;
-        y = (this.y10*1+this.y9*2+this.y8*3+this.y7*4+this.y6*5+this.y5*6+this.y4*7+this.y3*8+this.y2*9+this.y1*10)/count;
+        x = (this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/10;
+        y = (this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/10;
      }
     else if (this.x9)
      {
-        var count = 9+8+7+6+5+4+3+2+1;
-        x = (this.x9*1+this.x8*2+this.x7*3+this.x6*4+this.x5*5+this.x4*6+this.x3*7+this.x2*8+this.x1*9)/count;
-        y = (this.y9*1+this.y8*2+this.y7*3+this.y6*4+this.y5*5+this.y4*6+this.y3*7+this.y2*8+this.y1*9)/count;
+        x = (this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/9;
+        y = (this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/9;
      }
     else if (this.x8)
      {
-        var count = 8+7+6+5+4+3+2+1;
-        x = (this.x8*1+this.x7*2+this.x6*3+this.x5*4+this.x4*5+this.x3*6+this.x2*7+this.x1*8)/count;
-        y = (this.y8*1+this.y7*2+this.y6*3+this.y5*4+this.y4*5+this.y3*6+this.y2*7+this.y1*8)/count;
+        x = (this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/8;
+        y = (this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/8;
      }
      if (this.x7)
      {
-        var count = 7+6+5+4+3+2+1;
-        x = (this.x7*1+this.x6*2+this.x5*3+this.x4*4+this.x3*5+this.x2*6+this.x1*7)/count;
-        y = (this.y7*1+this.y6*2+this.y5*3+this.y4*4+this.y3*5+this.y2*6+this.y1*7)/count;
+        x = (this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/7;
+        y = (this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/7;
      }
     else if (this.x6)
      {
-        var count = 6+5+4+3+2+1;
-        x = (this.x6*1+this.x5*2+this.x4*3+this.x3*4+this.x2*5+this.x1*6)/count;
-        y = (this.y6*1+this.y5*2+this.y4*3+this.y3*4+this.y2*5+this.y1*6)/count;
+        x = (this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/6;
+        y = (this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/6;
      }
     else if (this.x5)
     {
-        var count = 5+4+3+2+1;
-        x = (this.x5*1+this.x4*2+this.x3*3+this.x2*4+this.x1*5)/count;
-        y = (this.y5*1+this.y4*2+this.y3*3+this.y2*4+this.y1*5)/count;
+        x = (this.x5+this.x4+this.x3+this.x2+this.x1)/5;
+        y = (this.y5+this.y4+this.y3+this.y2+this.y1)/5;
      }
     else if (this.x4)
     {
-        var count = 4+3+2+1;
-        x = (this.x4*1+this.x3*2+this.x2*3+this.x1*4)/count;
-        y = (this.y4*1+this.y3*2+this.y2*3+this.y1*4)/count;
+        x = (this.x4+this.x3+this.x2+this.x1)/4;
+        y = (this.y4+this.y3+this.y2+this.y1)/4;
      }
     else if (this.x3)
      {
-        var count = 3+2+1;
-        x = (this.x3*1+this.x2*2+this.x1*3)/count;
-        y = (this.y3*1+this.y2*2+this.y1*3)/count;
+        x = (this.x3+this.x2+this.x1)/3;
+        y = (this.y3+this.y2+this.y1)/3;
      }
     else if (this.x2)
      {
-        var count = 2+1;
-        x = (this.x2*1+this.x1*2)/count;
-        y = (this.y2*1+this.y1*2)/count;
+        x = (this.x2+this.x1)/2;
+        y = (this.y2+this.y1)/2;
      }
     else if (this.x1)
      {
-        x = this.x1;
-        y = this.y1;
+        x = (this.x1)/1;
+        y = (this.y1)/1;
      }
 
     return {x,y}
@@ -2167,6 +2226,16 @@ var taplst =
         else if (context.movenext && context.movenext.hitest(x,y))
         {
             _4cnvctx.movepage(1);
+        }
+        else if (context.tableft && context.tableft.hitest(x,y))
+        {
+            globalobj.autodirect = 1;
+            context.tab();
+        }
+        else if (context.tabright && context.tabright.hitest(x,y))
+        {
+            globalobj.autodirect = -1;
+            context.tab();
         }
         else if (thumbpos.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
@@ -2648,86 +2717,6 @@ function resetcanvas()
     context.refresh();
 }
 
-var eventlst =
-[
-    {name: "_1cnvctx", mouse: "DEFAULT", guide: "DEFAULT", thumb: "DEFAULT", tap: "DEFAULT", pan: "DEFAULT", swipe: "DEFAULT", draw: "DEFAULT", wheel: "DEFAULT", drop: "DEFAULT", key: "DEFAULT", press: "DEFAULT", pinch: "DEFAULT", fillwidth: 0},
-    {name: "_2cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
-    {name: "_3cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
-    {name: "_4cnvctx", mouse: "BOSS", guide: "GUIDE", thumb: "BOSS",  tap: "BOSS", pan: "BOSS", swipe: "BOSS", draw: "BOSS", wheel: "BOSS", drop: "BOSS", key: "BOSS", press: "BOSS", pinch: "BOSS", fillwidth: 0},
-    {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(420,window.innerWidth)},
-    {name: "_6cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
-    {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "HMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(420,window.innerWidth)},
-    {name: "_8cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
-    {name: "_9cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
-];
-
-function seteventspanel(panel)
-{
-    _1ham.panel = panel;
-    _2ham.panel = panel;
-    _3ham.panel = panel;
-    _4ham.panel = panel;
-    _5ham.panel = panel;
-    _6ham.panel = panel;
-    _7ham.panel = panel;
-    _8ham.panel = panel;
-    _9ham.panel = panel;
-}
-
-function setevents(context, obj)
-{
-    var k = pinchlst.findIndex(function (a) { return a.name == obj.pinch });
-    k = pinchlst[k];
-    context.pinch_ = k.pinch;
-    context.pinchstart_ = k.pinchstart;
-    context.pinchend_ = k.pinchend;
-
-    var k = droplst.findIndex(function (a) { return a.name == obj.drop });
-    k = droplst[k];
-    context.drop = k.drop;
-
-    var k = keylst.findIndex(function (a) { return a.name == obj.key });
-    k = keylst[k];
-    context.keyup_ = k.keyup;
-    context.keydown_ = k.keydown;
-
-    var k = wheelst.findIndex(function (a) { return a.name == obj.wheel });
-    k = wheelst[k];
-    context.wheelup_ = k.up;
-    context.wheeldown_ = k.down;
-
-    var k = mouselst.findIndex(function (a) {return a.name == obj.mouse});
-    k = mouselst[k];
-    context.mouse = k;
-
-    var k = presslst.findIndex(function (a) {return a.name == obj.press});
-    k = presslst[k];
-    context.pressup_ = k.pressup;
-    context.press_ = k.press;
-
-    var k = swipelst.findIndex(function (a) {return a.name == obj.swipe});
-    k = swipelst[k];
-    context.swipeleftright_ = k.swipeleftright;
-    context.swipeupdown_ = k.swipeupdown;
-
-    var k = drawlst.findIndex(function (a) {return a.name == obj.draw});
-    k = drawlst[k];
-    context.draw = k.draw;
-
-    var k = taplst.findIndex(function (a) {return a.name == obj.tap});
-    k = taplst[k];
-    context.tap_ = k.tap;
-
-    var k = panlst.findIndex(function (a) {return a.name == obj.pan});
-    k = panlst[k];
-    context.panstart_ = k.panstart;
-    context.pan_ = k.pan;
-    context.panupdown_ = k.updown;
-    context.panleftright_ = k.leftright;
-    context.panend_ = k.panend;
-    context.fillwidth = obj.fillwidth;
-}
-
 var templatelst =
 [
 {
@@ -2739,7 +2728,7 @@ var templatelst =
         globalobj.slicewidth = 60;
         loomobj.split(50, "70-85", loomobj.length());
         poomobj.split(50, "60-85", poomobj.length());
-        traitobj.split(65, "0.1-1.0", traitobj.length());
+        traitobj.split(60, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -2751,7 +2740,7 @@ var templatelst =
         globalobj.slicewidth = 60;
         loomobj.split(50, "70-85", loomobj.length());
         poomobj.split(50, "60-85", poomobj.length());
-        traitobj.split(85, "0.1-1.0", traitobj.length());
+        traitobj.split(60, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -2810,9 +2799,8 @@ var templatelst =
     {
         thumbpos.set(4);
         globalobj.slicewidth = 60;
-        var y = loomobj.length()*0.5;
-        loomobj.split(y, "90-95", loomobj.length());
-        poomobj.split(y, "90-95", poomobj.length());
+        loomobj.split(50, "90-95", loomobj.length());
+        poomobj.split(50, "90-95", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2823,9 +2811,8 @@ var templatelst =
     {
         thumbpos.set(4);
         globalobj.slicewidth = 60;
-        var y = loomobj.length()*0.5;
-        loomobj.split(y, "80-95", loomobj.length());
-        poomobj.split(y, "80-95", poomobj.length());
+        loomobj.split(50, "80-95", loomobj.length());
+        poomobj.split(50, "80-95", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2836,9 +2823,8 @@ var templatelst =
     {
         thumbpos.set(4);
         globalobj.slicewidth = 60;
-        var y = loomobj.length()*0.8;
-        loomobj.split(y, "80-90", loomobj.length());
-        poomobj.split(y, "60-90", poomobj.length());
+        loomobj.split(50, "80-90", loomobj.length());
+        poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2943,32 +2929,6 @@ fetch(path)
             }
         }
 
-        for (var n = 0; n < contextlst.length; ++n)
-		{
-            context = contextlst[n];
-			context.index = n;
-            context.imageSmoothingEnabled = false;
-            context.imageSmoothingQuality = "low";
-		    context.enabled = 0;
-			context.canvas.width = 1;
-			context.canvas.height = 1;
-			context.font = "400 1rem Russo One";
-			context.fillText("  ", 0, 0);
-			context.font = "400 1rem Archivo Black";
-			context.fillText("  ", 0, 0);
-			context.font = "400 1rem Source Code Pro";
-			context.fillText("  ", 0, 0);
-			context.slideshow = 0;
-	        context.lastime = 0;
-			context.allowpage = 0;
-			context.buttonheight = 32;
-            setevents(context, eventlst[n]);
-            context.sliceobj = new makeoption("", []);
-            context.timeobj = new makeoption("", TIMEOBJ);
-            context.timeobj.set(TIMEOBJ/2);
-        }
-
-        _4cnvctx.timeobj.set(url.time);
         var k = localStorage.getItem("8time");
         if (k)
             _8cnvctx.timeobj.set(Number(k));
@@ -3122,7 +3082,6 @@ fetch(path)
         _9cnvctx.slideshow_ = 20;
         _9cnvctx.slidereduce = 0.75;
 
-        seteventspanel(new YollPanel());
         _4cnvctx.enabled = 1;
         pageresize();
         contextobj.reset();
@@ -3830,12 +3789,10 @@ function menuhide()
 
 function reset()
 {
-    seteventspanel(new Empty());
     contextobj.reset()
     setTimeout(function()
     {
         contextobj.reset();
-        seteventspanel(new YollPanel());
     }, 400);
 }
 
@@ -4147,16 +4104,19 @@ var bodylst =
         {
             context.moveprev = new rectangle()
             context.movenext = new rectangle()
+            context.tableft = new rectangle()
+            context.tabright = new rectangle()
             var a = new Col([60,0,60],
             [
                 new Layer(
                 [
-                    new Rectangle(context.moveprev),
+                    new Rectangle(context.tableft),
                     new Row([0,60,0],
                     [
                         0,
                         new Shrink(new Layer(
                         [
+                            new Rectangle(context.moveprev),
                             new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),
                             new Shrink(new Arrow(ARROWFILL,270),12,12),
                         ]),10,10),
@@ -4166,12 +4126,13 @@ var bodylst =
                 0,
                 new Layer(
                 [
-                    new Rectangle(context.movenext),
+                    new Rectangle(context.tabright),
                     new Row([0,60,0],
                     [
                         0,
                         new Shrink(new Layer(
                         [
+                            new Rectangle(context.movenext),
                             new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),
                             new Shrink(new Arrow(ARROWFILL,90),12,12),
                         ]),10,10),
@@ -4542,4 +4503,31 @@ window.addEventListener("load", async () =>
     {
     }
 });
+
+for (var n = 0; n < contextlst.length; ++n)
+{
+    var context = contextlst[n];
+    context.index = n;
+    context.imageSmoothingEnabled = false;
+    context.imageSmoothingQuality = "low";
+    context.enabled = 0;
+    context.canvas.width = 1;
+    context.canvas.height = 1;
+    context.font = "400 1rem Russo One";
+    context.fillText("  ", 0, 0);
+    context.font = "400 1rem Archivo Black";
+    context.fillText("  ", 0, 0);
+    context.font = "400 1rem Source Code Pro";
+    context.fillText("  ", 0, 0);
+    context.slideshow = 0;
+    context.lastime = 0;
+    context.allowpage = 0;
+    context.buttonheight = 32;
+    setevents(context, eventlst[n]);
+    context.sliceobj = new makeoption("", []);
+    context.timeobj = new makeoption("", TIMEOBJ);
+    context.timeobj.set(TIMEOBJ/2);
+}
+
+_4cnvctx.timeobj.set(url.time);
 
