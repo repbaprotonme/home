@@ -4,6 +4,7 @@ out
 tmp
 error
 *.mp3
+*.avif
 *.webp
 *.jpg
 *.cbz
