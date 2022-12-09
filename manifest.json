@@ -2,7 +2,7 @@
   "background_color": "#fcb603",
   "scope": "/",
   "theme_color": "#fcb603",
-  "description": "Image Sidescroller",
+  "description": "Sidescroller",
   "display": "fullscreen",
   "icons": [
     {
@@ -64,7 +64,7 @@
       "icons": [{ "src": "res/shortcut.png", "sizes": "192x192" }]
     }
   ],
-  "name": "Repba Sidescroller",
+  "name": "Sidescroller",
   "id": "./index.html?source=pwa",
   "start_url": "./index.html?source=pwa"
 }

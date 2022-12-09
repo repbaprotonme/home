@@ -1,0 +1,45 @@
+#sudo systemctl restart nginx
+
+server 
+{
+	listen 80;
+      	server_name reportbase.us;
+
+      	location /
+      	{
+		expires 24h;
+        	root /srv/http/reportbase.us;
+           	index  index.html index.htm;
+      	}
+
+      	location /data/
+      	{
+		expires 24h;
+       		root /srv/http/reportbase.us;
+      	}
+
+       listen 443 ssl;                                                                                                                           
+        ssl_certificate /etc/letsencrypt/live/reportbase.us/fullchain.pem;                                                                        
+        ssl_certificate_key /etc/letsencrypt/live/reportbase.us/privkey.pem;                                                                      
+        include /etc/letsencrypt/options-ssl-nginx.conf;                                                                                          
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;                                                                                            
+
+	location /.well-known/acme-challenge/ 
+	{
+        	root /srv/http/reportbase.us;
+        }
+}
+
+server
+  {
+      if ($host = reportbase.us) {
+          return 301 https://$host$request_uri;
+      } 
+ 
+
+       listen 80;
+       server_name reportbase.us
+     return 404; 
+
+
+}

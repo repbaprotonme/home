@@ -393,6 +393,21 @@ var guidelst =
     },
 ]
 
+var colorlst =
+    [
+      'black', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+      '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+      '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+      '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+      '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+      '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+      '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+      '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+      '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+      '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF',
+    ];
+var colorobj = new makeoption("COLOR", [...colorlst, ...colorlst, ...colorlst, ...colorlst]);
+
 var guideobj = new makeoption("GUIDE", guidelst);
 var colobj = new makeoption("COLUMNS", [0,20,40,60,80,99].reverse());
 var channelobj = new makeoption("CHANNELS", [0,20,40,60,80,99]);
@@ -483,7 +498,14 @@ function drawslices()
             slice.xx = xx;
             slice.xxx = xxx;
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
-                slice.xx, 0, stretchwidth, rect.height);
+              slice.xx, 0, stretchwidth, rect.height);
+
+            if (colorobj.enabled)
+            {
+                var a = new Fill(colorobj.data()[m]);
+                a.draw(context, new rectangle(slice.xx,0,stretchwidth,rect.height), 0, 0);
+            }
+
             bx = bx2;
             context.visibles++
         }
@@ -491,6 +513,10 @@ function drawslices()
         context.coverage = (context.colwidth*context.visibles)/rect.width;
         context.drawslicescount++;
         context.restore();
+        delete context.keyzoomdown;
+        delete context.keyzoomup;
+        delete context.keymoveup;
+        delete context.keymovedown;
         delete context.moveprev;
         delete context.movenext;
         delete context.tableft;
@@ -504,7 +530,7 @@ function drawslices()
         if (!context.pressed && !headcnv.height)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
         context.setcolumncomplete = 1;
-   }
+    }
 
     var data = [_3cnvctx,  _5cnvctx, _6cnvctx, _7cnvctx, _8cnvctx, _9cnvctx, ];
     for (var n = 0; n < data.length; n++)
@@ -871,6 +897,80 @@ var StrokeRect = function (color)
     }
 }
 
+var Plus = function (color)
+{
+    this.draw = function (context, rect, user, time)
+    {
+        context.save();
+	    var w = rect.width
+        var h = rect.height
+        var x = rect.x;
+        var y = rect.y;
+        context.shadowOffsetX = 1;
+        context.shadowOffsetY = 1;
+	    var path = new Path2D();
+        x += 6;
+        y -= 3;
+		path.moveTo(x,y);
+        x += 5;
+		path.lineTo(x,y);
+        y += 22;
+		path.lineTo(x,y);
+        x += -5;
+		path.lineTo(x,y);
+        y += 22;
+		path.lineTo(x,y);
+		context.fillStyle = color;
+		context.fill(path);
+
+        var x = rect.x-3;
+        var y = rect.y+5;
+		path.moveTo(x,y);
+        x += 22;
+		path.lineTo(x,y);
+        y += 5;
+		path.lineTo(x,y);
+        x += -22;
+		path.lineTo(x,y);
+        y += 5;
+		path.lineTo(x,y);
+		context.fillStyle = color;
+		context.fill(path);
+
+        context.restore();
+    };
+};
+
+var Minus = function (color)
+{
+    this.draw = function (context, rect, user, time)
+    {
+        context.save();
+	    var w = rect.width
+        var h = rect.height
+        var x = rect.x;
+        var y = rect.y;
+        context.shadowOffsetX = 1;
+        context.shadowOffsetY = 1;
+	    var path = new Path2D();
+        var x = rect.x-3;
+        var y = rect.y+5;
+		path.moveTo(x,y);
+        x += 21;
+		path.lineTo(x,y);
+        y += 5;
+		path.lineTo(x,y);
+        x += -21;
+		path.lineTo(x,y);
+        y += 5;
+		path.lineTo(x,y);
+		context.fillStyle = color;
+		context.fill(path);
+
+        context.restore();
+    };
+};
+
 var Arrow = function (color, degrees)
 {
     this.draw = function (context, rect, user, time)
@@ -1038,10 +1138,7 @@ CanvasRenderingContext2D.prototype.tab = function ()
     context.slidestop = (context.timeobj.length()/context.virtualwidth)*globalobj.slidetop;
     context.slidereduce = context.slidestop/globalobj.slidefactor;
     clearInterval(context.timemain);
-    context.timemain = setInterval(function ()
-    {
-        drawslices()
-    }, TIMEMAIN);
+    context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
 }
 
 CanvasRenderingContext2D.prototype.refresh = function ()
@@ -1386,7 +1483,7 @@ var wheelst =
 
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
-        if (isthumbrect)
+        if (thumbpos.enabled && isthumbrect)
         {
             heightobj.getcurrent().add(-1);
             context.refresh();
@@ -1421,7 +1518,7 @@ var wheelst =
 
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
-        if (isthumbrect)
+        if (thumbpos.enabled && isthumbrect)
         {
             delete photo.cached;
             heightobj.getcurrent().add(1);
@@ -1623,7 +1720,7 @@ var panlst =
             var len = context.timeobj.length();
             var diff = context.startx-x;
             var jvalue = ((len/context.virtualwidth)*globalobj.panx)*diff;
-            var j = context.startt - jvalue;//todo
+            var j = context.startt - jvalue;
             if (j < 0)
                 j = len+j-1;
             else if (j >= len)
@@ -1897,33 +1994,64 @@ var keylst =
         {
             globalobj.autodirect = 1;
             evt.preventDefault();
-            _4cnvctx.timeobj.rotate(TIMEOBJ/150);
-            context.refresh();
+            context.tab();
         }
         else if (evt.key == "ArrowRight" || evt.key == "l")
         {
             globalobj.autodirect = -1;
             evt.preventDefault();
-            _4cnvctx.timeobj.rotate(-TIMEOBJ/150);
-            context.refresh();
+            context.tab();
         }
         else if (evt.key == "ArrowUp" || evt.key == "k")
         {
+            if (!rowobj.current())
+                return;
+            context.moving = -1;
+            setTimeout(function(){context.moving = 0; context.refresh();},400)
             if (context.ctrlhit)
                 rowobj.set(0);
             else
-                rowobj.add(-rowobj.length()/100);
+                rowobj.add(-rowobj.length()/6);
             contextobj.reset();
             evt.preventDefault();
         }
         else if (evt.key == "ArrowDown" || evt.key == "j" )
         {
+            if (rowobj.current() >= rowobj.length()-1)
+                return;
+            context.moving = 1;
+            setTimeout(function(){context.moving = 0; context.refresh();},400)
             if (context.ctrlhit)
                 rowobj.set(rowobj.length()-1);
             else
-                rowobj.add(rowobj.length()/100);
+                rowobj.add(rowobj.length()/6);
             contextobj.reset();
             evt.preventDefault();
+        }
+        else if (evt.key == "\\")
+        {
+            colorobj.enabled = colorobj.enabled?0:1;
+            context.refresh()
+        }
+        else if (evt.key == "[" || evt.key == "-")
+        {
+            var zoom = zoomobj.getcurrent();
+            if (!zoom.current())
+                return;
+            context.zooming = -1;
+            setTimeout(function(){context.zooming = 0; context.refresh();},400)
+            zoom.add(-5);
+            contextobj.reset()
+        }
+        else if (evt.key == "]" || evt.key == "+")
+        {
+            var zoom = zoomobj.getcurrent();
+            if (zoom.current() >= zoom.length()-1)
+                return;
+            context.zooming = 1;
+            setTimeout(function(){context.zooming = 0; context.refresh();},400)
+            zoom.add(5);
+            contextobj.reset()
         }
         else if (evt.key == "Pageup" || evt.key == "o")
         {
@@ -2219,13 +2347,67 @@ var taplst =
             return;
         }
 
-        if (context.moveprev && context.moveprev.hitest(x,y))
+        if (thumbpos.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
+        {
+            context.hithumb(x,y);
+            var zoom = zoomobj.getcurrent()
+            var b = !Number(zoom.getcurrent()/100) && !zoom.current()
+            if (b)
+                context.refresh();
+            else
+                contextobj.reset()
+        }
+        else if (context.moveprev && context.moveprev.hitest(x,y))
         {
             _4cnvctx.movepage(-1);
         }
         else if (context.movenext && context.movenext.hitest(x,y))
         {
             _4cnvctx.movepage(1);
+        }
+        else if (context.keyzoomup && context.keyzoomup.hitest(x,y))
+        {
+            var zoom = zoomobj.getcurrent();
+            if (zoom.current() >= zoom.length()-1)
+                return;
+            context.zooming = 1;
+            setTimeout(function(){context.zooming = 0; context.refresh();},400)
+            zoom.add(5);
+            contextobj.reset()
+        }
+        else if (context.keyzoomdown && context.keyzoomdown.hitest(x,y))
+        {
+            var zoom = zoomobj.getcurrent();
+            if (!zoom.current())
+                return;
+             context.zooming = -1;
+            setTimeout(function(){context.zooming = 0; context.refresh();},400)
+            zoom.add(-5);
+            contextobj.reset()
+        }
+         else if (context.keymoveup && context.keymoveup.hitest(x,y))
+        {
+            if (!rowobj.current())
+                return;
+            context.moving = -1;
+            setTimeout(function(){context.moving = 0; context.refresh();},400)
+            if (context.ctrlhit)
+                rowobj.set(0);
+            else
+                rowobj.add(-rowobj.length()/6);
+            contextobj.reset();
+        }
+        else if (context.keymovedown && context.keymovedown.hitest(x,y))
+        {
+            if (rowobj.current() >= rowobj.length()-1)
+                return;
+            context.moving = 1;
+            setTimeout(function(){context.moving = 0; context.refresh();},400)
+            if (context.ctrlhit)
+                rowobj.set(rowobj.length()-1);
+            else
+                rowobj.add(rowobj.length()/6);
+            contextobj.reset();
         }
         else if (context.tableft && context.tableft.hitest(x,y))
         {
@@ -2236,16 +2418,6 @@ var taplst =
         {
             globalobj.autodirect = -1;
             context.tab();
-        }
-        else if (thumbpos.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
-        {
-            context.hithumb(x,y);
-            var zoom = zoomobj.getcurrent()
-            var b = !Number(zoom.getcurrent()/100) && !zoom.current()
-            if (b)
-                context.refresh();
-            else
-                contextobj.reset()
         }
         else
         {
@@ -3808,6 +3980,7 @@ function resize()
 
 function escape()
 {
+    thumbpos.enabled = 0;
     clearInterval(_4cnvctx.timemain);
     _4cnvctx.timemain = 0;
     menuhide();
@@ -3961,10 +4134,7 @@ var headlst =
 		{
             if (context.page.hitest(x,y))
             {
-                if (photo.menu.complete && photo.menu.naturalHeight)
-                    menushow(_5cnvctx)
-                else
-                    menushow(_8cnvctx)
+                //todo project menu
             }
             else if (context.prevpage.hitest(x,y))
             {
@@ -3972,7 +4142,10 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                promptFile().then(function(files) { dropfiles(files); })
+                if (photo.menu.complete && photo.menu.naturalHeight)
+                    menushow(_5cnvctx)
+                else
+                    menushow(_8cnvctx)
             }
             else if (context.nextpage.hitest(x,y))
             {
@@ -4102,44 +4275,74 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
+            context.keyzoomup = new rectangle()
+            context.keyzoomdown = new rectangle()
+            context.keymoveup = new rectangle()
+            context.keymovedown = new rectangle()
             context.moveprev = new rectangle()
             context.movenext = new rectangle()
             context.tableft = new rectangle()
             context.tabright = new rectangle()
+            var zoom = zoomobj.getcurrent();
+            var k = !Number(zoom.getcurrent()) && !zoom.current();
             var a = new Col([60,0,60],
             [
                 new Layer(
                 [
                     new Rectangle(context.tableft),
-                    new Row([0,60,0],
+                    new Row([0,60,60,60,0],
                     [
                         0,
-                        new Shrink(new Layer(
+                        new Layer(
+                        [
+                            new Rectangle(context.keyzoomup),
+                            new Shrink(new Circle(_4cnvctx.zooming == 1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Plus(ARROWFILL),22,22),
+                        ]),
+                        new Layer(
                         [
                             new Rectangle(context.moveprev),
-                            new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),
-                            new Shrink(new Arrow(ARROWFILL,270),12,12),
-                        ]),10,10),
-                        0
-                    ]),
+                            new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Arrow(ARROWFILL,270),22,22),
+                        ]),
+                        new Layer(
+                        [
+                            new Rectangle(context.keyzoomdown),
+                            new Shrink(new Circle(_4cnvctx.zooming == -1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Minus(ARROWFILL),22,22),
+                        ]),
+                        0,
+                    ])
                 ]),
                 0,
                 new Layer(
                 [
                     new Rectangle(context.tabright),
-                    new Row([0,60,0],
+                    new Row([0,60,60,60,0],
                     [
                         0,
-                        new Shrink(new Layer(
+                        k?0:new Layer(
+                        [
+                            new Rectangle(context.keymoveup),
+                            new Shrink(new Circle(_4cnvctx.moving == -1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Arrow(ARROWFILL,0),22,22),
+                        ]),
+                        new Layer(
                         [
                             new Rectangle(context.movenext),
-                            new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),
-                            new Shrink(new Arrow(ARROWFILL,90),12,12),
-                        ]),10,10),
+                            new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Arrow(ARROWFILL,90),22,22),
+                        ]),
+                        k?0:new Layer(
+                        [
+                            new Rectangle(context.keymovedown),
+                            new Shrink(new Circle(_4cnvctx.moving == 1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Arrow(ARROWFILL,180),22,22),
+                        ]),
                         0
-                    ]),
-                ]),
-            ]);
+                    ])
+                ])
+            ])
 
             a.draw(context, rect, 0, 0);
         }
