@@ -1,4 +1,5 @@
 //todo: iphone 13 vs 1phone 14
+//todo: test cloudflare cache
 
 /* +=
 Copyright 2017 Tom Brinkman
@@ -25,7 +26,7 @@ const TIMEOBJ = 3926;
 const FONTHEIGHT = 16;
 const MENUSELECT = "rgba(0,0,100,0.85)";
 const MENUTAP = "rgba(200,0,0,0.75)";
-const THUMBSELECT = "rgba(0,0,0,0.15)";
+const THUMBSELECT = "rgba(0,0,0,0.25)";
 const THUMBODY = "rgba(0,0,0,1)";
 const PROGRESSFILL = "rgba(255,255,255,0.75)";
 const PROGRESSFALL = "rgba(0,0,0,0.5)";
@@ -4258,6 +4259,7 @@ var headlst =
 
            var k = (projectobj.current()+1).toFixed(0);
            var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
+            //todo: extents
             a.draw(context, rect, colorobj.enabled?j:k, time);
             context.restore()
 		};
