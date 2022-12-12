@@ -26,7 +26,7 @@ const TIMEOBJ = 3926;
 const FONTHEIGHT = 16;
 const MENUSELECT = "rgba(0,0,100,0.85)";
 const MENUTAP = "rgba(200,0,0,0.75)";
-const THUMBSELECT = "rgba(0,0,0,0.25)";
+const THUMBSELECT = "rgba(0,0,255,0.25)";
 const THUMBODY = "rgba(0,0,0,1)";
 const PROGRESSFILL = "rgba(255,255,255,0.75)";
 const PROGRESSFALL = "rgba(0,0,0,0.5)";
@@ -416,6 +416,7 @@ var guideobj = new makeoption("GUIDE", guidelst);
 var colobj = new makeoption("COLUMNS", [0,10,20,30,40,50,60,70,80,90,99].reverse());
 var channelobj = new makeoption("CHANNELS", [0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,99]);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
+thumbpos.set(7);
 thumbpos.enabled = 1;
 
 function drawslices()
@@ -2886,11 +2887,10 @@ var templatelst =
     {
         SLICERADIUS = 130500;
         headobj.enabled = 0;
-        thumbpos.set(4);
         widthobj.split(50, "1-240", loomobj.length());
         loomobj.split(50, "80-90", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
-        traitobj.split(60, "0.1-1.0", traitobj.length());
+        traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -2899,11 +2899,10 @@ var templatelst =
     init: function ()
     {
         SLICERADIUS = 130500;//todo interoplate
-        thumbpos.set(4);
         widthobj.split(50, "1-240", loomobj.length());
         loomobj.split(50, "80-90", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
-        traitobj.split(60, "0.1-1.0", traitobj.length());
+        traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -2911,7 +2910,6 @@ var templatelst =
     name: "SIDESCROLL",
     init: function ()
     {
-        thumbpos.set(7);
         widthobj.split(50, "60-540", loomobj.length());
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
@@ -2923,7 +2921,6 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
-        thumbpos.set(7);
         globalobj.slidefactor = 144;
         widthobj.split(40, "60-540", loomobj.length());
         loomobj.split(0, "0-25", loomobj.length());
@@ -2936,12 +2933,11 @@ var templatelst =
     name: "WIDE",
     init: function ()
     {
-        thumbpos.set(7);
         widthobj.split(50, "60-360", loomobj.length());
         loomobj.split(0, "40-75", loomobj.length());
         poomobj.split(0, "0-75", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
-        scapeobj.split(75, "0.1-1.0", scapeobj.length());
+        scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
 {
@@ -2949,12 +2945,11 @@ var templatelst =
     init: function (j)
     {
         SLICERADIUS = 130750;
-        thumbpos.set(7);
         widthobj.split(50, "20-240", loomobj.length());
         loomobj.split(50, "50-85", loomobj.length());
         poomobj.split(50, "25-85", poomobj.length());
-        traitobj.split(75, "0.1-1.0", traitobj.length());
-        scapeobj.split(75, "0.1-1.0", scapeobj.length());
+        traitobj.split(100, "0.1-1.0", traitobj.length());
+        scapeobj.split(100, "0.1-1.0", scapeobj.length());
    }
 },
 {
@@ -2962,11 +2957,10 @@ var templatelst =
     init: function ()
     {
         SLICERADIUS = 130500;
-        thumbpos.set(4);
         widthobj.split(50, "1-120", loomobj.length());
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "90-95", poomobj.length());
-        traitobj.split(60, "0.1-1.0", traitobj.length());
+        traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -2975,11 +2969,10 @@ var templatelst =
     init: function ()
     {
         SLICERADIUS = 130500;
-        thumbpos.set(4);
         widthobj.split(50, "1-120", loomobj.length());
         loomobj.split(50, "80-95", loomobj.length());
         poomobj.split(50, "80-95", poomobj.length());
-        traitobj.split(60, "0.1-1.0", traitobj.length());
+        traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -2988,11 +2981,10 @@ var templatelst =
     init: function ()
     {
         SLICERADIUS = 130500;
-        thumbpos.set(4);
         widthobj.split(50, "1-120", loomobj.length());
         loomobj.split(50, "80-90", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
-        traitobj.split(60, "0.1-1.0", traitobj.length());
+        traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -4146,7 +4138,9 @@ var headlst =
             else if (context.picture.hitest(x,y))
             {
                 bodyobj.enabled = bodyobj.enabled?0:1;
+                footobj.enabled = bodyobj.enabled;
                 context.refresh();
+                pageresize();
             }
             else if (context.nextpage.hitest(x,y))
             {
@@ -4309,92 +4303,62 @@ var bodylst =
             [
                 new Layer(
                 [
-                    0,//new Rectangle(context.tableft),
-                    new Row([(rect.height < 420 && headcnv.height)?60:-1,0],
+                    new Rectangle(context.tableft),
+                    new Row([rect.height/4,60,0],
                     [
                         0,
-                        new Row([0,60,30,60,60,30,60,0],
+                        thumbpos.enabled?
+                        new Layer(
                         [
-                            0,
-                            0,
-                            0,
-                            new Layer(
-                            [
-                                new Rectangle(context.keyzoomup),
-                                new Shrink(new Circle(_4cnvctx.zooming == 1?"red":SCROLLNAB,"white",3),10,10),
-                                new Shrink(new Plus(ARROWFILL),22,22),
-                            ]),
-                            new Layer(
-                            [
-                                new Rectangle(context.keyzoomdown),
-                                new Shrink(new Circle(_4cnvctx.zooming == -1?"red":SCROLLNAB,"white",3),10,10),
-                                new Shrink(new Minus(ARROWFILL),22,22),
-                            ]),
-                            0,
-                            0,
+                            new Rectangle(context.moveprev),
+                            new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Arrow(ARROWFILL,270),22,22),
+                        ]):
+                        new Layer(
+                        [
+                            new Rectangle(context.keyzoomdown),
+                            new Shrink(new Circle(_4cnvctx.zooming == -1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Minus(ARROWFILL),22,22),
                         ]),
+                        0,
                     ]),
                 ]),
-                !colorobj.enabled?0:
-                    new Row([0,30*6,0],
+                !colorobj.enabled?0: new Row([0,30*6,0],
+                [
+                    0,
+                    new RowA([30,30,30,30,30,30],
                     [
-                        0,
-                        new RowA([30,30,30,30,30,30],
-                        [
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                       ]),
-                        0,
-                    ]),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                   ]),
+                    0,
+                ]),
                 new Layer(
                 [
-                    new Row([(rect.height < 420 && headcnv.height)?60:-1,0],
+                    new Rectangle(context.tabright),
+                    new Row([rect.height/4,60,0],
                     [
                         0,
-                        new Row([0,300,0],
+                        thumbpos.enabled?
+                        new Layer(
                         [
-                            0,
-                            new Layer(
-                            [
-                                new Rectangle(context.tabright),
-                                new Row([60,30,60,60,30,60],
-                                [
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.keymoveup),
-                                        new Shrink(new Circle(_4cnvctx.moving == -1?"red":SCROLLNAB,"white",3),10,10),
-                                        new Shrink(new Arrow(ARROWFILL,0),22,22),
-                                    ]),
-                                    0,
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.moveprev),
-                                        new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
-                                        new Shrink(new Arrow(ARROWFILL,270),22,22),
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.movenext),
-                                        new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
-                                        new Shrink(new Arrow(ARROWFILL,90),22,22),
-                                    ]),
-                                    0,
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.keymovedown),
-                                        new Shrink(new Circle(_4cnvctx.moving == 1?"red":SCROLLNAB,"white",3),10,10),
-                                        new Shrink(new Arrow(ARROWFILL,180),22,22),
-                                    ]),
-                                ]),
-                            ]),
-                            0,
+                            new Rectangle(context.movenext),
+                            new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Arrow(ARROWFILL,90),22,22),
+                        ]):
+                        new Layer(
+                        [
+                            new Rectangle(context.keyzoomup),
+                            new Shrink(new Circle(_4cnvctx.zooming == 1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Plus(ARROWFILL),22,22),
                         ]),
+                        0,
                     ]),
-                ]),
+                ])
             ])
 
             a.draw(context, rect,
