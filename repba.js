@@ -1,3 +1,5 @@
+//todo: iphone 13 vs 1phone 14
+
 /* +=
 Copyright 2017 Tom Brinkman
 http://www.reportbase.com
@@ -23,7 +25,8 @@ const TIMEOBJ = 3926;
 const FONTHEIGHT = 16;
 const MENUSELECT = "rgba(0,0,100,0.85)";
 const MENUTAP = "rgba(200,0,0,0.75)";
-const THUMBSELECT = "rgba(0,0,255,0.3)";
+const THUMBSELECT = "rgba(0,0,0,0.15)";
+const THUMBODY = "rgba(0,0,0,1)";
 const PROGRESSFILL = "rgba(255,255,255,0.75)";
 const PROGRESSFALL = "rgba(0,0,0,0.5)";
 const SCROLLNUB = "rgba(0,0,0,0.5)";
@@ -411,7 +414,6 @@ var widthobj = new makeoption("WIDTH", 100);
 var guideobj = new makeoption("GUIDE", guidelst);
 var colobj = new makeoption("COLUMNS", [0,10,20,30,40,50,60,70,80,90,99].reverse());
 var channelobj = new makeoption("CHANNELS", [0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,99]);
-
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
 thumbpos.enabled = 1;
 
@@ -526,7 +528,9 @@ function drawslices()
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
         if (!context.pressed && thumbpos.enabled)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
-        if (!context.pressed)
+        if (!thumbpos.enabled && bodyobj.enabled && context.panning)
+            bodyobj.getcurrent().draw(context, rect, 0, 0);
+        else if (!context.isthumbrect && bodyobj.enabled && !context.pressed)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
         context.setcolumncomplete = 1;
     }
@@ -1071,12 +1075,11 @@ history.pushState(null, null, document.URL);
 CanvasRenderingContext2D.prototype.moveup = function()
 {
     var context = this;
-    var k = rowobj.berp()*100-1;
+    var k = rowobj.berp()*100;
     var index = channelobj.data_.findLastIndex(a=>{return a < k;})
-    if (index == -1)
-        return;
-    var j = (channelobj.data_[index]/100)*rowobj.length();
-    rowobj.set(j);
+    channelobj.set(index-1);
+    var k = channelobj.berp()*rowobj.length()
+    rowobj.set(k);
 }
 
 CanvasRenderingContext2D.prototype.movedown = function()
@@ -1084,10 +1087,9 @@ CanvasRenderingContext2D.prototype.movedown = function()
     var context = this;
     var k = rowobj.berp()*100;
     var index = channelobj.data_.findIndex(a=>{return a > k;})
-    if (index == -1)
-        return;
-    var j = (channelobj.data_[index]/100)*rowobj.length();
-    rowobj.set(j);
+    channelobj.set(index);
+    var k = channelobj.berp()*rowobj.length()
+    rowobj.set(k);
 }
 
 CanvasRenderingContext2D.prototype.movepage = function(j)
@@ -1591,6 +1593,7 @@ var pinchlst =
     {
         setTimeout(function()
         {
+            context.isthumbrect = 0;
             context.pinching = 0;
             context.refresh();
             addressobj.update();
@@ -1836,13 +1839,6 @@ var presslst =
             context.pressed = 1;
             pageresize();
             context.refresh();
-        }
-        else
-        {
-            headobj.enabled = headobj.enabled?0:1;
-            footobj.enabled = headobj.enabled;
-            pageresize();
-            context.refresh();
             addressobj.update();
         }
     }
@@ -1876,7 +1872,7 @@ var swipelst =
         {
             evt.preventDefault();
             var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-            if (isthumbrect)
+            if (thumbpos.enabled && isthumbrect)
                 return;
             globalobj.autodirect = evt.type == "swipeleft"?-1:1;
             context.tab();
@@ -2026,6 +2022,9 @@ var keylst =
         }
         else if (evt.key == "\\")
         {
+            headobj.enabled = headobj.enabled?0:1;
+            footobj.enabled = headobj.enabled;
+            thumbpos.enabled = !headobj.enabled;
             colorobj.enabled=colorobj.enabled?0:1;
             footobj.set(colorobj.enabled?1:0);
             pageresize()
@@ -2348,7 +2347,7 @@ var taplst =
                 return;
             context.zooming = 1;
             setTimeout(function(){context.zooming = 0; context.refresh();},400)
-            zoom.add(5);
+            zoom.add(10);
             contextobj.reset()
         }
         else if (context.keyzoomdown && context.keyzoomdown.hitest(x,y))
@@ -2358,7 +2357,7 @@ var taplst =
                 return;
              context.zooming = -1;
             setTimeout(function(){context.zooming = 0; context.refresh();},400)
-            zoom.add(-5);
+            zoom.add(-10);
             contextobj.reset()
         }
          else if (context.keymoveup && context.keymoveup.hitest(x,y))
@@ -2401,7 +2400,11 @@ var taplst =
         }
         else
         {
-            thumbpos.enabled = thumbpos.enabled?0:1;
+            headobj.enabled = headobj.enabled?0:1;
+            footobj.enabled = headobj.enabled;
+            thumbpos.enabled = !headobj.enabled;
+            pageresize();
+            context.refresh();
             reset();
         }
 
@@ -2883,11 +2886,9 @@ var templatelst =
         SLICERADIUS = 130500;
         headobj.enabled = 0;
         thumbpos.set(4);
-        globalobj.slidetop = 24;
-        globalobj.slidefactor = 24;
         widthobj.split(50, "1-240", loomobj.length());
-        loomobj.split(50, "70-85", loomobj.length());
-        poomobj.split(50, "60-85", poomobj.length());
+        loomobj.split(50, "80-90", loomobj.length());
+        poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(60, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2899,8 +2900,8 @@ var templatelst =
         SLICERADIUS = 130500;//todo interoplate
         thumbpos.set(4);
         widthobj.split(50, "1-240", loomobj.length());
-        loomobj.split(50, "70-85", loomobj.length());
-        poomobj.split(50, "60-85", poomobj.length());
+        loomobj.split(50, "80-90", loomobj.length());
+        poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(60, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2949,9 +2950,9 @@ var templatelst =
         SLICERADIUS = 130750;
         thumbpos.set(7);
         widthobj.split(50, "20-240", loomobj.length());
-        loomobj.split(25, "50-85", loomobj.length());
-        poomobj.split(25, "25-85", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
+        loomobj.split(50, "50-85", loomobj.length());
+        poomobj.split(50, "25-85", poomobj.length());
+        traitobj.split(75, "0.1-1.0", traitobj.length());
         scapeobj.split(75, "0.1-1.0", scapeobj.length());
    }
 },
@@ -4143,8 +4144,8 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                thumbpos.enabled = thumbpos.enabled?0:1;
-                reset();
+                bodyobj.enabled = bodyobj.enabled?0:1;
+                context.refresh();
             }
             else if (context.nextpage.hitest(x,y))
             {
@@ -4154,10 +4155,16 @@ var headlst =
             {
                 menushow(_9cnvctx);
             }
-            else
+            else if (context.extent.hitest(x,y))
             {
                 menuhide()
-                globalobj.autodirect = x<rect.width/2 ? 1 : -1;
+                globalobj.autodirect = 1;
+                _4cnvctx.tab();
+            }
+            else if (context.size.hitest(x,y))
+            {
+                menuhide()
+                globalobj.autodirect = -1;
                 _4cnvctx.tab();
             }
 
@@ -4196,39 +4203,48 @@ var headlst =
                         new Rectangle(context.page),
                     ]),
                     new Rectangle(context.extent),
-                    new Row([HNUB,0,HNUB],
+                    new Layer(
                     [
-                        0,
-                        new Layer(
+                        new Rectangle(context.prevpage),
+                        new Row([HNUB,0,HNUB],
                         [
-                            _4cnvctx.movingpage == -1 ?
-                                new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
-                            new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES-HNUB),
-                            new Rectangle(context.prevpage),
+                            0,
+                            new Layer(
+                            [
+                                _4cnvctx.movingpage == -1 ?
+                                    new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
+                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES-HNUB),
+                            ]),
+                            0,
                         ]),
-                        0,
                     ]),
-                    new Row([HNUB,0,HNUB],
+                    new Layer(
                     [
-                        0,
-                        new Layer(
+                        new Rectangle(context.picture),
+                        new Row([HNUB,0,HNUB],
                         [
-                            !thumbpos.enabled?0:new Fill(THUMBSELECT),
-                            new Text("white", "center", "middle",0,1,1),
-                            new Rectangle(context.picture),
+                            0,
+                            new Layer(
+                            [
+                                bodyobj.enabled?new Fill(THUMBSELECT):0,
+                                new Text("white", "center", "middle",0,1,1),
+                            ]),
+                            0,
                         ]),
-                        0,
                     ]),
-                    new Row([HNUB,0,HNUB],
+                    new Layer(
                     [
-                        0,
-                        new Layer(
+                        new Rectangle(context.nextpage),
+                        new Row([HNUB,0,HNUB],
                         [
-                            _4cnvctx.movingpage == 1 ? new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
-                            new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES-HNUB),
-                            new Rectangle(context.nextpage),
+                            0,
+                            new Layer(
+                            [
+                                _4cnvctx.movingpage == 1 ? new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
+                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES-HNUB),
+                            ]),
+                            0,
                         ]),
-                        0,
                     ]),
                     new Rectangle(context.size),
                     new Layer(
@@ -4291,11 +4307,13 @@ var bodylst =
             [
                 new Layer(
                 [
-                    new Rectangle(context.tableft),
-                    new Row([0,0],
+                    0,//new Rectangle(context.tableft),
+                    new Row([(rect.height < 420 && headcnv.height)?60:-1,0],
                     [
-                        new Row([60,0,60,60,0],
+                        0,
+                        new Row([0,60,30,60,60,30,60,0],
                         [
+                            0,
                             0,
                             0,
                             new Layer(
@@ -4311,19 +4329,9 @@ var bodylst =
                                 new Shrink(new Minus(ARROWFILL),22,22),
                             ]),
                             0,
-                        ]),
-                        new Row([60,0],
-                        [
-                            new Layer(
-                            [
-                                new Rectangle(context.moveprev),
-                                new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
-                                new Shrink(new Arrow(ARROWFILL,270),22,22),
-                            ]),
                             0,
                         ]),
                     ]),
-                    0
                 ]),
                 !colorobj.enabled?0:
                     new Row([0,30*6,0],
@@ -4342,39 +4350,48 @@ var bodylst =
                     ]),
                 new Layer(
                 [
-                    new Rectangle(context.tabright),
-                    new Row([0,0],
+                    new Row([(rect.height < 420 && headcnv.height)?60:-1,0],
                     [
-                        new Row([60,0,60,60,0],
+                        0,
+                        new Row([0,300,0],
                         [
                             0,
-                            0,
                             new Layer(
                             [
-                                new Rectangle(context.keymoveup),
-                                new Shrink(new Circle(_4cnvctx.moving == -1?"red":SCROLLNAB,"white",3),10,10),
-                                new Shrink(new Arrow(ARROWFILL,0),22,22),
-                            ]),
-                            new Layer(
-                            [
-                                new Rectangle(context.keymovedown),
-                                new Shrink(new Circle(_4cnvctx.moving == 1?"red":SCROLLNAB,"white",3),10,10),
-                                new Shrink(new Arrow(ARROWFILL,180),22,22),
-                            ]),
-                                0,
-                        ]),
-                        new Row([60,0],
-                        [
-                            new Layer(
-                            [
-                                new Rectangle(context.movenext),
-                                new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
-                                new Shrink(new Arrow(ARROWFILL,90),22,22),
+                                new Rectangle(context.tabright),
+                                new Row([60,30,60,60,30,60],
+                                [
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.keymoveup),
+                                        new Shrink(new Circle(_4cnvctx.moving == -1?"red":SCROLLNAB,"white",3),10,10),
+                                        new Shrink(new Arrow(ARROWFILL,0),22,22),
+                                    ]),
+                                    0,
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.moveprev),
+                                        new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
+                                        new Shrink(new Arrow(ARROWFILL,270),22,22),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.movenext),
+                                        new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
+                                        new Shrink(new Arrow(ARROWFILL,90),22,22),
+                                    ]),
+                                    0,
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.keymovedown),
+                                        new Shrink(new Circle(_4cnvctx.moving == 1?"red":SCROLLNAB,"white",3),10,10),
+                                        new Shrink(new Arrow(ARROWFILL,180),22,22),
+                                    ]),
+                                ]),
                             ]),
                             0,
                         ]),
                     ]),
-                    0
                 ]),
             ])
 
@@ -4383,7 +4400,7 @@ var bodylst =
                     window.rect.width+"X"+window.rect.height,
                     photo.image.width+"X"+photo.image.height,
                     context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
-                    context.visibles.toFixed(0),
+                    context.visibles.toFixed(0)+"-"+context.sliceobj.length(),
                 ],
                 0);
             context.restore();
@@ -4392,6 +4409,7 @@ var bodylst =
 ];
 
 var bodyobj = new makeoption("", bodylst);
+bodyobj.enabled = 1;
 
 var footlst =
 [
@@ -4909,8 +4927,8 @@ window.addEventListener("load", async () =>
 {
     try
     {
-        if ("serviceWorker" in navigator && url.hostname == "reportbase.com")
-           navigator.serviceWorker.register("sw.js");
+//        if ("serviceWorker" in navigator && url.hostname == "reportbase.com")
+//           navigator.serviceWorker.register("sw.js"); //todo
     }
     catch(error)
     {
