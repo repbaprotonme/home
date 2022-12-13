@@ -515,8 +515,6 @@ function drawslices()
 
         context.slicescount++;
         context.restore();
-        delete context.keyzoomdown;
-        delete context.keyzoomup;
         delete context.keymoveup;
         delete context.keymovedown;
         delete context.moveprev;
@@ -2341,26 +2339,6 @@ var taplst =
         {
             _4cnvctx.movepage(1);
         }
-        else if (context.keyzoomup && context.keyzoomup.hitest(x,y))
-        {
-            var zoom = zoomobj.getcurrent();
-            if (zoom.current() >= zoom.length()-1)
-                return;
-            context.zooming = 1;
-            setTimeout(function(){context.zooming = 0; context.refresh();},400)
-            zoom.add(10);
-            contextobj.reset()
-        }
-        else if (context.keyzoomdown && context.keyzoomdown.hitest(x,y))
-        {
-            var zoom = zoomobj.getcurrent();
-            if (!zoom.current())
-                return;
-             context.zooming = -1;
-            setTimeout(function(){context.zooming = 0; context.refresh();},400)
-            zoom.add(-10);
-            contextobj.reset()
-        }
          else if (context.keymoveup && context.keymoveup.hitest(x,y))
         {
             if (!rowobj.current())
@@ -2402,7 +2380,6 @@ var taplst =
         else
         {
             headobj.enabled = headobj.enabled?0:1;
-            footobj.enabled = headobj.enabled;
             thumbpos.enabled = !headobj.enabled;
             pageresize();
             context.refresh();
@@ -4136,8 +4113,7 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                bodyobj.enabled = bodyobj.enabled?0:1;
-                footobj.enabled = bodyobj.enabled;
+                footobj.enabled = footobj.enabled?0:1;
                 context.refresh();
                 pageresize();
             }
@@ -4151,15 +4127,9 @@ var headlst =
             }
             else if (context.extent.hitest(x,y))
             {
-                menuhide()
-                globalobj.autodirect = 1;
-                _4cnvctx.tab();
             }
             else if (context.size.hitest(x,y))
             {
-                menuhide()
-                globalobj.autodirect = -1;
-                _4cnvctx.tab();
             }
 
             _4cnvctx.refresh();
@@ -4220,7 +4190,7 @@ var headlst =
                             0,
                             new Layer(
                             [
-                                bodyobj.enabled?new Fill(THUMBSELECT):0,
+                                footobj.enabled?new Fill(THUMBSELECT):0,
                                 new Text("white", "center", "middle",0,1,1),
                             ]),
                             0,
@@ -4288,8 +4258,6 @@ var bodylst =
         {
             context.restore();
             context.font = "1.5rem Archivo Black";
-            context.keyzoomup = new rectangle()
-            context.keyzoomdown = new rectangle()
             context.keymoveup = new rectangle()
             context.keymovedown = new rectangle()
             context.moveprev = new rectangle()
@@ -4299,28 +4267,17 @@ var bodylst =
             var zoom = zoomobj.getcurrent();
             var a = new Col([60,0,60],
             [
-                new Layer(
-                [
-                    new Rectangle(context.tableft),
-                    new Row([rect.height/4,60,0],
+                    headcnv.height?0:new Row([rect.height/4,60,0],
                     [
                         0,
-                        thumbpos.enabled?
                         new Layer(
                         [
                             new Rectangle(context.moveprev),
                             new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
                             new Shrink(new Arrow(ARROWFILL,270),22,22),
-                        ]):
-                        new Layer(
-                        [
-                            new Rectangle(context.keyzoomdown),
-                            new Shrink(new Circle(_4cnvctx.zooming == -1?"red":SCROLLNAB,"white",3),10,10),
-                            new Shrink(new Minus(ARROWFILL),22,22),
                         ]),
                         0,
                     ]),
-                ]),
                 !colorobj.enabled?0: new Row([0,30*6,0],
                 [
                     0,
@@ -4335,28 +4292,17 @@ var bodylst =
                    ]),
                     0,
                 ]),
-                new Layer(
-                [
-                    new Rectangle(context.tabright),
-                    new Row([rect.height/4,60,0],
+                    headcnv.height?0:new Row([rect.height/4,60,0],
                     [
                         0,
-                        thumbpos.enabled?
                         new Layer(
                         [
                             new Rectangle(context.movenext),
                             new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
                             new Shrink(new Arrow(ARROWFILL,90),22,22),
-                        ]):
-                        new Layer(
-                        [
-                            new Rectangle(context.keyzoomup),
-                            new Shrink(new Circle(_4cnvctx.zooming == 1?"red":SCROLLNAB,"white",3),10,10),
-                            new Shrink(new Plus(ARROWFILL),22,22),
                         ]),
                         0,
                     ]),
-                ])
             ])
 
             a.draw(context, rect,
@@ -4448,6 +4394,26 @@ var footlst =
                 pageresize();
                 contextobj.reset();
             }
+        else if (context.keyzoomup && context.keyzoomup.hitest(x,y))
+        {
+            var zoom = zoomobj.getcurrent();
+            if (zoom.current() >= zoom.length()-1)
+                return;
+            context.zooming = 1;
+            setTimeout(function(){context.zooming = 0; _4cnvctx.refresh();},400)
+            zoom.add(10);
+            contextobj.reset()
+        }
+        else if (context.keyzoomdown && context.keyzoomdown.hitest(x,y))
+        {
+            var zoom = zoomobj.getcurrent();
+            if (!zoom.current())
+                return;
+             context.zooming = -1;
+            setTimeout(function(){context.zooming = 0; _4cnvctx.refresh();},400)
+            zoom.add(-10);
+            contextobj.reset()
+        }
 
             addressobj.update();
         };
@@ -4478,6 +4444,8 @@ var footlst =
             context.shadowOffsetY = 1;
             context.shadowColor = "black"
             context.progresscircle = new rectangle();
+            context.keyzoomup = new rectangle()
+            context.keyzoomdown = new rectangle()
             context.leftab = new rectangle()
             context.rightab = new rectangle()
             var e = 0;
@@ -4492,23 +4460,15 @@ var footlst =
             new Layer(
             [
                1?0:new Fill(HEADBACK),
-               new ColA([24,0,24,ALIEXTENT-16,24,0,24],
+               new ColA([0,60,24,ALIEXTENT-16,24,60,0],
                [
                     0,
-                   1?0:new Row([0,8,0],
-                   [
-                       0,
-                       new Col([e,f],
-                       [
-                           0,
-                           new Layer(
-                           [
-                                new ScrollHPanel(),
-                               new Expand(new Rectangle(context.leftab),0,30),
-                           ]),
-                       ]),
-                       0,
-                   ]),
+                        new Layer(
+                        [
+                            new Rectangle(context.keyzoomdown),
+                            new Shrink(new Circle(context.zooming == -1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Minus(ARROWFILL),22,22),
+                        ]),
                    0,
                     new Layer(
                        [
@@ -4516,20 +4476,12 @@ var footlst =
                            new Rectangle(context.progresscircle),
                        ]),
                    0,
-                   1?0:new Row([0,8,0],
-                   [
-                       0,
-                       new Col([f,e],
-                       [
-                           new Layer(
-                           [
-                               new ScrollHPanel(),
-                               new Expand(new Rectangle(context.rightab),0,30),
-                           ]),
-                           0,
-                       ]),
-                       0,
-                   ]),
+                        new Layer(
+                        [
+                            new Rectangle(context.keyzoomup),
+                            new Shrink(new Circle(context.zooming == 1?"red":SCROLLNAB,"white",3),10,10),
+                            new Shrink(new Plus(ARROWFILL),22,22),
+                        ]),
                    0
                ]),
             ]);
@@ -4622,6 +4574,7 @@ var footlst =
 
             addressobj.update();
         };
+
         this.draw = function (context, rect, user, time)
         {
             var ScrollHPanel = function(j)
@@ -4674,7 +4627,7 @@ var footlst =
                            0,
                            new Layer(
                            [
-                                new ScrollHPanel(),
+                               new ScrollHPanel(),
                                new Expand(new Rectangle(context.leftab),0,30),
                            ]),
                        ]),
