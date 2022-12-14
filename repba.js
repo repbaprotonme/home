@@ -50,7 +50,6 @@ globalobj.autodirect = -1;
 
 let photo = {}
 photo.image = 0;
-photo.cached = 0;
 photo.menu = 0;
 
 let loaded = new Set()
@@ -71,23 +70,12 @@ if (url.searchParams.has("p"))
 {
     var e = url.searchParams.get("p");
     let k = e.split(".");
-    if (k.length == 3)
+    url.path = k[0];
+    url.project = 0;
+    if (k.length == 2)
     {
         url.path = k[0];
         url.project = Number(k[1]);
-        url.extension = k[2]
-    }
-    else if (k.length == 2)
-    {
-        url.path = k[0];
-        url.project = 0;
-        url.extension = k[1]
-    }
-    else
-    {
-        url.path = k[0];
-        url.project = 0;
-        url.extension = "webp";
     }
 
     url.path = url.path.toUpperCase();
@@ -96,11 +84,12 @@ else
 {
     url.path = "HOME";
     url.project = 0;
-    url.extension = "jpg";
 }
 
-url.filepath = function() { return url.basepath ? url.basepath : (url.origin + "/data/"); }
-url.shortname = function() { return url.path + ".jpg"; }
+url.filepath = function()
+{
+    return url.origin + "/data/";
+}
 
 Math.clamp = function (min, max, val)
 {
@@ -1054,7 +1043,7 @@ var addressobj = {}
 addressobj.full = function ()
 {
     var out = url.origin;
-    out += "/?p="+projectobj.getcurrent()+
+    out += "/?p="+projectobj.getcurrent()[0]+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
     return out;
@@ -1094,7 +1083,7 @@ CanvasRenderingContext2D.prototype.movedown = function()
 CanvasRenderingContext2D.prototype.movepage = function(j)
 {
     projectobj.rotate(j);
-    var path = url.filepath() + projectobj.getcurrent();
+    var path = projectobj.getcurrent()[0];
     projectobj.rotate(-j);
     if (_4cnvctx.movingpage || !loaded.has(path) || projectobj.length() == 1)
     {
@@ -1110,7 +1099,6 @@ CanvasRenderingContext2D.prototype.movepage = function(j)
     {
         if (_4cnvctx.setcolumncomplete)
         {
-            delete photo.cached;
             delete photo.image;
             _4cnvctx.setcolumncomplete = 0;
             if (!thumbpos.enabled)
@@ -1520,7 +1508,6 @@ var wheelst =
         var isthumbrect = thumbobj.current()==0 && thumb;
         if (thumbpos.enabled && isthumbrect)
         {
-            delete photo.cached;
             heightobj.getcurrent().add(1);
             context.refresh();
         }
@@ -1645,9 +1632,10 @@ function dropfiles(files)
     if (!files || !files.length)
         return;
     delete photo.image;
-    footobj.enabled = 1;
     _4cnvctx.setcolumncomplete = 0;
     globalobj.promptedfile = URL.createObjectURL(files[0]);
+    thumbpos.enabled = 1;
+    footobj.enabled = 0;
     contextobj.reset();
 }
 
@@ -2381,6 +2369,11 @@ var taplst =
         {
             headobj.enabled = headobj.enabled?0:1;
             thumbpos.enabled = !headobj.enabled;
+            if (!thumbpos.enabled && footobj.show)
+                footobj.enabled = 1;
+            else
+                footobj.enabled = 0;
+
             pageresize();
             context.refresh();
             reset();
@@ -2488,26 +2481,10 @@ var thumblst =
             blackfill.draw(context, context.thumbrect, 0, 0);
             guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
         }
-        else if (photo.cached && w == context.oldwidth && h == context.oldheight)
-        {
-            context.drawImage(photo.cached, x, y, w, h);
-        }
         else
         {
-            context.drawImage(photo.image, 0, 0, photo.image.width, photo.image.height, x, y, w, h);
-            photo.cached = new Image();
-            var c = document.createElement('canvas');
-            var o = c.getContext('2d');
-            c.width=w;
-            c.height=h;
-            o.drawImage(photo.image, 0, 0, w, h);
-            photo.cached.src = o.canvas.toDataURL();
-            context.oldheight = h;
-            context.oldwidth = w;
+            context.drawImage(photo.image, x, y, w, h);
         }
-
-//        if (context.pressed)
-//            return;
 
         context.lineWidth = context.isthumbrect?2:8;
         var whitestroke = new StrokeRect(THUMBSTROKE);
@@ -2861,6 +2838,7 @@ var templatelst =
     name: "COMIC",
     init: function ()
     {
+        footobj.show = 1;
         SLICERADIUS = 130500;
         headobj.enabled = 0;
         widthobj.split(50, "1-240", loomobj.length());
@@ -2874,6 +2852,7 @@ var templatelst =
     name: "PORTRAIT",
     init: function ()
     {
+        footobj.show = 1;
         SLICERADIUS = 130500;//todo interoplate
         widthobj.split(50, "1-240", loomobj.length());
         loomobj.split(50, "80-90", loomobj.length());
@@ -2967,7 +2946,6 @@ var templatelst =
 ];
 
 var templateobj = new makeoption("TEMPLATE", templatelst);
-var extentobj = new makeoption("", 0);
 var describeobj = new makeoption("", 0);
 describeobj.positions = [0,0,0];
 
@@ -2997,12 +2975,6 @@ fetch(path)
             channelobj.data_ = data.channelobj.split(",");
         if (typeof data.colobj !== "undefined")
             colobj.data_ = data.colobj.split(",").reverse();
-        if (typeof data.extension !== "undefined")
-            url.extension = data.extension;
-        if (typeof data.path !== "undefined")
-            url.basepath = data.path;
-        if (typeof data.crossorigin !== "undefined")
-            globalobj.crossorigin = data.crossorigin;
         if (typeof data.slidetop !== "undefined")
             globalobj.slidetop = data.slidetop;
         if (typeof data.slidefactor !== "undefined")
@@ -3015,19 +2987,7 @@ fetch(path)
         photo.help = new Image();
         photo.help.src = url.filepath() + ((typeof data.help === "undefined") ? "HELP.jpg" : data.help);
 
-        if (typeof data.list !== "undefined")
-        {
-            projectobj.data_ = data.list;
-        }
-        else
-        {
-            var size = data.images+1;
-            projectobj.data_ = [];
-            for (var n = 0; n < size; ++n)
-            {
-                projectobj.data_[n] = url.path + "." + n.pad(4) + "." + url.extension;
-            }
-        }
+        projectobj.data_ = data.list;
 
         globalobj.config = data;
         globalobj.config.path = url.filepath();
@@ -3035,34 +2995,7 @@ fetch(path)
 
         projectobj.set(url.project);
 
-        if (data.extents)
-        {
-            var j = data.extents.split(",");
-            extentobj.data_ = []
-            for (var n = 0; n < j.length; ++n)
-            {
-                var e = j[n].split("x");
-                extentobj.data_.push(e);
-            }
-
-            var k = extentobj.data_.findIndex(a=>
-            {
-                var h = Number(a[1]);
-                return h > window.innerHeight;
-            })
-
-            if (url.searchParams.has("p"))
-            {
-                let p = url.searchParams.get("p").split(".");
-                if (p.length < 3 && k >= 0)
-                {
-                    projectobj.set(k);
-                    extentobj.set(k);
-                }
-            }
-        }
-
-        var k = localStorage.getItem("8time");
+        var k = localStorage.getItem("8time");//todo
         if (k)
             _8cnvctx.timeobj.set(Number(k));
 
@@ -3150,8 +3083,6 @@ fetch(path)
         for (var n = 0; n < items; ++n)
         {
             var t = (n+1)+"";
-            if (extentobj.data()[n])
-                t = extentobj.data()[n].join("x");
             slices.data_.push({index:n, title:t, path: "PROJECT", func: project})
         }
 
@@ -3299,20 +3230,19 @@ var ContextObj = (function ()
             }
             else if (url.path)
             {
-                var path = url.filepath() + projectobj.getcurrent();
+                var path =  "https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/"+projectobj.getcurrent()[0]+"/w="+projectobj.getcurrent()[1];
                 if (globalobj.promptedfile)
                     path = globalobj.promptedfile;
                 seteventspanel(new Empty());
                 photo.image = new Image();
-                if (globalobj.crossorigin)
-                    photo.image.crossOrigin = globalobj.crossorigin;
+                photo.image.crossOrigin = 1;
                 photo.image.original = path;
                 photo.image.src = path;
 
                 photo.image.onerror =
                     photo.image.onabort = function(e)
                 {
-                    location.reload();
+                    //todo location.reload();
                     _4cnvctx.setcolumncomplete = 1;
                     contextobj.resize(context);
                     context.refresh();
@@ -3326,7 +3256,7 @@ var ContextObj = (function ()
                     this.aspect = this.width/this.height;
                     this.size = ((this.width * this.height)/1000000).toFixed(1) + "MP";
                     this.extent = this.width + "x" + this.height;
-                    document.title = projectobj.getcurrent()+" ("+this.extent+")"
+                    document.title = projectobj.getcurrent()[0]+" ("+this.extent+")"
 
                     if (globalobj.promptedfile)
                     {
@@ -3359,21 +3289,27 @@ var ContextObj = (function ()
                     setTimeout(function()
                     {
                         photo.menu = new Image();
-                        photo.menu.src = url.filepath() + url.shortname();
+                        photo.menu.src = url.filepath() + url.path + ".jpg";
 
                         var k = projectobj.current();
                         projectobj.rotate(1);
-                        var img = new Image();
-                        img.src = url.filepath() + projectobj.getcurrent();
-                        img.onload = function() { loaded.add(this.src); }
+                        var img1 = new Image();
+                        var path =  "https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/"+projectobj.getcurrent()[0]+"/w="+projectobj.getcurrent()[1];
+                        img1.src = path;
+                        img1.path = projectobj.getcurrent()[0]
+                        img1.onload = function() { loaded.add(img1.path); }
                         projectobj.rotate(1);
-                        var img = new Image();
-                        img.src = url.filepath() + projectobj.getcurrent();
-                        img.onload = function() { loaded.add(this.src); }
+                        var img2 = new Image();
+                        var path =  "https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/"+projectobj.getcurrent()[0]+"/w="+projectobj.getcurrent()[1];
+                        img2.src = path;
+                        img2.path = projectobj.getcurrent()[0]
+                        img2.onload = function() { loaded.add(img2.path); }
                         projectobj.rotate(-3);
-                        var img = new Image();
-                        img.src = url.filepath() + projectobj.getcurrent();
-                        img.onload = function() { loaded.add(this.src); }
+                        var img3 = new Image();
+                        var path =  "https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/"+projectobj.getcurrent()[0]+"/w="+projectobj.getcurrent()[1];
+                        img3.src = path;
+                        img3.path = projectobj.getcurrent()[0]
+                        img3.onload = function() { loaded.add(img3.path); }
                         projectobj.set(k);
                     }, 250);
                 }
@@ -4336,7 +4272,6 @@ var footlst =
         {
             clearInterval(_4cnvctx.timemain);
             _4cnvctx.timemain = 0;
-            delete photo.cached;
             _4cnvctx.pinching = 1;
             context.panobj = x<rect.width/2?widthobj:speedxobj;
             _4cnvctx.refresh();
@@ -4513,7 +4448,6 @@ var footlst =
         {
             clearInterval(_4cnvctx.timemain);
             _4cnvctx.timemain = 0;
-            delete photo.cached;
             _4cnvctx.pinching = 1;
             context.panobj = x<rect.width/2?widthobj:speedxobj;
             _4cnvctx.refresh();
@@ -4675,7 +4609,7 @@ var footlst =
 ];
 
 var footobj = new makeoption("", footlst);
-footobj.enabled = 0;
+footobj.enabled = 0;//todo
 
 function menushow(context)
 {
@@ -4836,7 +4770,6 @@ function setfavicon()
 
 window.addEventListener("visibilitychange", (evt) =>
 {
-    delete photo.cached;
     reset();
 });
 
