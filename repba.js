@@ -1698,6 +1698,8 @@ var panlst =
 	{
         if ( context.pinching )
              return;
+        if ( context.shifthit )
+             return;
         if (context.isthumbrect && thumbpos.enabled)
         {
             var k = guideobj.getcurrent();
@@ -1818,16 +1820,13 @@ var presslst =
     press: function (context, rect, x, y)
     {
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-        if (thumbpos.enabled && context.isthumbrect)
-        {
-            headobj.enabled = 0;
-            footobj.enabled = 0;
-            context.panning = 1;
-            context.pressed = 1;
-            pageresize();
-            context.refresh();
-            addressobj.update();
-        }
+        headobj.enabled = 0;
+        footobj.enabled = 0;
+        context.panning = 1;
+        context.pressed = 1;
+        pageresize();
+        context.refresh();
+        addressobj.update();
     }
 },
 ];
@@ -2888,6 +2887,7 @@ var templatelst =
     name: "WIDE",
     init: function ()
     {
+        footobj.show = 1;
         widthobj.split(50, "60-360", loomobj.length());
         loomobj.split(0, "40-75", loomobj.length());
         poomobj.split(0, "0-75", poomobj.length());
@@ -2899,6 +2899,8 @@ var templatelst =
     name: "LANDSCAPE",
     init: function (j)
     {
+        globalobj.slidefactor = 144;
+        footobj.show = 1;
         SLICERADIUS = 130750;
         widthobj.split(50, "20-240", loomobj.length());
         loomobj.split(50, "50-85", loomobj.length());
@@ -3242,7 +3244,7 @@ var ContextObj = (function ()
                 photo.image.onerror =
                     photo.image.onabort = function(e)
                 {
-                    //todo location.reload();
+                    location.reload();//todo
                     _4cnvctx.setcolumncomplete = 1;
                     contextobj.resize(context);
                     context.refresh();
@@ -4203,7 +4205,7 @@ var bodylst =
             var zoom = zoomobj.getcurrent();
             var a = new Col([60,0,60],
             [
-                    headcnv.height?0:new Row([rect.height/4,60,0],
+                    headcnv.height?0:new Row([rect.height/5,60,0],
                     [
                         0,
                         new Layer(
@@ -4228,7 +4230,7 @@ var bodylst =
                    ]),
                     0,
                 ]),
-                    headcnv.height?0:new Row([rect.height/4,60,0],
+                    headcnv.height?0:new Row([rect.height/5,60,0],
                     [
                         0,
                         new Layer(
