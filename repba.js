@@ -3324,7 +3324,7 @@ var ContextObj = (function ()
                 photo.image.onerror =
                     photo.image.onabort = function(e)
                 {
-                    location.reload();//todo
+                    //location.reload();//todo
                     _4cnvctx.setcolumncomplete = 1;
                     contextobj.resize(context);
                     context.refresh();
