@@ -43,11 +43,6 @@ const ARROWFILL = "white";
 const TIMEMAIN = 8;
 
 globalobj = {};
-globalobj.slidetop = 36;
-globalobj.slidefactor = 36;
-globalobj.autodirect = -1;
-globalobj.maxmegapix = 9000000;
-globalobj.sliceradius = 131000;
 
 let photo = {}
 photo.image = 0;
@@ -417,14 +412,13 @@ function drawslices()
             if ( context.slidestop - context.slidereduce > 0)
             {
                 context.slidestop -= context.slidereduce;
-                context.timeobj.rotate(globalobj.autodirect*context.slidestop);
+                context.timeobj.rotate(context.autodirect*context.slidestop);
             }
             else
             {
                 clearInterval(context.timemain);
                 context.timemain = 0;
                 addressobj.update();
-//                context.movepage(1);//todo
             }
         }
 
@@ -1029,7 +1023,7 @@ var addressobj = {}
 addressobj.full = function ()
 {
     var out = url.origin;
-    out += "/?p="+projectobj.getcurrent()[0]+
+    out += "/?p="+url.path+"."+projectobj.current().pad(4)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
     return out;
@@ -1108,8 +1102,8 @@ CanvasRenderingContext2D.prototype.tab = function ()
 {
     var context = this;
     context.slidestart = context.timeobj.current();
-    context.slidestop = (context.timeobj.length()/context.virtualwidth)*globalobj.slidetop;
-    context.slidereduce = context.slidestop/globalobj.slidefactor;
+    context.slidestop = (context.timeobj.length()/context.virtualwidth)*projectobj.slidetop;
+    context.slidereduce = context.slidestop/projectobj.slidefactor;
     clearInterval(context.timemain);
     context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
 }
@@ -1692,7 +1686,7 @@ var panlst =
         }
         else if (type == "panleft" || type == "panright")
         {
-            globalobj.autodirect = (type == "panleft")?-1:1;
+            context.autodirect = (type == "panleft")?-1:1;
             var len = context.timeobj.length();
             var diff = context.startx-x;
             var jvalue = ((len/context.virtualwidth)*speedxobj.getcurrent())*diff;
@@ -1749,16 +1743,9 @@ var panlst =
             delete zoom.offset;
             delete rowobj.offset;
             delete describeobj.offset;
-            if (globalobj.minimal)
-            {
-                    context.movepage(-1);
-            }
-            else
-            {
-                pageresize();
-                contextobj.reset();
-                addressobj.update();
-            }
+            pageresize();
+            contextobj.reset();
+            addressobj.update();
         }, 20);
     }
 },
@@ -1857,7 +1844,7 @@ var swipelst =
             var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
             if (thumbpos.enabled && isthumbrect)
                 return;
-            globalobj.autodirect = evt.type == "swipeleft"?-1:1;
+            context.autodirect = evt.type == "swipeleft"?-1:1;
             context.tab();
         }, SWIPETIME);
     },
@@ -1870,7 +1857,7 @@ var swipelst =
             var zoom = zoomobj.getcurrent()
             if (Number(zoom.getcurrent()))
                 return;
-            globalobj.autodirect = evt.type == "swipeup"?-1:1;
+            context.autodirect = evt.type == "swipeup"?-1:1;
             context.tab();
         }, SWIPETIME);
     },
@@ -1968,18 +1955,18 @@ var keylst =
         else if (evt.key == "Tab")
         {
             evt.preventDefault();
-            globalobj.autodirect = evt.shiftKey ? 1 : -1;
+            context.autodirect = evt.shiftKey ? 1 : -1;
             context.tab();
         }
         else if (evt.key == "ArrowLeft" || evt.key == "h")
         {
-            globalobj.autodirect = 1;
+            context.autodirect = 1;
             evt.preventDefault();
             context.tab();
         }
         else if (evt.key == "ArrowRight" || evt.key == "l")
         {
-            globalobj.autodirect = -1;
+            context.autodirect = -1;
             evt.preventDefault();
             context.tab();
         }
@@ -2466,12 +2453,7 @@ var thumblst =
         var blackfill = new Fill(THUMBFILL);
         var blackfill2 = new Fill("rgba(0,0,0,0.4)");
 
-        if (debugobj.enabled)
-        {
-            var a = new GridA(context.sliceobj.length(), 1, 0, new Fill())
-            a.draw(context, context.thumbrect, debugobj.data, 0);
-        }
-        else if (context.isthumbrect && (jp || context.panning))
+        if (context.isthumbrect && (jp || context.panning))
         {
             if (!context.pressed)
             {
@@ -2835,7 +2817,7 @@ function resetcanvas()
 
     let slicelst = [];
     for (let n = 399; n >= 1; n=n-1)
-        slicelst.push({slices: n*3, delay: globalobj.sliceradius/n});
+        slicelst.push({slices: n*3, delay: projectobj.sliceradius/n});
 
     var ks = 0;
     for (var n = 0; n < slicelst.length; ++n)
@@ -2900,12 +2882,14 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        globalobj.sliceradius = 130500;
-        globalobj.maxmegapix = 4000000;
+        projectobj.sliceradius = 130500;
+        projectobj.maxmegapix = 4000000;
         headobj.enabled = 0;
-        widthobj.split(50, "1-280", loomobj.length());
-        loomobj.split(50, "80-90", loomobj.length());
-        poomobj.split(50, "50-80", poomobj.length());
+        pretchobj.split(50, "40-80", pretchobj.length());
+        letchobj.split(50, "40-80", letchobj.length());
+        widthobj.split(50, "90-150", widthobj.length());
+        loomobj.split(50, "70-85", loomobj.length());
+        poomobj.split(50, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
         speedxobj.split(4, "1-20", speedxobj.length());
@@ -2917,9 +2901,11 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        globalobj.sliceradius = 130500;
-        widthobj.split(50, "1-240", loomobj.length());
-        loomobj.split(50, "80-95", loomobj.length());
+        projectobj.sliceradius = 130500;
+        pretchobj.split(50, "40-80", pretchobj.length());
+        letchobj.split(50, "40-80", letchobj.length());
+        widthobj.split(50, "90-150", widthobj.length());
+        loomobj.split(50, "70-95", loomobj.length());
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
@@ -2932,9 +2918,11 @@ var templatelst =
     init: function ()
     {
         thumbpos.enabled = 0;
-        globalobj.slidetop = 16;
-        globalobj.slidefactor = 1440;
-        widthobj.split(50, "960-1440", loomobj.length());
+        projectobj.slidetop = 16;
+        projectobj.slidefactor = 1440;
+        pretchobj.split(50, "40-80", pretchobj.length());
+        letchobj.split(50, "40-80", letchobj.length());
+        widthobj.split(50, "800-1600", widthobj.length());
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2947,7 +2935,9 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
-        widthobj.split(50, "60-720", loomobj.length());
+        pretchobj.split(50, "40-80", pretchobj.length());
+        letchobj.split(50, "40-80", letchobj.length());
+        widthobj.split(50, "480-960", widthobj.length());
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2961,7 +2951,9 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        widthobj.split(50, "60-380", loomobj.length());
+        pretchobj.split(50, "40-80", pretchobj.length());
+        letchobj.split(50, "40-80", letchobj.length());
+        widthobj.split(50, "180-360", widthobj.length());
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2975,10 +2967,12 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
-        globalobj.sliceradius = 130500;
-        widthobj.split(50, "20-280", loomobj.length());
-        loomobj.split(50, "60-90", loomobj.length());
-        poomobj.split(50, "30-90", poomobj.length());
+        projectobj.sliceradius = 130500;
+        pretchobj.split(50, "40-80", pretchobj.length());
+        letchobj.split(50, "40-80", letchobj.length());
+        widthobj.split(50, "150-210", widthobj.length());
+        loomobj.split(50, "50-90", loomobj.length());
+        poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(75, "0.1-1.0", scapeobj.length());
         speedxobj.split(4, "1-20", speedxobj.length());
@@ -2990,8 +2984,10 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        globalobj.sliceradius = 130500;
-        widthobj.split(50, "1-120", loomobj.length());
+        projectobj.sliceradius = 130500;
+        pretchobj.split(50, "40-80", pretchobj.length());
+        letchobj.split(50, "40-80", letchobj.length());
+        widthobj.split(50, "1-120", widthobj.length());
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3005,8 +3001,10 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        globalobj.sliceradius = 130500;
-        widthobj.split(50, "1-120", loomobj.length());
+        projectobj.sliceradius = 130500;
+        pretchobj.split(50, "40-80", pretchobj.length());
+        letchobj.split(50, "40-80", letchobj.length());
+        widthobj.split(50, "1-120", widthobj.length());
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3020,8 +3018,10 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        globalobj.sliceradius = 130500;
-        widthobj.split(50, "1-120", loomobj.length());
+        projectobj.sliceradius = 130500;
+        pretchobj.split(50, "40-80", pretchobj.length());
+        letchobj.split(50, "40-80", letchobj.length());
+        widthobj.split(50, "1-120", widthobj.length());
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3047,7 +3047,7 @@ projectobj.path = function()
 
     if (w > h)
     {
-        while (w*h > globalobj.maxmegapix)
+        while (w*h > projectobj.maxmegapix)
         {
             w *= 0.999;
             h = w/a;
@@ -3055,7 +3055,7 @@ projectobj.path = function()
     }
     else
     {
-        while (w*h > globalobj.maxmegapix)
+        while (w*h > projectobj.maxmegapix)
         {
             h *= 0.999;
             w = a*h;
@@ -3064,8 +3064,8 @@ projectobj.path = function()
 
     w = Math.floor(w);
     h = Math.floor(h);
-
-    var s = 'https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/'+name+'/w='+w+',h='+h+',quality=75';
+    var q = this.quality;
+    var s = 'https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/'+name+'/w='+w+',h='+h+',quality='+q;
 //    var s = "https://reportbase.com/api/"+k[0]+"/w="+k[1];
     return s;
 }
@@ -3081,21 +3081,20 @@ fetch(path)
         projectobj = Object.assign(projectobj,obj);
         setfavicon();
 
-        pretchobj.split(50, "40-80", pretchobj.length());
-        letchobj.split(50, "40-80", letchobj.length());
-
         var j = templatelst.findIndex(function(a){return a.name == obj.template;})
         templateobj.set(j);
         templateobj.getcurrent().init();
 
-        if (typeof obj.channelobj !== "undefined")
-            channelobj.data = obj.channelobj.split(",");
-        if (typeof obj.colobj !== "undefined")
-            colobj.data = obj.colobj.split(",").reverse();
-        if (typeof obj.slidetop !== "undefined")
-            globalobj.slidetop = obj.slidetop;
-        if (typeof obj.slidefactor !== "undefined")
-            globalobj.slidefactor = obj.slidefactor;
+        if (typeof projectobj.slidetop === "undefined")
+            projectobj.slidetop = 36;
+        if (typeof projectobj.slidefactor === "undefined")
+            projectobj.slidefactor = 36;
+        if (typeof projectobj.quality  === "undefined")
+            projectobj.quality = 75;
+        if (typeof projectobj.sliceradius  === "undefined")
+            projectobj.sliceradius = 131000;
+        if (typeof projectobj.projectobj  === "undefined")
+            projectobj.maxmegapix = 9000000;
 
         photo.help = new Image();
         photo.help.src = url.filepath() + ((typeof obj.help === "undefined") ? "HELP.jpg" : obj.help);
@@ -3111,6 +3110,7 @@ fetch(path)
             context.enabled = 0;
             context.canvas.width = 1;
             context.canvas.height = 1;
+            context.autodirect = -1;
             context.font = "400 1rem Archivo Black";
             context.fillText("  ", 0, 0);
             context.slideshow = 0;
@@ -3426,7 +3426,7 @@ var ContextObj = (function ()
                     contextobj.resize(context);
                     resetcanvas(context);
                     seteventspanel(new YollPanel());
-                    context.reset();
+                    reset();
 
                     setTimeout(function()
                     {
@@ -3450,7 +3450,6 @@ var ContextObj = (function ()
                         img3.path = projectobj.getcurrent()[0]
                         img3.onload = function() { loaded.add(img3.path); }
                         projectobj.set(k);
-//                        _4cnvctx.tab();//todo
 
                     }, 250);
                 }
@@ -4250,7 +4249,7 @@ var headlst =
             context.nextpage2 = new rectangle()
             context.picture = new rectangle()
             context.font = "0.85rem Archivo Black";
-            var j = rect.width < 420 ? (rect.width-ALIEXTENT*4):240;
+            var j = rect.width < 420 ? (rect.width-ALIEXTENT*4):180;
             var s = _5cnvctx.enabled || _8cnvctx.enabled;
             var a = new Layer(
             [
@@ -4364,9 +4363,6 @@ var bodylst =
             context.movenext = new rectangle()
             var zoom = zoomobj.getcurrent();
             var a =
-                new RowA([60,0],
-                [
-                    0,
                     new Col([60,0,60],
                     [
                             headcnv.height?0:new Row([rect.height/7,60,0],
@@ -4380,11 +4376,12 @@ var bodylst =
                                 ]),
                                 0,
                             ]),
-                        !debugobj.enabled?0: new Row([0,30*6,0],
+                        !debugobj.enabled?0: new Row([0,30*7,0],
                         [
                             0,
-                            new RowA([30,30,30,30,30,30],
+                            new RowA([30,30,30,30,30,30,30],
                             [
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
@@ -4405,18 +4402,11 @@ var bodylst =
                                 ]),
                                 0,
                             ]),
-                    ]),
-                ]);
+                    ]);
 
             var e = projectobj.getcurrent();
 
             a.draw(context, rect,
-                [
-                    [
-                        (projectobj.current()+1).toFixed(0),
-                        0,
-                        projectobj.length().toFixed(0),
-                    ],
                     [
                         e[0],
                         window.rect.width+"X"+window.rect.height,
@@ -4424,8 +4414,8 @@ var bodylst =
                         photo.image.width+"X"+photo.image.height,
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
                         context.visibles.toFixed(0)+"-"+context.sliceobj.length(),
-                    ]
-                ],
+                        widthobj.getcurrent(),
+                    ],
                 0);
             context.restore();
         }
@@ -4643,13 +4633,10 @@ var footlst =
             }
 
             var a =
-            new Layer(
-            [
-               new Fill(HEADBACK),
                new ColA([24,0,24,ALIEXTENT-16,24,0,24],
                [
                     0,
-                   new Row([0,8,0],
+                   1?0:new Row([0,8,0],
                    [
                        0,
                        new Col([e,f],
@@ -4670,7 +4657,7 @@ var footlst =
                            new Rectangle(context.progresscircle),
                        ]),
                    0,
-                   new Row([0,8,0],
+                   1?0:new Row([0,8,0],
                    [
                        0,
                        new Col([f,e],
@@ -4685,8 +4672,7 @@ var footlst =
                        0,
                    ]),
                    0
-               ]),
-            ]);
+               ]);
 
             a.draw(context, rect,
             [
