@@ -28,3 +28,9 @@ wget -q -O unsplash_wallpaper.jpg https://unsplash.it/1920/1080/?random
 #get images
 for i in {1..25}; do wget https://source.unsplash.com/featured/\?dogs?orientation=portrait -O "$(ls -l | wc -l).jpg" && sleep 2; done
 
+#how many cores
+cat /proc/cpuinfo
+
+#replace all strings in folder
+sed -i 's/list/data/g' *
+
