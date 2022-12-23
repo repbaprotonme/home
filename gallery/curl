@@ -5,5 +5,86 @@ curl -X "DELETE" https://reportbase.com/gallery/CITY
 curl -X PUT -H "Content-Type: application/json" -d @CITY.json https://gallery.reportbase5836.workers.dev/CITY
 curl -X PUT -H "Content-Type: application/json" -d @CITY.json https://reportbase.com/gallery/CITY
 
+#image details
+curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+     -H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" \
+     -H "Content-Type:application/json"
 
+{"result":{"id":"4117a5c350bebe48ce565c1384a8eeb2","status":"active","not_before":"2022-12-22T00:00:00Z","expires_on":"2023-09-08T23:59:59Z"},"success":true,"errors":[],"messages":[{"code":10000,"message":"This API Token is valid and active","type":null}]}[
 
+#delete image
+curl --request DELETE \
+--url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1/cbe96e39-8046-48ad-796f-fe2159fe4f00 \
+-H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" -H 'Content-Type: application/json' 
+
+{
+  "result": {},
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+
+#image statistics
+curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1/stats \
+  -H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" -H 'Content-Type: application/json' 
+
+{
+  "result": {
+    "count": {
+      "current": 3901,
+      "allowed": 100000
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+
+#list images
+curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1 \
+-H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC"  --header 'Content-Type: application/json' 
+
+{
+"id": "ALAD.0019",
+"filename": "ALAD.0019.jpg",
+"uploaded": "2022-12-23T01:40:02.508Z",
+"requireSignedURLs": false,
+"variants": [
+  "https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/ALAD.0019/main"
+]
+}
+
+#update image
+curl --request PATCH --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1/HOME.0000 --header 'Content-Type: application/json' --header "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" --data '{"metadata": 100, "requireSignedURLs": false }
+
+{
+  "result": {
+    "id": "HOME.0000",
+    "filename": "HOME.0000.jpg",
+    "meta": 100,
+    "uploaded": "2022-12-15T19:17:00.597Z",
+    "requireSignedURLs": false,
+    "variants": [
+      "https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/HOME.0000/main"
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+
+#get base image
+curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1/HOME.0000/blob -H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" --header 'Content-Type: application/json' --output HOME.0000.webp
+
+#get upload link
+curl --request POST --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v2/direct_upload --header 'Content-Type: multipart/form-data' --header "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC"   --form id=200 --form 'metadata={"key":"value"}' --form requireSignedURLs=false
+
+{
+  "result": {
+    "id": "200",
+    "uploadURL": "https://upload.imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/200"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
