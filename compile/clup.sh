@@ -1,6 +1,6 @@
-for ((i=0;i<120;i++)); do
+for ((i=0;i<1;i++)); do
 
-    IMAGE=$(printf "url=BOAT.%04d.webp" "$i")
+    IMAGE=$(printf "url=https://[scott:Bear8517@]207.246.100.73/srv/http/reportbase.com/data/BOAT.%04d.webp" "$i")
     echo $IMAGE
     ID=$(printf "id=BOAT.%04d" "$i")
     ACCOUNT=$(printf "https://api.cloudflare.com/client/v4/accounts/%s/images/v1" "41f6f507a22c7eec431dbc5e9670c73d")

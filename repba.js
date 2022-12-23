@@ -1615,6 +1615,8 @@ function dropfiles(files)
     if (!files || !files.length)
         return;
     delete photo.image;
+    projectobj.data = ["",0,0];
+    projectobj.set(0);
     _4cnvctx.setcolumncomplete = 0;
     globalobj.promptedfile = URL.createObjectURL(files[0]);
     thumbpos.enabled = 1;
