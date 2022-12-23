@@ -1,5 +1,4 @@
 //todo: https://obfuscator.io/
-//
 
 /* +=
 Copyright 2017 Tom Brinkman
@@ -3354,7 +3353,7 @@ var ContextObj = (function ()
                 photo.image.onerror =
                     photo.image.onabort = function(e)
                 {
-                    //location.reload();//todo
+                    location.reload();//todo
                     _4cnvctx.setcolumncomplete = 1;
                     contextobj.resize(context);
                     context.refresh();
@@ -4620,10 +4619,11 @@ function setfavicon()
 
 window.addEventListener("visibilitychange", (evt) =>
 {
-    debugobj.enabled = 0;
-    globalobj.minimal = 0;
-    pageresize();
-    reset();
+//todo
+//    debugobj.enabled = 0;
+//    globalobj.minimal = 0;
+//   pageresize();
+//    reset();
 });
 
 window.addEventListener("load", async () =>
