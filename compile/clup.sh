@@ -1,10 +1,10 @@
-for ((i=0;i<4;i++)); do
+for ((i=0;i<1;i++)); do
 
-    IMAGE=$(printf "url=https://reportbase.com/compile/WALLA.%04d.jpg" "$i")
-    ID=$(printf "id=WALLA.%04d" "$i")
-    ACCOUNT=$(printf "https://api.cloudflare.com/client/v4/accounts/%s/images/v1" "41f6f507a22c7eec431dbc5e9670c73d")
-    BEARER=$(printf "Authorization: Bearer %s" "y0wMwbTTYZkJG9IDm3EngHYrnsdEqfaUPgc6J38R")
-    curl --request POST $ACCOUNT  --header "$BEARER" --form $IMAGE --form $ID
+    IMAGE=$(printf "url=https://reportbase.us/compile/DELE.%04d.jpg" "$i")
+    ID=$(printf "id=DELE.%04d" "$i")
+    POST=$(printf "https://api.cloudflare.com/client/v4/accounts/%s/images/v1" "41f6f507a22c7eec431dbc5e9670c73d")
+    HEADER=$(printf "Authorization: Bearer %s" "y0wMwbTTYZkJG9IDm3EngHYrnsdEqfaUPgc6J38R")
+    curl --request POST $POST  --header "$HEADER" --form $IMAGE --form $ID
 
 done
 
