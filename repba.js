@@ -1,7 +1,8 @@
 //todo: https://obfuscator.io/
 
 /* +=
-Copyright 2017 Tom Brinkman
+Copyright 2017 Tom Brinkman .
+
 http://www.reportbase.com
 */
 
