@@ -3039,7 +3039,6 @@ projectobj.path = function()
     return s;
 }
 
-//var path = url.origin + "/data/" + url.path + ".json";
 var path = "https://reportbase.com/gallery/" + url.path;
 fetch(path)
   .then(function (response)
@@ -4638,4 +4637,24 @@ window.addEventListener("load", async () =>
     {
     }
 });
+
+let urla = 'https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1?page=1&per_page=100';
+
+let optionsa = {
+  method: 'GET',
+  headers: {'Content-Type': 'application/json', 
+        'Authorization': 'Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC'
+}};
+
+fetch(urla, optionsa)
+  .then(function (response)
+  {
+     return response.json();
+  })
+  .then(function (obj)
+  {
+      console.log(obj);
+  })
+  .catch(err => console.error('error:' + err));
+
 
