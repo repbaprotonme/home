@@ -1,5 +1,3 @@
-git remote set-url origin https://reportbase:Bear8517%@https://github.com/repbaprotonme/home.git
-
 make git m="your message"
 git config credential.helper 'cache --timeout=90000'  #cache password
 
