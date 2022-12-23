@@ -1,9 +1,8 @@
 //todo: https://obfuscator.io/
 
 /* +=
-Copyright 2017 Tom Brinkman .
-
-http://www.reportbase.com
+Copyright 2017 Tom Brinkman
+http://www.reportbase.comk
 */
 
 const ISMOBILE = window.matchMedia("only screen and (max-width: 760px)").matches;
@@ -4620,11 +4619,10 @@ function setfavicon()
 
 window.addEventListener("visibilitychange", (evt) =>
 {
-//todo
-//    debugobj.enabled = 0;
-//    globalobj.minimal = 0;
-//   pageresize();
-//    reset();
+    debugobj.enabled = 0;
+    globalobj.minimal = 0;
+    pageresize();
+    reset();
 });
 
 window.addEventListener("load", async () =>
