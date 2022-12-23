@@ -1,0 +1,9 @@
+curl https://gallery.reportbase5836.workers.dev/CITY | jq
+curl https://reportbase.com/gallery/CITY | jq
+curl -X "DELETE" https://gallery.reportbase5836.workers.dev/CITY
+curl -X "DELETE" https://reportbase.com/gallery/CITY
+curl -X PUT -H "Content-Type: application/json" -d @CITY.json https://gallery.reportbase5836.workers.dev/CITY
+curl -X PUT -H "Content-Type: application/json" -d @CITY.json https://reportbase.com/gallery/CITY
+
+
+
