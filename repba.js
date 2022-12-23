@@ -1,4 +1,4 @@
-//todo: https://obfuscator.io/
+//todo: https://obfuscator.io/ .
 
 /* +=
 Copyright 2017 Tom Brinkman
@@ -3040,7 +3040,7 @@ projectobj.path = function()
 }
 
 //var path = url.origin + "/data/" + url.path + ".json";
-var path = "https://reportbase.us/gallery/" + url.path;
+var path = "https://reportbase.com/gallery/" + url.path;
 fetch(path)
   .then(function (response)
   {
