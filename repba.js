@@ -4293,8 +4293,7 @@ var headlst =
             var e = projectobj.getcurrent();
             var b = e[0];
             var f = e[1]+"x"+e[2];
-            //a.draw(context, rect, [0,0,0,debugobj.enabled?j:b,0,0,0], time);
-            a.draw(context, rect, [0,0,0,"aa",0,0,0], time);
+            a.draw(context, rect, [0,0,0,debugobj.enabled?j:b,0,0,0], time);
             context.restore()
 		};
 	},
