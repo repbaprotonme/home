@@ -1,0 +1,25 @@
+export default {
+  async fetch(request, env, ctx) {
+        const value = await env.MY_KV.get("TOM2");
+        const data = { hello: value };
+        var json = JSON.stringify(data, null, 2);
+        console.log(env.MY_ENV_VAR)
+        env.MY_KV.put("TOM2",value*2);
+        const url = new URL(request.url);
+        const key = url.pathname.slice(1);
+        await env.MY_BUCKET.put("hello", "abcdefg");
+        const valuekey = await env.MY_BUCKET.get("hello");
+        return new Response(valuekey.body);
+
+        return new Response(json, {
+        headers: {
+        'content-type': 'application/json;charset=UTF-8',
+      },
+    })
+  }
+}
+
+
+//    const value2 = await env.MY_KV.list();
+//    return new Response(JSON.stringify(value2.keys, null, 2));
+

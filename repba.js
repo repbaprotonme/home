@@ -2,7 +2,7 @@
 
 /* +=
 Copyright 2017 Tom Brinkman
-http://www.reportbase.com
+http://www.reportbase.comk
 */
 
 const ISMOBILE = window.matchMedia("only screen and (max-width: 760px)").matches;
@@ -1615,6 +1615,8 @@ function dropfiles(files)
     if (!files || !files.length)
         return;
     delete photo.image;
+    projectobj.data = ["",0,0];
+    projectobj.set(0);
     _4cnvctx.setcolumncomplete = 0;
     globalobj.promptedfile = URL.createObjectURL(files[0]);
     thumbpos.enabled = 1;
@@ -2912,8 +2914,6 @@ var templatelst =
     init: function ()
     {
         thumbpos.enabled = 0;
-        projectobj.slidetop = 12;
-        projectobj.slidefactor = 640;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3355,7 +3355,7 @@ var ContextObj = (function ()
                 photo.image.onerror =
                     photo.image.onabort = function(e)
                 {
-                    //location.reload();//todo
+                    location.reload();//todo
                     _4cnvctx.setcolumncomplete = 1;
                     contextobj.resize(context);
                     context.refresh();
