@@ -3403,7 +3403,7 @@ var ContextObj = (function ()
                     setTimeout(function()
                     {
                         photo.menu = new Image();
-                        photo.menu.src = url.filepath() + url.path + ".jpg";//todo
+                        photo.menu.src = 'https://reportbase.com/images/' + url.path;
 
                         var k = projectobj.current();
                         projectobj.rotate(1);
