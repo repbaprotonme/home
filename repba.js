@@ -3034,8 +3034,8 @@ projectobj.path = function()
     w = Math.floor(w);
     h = Math.floor(h);
     var q = this.quality;
-    var s = 'https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/'+name+'/w='+w+',h='+h+',quality='+q;
-//    var s = "https://reportbase.com/api/"+k[0]+"/w="+k[1];
+//    var s = 'https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/'+name+'/w='+w+',h='+h+',quality='+q;
+    var s = 'https://reportbase.com/api/'+name+'/w='+w+',h='+h+',quality='+q;  
     return s;
 }
 
@@ -3403,7 +3403,7 @@ var ContextObj = (function ()
                     setTimeout(function()
                     {
                         photo.menu = new Image();
-                        photo.menu.src = url.filepath() + url.path + ".jpg";
+                        photo.menu.src = url.filepath() + url.path + ".jpg";//todo
 
                         var k = projectobj.current();
                         projectobj.rotate(1);
@@ -4637,24 +4637,5 @@ window.addEventListener("load", async () =>
     {
     }
 });
-
-let urla = 'https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1?page=1&per_page=100';
-
-let optionsa = {
-  method: 'GET',
-  headers: {'Content-Type': 'application/json', 
-        'Authorization': 'Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC'
-}};
-
-fetch(urla, optionsa)
-  .then(function (response)
-  {
-     return response.json();
-  })
-  .then(function (obj)
-  {
-      console.log(obj);
-  })
-  .catch(err => console.error('error:' + err));
 
 
