@@ -3069,7 +3069,7 @@ fetch(path)
             projectobj.virtualcolumns = 9;
 
         photo.help = new Image();
-        photo.help.src = url.filepath() + ((typeof obj.help === "undefined") ? "HELP.jpg" : obj.help);
+        photo.help.src = "https://reportbase.com/images/HELP;
 
         if (projectobj.length() < 2)
             bodyobj.enabled = 0;
@@ -3403,11 +3403,7 @@ var ContextObj = (function ()
                     setTimeout(function()
                     {
                         photo.menu = new Image();
-                        photo.menu.src = "https://reportbase.com/images/WILL.MENU";
-                        photo.menu.onload = function() 
-                        {
-                            console.log("aa");
-                        }
+                        photo.menu.src = "https://reportbase.com/images/" + url.path;
 
                         var k = projectobj.current();
                         projectobj.rotate(1);
