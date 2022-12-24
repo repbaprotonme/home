@@ -3403,7 +3403,7 @@ var ContextObj = (function ()
                     setTimeout(function()
                     {
                         photo.menu = new Image();
-                        photo.menu.src = 'https://reportbase.com/images/WILL.0000';// + url.path;
+                        photo.menu.src = projectobj.path();// + url.path;
                         photo.menu.onload = function() 
                         {
                             console.log("aa");
