@@ -3069,7 +3069,7 @@ fetch(path)
             projectobj.virtualcolumns = 9;
         
         photo.help = new Image();
-        photo.help.src = "https://reportbase.com/images/HELP.0000"+'/w='+360+',h='+2520+',quality='+85;
+        photo.help.src = "https://reportbase.com/images/HELP"+'/w='+360+',h='+2520+',quality='+85;
 
         if (projectobj.length() < 2)
             bodyobj.enabled = 0;
