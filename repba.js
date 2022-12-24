@@ -3035,7 +3035,7 @@ projectobj.path = function()
     h = Math.floor(h);
     var q = this.quality;
 //    var s = 'https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/'+name+'/w='+w+',h='+h+',quality='+q;
-    var s = 'https://reportbase.com/api/'+name+'/w='+w+',h='+h+',quality='+q;  
+    var s = 'https://reportbase.com/images/'+name+'/w='+w+',h='+h+',quality='+q;  
     return s;
 }
 
