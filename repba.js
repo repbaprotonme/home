@@ -3069,7 +3069,7 @@ fetch(path)
             projectobj.virtualcolumns = 9;
         
         photo.help = new Image();
-        photo.help.src = "https://reportbase.com/images/HELP"+'/w='+360+',h='+2520+',quality='+85;
+        photo.help.src = "https://reportbase.com/images/HELP"+'/w='+360+';
 
         if (projectobj.length() < 2)
             bodyobj.enabled = 0;
@@ -3403,7 +3403,7 @@ var ContextObj = (function ()
                     setTimeout(function()
                     {
                         photo.menu = new Image();
-                        photo.menu.src = "https://reportbase.com/images/PUCK.5000/"+'/w='+280+',h='+18200+',quality='+85;// + url.path;//todo
+                        photo.menu.src = "https://reportbase.com/images/"+url.path+'/w='+360;
                         
                         var k = projectobj.current();
                         projectobj.rotate(1);
