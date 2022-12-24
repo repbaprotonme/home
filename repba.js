@@ -48,6 +48,7 @@ globalobj = {};
 let photo = {}
 photo.image = 0;
 photo.menu = 0;
+photo.help = 0;
 
 let loaded = new Set()
 
@@ -3069,7 +3070,7 @@ fetch(path)
             projectobj.virtualcolumns = 9;
 
         photo.help = new Image();
-        photo.help.src = "https://reportbase.com/images/HELP";
+        photo.help.src = "https://reportbase.com/images/HELP.0000";//todo
 
         if (projectobj.length() < 2)
             bodyobj.enabled = 0;
@@ -3403,7 +3404,7 @@ var ContextObj = (function ()
                     setTimeout(function()
                     {
                         photo.menu = new Image();
-                        photo.menu.src = "https://reportbase.com/images/" + url.path;
+                        photo.menu.src = "https://reportbase.com/images/" + url.path;//todo
 
                         var k = projectobj.current();
                         projectobj.rotate(1);
