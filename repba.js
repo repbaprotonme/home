@@ -3035,7 +3035,6 @@ projectobj.path = function()
     w = Math.floor(w);
     h = Math.floor(h);
     var q = this.quality;
-//    var s = 'https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/'+name+'/w='+w+',h='+h+',quality='+q;
     var s = 'https://reportbase.com/images/'+name+'/w='+w+',h='+h+',quality='+q;  
     return s;
 }
@@ -3068,9 +3067,9 @@ fetch(path)
             projectobj.maxmegapix = 9000000;
         if (typeof projectobj.virtualcolumn  === "undefined")
             projectobj.virtualcolumns = 9;
-
+        
         photo.help = new Image();
-        photo.help.src = "https://reportbase.com/images/HELP.0000";//todo
+        photo.help.src = "https://reportbase.com/images/HELP.0000"+'/w='+360+',h='+2520+',quality='+85;
 
         if (projectobj.length() < 2)
             bodyobj.enabled = 0;
