@@ -1,4 +1,2 @@
-fetch("https://reportbase.com/tomwork/CITY", {
-method: "DELETE"
-})
+fetch("https://reportbase.com/gallery/_AA.json", { method: "DELETE" })
 
