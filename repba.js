@@ -48,6 +48,7 @@ globalobj = {};
 let photo = {}
 photo.image = 0;
 photo.menu = 0;
+photo.help = 0;
 
 let loaded = new Set()
 
@@ -2888,6 +2889,7 @@ var templatelst =
         footobj.show = 1;
         projectobj.maxmegapix = 4000000;
         headobj.enabled = 0;
+        projectobj.virtualcolumns = 18;
         loomobj.split(50, "70-85", loomobj.length());
         poomobj.split(50, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2901,6 +2903,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
+        projectobj.virtualcolumns = 18;
         loomobj.split(50, "70-95", loomobj.length());
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2965,6 +2968,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
+        projectobj.virtualcolumns = 18;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2978,6 +2982,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
+        projectobj.virtualcolumns = 18;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2991,6 +2996,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
+        projectobj.virtualcolumns = 18;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3034,12 +3040,10 @@ projectobj.path = function()
     w = Math.floor(w);
     h = Math.floor(h);
     var q = this.quality;
-    var s = 'https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/'+name+'/w='+w+',h='+h+',quality='+q;
-//    var s = "https://reportbase.com/api/"+k[0]+"/w="+k[1];
+    var s = 'https://reportbase.com/images/'+name+'/w='+w+',h='+h+',quality='+q;
     return s;
 }
 
-//var path = url.origin + "/data/" + url.path + ".json";
 var path = "https://reportbase.com/gallery/" + url.path;
 fetch(path)
   .then(function (response)
@@ -3066,11 +3070,11 @@ fetch(path)
             projectobj.quality = 75;
         if (typeof projectobj.projectobj  === "undefined")
             projectobj.maxmegapix = 9000000;
-        if (typeof projectobj.virtualcolumn  === "undefined")
+        if (typeof projectobj.virtualcolumns  === "undefined")
             projectobj.virtualcolumns = 9;
 
         photo.help = new Image();
-        photo.help.src = url.filepath() + ((typeof obj.help === "undefined") ? "HELP.jpg" : obj.help);
+        photo.help.src = "https://reportbase.com/images/HELP"+'/w='+360;
 
         if (projectobj.length() < 2)
             bodyobj.enabled = 0;
@@ -3404,7 +3408,7 @@ var ContextObj = (function ()
                     setTimeout(function()
                     {
                         photo.menu = new Image();
-                        photo.menu.src = url.filepath() + url.path + ".jpg";
+                        photo.menu.src = "https://reportbase.com/images/"+url.path+'/w='+360;
 
                         var k = projectobj.current();
                         projectobj.rotate(1);
@@ -4638,4 +4642,5 @@ window.addEventListener("load", async () =>
     {
     }
 });
+
 

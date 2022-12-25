@@ -2,6 +2,7 @@ curl https://gallery.reportbase5836.workers.dev/CITY | jq
 curl https://reportbase.com/gallery/CITY | jq
 curl -X "DELETE" https://gallery.reportbase5836.workers.dev/CITY
 curl -X "DELETE" https://reportbase.com/gallery/CITY
+curl -X "LIST" https://reportbase.com/gallery/ALL
 curl -X PUT -H "Content-Type: application/json" -d @CITY.json https://gallery.reportbase5836.workers.dev/CITY
 curl -X PUT -H "Content-Type: application/json" -d @CITY.json https://reportbase.com/gallery/CITY
 
@@ -41,8 +42,12 @@ curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a
 }
 
 #list images
-curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1 \
+curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1?page=1&per_page=100 \
 -H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC"  --header 'Content-Type: application/json' 
+
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca31a8372d0c353/images/v1" \
+     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
 
 {
 "id": "ALAD.0019",
