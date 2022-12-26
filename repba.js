@@ -2927,6 +2927,8 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
+        projectobj.virtualcolumns = 6;
+        projectobj.slidefactor = 36*4;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
