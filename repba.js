@@ -2887,7 +2887,9 @@ var templatelst =
         footobj.show = 1;
         projectobj.maxmegapix = 4000000;
         headobj.enabled = 0;
-        projectobj.virtualcolumns = 18;
+        projectobj.virtualcolumns = 15;
+        projectobj.slidetop = 24;
+        projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "70-85", loomobj.length());
         poomobj.split(50, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2901,7 +2903,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 18;
+        projectobj.virtualcolumns = 15;
         loomobj.split(50, "70-95", loomobj.length());
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2968,7 +2970,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 18;
+        projectobj.virtualcolumns = 15;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2982,7 +2984,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 18;
+        projectobj.virtualcolumns = 15;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2996,7 +2998,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 18;
+        projectobj.virtualcolumns = 15;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
