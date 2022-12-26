@@ -2574,7 +2574,7 @@ var drawlst =
         context.translate(-rect.width/2, -rect.height/2);
         user.fitwidth = rect.width;
         user.fitheight = rect.height;
-        context.font = "0.75rem Archivo Black";
+        context.font = "0.9rem Archivo Black";
         var clr = SCROLLNAB;
         var str = user.title;
 
@@ -2622,7 +2622,7 @@ var drawlst =
         context.translate(-rect.width/2, -rect.height/2);
         user.fitwidth = rect.width;
         user.fitheight = rect.height;
-        context.font = "0.75rem Archivo Black";
+        context.font = "0.9rem Archivo Black";
         var clr = SCROLLNAB;
         var str = user.title;
 
@@ -2700,7 +2700,7 @@ var drawlst =
         var tap = "rgba(200,0,0,0.75)";
         var select = "rgba(200,0,0,0.75)";
 
-        context.font = "0.75rem Archivo Black";
+        context.font = "0.9rem Archivo Black";
         var hh = photo.menu.height/projectobj.length();
         var r = calculateAspectRatioFit(photo.menu.width, hh, rect.width-20, rect.height+120-20);
         var x = rect.x+(rect.width-r.width)/2;
@@ -2767,7 +2767,7 @@ var drawlst =
         var tap = "rgba(200,0,0,0.75)";
         var select = "rgba(200,0,0,0.75)";
 
-        context.font = "0.75rem Archivo Black";
+        context.font = "0.9rem Archivo Black";
         var hh = photo.help.height/helplst.length;
         var r = calculateAspectRatioFit(photo.help.width, hh, rect.width-20, rect.height+120-20);
         var x = rect.x+(rect.width-r.width)/2;
