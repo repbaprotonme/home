@@ -457,6 +457,21 @@ function drawslices()
             var stretchwidth = bx2-bx+1;
             var xx = bx+r.x;
             var xxx = bx+r.x-width/2;
+            slice.stretchwidth = stretchwidth;
+            slice.bx = bx;
+            slice.xx = xx;
+            slice.xxx = xxx;
+            if (m == 1)
+            {
+                x1 = slice.xx;
+                s1 = stretchwidth;
+            }
+            else if (m == slicelst.length-1)
+            {
+                xn = slice.xx;
+                sn = stretchwidth;
+            }
+
             if (bx >= width)
             {
                 bx = bx2;
@@ -468,23 +483,8 @@ function drawslices()
                 continue;
             }
 
-            slice.stretchwidth = stretchwidth;
-            slice.bx = bx;
-            slice.xx = xx;
-            slice.xxx = xxx;
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
-
-            if (m == 1)
-            {
-                x1 = slice.xx;
-                s1 = stretchwidth;
-            }
-            else if (m == slicelst.length-1)
-            {
-                xn = slice.xx;
-                sn = stretchwidth;
-            }
 
             if (debugobj.enabled)
             {
