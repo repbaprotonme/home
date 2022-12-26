@@ -2820,7 +2820,7 @@ function resetcanvas()
     var y = Math.clamp(0,context.canvas.height-1,context.canvas.height*rowobj.berp());
     context.nuby = Math.nub(y, context.canvas.height, context.imageheight, photo.image.height);
 
-    const SLICERADIUS = 131000;
+    const SLICERADIUS = 141000;
 
     let slicelst = [];
     for (let n = 399; n >= 1; n=n-1)
