@@ -1,4 +1,4 @@
-//todo: https://obfuscator.io/ ....
+//todo: https://obfuscator.io/ .
 
 /* +=
 Copyright 2017 Tom Brinkman
@@ -3030,7 +3030,7 @@ projectobj.path = function()
     w = Math.floor(w);
     h = Math.floor(h);
     var q = this.quality;
-    var s = 'https://reportbase.com/images/'+name+'/w='+w+',h='+h+',quality='+q;  
+    var s = 'https://reportbase.com/images/'+name+'/w='+w+',h='+h+',quality='+q;
     return s;
 }
 
@@ -3062,7 +3062,7 @@ fetch(path)
             projectobj.maxmegapix = 9000000;
         if (typeof projectobj.virtualcolumns  === "undefined")
             projectobj.virtualcolumns = 9;
-        
+
         photo.help = new Image();
         photo.help.src = "https://reportbase.com/images/HELP"+'/w='+360;
 
@@ -3378,7 +3378,7 @@ var ContextObj = (function ()
                     {
                         photo.menu = new Image();
                         photo.menu.src = "https://reportbase.com/images/"+url.path+'/w='+360;
-                        
+
                         var k = projectobj.current();
                         projectobj.rotate(1);
                         var img1 = new Image();
