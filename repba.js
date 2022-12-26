@@ -448,7 +448,8 @@ function drawslices()
         var width = rect.width+extra;
         context.visibles = 0;
 
-        for (var m = 0; m < slicelst.length; ++m)
+        //for (var m = 0; m < slicelst.length; ++m) //todo
+        for (var m = 1; m < slicelst.length; ++m)
         {
             var e = m == slicelst.length-1?0:m+1
             var slice = slicelst[e];
@@ -2904,6 +2905,8 @@ var templatelst =
     {
         footobj.show = 1;
         projectobj.virtualcolumns = 15;
+        projectobj.slidetop = 24;
+        projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "70-95", loomobj.length());
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2971,6 +2974,8 @@ var templatelst =
     {
         footobj.show = 1;
         projectobj.virtualcolumns = 15;
+        projectobj.slidetop = 24;
+        projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2985,6 +2990,8 @@ var templatelst =
     {
         footobj.show = 1;
         projectobj.virtualcolumns = 15;
+        projectobj.slidetop = 24;
+        projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2999,6 +3006,8 @@ var templatelst =
     {
         footobj.show = 1;
         projectobj.virtualcolumns = 15;
+        projectobj.slidetop = 24;
+        projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3998,7 +4007,6 @@ function reset()
 
 function resize()
 {
-    debugobj.enabled = 0;
     reset();
     menuhide();
     var n = eventlst.findIndex(function(a){return a.name == "_4cnvctx";})
@@ -4009,7 +4017,6 @@ function resize()
 
 function escape()
 {
-    debugobj.enabled = 0;
     clearInterval(_4cnvctx.timemain);
     _4cnvctx.timemain = 0;
     menuhide();
