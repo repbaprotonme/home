@@ -450,8 +450,7 @@ function drawslices()
 
         for (var m = 1; m < slicelst.length; ++m)
         {
-            var e = m;
-            var slice = slicelst[e];
+            var slice = slicelst[m];
             var j = time + slice.time;
             var b = Math.tan(j*VIRTCONST);
             var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
