@@ -2376,7 +2376,7 @@ var taplst =
         context.refresh();
         setTimeout(function ()
         {
-            slice.func();
+            slice.func(rect, x, y);
             slice.tap = 0;
             context.refresh();
         }, JULIETIME*5);
@@ -3210,15 +3210,15 @@ fetch(path)
 
         slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
 
-        slices.data.push({title:"Debug", path: "DEBUG", func: function()
+        slices.data.push({title:"Debug", path: "DEBUG", func: function(rect, x, y)
         {
+            projectobj.virtualcolumns += (x<rect.width/2)?-1:1;
             headobj.enabled = 1;
             footobj.enabled = 1;
             thumbpos.enabled = 0;
             debugobj.enabled=debugobj.enabled?0:1;
             pageresize()
-            _4cnvctx.refresh();
-            menuhide();
+            contextobj.reset();
         }})
 
         slices.data.push({title:"Help", path: "HELP", func: function(){ menushow(_7cnvctx); }})
