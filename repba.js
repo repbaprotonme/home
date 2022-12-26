@@ -431,9 +431,6 @@ function drawslices()
         var j = (context.colwidth/(context.colwidth+context.virtualwidth))*TIMEOBJ;
         var time = (context.timeobj.getcurrent()+j)/1000;
         var slicelst = context.sliceobj.data;
-        var slice = slicelst[1];//todo
-        if (!slice)
-            break;
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
         var xt = -rect.width/2;
         var y = rect.height*0.5;
@@ -441,21 +438,24 @@ function drawslices()
         context.translate(xt, 0);
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
+        var slice = slicelst[2];
+        if (!slice)
+            break;
         var j = time+slice.time;
         var b = Math.tan(j*VIRTCONST);
         var bx = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
+        var stretchwidth;
 
-        for (var m = 0; m < slicelst.length; ++m)
+        for (var m = 1; m < slicelst.length; ++m)
         {
-            var e = m;//m == slicelst.length-1?0:m+1
-            var slice = slicelst[e];
+            var slice = slicelst[m];
             var j = time + slice.time;
             var b = Math.tan(j*VIRTCONST);
             var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
-            var stretchwidth = bx2-bx+1;
+            stretchwidth = bx2-bx+1;
             var xx = bx+r.x;
             var xxx = bx+r.x-width/2;
             if (bx >= width)
@@ -477,6 +477,7 @@ function drawslices()
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
 
+
             if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
@@ -488,6 +489,11 @@ function drawslices()
             bx = bx2;
             context.visibles++
         }
+
+        var xxx = slice.xx+stretchwidth;
+        var sw = slicelst[1].xx-xxx;
+        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
+              xxx, 0, sw,  rect.height);
 
         context.slicescount++;
         context.restore();
