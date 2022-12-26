@@ -3210,7 +3210,13 @@ fetch(path)
 
         slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
 
-        slices.data.push({title:"Slices (+/-)", path: "SLICES", func: function(rect, x, y)
+        slices.data.push({title:"Slidefactor (-/+)", path: "", func: function(rect, x, y)
+        {
+            projectobj.slidefactor += (x<rect.width/2)?-36:36;
+            contextobj.reset();
+        }})
+
+        slices.data.push({title:"Slices (-/+)", path: "", func: function(rect, x, y)
         {
             projectobj.virtualcolumns += (x<rect.width/2)?-1:1;
             contextobj.reset();
