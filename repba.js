@@ -431,7 +431,7 @@ function drawslices()
         var j = (context.colwidth/(context.colwidth+context.virtualwidth))*TIMEOBJ;
         var time = (context.timeobj.getcurrent()+j)/1000;
         var slicelst = context.sliceobj.data;
-        var slice = slicelst[0];
+        var slice = slicelst[4];//todo
         if (!slice)
             break;
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
