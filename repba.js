@@ -2965,8 +2965,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 9;
-        projectobj.slidetop = 28;
+        projectobj.virtualcolumns = 6;
+        projectobj.slidetop = 24;
         projectobj.slidefactor = 36*3;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
@@ -2981,8 +2981,8 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 12;
-        projectobj.slidetop = 28;
+        projectobj.virtualcolumns = 6;
+        projectobj.slidetop = 24;
         projectobj.slidefactor = 36*3;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
