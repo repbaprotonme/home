@@ -447,7 +447,7 @@ function drawslices()
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
-        var stretchwidth;
+        var x0,xn,s0,sn;
 
         for (var m = 1; m < slicelst.length; ++m)
         {
@@ -477,6 +477,16 @@ function drawslices()
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
 
+            if (m == 1)
+            {
+                x0 = slice.xx;
+                s0 = stretchwidth;
+            }
+            else if (m == slicelist.length-1)
+            {
+                xn = slice.xx;
+                sn = stretchwidth;
+            }
 
             if (debugobj.enabled)
             {
@@ -490,10 +500,8 @@ function drawslices()
             context.visibles++
         }
 
-        var xxx = slice.xx+stretchwidth;
-        var sw = slicelst[1].xx-xxx;
         context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
-              xxx, 0, sw,  rect.height);
+              xn+sn, 0, x1-(xn+sn),  rect.height);
 
         context.slicescount++;
         context.restore();
