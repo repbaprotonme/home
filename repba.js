@@ -2951,7 +2951,7 @@ var templatelst =
     init: function ()
     {
         projectobj.virtualcolumns = 6;
-        projectobj.slidefactor = 36*6;
+        projectobj.slidefactor = 36*5;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2982,8 +2982,8 @@ var templatelst =
     {
         footobj.show = 1;
         projectobj.virtualcolumns = 12;
-        projectobj.slidetop = 24;
-        projectobj.slidefactor = 36*2;
+        projectobj.slidetop = 28;
+        projectobj.slidefactor = 36*3;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
