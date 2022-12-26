@@ -1,9 +1,11 @@
+#./makemenu AGEN
+#
 #cp ../data/HOME.0*.jpg .
 #./avif2jpg.sh
 #./webp2jpg.sh
-#for image in *.jpg; do convert $image -resize x360 $image; done
-#for image in *.jpg; do convert $image -resize 360x360^ -gravity north -extent 360x360 $image; done 
-convert KAZA.*.jpg -append KAZA.jpg
+for image in *.jpg; do convert $image -resize x360 $image; done
+for image in *.jpg; do convert $image -resize 360x360^ -gravity north -extent 360x360 $image; done 
+convert $1.*.jpg -append $1.jpg
 #convert GIRL.webp GIRL.jpg 
 
 

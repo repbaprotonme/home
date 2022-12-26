@@ -1,3 +1,5 @@
+#./makegallery.sh > AGEN.json
+#
 echo "{"
 
 echo "     \"template\": \"\"," 

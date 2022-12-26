@@ -2936,6 +2936,8 @@ var templatelst =
     init: function ()
     {
         thumbpos.enabled = 0;
+        projectobj.virtualcolumns = 6;
+        projectobj.slidefactor = 36*4;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2949,7 +2951,7 @@ var templatelst =
     init: function ()
     {
         projectobj.virtualcolumns = 6;
-        projectobj.slidefactor = 36*4;
+        projectobj.slidefactor = 36*6;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2963,6 +2965,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
+        projectobj.virtualcolumns = 9;
+        projectobj.slidefactor = 36*4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2976,6 +2980,8 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
+        projectobj.virtualcolumns = 12;
+        projectobj.slidefactor = 36*2;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -4311,7 +4317,7 @@ var headlst =
             var e = projectobj.getcurrent();
             var b = e[0];
             var f = e[1]+"x"+e[2];
-            a.draw(context, rect, [0,0,0,debugobj.enabled?j:b,0,0,0], time);
+            a.draw(context, rect, [0,0,0,debugobj.enabled?j:k,0,0,0], time);
             context.restore()
 		};
 	},

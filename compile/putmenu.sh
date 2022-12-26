@@ -1,4 +1,4 @@
-#./put.sh HOME.0000
+#./put.sh HOME
 
 IMAGE=$(printf "file=@./$1.jpg" "$i")
 ID=$(printf "id=$1" "$i")
