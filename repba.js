@@ -431,6 +431,9 @@ function drawslices()
         var j = (context.colwidth/(context.colwidth+context.virtualwidth))*TIMEOBJ;
         var time = (context.timeobj.getcurrent()+j)/1000;
         var slicelst = context.sliceobj.data;
+        var slice = slicelst[2];//todo
+        if (!slice)
+            break;
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
         var xt = -rect.width/2;
         var y = rect.height*0.5;
@@ -438,9 +441,6 @@ function drawslices()
         context.translate(xt, 0);
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
-        var slice = slicelst[2];
-        if (!slice)
-            break;
         var j = time+slice.time;
         var b = Math.tan(j*VIRTCONST);
         var bx = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
