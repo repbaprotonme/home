@@ -501,9 +501,9 @@ function drawslices()
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
         if (!context.pressed && thumbpos.enabled)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
-        if (!thumbpos.enabled && bodyobj.enabled && context.panning && !globalobj.minimal)
+        if (!thumbpos.enabled && bodyobj.enabled && context.panning && !projectobj.hideui)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
-        else if (!context.isthumbrect && bodyobj.enabled && !context.pressed && !globalobj.minimal)
+        else if (!context.isthumbrect && bodyobj.enabled && !context.pressed && !projectobj.hideui)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
         context.setcolumncomplete = 1;
     }
@@ -1997,16 +1997,6 @@ var keylst =
             contextobj.reset();
             evt.preventDefault();
         }
-        else if (evt.key == "/")
-        {
-            var k = swipelst[0];
-            context.swipeleftright_ = k.swipeleftright;
-            context.swipeupdown_ = k.swipeupdown;
-            globalobj.minimal = globalobj.minimal?0:1;
-            pageresize();
-            context.refresh();
-            menuhide();
-        }
         else if (evt.key == "\\")
         {
             headobj.enabled = 1;
@@ -2450,7 +2440,7 @@ var thumblst =
             x = rect.x+rect.width-w-THUMBORDER;
         context.thumbrect = new rectangle(x,y,w,h);
 
-        if (globalobj.minimal)
+        if (projectobj.hideui)
             return;
 
         context.save();
@@ -2629,7 +2619,7 @@ var drawlst =
         }
         else if (user.path == "MINIMAL")
         {
-            if (globalobj.minimal)
+            if (projectobj.hideui)
                 clr = MENUSELECT;
         }
         else if (user.path == "DEBUG")
@@ -3211,26 +3201,6 @@ fetch(path)
         }});
 
         slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
-        slices.data.push({title:"Config", path: "CONFIG", func: function()
-        {
-            var str = JSON.stringify(projectobj, null, 2);
-            var tab = window.open('about:blank', '_blank');
-            tab.document.write("<pre>"+str+"</pre>");
-            tab.document.close();
-        }});
-
-        slices.data.push({ title:"Original", path: "ORIGINAL", func: function()
-        {
-           window.location.href = photo.image.original;
-        }});
-
-        slices.data.push({title:"Hide UI", path: "MINIMAL", func: function()
-        {
-            globalobj.minimal = globalobj.minimal?0:1;
-            pageresize();
-            _4cnvctx.refresh();
-            menuhide();
-        }})
 
         slices.data.push({title:"Debug", path: "DEBUG", func: function()
         {
@@ -3353,7 +3323,6 @@ var ContextObj = (function ()
                 seteventspanel(new Empty());
                 photo.image = new Image();
                 photo.image.crossOrigin = 1;
-                photo.image.original = path;
                 photo.image.src = path;
 
                 photo.image.onerror =
@@ -4007,7 +3976,6 @@ function reset()
 function resize()
 {
     debugobj.enabled = 0;
-    globalobj.minimal = 0;
     reset();
     menuhide();
     var n = eventlst.findIndex(function(a){return a.name == "_4cnvctx";})
@@ -4018,7 +3986,6 @@ function resize()
 
 function escape()
 {
-    globalobj.minimal = 0;
     debugobj.enabled = 0;
     clearInterval(_4cnvctx.timemain);
     _4cnvctx.timemain = 0;
@@ -4592,11 +4559,11 @@ window.addEventListener("keydown", function (evt)
 
 function pageresize()
 {
-    var h = (headobj.enabled && !globalobj.minimal) ? ALIEXTENT : 0;
+    var h = (headobj.enabled && !projectobj.hideui) ? ALIEXTENT : 0;
     headcnvctx.show(0,0,window.innerWidth,h);
     headobj.set(h?1:0);
     headham.panel = headobj.getcurrent();
-    var h = (footobj.enabled && !globalobj.minimal) ? ALIEXTENT : 0;
+    var h = (footobj.enabled && !projectobj.hideui) ? ALIEXTENT : 0;
     footcnvctx.show(0,window.innerHeight-h, window.innerWidth, h);
     footobj.set(h?1:0);
     footham.panel = footobj.getcurrent();
@@ -4625,22 +4592,10 @@ function setfavicon()
 
 window.addEventListener("visibilitychange", (evt) =>
 {
-    debugobj.enabled = 0;
-    globalobj.minimal = 0;
-    pageresize();
-    reset();
 });
 
 window.addEventListener("load", async () =>
 {
-    try
-    {
-//        if ("serviceWorker" in navigator && url.hostname == "reportbase.com")
-//           navigator.serviceWorker.register("sw.js"); //todo
-    }
-    catch(error)
-    {
-    }
 });
 
 

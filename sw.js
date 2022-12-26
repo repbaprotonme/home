@@ -39,3 +39,15 @@ self.addEventListener("fetch", function(e)
         })
     )
 })
+
+/*
+    try
+    {
+//        if ("serviceWorker" in navigator && url.hostname == "reportbase.com")
+//           navigator.serviceWorker.register("sw.js"); 
+    }
+    catch(error)
+    {
+    }
+*/
+

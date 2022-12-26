@@ -79,7 +79,9 @@ curl --request PATCH --url https://api.cloudflare.com/client/v4/accounts/41f6f50
 }
 
 #get base image
-curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1/HOME.0000/blob -H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" --header 'Content-Type: application/json' --output HOME.0000.webp
+curl --request GET \
+    --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1/HOME.0000/blob \
+    -H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" --header 'Content-Type: application/json' --output HOME.0000.webp
 
 #get upload link
 curl --request POST --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v2/direct_upload --header 'Content-Type: multipart/form-data' --header "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC"   --form id=200 --form 'metadata={"key":"value"}' --form requireSignedURLs=false

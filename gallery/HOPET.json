@@ -1,0 +1,12 @@
+{
+  "template": "LEGEND",
+  "title": "Landscapes - Hupe - Tall",
+  "data":
+  [
+    ["HOPET.0000", 1440, 4050],
+    ["HOPET.0001", 1440, 4050],
+    ["HOPET.0002", 1440, 4050],
+    ["HOPET.0003", 1440, 4050],
+    ["HOPET.0004", 1440, 4050]
+  ]
+}
