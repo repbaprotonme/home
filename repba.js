@@ -447,7 +447,7 @@ function drawslices()
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
-        var x0,xn,s0,sn;
+        var x1,xn,s1,sn;
 
         for (var m = 1; m < slicelst.length; ++m)
         {
@@ -479,8 +479,8 @@ function drawslices()
 
             if (m == 1)
             {
-                x0 = slice.xx;
-                s0 = stretchwidth;
+                x1 = slice.xx;
+                s1 = stretchwidth;
             }
             else if (m == slicelist.length-1)
             {
@@ -500,8 +500,8 @@ function drawslices()
             context.visibles++
         }
 
-//        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
-  //            xn+sn, 0, x1-(xn+sn),  rect.height);
+        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
+              xn+sn, 0, x1-(xn+sn),  rect.height);
 
         context.slicescount++;
         context.restore();
