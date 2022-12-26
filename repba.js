@@ -449,9 +449,9 @@ function drawslices()
         context.visibles = 0;
 
         //for (var m = 0; m < slicelst.length; ++m) //todo
-        for (var m = 1; m < slicelst.length-1; ++m)
+        for (var m = 0; m < slicelst.length; ++m)
         {
-            var e = m == slicelst.length-1?0:m+1
+            var e = m;//m == slicelst.length-1?0:m+1
             var slice = slicelst[e];
             var j = time + slice.time;
             var b = Math.tan(j*VIRTCONST);
