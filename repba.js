@@ -3210,9 +3210,14 @@ fetch(path)
 
         slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
 
-        slices.data.push({title:"Debug", path: "DEBUG", func: function(rect, x, y)
+        slices.data.push({title:"Slices (+/-)", path: "SLICES", func: function(rect, x, y)
         {
             projectobj.virtualcolumns += (x<rect.width/2)?-1:1;
+            contextobj.reset();
+        }})
+
+        slices.data.push({title:"Debug", path: "DEBUG", func: function(rect, x, y)
+        {
             headobj.enabled = 1;
             footobj.enabled = 1;
             thumbpos.enabled = 0;
