@@ -431,7 +431,7 @@ function drawslices()
         var j = (context.colwidth/(context.colwidth+context.virtualwidth))*TIMEOBJ;
         var time = (context.timeobj.getcurrent()+j)/1000;
         var slicelst = context.sliceobj.data;
-        var slice = slicelst[3];//todo
+        var slice = slicelst[1];//todo
         if (!slice)
             break;
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
@@ -449,7 +449,7 @@ function drawslices()
         context.visibles = 0;
 
         //for (var m = 0; m < slicelst.length; ++m) //todo
-        for (var m = 4; m < slicelst.length; ++m)
+        for (var m = 2; m < slicelst.length; ++m)
         {
             var e = m;//m == slicelst.length-1?0:m+1
             var slice = slicelst[e];
