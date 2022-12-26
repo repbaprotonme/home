@@ -500,9 +500,12 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        if (x+w > 0)//  x+w < width)
+        if (x+w > 0)
+        {
+            context.visibles++
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
+        }
 
         context.slicescount++;
         context.restore();
@@ -2937,7 +2940,7 @@ var templatelst =
     {
         thumbpos.enabled = 0;
         projectobj.virtualcolumns = 6;
-        projectobj.slidefactor = 36*4;
+        projectobj.slidefactor = 36*2;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
