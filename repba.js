@@ -41,6 +41,7 @@ const THUMBFILL2 = "rgba(0,0,0,0.40)";
 const THUMBSTROKE = "rgba(255,255,235,0.35)";
 const ARROWFILL = "white";
 const TIMEMAIN = 8;
+const SLICERADIUS = 131000;
 
 globalobj = {};
 
@@ -430,7 +431,7 @@ function drawslices()
         var j = (context.colwidth/(context.colwidth+context.virtualwidth))*TIMEOBJ;
         var time = (context.timeobj.getcurrent()+j)/1000;
         var slicelst = context.sliceobj.data;
-        var slice = slicelst[0];//todo
+        var slice = slicelst[1];//todo
         if (!slice)
             break;
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
@@ -447,8 +448,7 @@ function drawslices()
         var width = rect.width+extra;
         context.visibles = 0;
 
-        //for (var m = 0; m < slicelst.length; ++m) //todo
-        for (var m = 1; m < slicelst.length; ++m)
+        for (var m = 0; m < slicelst.length; ++m)
         {
             var e = m;//m == slicelst.length-1?0:m+1
             var slice = slicelst[e];
@@ -2819,8 +2819,6 @@ function resetcanvas()
     context.virtualsize = ((context.virtualwidth * context.virtualheight)/1000000).toFixed(1) + "MP";
     var y = Math.clamp(0,context.canvas.height-1,context.canvas.height*rowobj.berp());
     context.nuby = Math.nub(y, context.canvas.height, context.imageheight, photo.image.height);
-
-    const SLICERADIUS = 131000;
 
     let slicelst = [];
     for (let n = 399; n >= 1; n=n-1)
