@@ -443,7 +443,7 @@ function drawslices()
         var j = time+slice.time;
         var b = Math.tan(j*VIRTCONST);
         var bx = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
-        var extra = 0;//context.colwidth;
+        var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
         var x1,xn,s1,sn;
@@ -500,7 +500,7 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        if (x+w > 0)// && x+w < width)
+        if (x+w > 0)//  x+w < width)
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
 
