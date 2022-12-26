@@ -446,12 +446,11 @@ function drawslices()
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
+        var x1,xn,s1,sn;
 
-        //for (var m = 0; m < slicelst.length; ++m) //todo
         for (var m = 1; m < slicelst.length; ++m)
         {
-            var e = m;//m == slicelst.length-1?0:m+1
-            var slice = slicelst[e];
+            var slice = slicelst[m];
             var j = time + slice.time;
             var b = Math.tan(j*VIRTCONST);
             var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
@@ -463,8 +462,7 @@ function drawslices()
                 bx = bx2;
                 continue;
             }
-
-            if (bx2 < 0)
+            else if (bx2 < 0)
             {
                 bx = bx2;
                 continue;
@@ -477,6 +475,17 @@ function drawslices()
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
 
+            if (m == 1)
+            {
+                x1 = slice.xx;
+                s1 = stretchwidth;
+            }
+            else if (m == slicelst.length-1)
+            {
+                xn = slice.xx;
+                sn = stretchwidth;
+            }
+
             if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
@@ -488,6 +497,9 @@ function drawslices()
             bx = bx2;
             context.visibles++
         }
+
+        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
+              xn+sn, 0, x1-(xn+sn), rect.height);
 
         context.slicescount++;
         context.restore();
