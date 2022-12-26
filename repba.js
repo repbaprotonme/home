@@ -430,7 +430,7 @@ function drawslices()
         var j = (context.colwidth/(context.colwidth+context.virtualwidth))*TIMEOBJ;
         var time = (context.timeobj.getcurrent()+j)/1000;
         var slicelst = context.sliceobj.data;
-        var slice = slicelst[0];//todo
+        var slice = slicelst[0];
         if (!slice)
             break;
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
@@ -4246,7 +4246,7 @@ var headlst =
             context.prevpage2 = new rectangle()
             context.nextpage2 = new rectangle()
             context.picture = new rectangle()
-            context.font = "1.1rem Archivo Black";
+            context.font = "1rem Archivo Black";
             var j = rect.width < 420 ? (rect.width-ALIEXTENT*4):180;
             var s = _5cnvctx.enabled || _8cnvctx.enabled;
             var a = new Layer(
