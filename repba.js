@@ -446,7 +446,10 @@ function drawslices()
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
-        var x1,xn,s1,sn;
+        var x1 = 0;
+        var xn = 0;
+        var s1 = 0;
+        var sn = 0;
 
         for (var m = 1; m < slicelst.length; ++m)
         {
@@ -498,13 +501,10 @@ function drawslices()
             context.visibles++
         }
 
-        if (sn)
-        {
-            var x = xn+sn;
-            var w = x1-x;
-            context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
-                  x, 0, w, rect.height);
-        }
+        var x = xn+sn;
+        var w = x1-x;
+        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
+              x, 0, w, rect.height);
 
         context.slicescount++;
         context.restore();
@@ -2906,7 +2906,7 @@ var templatelst =
         footobj.show = 1;
         projectobj.maxmegapix = 4000000;
         headobj.enabled = 0;
-        projectobj.virtualcolumns = 15;
+        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "70-85", loomobj.length());
@@ -2922,7 +2922,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 15;
+        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "70-95", loomobj.length());
@@ -2991,7 +2991,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 15;
+        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "90-95", loomobj.length());
@@ -3007,7 +3007,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 15;
+        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "90-95", loomobj.length());
@@ -3023,7 +3023,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 15;
+        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "90-95", loomobj.length());
