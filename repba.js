@@ -447,7 +447,7 @@ function drawslices()
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
-
+//hello
         for (var m = 1; m < slicelst.length; ++m)
         {
             var slice = slicelst[m];
