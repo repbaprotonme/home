@@ -500,8 +500,8 @@ function drawslices()
             context.visibles++
         }
 
-        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
-              xn+sn, 0, 150, rect.height);
+//        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
+//              xn+sn, 0, 150, rect.height);
 
         context.slicescount++;
         context.restore();
