@@ -41,7 +41,6 @@ const THUMBFILL2 = "rgba(0,0,0,0.40)";
 const THUMBSTROKE = "rgba(255,255,235,0.35)";
 const ARROWFILL = "white";
 const TIMEMAIN = 8;
-const SLICERADIUS = 126000;
 
 globalobj = {};
 
@@ -2820,6 +2819,8 @@ function resetcanvas()
     context.virtualsize = ((context.virtualwidth * context.virtualheight)/1000000).toFixed(1) + "MP";
     var y = Math.clamp(0,context.canvas.height-1,context.canvas.height*rowobj.berp());
     context.nuby = Math.nub(y, context.canvas.height, context.imageheight, photo.image.height);
+
+    const SLICERADIUS = 129000;
 
     let slicelst = [];
     for (let n = 399; n >= 1; n=n-1)
