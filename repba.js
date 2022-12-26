@@ -482,7 +482,7 @@ function drawslices()
                 x1 = slice.xx;
                 s1 = stretchwidth;
             }
-            else if (m == slicelist.length-1)
+            else if (m == slicelst.length-1)
             {
                 xn = slice.xx;
                 sn = stretchwidth;
