@@ -500,8 +500,9 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
-              x, 0, w, rect.height);
+        if (x+w > 0 && x+w < rect.width)
+            context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
+                  x, 0, w, rect.height);
 
         context.slicescount++;
         context.restore();
