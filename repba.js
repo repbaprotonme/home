@@ -2576,16 +2576,17 @@ var drawlst =
         var a = new Layer(
         [
             new Expand(new Rounded(clr, 2, "white", 8, 8), 0, 12),
-            new RowA([0,20,20,0],
+            new RowA([0,20,20,20,0],
             [
                 0,
+                new Text("white", "center", "middle", 0, 0, 1),
                 new Text("white", "center", "middle", 0, 0, 1),
                 new Text("white", "center", "middle", 0, 0, 1),
                 0,
             ]),
         ]);
 
-        a.draw(context, rect, [0, user.title[0], user.title[1]+"x"+user.title[2], 0], time);
+        a.draw(context, rect, [0, (index+1).toFixed(0), duser.title[0], user.title[1]+"x"+user.title[2], 0], time);
         context.restore();
     }
 },
