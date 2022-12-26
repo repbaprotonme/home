@@ -446,10 +446,7 @@ function drawslices()
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
-        var x1 = 0;
-        var xn = 0;
-        var s1 = 0;
-        var sn = 0;
+        var x1,xn,s1,sn;
 
         for (var m = 1; m < slicelst.length; ++m)
         {
@@ -502,6 +499,8 @@ function drawslices()
         }
 
         var x = xn+sn;
+        if (!x)
+            x = 0;
         var w = x1-x;
         context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
               x, 0, w, rect.height);
