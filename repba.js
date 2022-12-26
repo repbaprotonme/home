@@ -454,7 +454,7 @@ function drawslices()
             var j = time + slice.time;
             var b = Math.tan(j*VIRTCONST);
             var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
-            stretchwidth = bx2-bx+1;
+            var stretchwidth = bx2-bx+1;
             var xx = bx+r.x;
             var xxx = bx+r.x-width/2;
             if (bx >= width)
@@ -487,12 +487,6 @@ function drawslices()
             bx = bx2;
             context.visibles++
         }
-
-        var xx1 = slicelst[slicelst.length-1].xx;
-        var xx2 = slicelst[1].xx;
-        var sw = slicelst[1].xx-xxx;
-        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
-              xxx, 0, sw,  rect.height);
 
         context.slicescount++;
         context.restore();
