@@ -449,7 +449,7 @@ function drawslices()
         context.visibles = 0;
 
         //for (var m = 0; m < slicelst.length; ++m) //todo
-        for (var m = 2; m < slicelst.length; ++m)
+        for (var m = 5; m < slicelst.length; ++m)
         {
             var e = m;//m == slicelst.length-1?0:m+1
             var slice = slicelst[e];
