@@ -488,16 +488,18 @@ function drawslices()
 
             if (debugobj.enabled)
             {
-                var a = new Fill(debugobj.data[e]);
+                context.globalAlpha = 0.5;
+                var a = new Fill(debugobj.data[m]);
                 a.draw(context, new rectangle(slice.xx,0,stretchwidth,rect.height), 0, 0);
+                context.globalAlpha = 1.0;
             }
 
             bx = bx2;
             context.visibles++
         }
 
-//        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
-  //            xn+sn, 0, x1-(xn+sn), rect.height);
+        context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
+              xn+sn, 0, x1-(xn+sn), rect.height);
 
         context.slicescount++;
         context.restore();
