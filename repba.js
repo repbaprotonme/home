@@ -457,6 +457,7 @@ function drawslices()
             var stretchwidth = bx2-bx+1;
             var xx = bx+r.x;
             var xxx = bx+r.x-width/2;
+            /*
             if (bx >= width)
             {
                 bx = bx2;
@@ -467,6 +468,7 @@ function drawslices()
                 bx = bx2;
                 continue;
             }
+            */
 
             slice.stretchwidth = stretchwidth;
             slice.bx = bx;
