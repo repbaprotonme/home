@@ -498,8 +498,10 @@ function drawslices()
             context.visibles++
         }
 
+        var x = xn+sn;
+        var w = x1-x;
         context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
-              xn+sn, 0, x1-(xn+sn), rect.height);
+              x, 0, w, rect.height);
 
         context.slicescount++;
         context.restore();
