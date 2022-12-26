@@ -462,7 +462,7 @@ function drawslices()
                 bx = bx2;
                 continue;
             }
-            else if (bx2 < stretchwidth)
+            else if (bx2 < -stretchwidth)
             {
                 bx = bx2;
                 continue;
