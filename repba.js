@@ -1708,8 +1708,10 @@ var panlst =
 	{
         if ( context.pinching )
              return;
-        if (context.shifthit)
-            y = context.starty;
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
         if (context.isthumbrect && thumbpos.enabled)
         {
             var k = guideobj.getcurrent();
@@ -1882,15 +1884,6 @@ var swipelst =
 
     swipeupdown: function (context, rect, x, y, evt)
     {
-        setTimeout(function()
-        {
-            evt.preventDefault();
-            var zoom = zoomobj.getcurrent()
-            if (Number(zoom.getcurrent()))
-                return;
-            context.autodirect = evt.type == "swipeup"?-1:1;
-            context.tab();
-        }, SWIPETIME);
     },
 },
 ];
@@ -2976,7 +2969,6 @@ var templatelst =
         footobj.show = 1;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*3;
-        projectobj.virtualcolumns = 4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
