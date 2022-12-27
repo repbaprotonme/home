@@ -435,7 +435,6 @@ function drawslices()
             break;
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
         var xt = -rect.width/2;
-        var y = rect.height*0.5;
         context.save();
         context.translate(xt, 0);
         context.shadowOffsetX = 0;
@@ -503,9 +502,15 @@ function drawslices()
         if (x+w > 0)
         {
             context.visibles++
-            //todo green
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
+            if (debugobj.enabled)
+            {
+                context.globalAlpha = 0.5;
+                var a = new Fill(debugobj.data[0]);
+                a.draw(context, new rectangle(x,0,w,rect.height), 0, 0);
+                context.globalAlpha = 1.0;
+            }
         }
 
         context.slicescount++;
