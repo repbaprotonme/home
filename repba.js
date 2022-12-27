@@ -1736,6 +1736,9 @@ var panlst =
             var zoom = zoomobj.getcurrent()
             if (Number(zoom.getcurrent()))
             {
+                var pt = context.getweightedpoint(x,y);
+                x = pt?pt.x:x;
+                y = pt?pt.y:y;
                 var h = (rect.height*(1-zoom.getcurrent()/100))*2;
                 y = ((y/rect.height)*speedyobj.getcurrent())*h;
                 var k = panvert(rowobj, h-y);
