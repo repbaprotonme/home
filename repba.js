@@ -1708,27 +1708,20 @@ var panlst =
 	{
         if ( context.pinching )
              return;
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
 
         if (context.isthumbrect && thumbpos.enabled)
         {
-            var pt = context.getweightedpoint(x,y);
-            x = pt?pt.x:x;
-            y = pt?pt.y:y;
             var k = guideobj.getcurrent();
             k.pan(context, rect, x, y, type);
         }
         else
         {
-            var pt = context.getweightedpoint(x,y);
-            x = pt?pt.x:x;
-            y = pt?pt.y:y;
-            var pt = context.getweightedpoint(x,y);
-            x = pt?pt.x:x;
-            y = pt?pt.y:y;
-            var pt = context.getweightedpoint(x,y);
-            x = pt?pt.x:x;
-            y = pt?pt.y:y;
-
             if (type == "panleft" || type == "panright")
             {
                 context.autodirect = (type == "panleft")?-1:1;
