@@ -2907,7 +2907,6 @@ var templatelst =
         footobj.show = 1;
         projectobj.maxmegapix = 4000000;
         headobj.enabled = 0;
-        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "70-85", loomobj.length());
@@ -2923,7 +2922,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "70-95", loomobj.length());
@@ -2939,7 +2937,6 @@ var templatelst =
     init: function ()
     {
         thumbpos.enabled = 0;
-        projectobj.virtualcolumns = 6;
         projectobj.slidefactor = 36*2;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
@@ -2953,7 +2950,6 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
-        projectobj.virtualcolumns = 6;
         projectobj.slidefactor = 36*5;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
@@ -2968,7 +2964,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 6;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*3;
         loomobj.split(0, "30-80", loomobj.length());
@@ -2984,7 +2979,6 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 6;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*3;
         loomobj.split(50, "50-90", loomobj.length());
@@ -3000,7 +2994,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "90-95", loomobj.length());
@@ -3016,7 +3009,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "90-95", loomobj.length());
@@ -3032,7 +3024,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        projectobj.virtualcolumns = 12;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "90-95", loomobj.length());
