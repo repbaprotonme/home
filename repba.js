@@ -1711,9 +1711,6 @@ var panlst =
         var pt = context.getweightedpoint(x,y);
         x = pt?pt.x:x;
         y = pt?pt.y:y;
-        var pt = context.getweightedpoint(x,y);
-        x = pt?pt.x:x;
-        y = pt?pt.y:y;
 
         if (context.isthumbrect && thumbpos.enabled)
         {
@@ -1722,8 +1719,9 @@ var panlst =
         }
         else
         {
-            if (type == "panleft" || type == "panright")
+            if (conext.type == 1 || type == "panleft" || type == "panright")
             {
+                conext.type ==  1
                 context.autodirect = (type == "panleft")?-1:1;
                 var len = context.timeobj.length();
                 var diff = context.startx-x;
@@ -1736,8 +1734,9 @@ var panlst =
                 context.timeobj.set(j);
                 context.refresh()
             }
-            else if (type == "panup" || type == "pandown")
+            else if (type == 2 || type == "panup" || type == "pandown")
             {
+                conext.type == 2
                 var zoom = zoomobj.getcurrent()
                 if (Number(zoom.getcurrent()))
                 {
@@ -1756,6 +1755,7 @@ var panlst =
     },
 	panstart: function (context, rect, x, y)
 	{
+        conext.type = 0;
         context.startx = x;
         context.starty = y;
         context.startt = context.timeobj.current();
