@@ -1719,9 +1719,9 @@ var panlst =
         }
         else
         {
-            if (conext.type == 1 || type == "panleft" || type == "panright")
+            if (context.type == 1 || type == "panleft" || type == "panright")
             {
-                conext.type ==  1
+                context.type ==  1
                 context.autodirect = (type == "panleft")?-1:1;
                 var len = context.timeobj.length();
                 var diff = context.startx-x;
@@ -1734,9 +1734,9 @@ var panlst =
                 context.timeobj.set(j);
                 context.refresh()
             }
-            else if (type == 2 || type == "panup" || type == "pandown")
+            else if (context.type == 2 || type == "panup" || type == "pandown")
             {
-                conext.type == 2
+                context.type == 2
                 var zoom = zoomobj.getcurrent()
                 if (Number(zoom.getcurrent()))
                 {
@@ -1755,7 +1755,7 @@ var panlst =
     },
 	panstart: function (context, rect, x, y)
 	{
-        conext.type = 0;
+        context.type = 0;
         context.startx = x;
         context.starty = y;
         context.startt = context.timeobj.current();
