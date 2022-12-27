@@ -503,6 +503,7 @@ function drawslices()
         if (x+w > 0)
         {
             context.visibles++
+            //todo green
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
         }
@@ -2937,6 +2938,7 @@ var templatelst =
     init: function ()
     {
         thumbpos.enabled = 0;
+        projectobj.slidetop = 24;
         projectobj.slidefactor = 36*2;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
@@ -2950,6 +2952,7 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
+        projectobj.slidetop = 24;
         projectobj.slidefactor = 36*5;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
@@ -2980,7 +2983,7 @@ var templatelst =
     {
         footobj.show = 1;
         projectobj.slidetop = 24;
-        projectobj.slidefactor = 36*3;
+        projectobj.slidefactor = 36*1.5;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3100,7 +3103,7 @@ fetch(path)
         if (typeof projectobj.projectobj  === "undefined")
             projectobj.maxmegapix = 9000000;
         if (typeof projectobj.virtualcolumns  === "undefined")
-            projectobj.virtualcolumns = 9;
+            projectobj.virtualcolumns = 6;
 
         photo.help = new Image();
         photo.help.src = "https://reportbase.com/images/HELP"+'/w='+360;
