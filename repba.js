@@ -1708,12 +1708,12 @@ var panlst =
 	{
         if ( context.pinching )
              return;
-        var pt = context.getweightedpoint(x,y);
-        x = pt?pt.x:x;
-        y = pt?pt.y:y;
 
         if (context.isthumbrect && thumbpos.enabled)
         {
+            var pt = context.getweightedpoint(x,y);
+            x = pt?pt.x:x;
+            y = pt?pt.y:y;
             var pt = context.getweightedpoint(x,y);
             x = pt?pt.x:x;
             y = pt?pt.y:y;
@@ -1722,6 +1722,9 @@ var panlst =
         }
         else if (type == "panleft" || type == "panright")
         {
+            var pt = context.getweightedpoint(x,y);
+            x = pt?pt.x:x;
+            y = pt?pt.y:y;
             context.autodirect = (type == "panleft")?-1:1;
             var len = context.timeobj.length();
             var diff = context.startx-x;
