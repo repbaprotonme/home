@@ -1721,7 +1721,7 @@ var panlst =
         {
             if (context.type != 2 && (type == "panleft" || type == "panright"))
             {
-                context.type ==  1
+                context.type = 1
                 context.autodirect = (type == "panleft")?-1:1;
                 var len = context.timeobj.length();
                 var diff = context.startx-x;
@@ -1736,7 +1736,7 @@ var panlst =
             }
             else if (context.type != 1 && (type == "panup" || type == "pandown"))
             {
-                context.type == 2
+                context.type = 2
                 var zoom = zoomobj.getcurrent()
                 if (Number(zoom.getcurrent()))
                 {
