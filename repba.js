@@ -3078,7 +3078,7 @@ galleryobj.path = function()
     w = Math.floor(w);
     h = Math.floor(h);
     var q = this.quality;
-    var s = 'https://reportbase.com/images/'+name+'/w='+w+',h='+h+',quality='+q;
+    var s = 'https://reportbase.com/image/'+name+'/w='+w+',h='+h+',quality='+q;
     return s;
 }
 
@@ -3112,7 +3112,7 @@ fetch(path)
             galleryobj.virtualcolumns = 6;
 
         photo.help = new Image();
-        photo.help.src = "https://reportbase.com/images/HELP"+'/w='+360;
+        photo.help.src = "https://reportbase.com/image/HELP"+'/w='+360;
 
         if (galleryobj.length() < 2)
             bodyobj.enabled = 0;
@@ -3436,7 +3436,7 @@ var ContextObj = (function ()
                     setTimeout(function()
                     {
                         photo.menu = new Image();
-                        photo.menu.src = "https://reportbase.com/images/"+url.path+'/w='+360;
+                        photo.menu.src = "https://reportbase.com/image/"+url.path+'/w='+360;
 
                         var k = galleryobj.current();
                         galleryobj.rotate(1);
