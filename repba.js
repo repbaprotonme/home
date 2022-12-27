@@ -2945,7 +2945,7 @@ var templatelst =
         thumbpos.enabled = 0;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*2;
-        rojectobj.virtualcolumns = 4;
+        projectobj.virtualcolumns = 4;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2960,7 +2960,7 @@ var templatelst =
     {
         projectobj.slidetop = 36;
         projectobj.slidefactor = 36*8;
-        rojectobj.virtualcolumns = 4;
+        projectobj.virtualcolumns = 4;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2976,7 +2976,7 @@ var templatelst =
         footobj.show = 1;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*3;
-        rojectobj.virtualcolumns = 4;
+        projectobj.virtualcolumns = 4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
