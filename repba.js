@@ -1708,6 +1708,9 @@ var panlst =
 	{
         if ( context.pinching )
              return;
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
 
         if (context.isthumbrect && thumbpos.enabled)
         {
@@ -1736,9 +1739,6 @@ var panlst =
             var zoom = zoomobj.getcurrent()
             if (Number(zoom.getcurrent()))
             {
-                var pt = context.getweightedpoint(x,y);
-                x = pt?pt.x:x;
-                y = pt?pt.y:y;
                 var h = (rect.height*(1-zoom.getcurrent()/100))*2;
                 y = ((y/rect.height)*speedyobj.getcurrent())*h;
                 var k = panvert(rowobj, h-y);
@@ -2930,8 +2930,8 @@ var templatelst =
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
+        speedxobj.split(1, "1-20", speedxobj.length());
+        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 {
@@ -2946,8 +2946,8 @@ var templatelst =
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
+        speedxobj.split(1, "1-20", speedxobj.length());
+        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 {
@@ -2961,8 +2961,8 @@ var templatelst =
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
+        speedxobj.split(1, "1-20", speedxobj.length());
+        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 {
@@ -2976,8 +2976,8 @@ var templatelst =
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
+        speedxobj.split(1, "1-20", speedxobj.length());
+        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 {
@@ -2991,8 +2991,8 @@ var templatelst =
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(75, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
+        speedxobj.split(1, "1-20", speedxobj.length());
+        speedyobj.split(1, "1-20", speedyobj.length());
    }
 },
 {
@@ -3006,8 +3006,8 @@ var templatelst =
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
+        speedxobj.split(1, "1-20", speedxobj.length());
+        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 {
@@ -3021,8 +3021,8 @@ var templatelst =
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
+        speedxobj.split(1, "1-20", speedxobj.length());
+        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 {
@@ -3036,8 +3036,8 @@ var templatelst =
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
+        speedxobj.split(1, "1-20", speedxobj.length());
+        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 ];
