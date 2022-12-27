@@ -1708,46 +1708,56 @@ var panlst =
 	{
         if ( context.pinching )
              return;
-        var pt = context.getweightedpoint(x,y);
-        x = pt?pt.x:x;
-        y = pt?pt.y:y;
-        var pt = context.getweightedpoint(x,y);
-        x = pt?pt.x:x;
-        y = pt?pt.y:y;
 
         if (context.isthumbrect && thumbpos.enabled)
         {
+            var pt = context.getweightedpoint(x,y);
+            x = pt?pt.x:x;
+            y = pt?pt.y:y;
             var k = guideobj.getcurrent();
             k.pan(context, rect, x, y, type);
         }
-        else if (type == "panleft" || type == "panright")
+        else
         {
-            context.autodirect = (type == "panleft")?-1:1;
-            var len = context.timeobj.length();
-            var diff = context.startx-x;
-            var jvalue = ((len/context.virtualwidth)*speedxobj.getcurrent())*diff;
-            var j = context.startt - jvalue;
-            if (j < 0)
-                j = len+j-1;
-            else if (j >= len)
-                j = j-len-1;
-            context.timeobj.set(j);
-            context.refresh()
-        }
-        else if (type == "panup" || type == "pandown")
-        {
-            var zoom = zoomobj.getcurrent()
-            if (Number(zoom.getcurrent()))
+            var pt = context.getweightedpoint(x,y);
+            x = pt?pt.x:x;
+            y = pt?pt.y:y;
+            var pt = context.getweightedpoint(x,y);
+            x = pt?pt.x:x;
+            y = pt?pt.y:y;
+            var pt = context.getweightedpoint(x,y);
+            x = pt?pt.x:x;
+            y = pt?pt.y:y;
+
+            if (type == "panleft" || type == "panright")
             {
-                var h = (rect.height*(1-zoom.getcurrent()/100))*2;
-                y = ((y/rect.height)*speedyobj.getcurrent())*h;
-                var k = panvert(rowobj, h-y);
-                if (k == -1)
-                    return;
-                if (k == rowobj.anchor())
-                    return;
-                rowobj.set(k);
-                contextobj.reset();
+                context.autodirect = (type == "panleft")?-1:1;
+                var len = context.timeobj.length();
+                var diff = context.startx-x;
+                var jvalue = ((len/context.virtualwidth)*speedxobj.getcurrent())*diff;
+                var j = context.startt - jvalue;
+                if (j < 0)
+                    j = len+j-1;
+                else if (j >= len)
+                    j = j-len-1;
+                context.timeobj.set(j);
+                context.refresh()
+            }
+            else if (type == "panup" || type == "pandown")
+            {
+                var zoom = zoomobj.getcurrent()
+                if (Number(zoom.getcurrent()))
+                {
+                    var h = (rect.height*(1-zoom.getcurrent()/100))*2;
+                    y = ((y/rect.height)*speedyobj.getcurrent())*h;
+                    var k = panvert(rowobj, h-y);
+                    if (k == -1)
+                        return;
+                    if (k == rowobj.anchor())
+                        return;
+                    rowobj.set(k);
+                    contextobj.reset();
+                }
             }
         }
     },
