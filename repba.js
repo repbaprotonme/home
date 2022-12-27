@@ -2918,8 +2918,8 @@ var templatelst =
         poomobj.split(50, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(1, "1-20", speedxobj.length());
-        speedyobj.split(1, "1-20", speedyobj.length());
+        speedxobj.split(2, "1-20", speedxobj.length());
+        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2933,8 +2933,8 @@ var templatelst =
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(1, "1-20", speedxobj.length());
-        speedyobj.split(1, "1-20", speedyobj.length());
+        speedxobj.split(2, "1-20", speedxobj.length());
+        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2949,8 +2949,8 @@ var templatelst =
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(1, "1-20", speedxobj.length());
-        speedyobj.split(1, "1-20", speedyobj.length());
+        speedxobj.split(2, "1-20", speedxobj.length());
+        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2964,8 +2964,8 @@ var templatelst =
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(1, "1-20", speedxobj.length());
-        speedyobj.split(1, "1-20", speedyobj.length());
+        speedxobj.split(2, "1-20", speedxobj.length());
+        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2979,8 +2979,8 @@ var templatelst =
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(1, "1-20", speedxobj.length());
-        speedyobj.split(1, "1-20", speedyobj.length());
+        speedxobj.split(2, "1-20", speedxobj.length());
+        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2994,8 +2994,8 @@ var templatelst =
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(75, "0.1-1.0", scapeobj.length());
-        speedxobj.split(1, "1-20", speedxobj.length());
-        speedyobj.split(1, "1-20", speedyobj.length());
+        speedxobj.split(2, "1-20", speedxobj.length());
+        speedyobj.split(2, "1-20", speedyobj.length());
    }
 },
 {
