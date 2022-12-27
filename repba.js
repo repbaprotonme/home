@@ -2945,6 +2945,7 @@ var templatelst =
         thumbpos.enabled = 0;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*2;
+        rojectobj.virtualcolumns = 4;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2959,6 +2960,7 @@ var templatelst =
     {
         projectobj.slidetop = 36;
         projectobj.slidefactor = 36*8;
+        rojectobj.virtualcolumns = 4;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2974,6 +2976,7 @@ var templatelst =
         footobj.show = 1;
         projectobj.slidetop = 24;
         projectobj.slidefactor = 36*3;
+        rojectobj.virtualcolumns = 4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3248,7 +3251,7 @@ fetch(path)
         }});
 
         slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
-
+/*
         slices.data.push({title:"Slidefactor (-/+)", path: "", func: function(rect, x, y)
         {
             projectobj.slidefactor += (x<rect.width/2)?-36:36;
@@ -3260,7 +3263,7 @@ fetch(path)
             projectobj.virtualcolumns += (x<rect.width/2)?-1:1;
             contextobj.reset();
         }})
-
+*/
         slices.data.push({title:"Debug", path: "DEBUG", func: function(rect, x, y)
         {
             headobj.enabled = 1;

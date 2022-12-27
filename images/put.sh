@@ -1,6 +1,6 @@
 #./put.sh HOME.0000
 
-IMAGE=$(printf "url=https://reportbase.us/compile/$1.jpg" "$i")
+IMAGE=$(printf "file=@./$1.jpg" "$i")
 ID=$(printf "id=$1" "$i")
 POST=$(printf "https://api.cloudflare.com/client/v4/accounts/%s/images/v1" "41f6f507a22c7eec431dbc5e9670c73d")
 HEADER=$(printf "Authorization: Bearer %s" "y0wMwbTTYZkJG9IDm3EngHYrnsdEqfaUPgc6J38R")
