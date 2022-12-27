@@ -1,9 +1,9 @@
-#./makegallery.sh > AGEN.json
+#./makegallery.sh COMIC " " > AGEN.json
 #
 echo "{"
 
-echo "     \"template\": \"\"," 
-echo "     \"title\": \"\","
+echo "     \"template\": \"$1\"," 
+echo "     \"title\": \"$2\","
 echo "     \"data\":"
 echo "     ["
 

@@ -42,21 +42,16 @@ curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a
 }
 
 #list images
-curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1?page=1&per_page=100 \
--H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC"  --header 'Content-Type: application/json' 
-
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca31a8372d0c353/images/v1" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
+curl --request GET --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1?page=1&per_page=100 -H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC"  --header "Content-Type: application/json" 
 
 {
-"id": "ALAD.0019",
-"filename": "ALAD.0019.jpg",
-"uploaded": "2022-12-23T01:40:02.508Z",
-"requireSignedURLs": false,
-"variants": [
-  "https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/ALAD.0019/main"
-]
+    "id": "ALAD.0019",
+    "filename": "ALAD.0019.jpg",
+    "uploaded": "2022-12-23T01:40:02.508Z",
+    "requireSignedURLs": false,
+    "variants": [
+      "https://imagedelivery.net/w9Lvwo1EAmYzHfbI5TkJ7g/ALAD.0019/main"
+    ]
 }
 
 #update image
