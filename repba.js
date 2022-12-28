@@ -466,12 +466,7 @@ function drawslices()
                 sn = stretchwidth;
             }
 
-            if (bx >= width)
-            {
-                bx = bx2;
-                continue;
-            }
-            else if (bx2 < 0)
+            if (bx >= width || bx2 < 0)
             {
                 bx = bx2;
                 continue;
@@ -2845,6 +2840,9 @@ function resetcanvas()
     for (let n = 399; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
     context.slicewidth = context.virtualwidth/galleryobj.virtualcolumns;
+    if (context.slicewidth > rect.width)
+        context.slicewidth = rect.width;
+
     var slices = 0;
     for (; slices < slicelst.length; ++slices)
     {
