@@ -434,10 +434,10 @@ function drawslices()
         if (!slice)
             break;
 
-//        var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
-//        var xt = -rect.width/2;
+        var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
+        var xt = -rect.width/2;
         context.save();
-//        context.translate(xt, 0);
+        context.translate(xt, 0);
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
         var j = time+slice.time;
