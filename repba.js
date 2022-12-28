@@ -455,11 +455,9 @@ function drawslices()
             var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
             var stretchwidth = bx2-bx+1;
             var xx = bx+r.x;
-            var xxx = bx+r.x-width/2;
             slice.stretchwidth = stretchwidth;
             slice.bx = bx;
             slice.xx = xx;
-            slice.xxx = xxx;
 
             if (m == 1)
             {
@@ -481,7 +479,7 @@ function drawslices()
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
 
-           TEST.push({x: slice.xx, w:stretchwidth})
+            TEST.push({x: slice.xx, w:stretchwidth})
 
             if (debugobj.enabled)
             {
