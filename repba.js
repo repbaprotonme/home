@@ -433,7 +433,7 @@ function drawslices()
         var slice = slicelst[0];
         if (!slice)
             break;
-        var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
+        //var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
         var xt = 0;//-rect.width/2;
         context.save();
         context.translate(xt, 0);
@@ -454,19 +454,19 @@ function drawslices()
             var b = Math.tan(j*VIRTCONST);
             var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
             var stretchwidth = bx2-bx+1;
-            var xx = bx;//+r.x;
+            //var xx = bx;//+r.x;
             slice.stretchwidth = stretchwidth;
             slice.bx = bx;
-            slice.xx = xx;
+            //slice.xx = xx;
 
             if (m == 1)
             {
-                x1 = slice.xx;
+                x1 = slice.bx;
                 s1 = stretchwidth;
             }
             else if (m == slicelst.length-1)
             {
-                xn = slice.xx;
+                xn = slice.bx;
                 sn = stretchwidth;
             }
 
@@ -477,15 +477,15 @@ function drawslices()
             }
 
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
-              slice.xx, 0, stretchwidth, rect.height);
+              slice.bx, 0, stretchwidth, rect.height);
 
-            TEST.push({x: slice.xx, w:stretchwidth})
+            TEST.push({x: slice.bx, w:stretchwidth})
 
             if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
                 var a = new Fill(debugobj.data[m]);
-                a.draw(context, new rectangle(slice.xx,0,stretchwidth,rect.height), 0, 0);
+                a.draw(context, new rectangle(slice.bx,0,stretchwidth,rect.height), 0, 0);
                 context.globalAlpha = 1.0;
             }
 
