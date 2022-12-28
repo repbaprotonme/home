@@ -1,4 +1,5 @@
-#./putm2.sh BUGS
+#./cmen.sh BUGS
+
 ./makem.sh $1
 ./putm.sh $1
 

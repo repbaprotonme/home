@@ -1,4 +1,4 @@
-#./putimages SPIR*
+#./pimg SPIR*
 
 for f in "$@"
 do
