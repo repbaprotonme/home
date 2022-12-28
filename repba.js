@@ -494,12 +494,12 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        if (x+w+rect.width/2 >= 0)// && x < width)
+        if (x+w+width/2 >= 0)// && x < width)
         {
             context.visibles++
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
-           TEST.push({x,w,rect.width})
+           TEST.push({x,w,width})
            if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
