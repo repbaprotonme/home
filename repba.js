@@ -472,7 +472,8 @@ function drawslices()
                 sn = stretchwidth;
             }
 
-            if (bx >= width || bx2 < 0 || (slice.xx + stretchwidth) < 0 || slice.xx > width)
+//            if (bx >= width || bx2 < 0 || (slice.xx + stretchwidth) < 0 || slice.xx > width)
+            if (bx >= width || bx2 < 0 || slice.xx > width)
             {
                 bx = bx2;
                 continue;
@@ -501,7 +502,7 @@ function drawslices()
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
            TEST.push(x)
-            if (debugobj.enabled)
+           if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
                 var a = new Fill(debugobj.data[0]);
