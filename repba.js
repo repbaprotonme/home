@@ -480,7 +480,9 @@ function drawslices()
 
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
-           TEST.push({slice.xx,stretchwidth})
+
+           TEST.push({x: slice.xx, w:stretchwidth})
+
             if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
