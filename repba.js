@@ -454,7 +454,7 @@ function drawslices()
             var b = Math.tan(j*VIRTCONST);
             var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
             var stretchwidth = bx2-bx+1;
-            var xx = bx+r.x;
+            var xx = bx;//+r.x;
             slice.stretchwidth = stretchwidth;
             slice.bx = bx;
             slice.xx = xx;
