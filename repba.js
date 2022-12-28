@@ -2846,8 +2846,7 @@ function resetcanvas()
     let slicelst = [];
     for (let n = 399; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
-    context.virtualcolumns = context.virtualwidth/rect.width;
-    context.slicewidth = context.virtualwidth/context.virtualcolumns;
+    context.slicewidth = context.virtualwidth/galleryobj.virtualcolumns;
     var slices = 0;
     for (; slices < slicelst.length; ++slices)
     {
@@ -2943,6 +2942,22 @@ var templatelst =
         thumbpos.enabled = 0;
         galleryobj.slidetop = 24;
         galleryobj.slidefactor = 36*2;
+        galleryobj.virtualcolumns = 4;
+        loomobj.split(0, "0-25", loomobj.length());
+        poomobj.split(0, "0-25", poomobj.length());
+        traitobj.split(100, "0.1-1.0", traitobj.length());
+        scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        speedxobj.split(2, "1-20", speedxobj.length());
+        speedyobj.split(2, "1-20", speedyobj.length());
+    }
+},
+{
+    name: "ULTRAWIDE",
+    init: function ()
+    {
+        galleryobj.slidetop = 36;
+        galleryobj.slidefactor = 36*8;
+        galleryobj.virtualcolumns = 4;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2958,6 +2973,7 @@ var templatelst =
         footobj.show = 1;
         galleryobj.slidetop = 24;
         galleryobj.slidefactor = 36*3;
+        galleryobj.virtualcolumns = 4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3091,6 +3107,8 @@ fetch(path)
             galleryobj.quality = 75;
         if (typeof galleryobj.galleryobj  === "undefined")
             galleryobj.maxmegapix = 9000000;
+        if (typeof galleryobj.virtualcolumns  === "undefined")
+            galleryobj.virtualcolumns = 6;
 
         photo.help = new Image();
         photo.help.src = "https://reportbase.com/image/HELP"+'/w='+360;
@@ -3230,6 +3248,19 @@ fetch(path)
         }});
 
         slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
+/*
+        slices.data.push({title:"Slidefactor (-/+)", path: "", func: function(rect, x, y)
+        {
+            galleryobj.slidefactor += (x<rect.width/2)?-36:36;
+            contextobj.reset();
+        }})
+
+        slices.data.push({title:"Slices (-/+)", path: "", func: function(rect, x, y)
+        {
+            galleryobj.virtualcolumns += (x<rect.width/2)?-1:1;
+            contextobj.reset();
+        }})
+*/
         slices.data.push({title:"Debug", path: "DEBUG", func: function(rect, x, y)
         {
             headobj.enabled = 1;
