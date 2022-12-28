@@ -468,7 +468,12 @@ function drawslices()
                 sn = stretchwidth;
             }
 
-            if (bx >= width || bx < -context.colwidth)
+            if (bx >= width)
+            {
+                bx = bx2;
+                continue;
+            }
+            else if (bx2 < 0)
             {
                 bx = bx2;
                 continue;
