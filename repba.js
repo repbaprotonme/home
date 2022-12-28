@@ -472,7 +472,7 @@ function drawslices()
                 sn = stretchwidth;
             }
 
-            if (bx >= width || bx2 < 0 || slice.xx > width)
+            if (bx >= width || bx2 < 0 || (slice.xx + stretchwidth) < 0 || slice.xx > width)
             {
                 bx = bx2;
                 continue;
