@@ -473,6 +473,11 @@ function drawslices()
                 bx = bx2;
                 continue;
             }
+            else if (bx < -context.colwidth)
+            {
+                bx = bx2;
+                continue;
+            }
             else if (bx2 < 0)
             {
                 bx = bx2;
@@ -3081,8 +3086,6 @@ galleryobj.path = function()
     return s;
 }
 
-TEST = [];
-
 var path = "https://reportbase.com/gallery/" + url.path;
 fetch(path)
   .then(function (response)
@@ -3098,8 +3101,8 @@ fetch(path)
         templateobj.set(j);
         templateobj.getcurrent().init();
 
-        pretchobj.split(60, "40-90", pretchobj.length());
-        letchobj.split(60, "40-90", letchobj.length());
+        pretchobj.split(50, "40-90", pretchobj.length());
+        letchobj.split(50, "40-90", letchobj.length());
 
         if (typeof galleryobj.slidetop === "undefined")
             galleryobj.slidetop = 36;
