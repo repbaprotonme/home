@@ -434,6 +434,7 @@ function drawslices()
         if (!slice)
             break;
         context.save();
+        context.translate(-context.colwidth, 0);
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
         var j = time+slice.time;
