@@ -480,6 +480,7 @@ function drawslices()
 
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
+           context.test.push({slice.xx,stretchwidth})
             if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
@@ -494,11 +495,12 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        if (x+w > 0 && x+w<width)
+        if (x+w > 0)
         {
             context.visibles++
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
+           context.test.push({x,w})
             if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
@@ -3126,6 +3128,7 @@ fetch(path)
             context.font = "400 1rem Archivo Black";
             context.fillText("  ", 0, 0);
             context.slideshow = 0;
+            context.tests = [];
             context.lastime = 0;
             context.buttonheight = ALIEXTENT/2;
             setevents(context, eventlst[n]);
