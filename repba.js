@@ -473,7 +473,7 @@ function drawslices()
                 bx = bx2;
                 continue;
             }
-            else if (bx < -context.colwidth)
+            else if (bx2 < 0)
             {
                 bx = bx2;
                 continue;
