@@ -433,7 +433,7 @@ function drawslices()
         var slice = slicelst[0];
         if (!slice)
             break;
-        var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
+        //var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
         var xt = 0;//-rect.width/2;
         context.save();
         context.translate(xt, 0);
@@ -470,7 +470,7 @@ function drawslices()
                 sn = stretchwidth;
             }
 
-            if (bx >= width || bx2 < 0)
+            if (bx >= rect.width || bx+stretchwidth < 0)
             {
                 bx = bx2;
                 continue;
