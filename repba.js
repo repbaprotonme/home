@@ -466,7 +466,7 @@ function drawslices()
             }
 
             //if (bx >= rect.width || bx2 < 0)
-            if (bx2 < 0)
+            if (0)
             {
                 bx = bx2;
                 continue;
