@@ -439,7 +439,7 @@ function drawslices()
         context.shadowOffsetY = 0;
         var j = time+slice.time;
         var b = Math.tan(j*VIRTCONST);
-        var bx = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
+        var bx = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft + context.colwidth;
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
@@ -450,7 +450,7 @@ function drawslices()
             var slice = slicelst[m];
             var j = time + slice.time;
             var b = Math.tan(j*VIRTCONST);
-            var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
+            var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft + context.colwidth;
             var stretchwidth = bx2-bx+1;
             slice.stretchwidth = stretchwidth;
             slice.bx = bx;
