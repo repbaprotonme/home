@@ -434,7 +434,6 @@ function drawslices()
         if (!slice)
             break;
         context.save();
-        context.translate(-context.colwidth, 0);
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
         var j = time+slice.time;
@@ -472,7 +471,7 @@ function drawslices()
             }
 
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
-              slice.bx+context.colwidth, 0, stretchwidth, rect.height);
+              slice.bx, 0, stretchwidth, rect.height);
 
             if (debugobj.enabled)
             {
