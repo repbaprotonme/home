@@ -433,6 +433,7 @@ function drawslices()
         var slice = slicelst[0];
         if (!slice)
             break;
+
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
         var xt = -rect.width/2;
         context.save();
@@ -455,10 +456,11 @@ function drawslices()
             var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
             var stretchwidth = bx2-bx+1;
             var xx = bx+r.x;
+            var xxx = bx+r.x-width/2;
             slice.stretchwidth = stretchwidth;
             slice.bx = bx;
             slice.xx = xx;
-
+            slice.xxx = xxx;
             if (m == 1)
             {
                 x1 = slice.xx;
@@ -470,7 +472,12 @@ function drawslices()
                 sn = stretchwidth;
             }
 
-            if (bx >= width || bx2 < 0)
+            if (bx >= width)
+            {
+                bx = bx2;
+                continue;
+            }
+            else if (bx2 < 0)
             {
                 bx = bx2;
                 continue;
@@ -478,8 +485,6 @@ function drawslices()
 
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
-
-            TEST.push({x: slice.xx, w:stretchwidth})
 
             if (debugobj.enabled)
             {
@@ -495,12 +500,12 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        if (x+w > 0)// && w > context.colwidth && w < context.colwidth*8)// && x < 1700)// && x < width)
+        if (x+w > 0)
         {
             context.visibles++
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
-           if (debugobj.enabled)
+            if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
                 var a = new Fill(debugobj.data[0]);
