@@ -2988,7 +2988,6 @@ var templatelst =
         footobj.show = 1;
         galleryobj.slidetop = 24;
         galleryobj.slidefactor = 36*1.5;
-        galleryobj.virtualcolumns = 4;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
