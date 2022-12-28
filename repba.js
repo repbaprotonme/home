@@ -477,7 +477,7 @@ function drawslices()
                 bx = bx2;
                 continue;
             }
-            else if (bx2 < 0)
+            else if (bx < 0)
             {
                 bx = bx2;
                 continue;
