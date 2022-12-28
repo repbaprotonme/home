@@ -496,7 +496,7 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        if (x+w > 0 && x < width)
+        if (x+w > 0)// && x < width)
         {
             context.visibles++
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
