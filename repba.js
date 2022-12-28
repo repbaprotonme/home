@@ -435,7 +435,7 @@ function drawslices()
             break;
 
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
-        var xt = -rect.width/2;
+        var xt = 0;//-rect.width/2;
         context.save();
         context.translate(xt, 0);
         context.shadowOffsetX = 0;
