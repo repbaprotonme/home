@@ -442,7 +442,6 @@ function drawslices()
         var j = time+slice.time;
         var b = Math.tan(j*VIRTCONST);
         var bx = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
-        context.bxlst.push(bx);
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
@@ -461,6 +460,7 @@ function drawslices()
             slice.bx = bx;
             slice.xx = xx;
             slice.xxx = xxx;
+
             if (m == 1)
             {
                 x1 = slice.xx;
@@ -472,12 +472,7 @@ function drawslices()
                 sn = stretchwidth;
             }
 
-            if (bx >= width)
-            {
-                bx = bx2;
-                continue;
-            }
-            else if (bx < 0)
+            if (bx >= width || bx2 < 0)
             {
                 bx = bx2;
                 continue;
@@ -3132,7 +3127,6 @@ fetch(path)
             context.fillText("  ", 0, 0);
             context.slideshow = 0;
             context.lastime = 0;
-            context.bxlst = [];//todo
             context.buttonheight = ALIEXTENT/2;
             setevents(context, eventlst[n]);
             context.sliceobj = new makeoption("", []);
