@@ -434,7 +434,7 @@ function drawslices()
         if (!slice)
             break;
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
-        var xt = rect.width/2;
+        var xt = -rect.width/2;
         context.save();
         context.translate(xt, 0);
         context.shadowOffsetX = 0;
@@ -470,7 +470,7 @@ function drawslices()
                 sn = stretchwidth;
             }
 
-            if (bx >= rect.width || bx+stretchwidth < 0)
+            if (bx >= width || bx2 < 0)
             {
                 bx = bx2;
                 continue;
@@ -479,7 +479,7 @@ function drawslices()
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
 
-            //TEST.push({x: slice.xx, w:stretchwidth})
+            TEST.push({x: slice.xx, w:stretchwidth})
 
             if (debugobj.enabled)
             {
@@ -495,9 +495,8 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        if (x+w >= 0 && x < rect.width)// && x < 1700)// && x < width)
+        if (x+w > 0 && w > context.colwidth && w < context.colwidth*8)// && x < 1700)// && x < width)
         {
-            //TEST.push({x: slice.xx, w:stretchwidth})
             context.visibles++
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
