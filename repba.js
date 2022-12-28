@@ -472,8 +472,7 @@ function drawslices()
                 sn = stretchwidth;
             }
 
-//            if (bx >= width || bx2 < 0 || (slice.xx + stretchwidth) < 0 || slice.xx > width)
-            if (bx >= width || bx2 < 0)// || slice.xx > width)
+            if (bx >= width || bx+stretchwidth < 0)
             {
                 bx = bx2;
                 continue;
@@ -496,7 +495,7 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        if (x+w > 0)// && x < width)
+        if (x > width && x+w < width)
         {
             context.visibles++
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
