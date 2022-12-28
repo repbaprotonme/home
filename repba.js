@@ -479,7 +479,7 @@ function drawslices()
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
 
-            TEST.push({x: slice.xx, w:stretchwidth})
+            //TEST.push({x: slice.xx, w:stretchwidth})
 
             if (debugobj.enabled)
             {
@@ -495,8 +495,9 @@ function drawslices()
 
         var x = xn+sn;
         var w = x1-x;
-        if (x+w > 0 && w > context.colwidth && w < context.colwidth*8)// && x < 1700)// && x < width)
+        if (x+w >= 0 && x < rect.width)// && x < 1700)// && x < width)
         {
+            //TEST.push({x: slice.xx, w:stretchwidth})
             context.visibles++
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
