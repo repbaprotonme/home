@@ -442,6 +442,7 @@ function drawslices()
         var j = time+slice.time;
         var b = Math.tan(j*VIRTCONST);
         var bx = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
+        context.bxlst.push(bx);
         var extra = context.colwidth;
         var width = rect.width+extra;
         context.visibles = 0;
@@ -484,7 +485,6 @@ function drawslices()
 
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
-
             if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
@@ -3132,6 +3132,7 @@ fetch(path)
             context.fillText("  ", 0, 0);
             context.slideshow = 0;
             context.lastime = 0;
+            context.bxlst = [];//todo
             context.buttonheight = ALIEXTENT/2;
             setevents(context, eventlst[n]);
             context.sliceobj = new makeoption("", []);

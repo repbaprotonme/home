@@ -17,6 +17,10 @@ export default {
             return fetch(k);
 
       case 'DELETE':
+//curl --request DELETE \
+//--url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1/cbe96e39-8046-48ad-796f-fe2159fe4f00 \
+//-H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" -H 'Content-Type: application/json'
+
         return new Response(`"""DELETE!`);
 
       default:
@@ -27,17 +31,6 @@ export default {
 };
 
 /*
-#delete image
-curl --request DELETE \
---url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1/cbe96e39-8046-48ad-796f-fe2159fe4f00 \
--H "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" -H 'Content-Type: application/json'
-
-{
-  "result": {},
-  "success": true,
-  "errors": [],
-  "messages": []
-}
 
 #update image
 curl --request PATCH --url https://api.cloudflare.com/client/v4/accounts/41f6f507a22c7eec431dbc5e9670c73d/images/v1/HOME.0000 --header 'Content-Type: application/json' --header "Authorization: Bearer majjgSB2awSS1-8WJ7OoRvst4gsGjfLl3Fl0kpdC" --data '{"metadata": 100, "requireSignedURLs": false }
