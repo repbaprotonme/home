@@ -434,7 +434,7 @@ function drawslices()
         if (!slice)
             break;
         var r = calculateAspectRatioFit(context.colwidth, rect.height, rect.width, rect.height);
-        var xt = -rect.width/2;
+        var xt = 0;//-rect.width/2;
         context.save();
         context.translate(xt, 0);
         context.shadowOffsetX = 0;
@@ -454,7 +454,7 @@ function drawslices()
             var b = Math.tan(j*VIRTCONST);
             var bx2 = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
             var stretchwidth = bx2-bx+1;
-            var xx = bx+r.x;
+            var xx = bx;//+r.x;
             slice.stretchwidth = stretchwidth;
             slice.bx = bx;
             slice.xx = xx;
