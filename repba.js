@@ -480,7 +480,7 @@ function drawslices()
 
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.xx, 0, stretchwidth, rect.height);
-           context.test.push(slice.xx)
+           TEST.push(slice.xx)
             if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
@@ -500,7 +500,7 @@ function drawslices()
             context.visibles++
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
-           context.test.push(x)
+           TEST.push(x)
             if (debugobj.enabled)
             {
                 context.globalAlpha = 0.5;
@@ -3081,6 +3081,8 @@ galleryobj.path = function()
     return s;
 }
 
+TEST = [];
+
 var path = "https://reportbase.com/gallery/" + url.path;
 fetch(path)
   .then(function (response)
@@ -3128,7 +3130,6 @@ fetch(path)
             context.font = "400 1rem Archivo Black";
             context.fillText("  ", 0, 0);
             context.slideshow = 0;
-            context.tests = [];
             context.lastime = 0;
             context.buttonheight = ALIEXTENT/2;
             setevents(context, eventlst[n]);
