@@ -1699,8 +1699,8 @@ var panlst =
              return;
 
         var pt = context.getweightedpoint(x,y);
-        x = Math.floor(pt?pt.x:x);
-        y = Math.floor(pt?pt.y:y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
 
         if (context.isthumbrect && thumbpos.enabled)
         {
