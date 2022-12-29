@@ -2717,7 +2717,7 @@ var drawlst =
         a.draw(context, rect, 0, 0);
 
         var yy = user.index*hh;
-        context.globalAlpha = 0.35;
+        context.globalAlpha = 0.5;
         var aspect = r.width/r.height;
         var h = (rect.width-20)/aspect;
         context.drawImage(photo.menu, 0, yy, photo.menu.width, hh, rect.x+10, y, rect.width-20, r.height);
