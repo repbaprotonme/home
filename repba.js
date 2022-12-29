@@ -2717,9 +2717,12 @@ var drawlst =
         a.draw(context, rect, 0, 0);
 
         var yy = user.index*hh;
-        context.drawImage(photo.menu,
-            0, yy, photo.menu.width, hh,
-            x, y, r.width, r.height);
+        context.globalAlpha = 0.35;
+        var aspect = r.width/r.height;
+        var h = (rect.width-20)/aspect;
+        context.drawImage(photo.menu, 0, yy, photo.menu.width, hh, 10, 10, rect.width-20, h);
+        context.globalAlpha = 1.0;
+        context.drawImage(photo.menu, 0, yy, photo.menu.width, hh, x, y, r.width, r.height);
         var a = new RowA([40,0,ALIEXTENT,0,40],
         [
             new Text("white", "center", "middle",0, 0, 1),
