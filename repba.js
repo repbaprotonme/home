@@ -2906,7 +2906,7 @@ var templatelst =
         galleryobj.maxmegapix = 4000000;
         headobj.enabled = 0;
         galleryobj.slidetop = 24;
-        galleryobj.slidefactor = 36*1.5;
+        galleryobj.slidefactor = 36;
         loomobj.split(50, "70-85", loomobj.length());
         poomobj.split(50, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2921,7 +2921,7 @@ var templatelst =
     {
         footobj.show = 1;
         galleryobj.slidetop = 24;
-        galleryobj.slidefactor = 36*1.5;
+        galleryobj.slidefactor = 36;
         loomobj.split(50, "70-95", loomobj.length());
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2950,7 +2950,7 @@ var templatelst =
     init: function ()
     {
         galleryobj.slidetop = 24;
-        galleryobj.slidefactor = 36*8;
+        galleryobj.slidefactor = 36*6;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2964,7 +2964,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 18;
+        galleryobj.slidetop = 24;
         galleryobj.slidefactor = 36*4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
@@ -2979,8 +2979,8 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
-        galleryobj.slidetop = 12;
-        galleryobj.slidefactor = 36*4;
+        galleryobj.slidetop = 24;
+        galleryobj.slidefactor = 36*2;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
