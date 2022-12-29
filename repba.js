@@ -2839,8 +2839,8 @@ function resetcanvas()
     for (let n = 399; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
     context.slicewidth = context.virtualwidth/galleryobj.virtualcolumns;
-    if (context.slicewidth > rect.width)
-        context.slicewidth = rect.width;
+    if (context.slicewidth > rect.width*1.25)
+        context.slicewidth = rect.width*1.25;
 
     var slices = 0;
     for (; slices < slicelst.length; ++slices)
