@@ -2717,8 +2717,8 @@ var drawlst =
         a.draw(context, rect, 0, 0);
 
         var yy = user.index*hh;
-        var hhh = photo.menu.width*a;
-        context.drawImage(photo.menu, 0, yy, photo.menu.width, hh, x, y, r.width, hh);
+        var hhh = r.width/a;
+        context.drawImage(photo.menu, 0, yy, photo.menu.width, hh, x, y, r.width, hhh);
         return;
 
         var a = new RowA([40,0,ALIEXTENT,0,40],
