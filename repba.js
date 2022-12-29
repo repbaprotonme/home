@@ -1699,8 +1699,8 @@ var panlst =
              return;
 
         var pt = context.getweightedpoint(x,y);
-        x = pt?pt.x:x;
-        y = pt?pt.y:y;
+        x = Math.floor(pt?pt.x:x);
+        y = Math.floor(pt?pt.y:y);
 
         if (context.isthumbrect && thumbpos.enabled)
         {
@@ -2838,7 +2838,7 @@ function resetcanvas()
     let slicelst = [];
     for (let n = 399; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
-    context.slicewidth = context.virtualwidth/4;
+    context.slicewidth = context.virtualwidth/3;
     if (context.slicewidth > rect.width)
         context.slicewidth = rect.width;
 
