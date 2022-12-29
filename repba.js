@@ -2714,7 +2714,7 @@ var drawlst =
         }
 
         var a = new Expand(new Rounded(clr, 2, "white", 8, 8), 0, 60);
-        a.draw(context, rect, 0, 0);
+//        a.draw(context, rect, 0, 0);
 
         var yy = user.index*hh;
         var hhh = r.width/a;
