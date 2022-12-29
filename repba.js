@@ -3140,7 +3140,7 @@ fetch(path)
             slices.data.push({index:n, title:k, path: "PROJECT", func: project})
         }
 
-        _5cnvctx.buttonheight = 240;
+        _5cnvctx.buttonheight = 360;
         _5cnvctx.delayinterval = DELAYCENTER / slices.data.length;
         _5cnvctx.rvalue = 10;
         _5cnvctx.virtualheight = slices.data.length*_5cnvctx.buttonheight;
