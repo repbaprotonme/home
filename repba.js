@@ -3307,7 +3307,7 @@ var ContextObj = (function ()
 
             if (context.index == 4)
             {
-                w = Math.min(_4cnv.width,Math.min(520,window.innerWidth));
+                w = Math.min(_4cnv.width,Math.min(600,window.innerWidth));
                 l = Math.floor((window.innerWidth-w)/2);
 				context.show(l, 0, w, _4cnv.height);
 			}
