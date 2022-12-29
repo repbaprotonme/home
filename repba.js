@@ -2699,7 +2699,7 @@ var drawlst =
 
         context.font = "0.9rem Archivo Black";
         var hh = photo.menu.height/galleryobj.length();
-        var r = calculateAspectRatioFit(photo.menu.width, hh, rect.width-20, rect.height-20);//+120-20);
+        var r = calculateAspectRatioFit(photo.menu.width, hh, rect.width-20, rect.height+240-20);
         var x = rect.x+(rect.width-r.width)/2;
         var y = (rect.height-r.height)/2;
 
