@@ -2967,7 +2967,7 @@ var templatelst =
     {
         footobj.show = 1;
         galleryobj.slidetop = 18;
-        galleryobj.slidefactor = 36*8;
+        galleryobj.slidefactor = 36*4;
         galleryobj.virtualcolumns = 4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
@@ -2983,7 +2983,7 @@ var templatelst =
     {
         footobj.show = 1;
         galleryobj.slidetop = 12;
-        galleryobj.slidefactor = 36*8;
+        galleryobj.slidefactor = 36*4;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -4452,12 +4452,12 @@ var footlst =
             }
             else if (context.leftab.hitest(x,y))
             {
-                _4cnvctx.autodirect = -1;
+                _4cnvctx.autodirect = 1;
                 _4cnvctx.tab();
             }
             else if (context.rightab.hitest(x,y))
             {
-                _4cnvctx.autodirect = 1;
+                _4cnvctx.autodirect = -1;
                 _4cnvctx.tab();
             }
 
