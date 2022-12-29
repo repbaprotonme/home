@@ -650,7 +650,7 @@ var eventlst =
     {name: "_2cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
     {name: "_3cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
     {name: "_4cnvctx", mouse: "BOSS", guide: "GUIDE", thumb: "BOSS",  tap: "BOSS", pan: "BOSS", swipe: "BOSS", draw: "BOSS", wheel: "BOSS", drop: "BOSS", key: "BOSS", press: "BOSS", pinch: "BOSS", fillwidth: 0},
-    {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(840,window.innerWidth)},
+    {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(640,window.innerWidth)},
     {name: "_6cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
     {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "HMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth)},
     {name: "_8cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "GMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT", fillwidth: Math.min(320,window.innerWidth-ALIEXTENT*2)},
@@ -2896,7 +2896,7 @@ var templatelst =
         footobj.show = 1;
         galleryobj.maxmegapix = 4000000;
         headobj.enabled = 0;
-        galleryobj.slidetop = 24;
+        galleryobj.slidetop = 36;
         galleryobj.slidefactor = 36;
         loomobj.split(50, "70-85", loomobj.length());
         poomobj.split(50, "50-85", poomobj.length());
@@ -2911,7 +2911,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 24;
+        galleryobj.slidetop = 36;
         galleryobj.slidefactor = 36;
         loomobj.split(50, "70-95", loomobj.length());
         poomobj.split(50, "50-90", poomobj.length());
@@ -2926,7 +2926,7 @@ var templatelst =
     init: function ()
     {
         thumbpos.enabled = 0;
-        galleryobj.slidetop = 24;
+        galleryobj.slidetop = 36;
         galleryobj.slidefactor = 36*2;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
@@ -2940,7 +2940,7 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
-        galleryobj.slidetop = 24;
+        galleryobj.slidetop = 36;
         galleryobj.slidefactor = 36*6;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
@@ -2955,7 +2955,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 24;
+        galleryobj.slidetop = 36;
         galleryobj.slidefactor = 36*4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
@@ -2970,7 +2970,7 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
-        galleryobj.slidetop = 24;
+        galleryobj.slidetop = 36;
         galleryobj.slidefactor = 36*2;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
@@ -2985,8 +2985,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 24;
-        galleryobj.slidefactor = 36*1.5;
+        galleryobj.slidetop = 36;
+        galleryobj.slidefactor = 36;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3000,8 +3000,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 24;
-        galleryobj.slidefactor = 36*1.5;
+        galleryobj.slidetop = 36;
+        galleryobj.slidefactor = 36;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3015,8 +3015,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 24;
-        galleryobj.slidefactor = 36*1.5;
+        galleryobj.slidetop = 36;
+        galleryobj.slidefactor = 36;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3140,7 +3140,7 @@ fetch(path)
             slices.data.push({index:n, title:k, path: "PROJECT", func: project})
         }
 
-        _5cnvctx.buttonheight = 480;
+        _5cnvctx.buttonheight = 360;
         _5cnvctx.delayinterval = DELAYCENTER / slices.data.length;
         _5cnvctx.rvalue = 10;
         _5cnvctx.virtualheight = slices.data.length*_5cnvctx.buttonheight;
