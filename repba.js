@@ -2950,7 +2950,7 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
-        galleryobj.slidetop = 36;
+        galleryobj.slidetop = 24;
         galleryobj.slidefactor = 36*8;
         galleryobj.virtualcolumns = 4;
         loomobj.split(0, "0-25", loomobj.length());
@@ -4449,6 +4449,11 @@ var footlst =
                 setTimeout(function(){context.zooming = 0; _4cnvctx.refresh();},400)
                 zoom.add(-10);
                 contextobj.reset()
+            }
+            else
+            {
+                context.autodirect = (x<rect.width/2)?-1:1;
+                context.tab();
             }
 
             addressobj.update();
