@@ -2357,7 +2357,7 @@ var taplst =
             context.tapping = 1;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},2000)
+            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},1000)
         }
         else
         {
@@ -2839,8 +2839,8 @@ function resetcanvas()
     for (let n = 399; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
     context.slicewidth = context.virtualwidth/galleryobj.virtualcolumns;
-    if (context.slicewidth > rect.width*1.25)
-        context.slicewidth = rect.width*1.25;
+    if (context.slicewidth > rect.width)
+        context.slicewidth = rect.width;
 
     var slices = 0;
     for (; slices < slicelst.length; ++slices)
@@ -2907,6 +2907,7 @@ var templatelst =
         headobj.enabled = 0;
         galleryobj.slidetop = 24;
         galleryobj.slidefactor = 36*1.5;
+        galleryobj.virtualcolumns = 4;
         loomobj.split(50, "70-85", loomobj.length());
         poomobj.split(50, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2922,6 +2923,7 @@ var templatelst =
         footobj.show = 1;
         galleryobj.slidetop = 24;
         galleryobj.slidefactor = 36*1.5;
+        galleryobj.virtualcolumns = 4;
         loomobj.split(50, "70-95", loomobj.length());
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
