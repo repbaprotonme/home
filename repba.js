@@ -2688,7 +2688,7 @@ var drawlst =
     draw: function (context, rect, user, time)
     {
         context.save();
-//        rect.height = context.buttonheight;
+        rect.height = context.buttonheight;
         rect.width -= 40;
         context.translate(-rect.width/2, -rect.height/2);
         user.fitwidth = rect.width;
@@ -2702,7 +2702,7 @@ var drawlst =
         var r = calculateAspectRatioFit(photo.menu.width, hh, rect.width-20, rect.height+120-20);
         var x = rect.x+(rect.width-r.width)/2;
         var y = (rect.height-r.height)/2;
-        var a = photo.menu.width/hh;
+
         if (user.tap)
         {
             clr = tap;
@@ -2714,16 +2714,21 @@ var drawlst =
         }
 
         var a = new Expand(new Rounded(clr, 2, "white", 8, 8), 0, 60);
-//        a.draw(context, rect, 0, 0);
+        //a.draw(context, rect, 0, 0);
 
         var yy = user.index*hh;
+        var a = photo.menu.width/hh;
         var hhh = r.width/a;
         context.drawImage(photo.menu, 0, yy, photo.menu.width, hh, x, y, r.width, hhh);
-        return;
+        return
 
         var a = new RowA([40,0,ALIEXTENT,0,40],
         [
-            new Text("white", "center", "middle",0, 0, 1),
+            new Layer(
+            [
+                //new Fill("rgba(0,0,0,0.25)"),
+                new Text("white", "center", "middle",0, 0, 1),
+            ]),
             0,
             new Row([0,ALIEXTENT,0],
             [
@@ -2736,7 +2741,11 @@ var drawlst =
                 0,
             ]),
             0,
-            new Text("white", "center", "middle",0, 0, 1),
+            new Layer(
+            [
+                //new Fill("rgba(0,0,0,0.25)"),
+                new Text("white", "center", "middle",0, 0, 1),
+            ]),
         ]);
 
         a.draw(context, rect, [user.title[0],0,(user.index+1)+"",0,user.title[1]+"x"+user.title[2]], time);
