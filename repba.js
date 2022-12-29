@@ -2966,8 +2966,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 24;
-        galleryobj.slidefactor = 36*3;
+        galleryobj.slidetop = 18;
+        galleryobj.slidefactor = 36*4;
         galleryobj.virtualcolumns = 4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
@@ -2982,8 +2982,8 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
-        galleryobj.slidetop = 24;
-        galleryobj.slidefactor = 36*1.5;
+        galleryobj.slidetop = 18;
+        galleryobj.slidefactor = 36*4;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
