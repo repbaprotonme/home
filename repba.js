@@ -2714,21 +2714,15 @@ var drawlst =
         }
 
         var a = new Expand(new Rounded(clr, 2, "white", 8, 8), 0, 60);
-        //a.draw(context, rect, 0, 0);
+        a.draw(context, rect, 0, 0);
 
         var yy = user.index*hh;
-        var a = photo.menu.width/hh;
-        var hhh = r.width/a;
-        context.drawImage(photo.menu, 0, yy, photo.menu.width, hh, x, y, r.width, hhh);
-        return
-
+        context.drawImage(photo.menu,
+            0, yy, photo.menu.width, hh,
+            x, y, r.width, r.height);
         var a = new RowA([40,0,ALIEXTENT,0,40],
         [
-            new Layer(
-            [
-                //new Fill("rgba(0,0,0,0.25)"),
-                new Text("white", "center", "middle",0, 0, 1),
-            ]),
+            new Text("white", "center", "middle",0, 0, 1),
             0,
             new Row([0,ALIEXTENT,0],
             [
@@ -2741,11 +2735,7 @@ var drawlst =
                 0,
             ]),
             0,
-            new Layer(
-            [
-                //new Fill("rgba(0,0,0,0.25)"),
-                new Text("white", "center", "middle",0, 0, 1),
-            ]),
+            new Text("white", "center", "middle",0, 0, 1),
         ]);
 
         a.draw(context, rect, [user.title[0],0,(user.index+1)+"",0,user.title[1]+"x"+user.title[2]], time);
@@ -3150,7 +3140,7 @@ fetch(path)
             slices.data.push({index:n, title:k, path: "PROJECT", func: project})
         }
 
-        _5cnvctx.buttonheight = 360;
+        _5cnvctx.buttonheight = 240;
         _5cnvctx.delayinterval = DELAYCENTER / slices.data.length;
         _5cnvctx.rvalue = 10;
         _5cnvctx.virtualheight = slices.data.length*_5cnvctx.buttonheight;
