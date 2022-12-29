@@ -4450,9 +4450,14 @@ var footlst =
                 zoom.add(-10);
                 contextobj.reset()
             }
-            else
+            else if (context.leftab.hitest(x,y))
             {
-                context.autodirect = (x<rect.width/2)?-1:1;
+                context.autodirect = -1;
+                context.tab();
+            }
+            else if (context.rightab.hitest(x,y))
+            {
+                context.autodirect = 1;
                 context.tab();
             }
 
@@ -4468,11 +4473,13 @@ var footlst =
             context.progresscircle = new rectangle();
             context.keyzoomup = new rectangle()
             context.keyzoomdown = new rectangle()
+            context.leftab = new rectangle()
+            context.rightab = new rectangle()
 
             var a =
                new Col([0,60,24,ALIEXTENT-16,24,60,0],
                [
-                    0,
+                    new Rectangle(context.leftab),
                     new Layer(
                     [
                         new Rectangle(context.keyzoomdown),
@@ -4492,7 +4499,7 @@ var footlst =
                         new Shrink(new Circle(context.zooming == 1?"red":SCROLLNAB,"white",3),10,10),
                         new Shrink(new Plus(ARROWFILL),22,22),
                     ]),
-                    0
+                    new Rectangle(context.rightab),
                ]);
 
             a.draw(context, rect, _4cnvctx.timeobj, 0);
