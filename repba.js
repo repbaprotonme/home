@@ -2966,7 +2966,7 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 24;
+        galleryobj.slidetop = 18;
         galleryobj.slidefactor = 36*4;
         galleryobj.virtualcolumns = 4;
         loomobj.split(0, "30-80", loomobj.length());
@@ -2982,7 +2982,7 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
-        galleryobj.slidetop = 18;
+        galleryobj.slidetop = 12;
         galleryobj.slidefactor = 36*4;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
