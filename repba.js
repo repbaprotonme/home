@@ -416,6 +416,7 @@ function drawslices()
             {
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
+                galleryobj.slidefactor = 36;
             }
             else
             {
@@ -1124,14 +1125,9 @@ CanvasRenderingContext2D.prototype.tab = function ()
 {
     var context = this;
     context.slidestart = context.timeobj.current();
-    context.slidestop += (context.timeobj.length()/context.virtualwidth)*galleryobj.slidetop;
-    context.slidereduce = context.slBear8517%Bear8517%
-1119     this.canvas.height = 0;
-1120     this.enabled = 0;
-1119     this.canvas.height = 0;
-1120     this.enabled = 0;          idestop/galleryobj.slidefactor;
-    if (context.slidestop > 36)
-        context.slidestop = 36;
+    context.slidestop = (context.timeobj.length()/context.virtualwidth)*galleryobj.slidetop;
+    context.slidereduce = context.slidestop/galleryobj.slidefactor;
+    galleryobj.slidefactor *= 0.8;
     clearInterval(context.timemain);
     context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
 }
@@ -1500,7 +1496,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(-rowobj.length()/15);
+            rowobj.add(-rowobj.length()*0.05);
             contextobj.reset();
         }
 	},
@@ -1535,7 +1531,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(rowobj.length()/15);
+            rowobj.add(rowobj.length()*0.05);
             contextobj.reset();
         }
 	},
