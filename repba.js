@@ -4424,10 +4424,9 @@ var footlst =
             context.rightab = new rectangle()
 
             var a =
-               new Col([0,0,20,60,24,ALIEXTENT-16,24,60,20,0,0],
+               new Col([0,20,60,24,ALIEXTENT-16,24,60,20,0],
                [
                     new Rectangle(context.leftab),
-                    new Rectangle(context.up),
                     0,
                     new Layer(
                     [
@@ -4449,7 +4448,6 @@ var footlst =
                         new Shrink(new Plus(ARROWFILL),22,22),
                     ]),
                     0,
-                    new Rectangle(context.down),
                     new Rectangle(context.rightab),
                ]);
 
