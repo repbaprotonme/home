@@ -642,7 +642,7 @@ var eventlst =
     {name: "_4cnvctx", mouse: "BOSS", guide: "GUIDE", thumb: "BOSS",  tap: "BOSS", pan: "BOSS", swipe: "BOSS", draw: "BOSS", wheel: "BOSS", drop: "BOSS", key: "BOSS", press: "BOSS", pinch: "BOSS"},
     {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_6cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
-    {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "GMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "EMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_8cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "GMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_9cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
 ];
@@ -2551,6 +2551,55 @@ var drawlst =
     draw: function (context, rect, user, time){}
 },
 {
+    name: "EMENU",
+    draw: function (context, rect, user, time)
+    {
+        context.save();
+        rect.height = context.buttonheight;
+        rect.width -= 40;
+        context.translate(-rect.width/2, -rect.height/2);
+        user.fitwidth = rect.width;
+        user.fitheight = rect.height;
+        context.font = "0.9rem Archivo Black";
+        var clr = SCROLLNAB;
+        var str = user.title;
+
+        if (user.tap)
+        {
+            clr = MENUTAP;
+        }
+        else if (user.path == "PROJECT")
+        {
+            if (user.index == galleryobj.current())
+                clr = MENUSELECT;
+        }
+
+        var a = new Layer(
+        [
+            new Expand(new Rounded(clr, 2, "white", 8, 8), 0, 12),
+            new RowA([0,20,20,20,0],
+            [
+                0,
+                new Text("white", "center", "middle", 0, 0, 1),
+                new Text("white", "center", "middle", 0, 0, 1),
+                new Text("white", "center", "middle", 0, 0, 1),
+                0,
+            ]),
+        ]);
+
+        a.draw(context, rect,
+        [
+            0,
+            (user.index+1).toFixed(0),
+            user.line1,
+            user.line2,
+            user.line3,
+            0
+        ], time);
+        context.restore();
+    }
+},
+{
     name: "GMENU",
     draw: function (context, rect, user, time)
     {
@@ -3137,8 +3186,8 @@ fetch(path)
 
         var lst =
         [
-            { title:"NorthWest", width: 0, height: 1},
-            { title:"NorthWest", width: 0, height: 1},
+            { line:"Image Viewer", line2: "https://reportbase.com", line3: "Tom Brinkman", function() {menuhide(); } },
+            { line:"Interactive 360° Panoramas", line2: "High Resolution Images", line3: "Wrap-Around Srolling", function() {menuhide(); } },
         ];
 
         var slices = _7cnvctx.sliceobj;
