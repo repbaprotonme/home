@@ -1221,8 +1221,8 @@ var makehammer = function (context, v, t)
     ham.element.addEventListener("contextmenu", function (evt)
     {
    	    evt.preventDefault();
-        var x = evt.center.x - evt.target.offsetLeft;
-        var y = evt.center.y - evt.target.offsetTop;
+        var x = evt.offsetX;
+        var y = evt.offsetY;
         if (typeof (ham.panel.contextmenu) == "function")
             ham.panel.contextmenu(context, new rectangle(0, 0, ham.element.width, ham.element.height), x, y);
     }, false);
