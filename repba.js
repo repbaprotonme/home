@@ -4383,7 +4383,7 @@ var footlst =
             }
             else if (context.down.hitest(x,y))
             {
-                if (!rowobj.current())
+                if (rowobj.current() >= rowobj.length()-1)
                     return;
                 context.movedown();
                 contextobj.reset();
