@@ -1031,8 +1031,8 @@ addressobj.full = function ()
     var zoom = zoomobj.getcurrent();
     var out = url.origin;
     out +=
-        "/?p="+url.path+"."+galleryobj.current().pad(4)+
-        "&z="+Number(zoom.getcurrent()).toFixed(2)+
+        "/?p="+url.path+"."+galleryobj.current().pad(2)+
+        "&z="+Number(zoom.current()).toFixed(2)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
     return out;
