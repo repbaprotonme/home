@@ -1426,7 +1426,7 @@ var contextmenulst =
     name: "BOSS",
     click: function (context, rect, x, y)
     {
-        context.autodirect = x<rect.width/2?-1:1;
+        context.autodirect = x<rect.width/2?1:-1;
         context.tab();
     },
 },
