@@ -1127,7 +1127,7 @@ CanvasRenderingContext2D.prototype.tab = function ()
     context.slidestart = context.timeobj.current();
     context.slidestop = (context.timeobj.length()/context.virtualwidth)*galleryobj.slidetop;
     context.slidereduce = context.slidestop/galleryobj.slidefactor;
-    galleryobj.slidefactor *= 0.8;
+    galleryobj.slidefactor *= 0.5;
     clearInterval(context.timemain);
     context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
 }
