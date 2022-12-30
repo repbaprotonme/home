@@ -2829,7 +2829,7 @@ function resetcanvas()
     const SLICERADIUS = 131000;
 
     let slicelst = [];
-    for (let n = 399; n >= 1; n=n-1)
+    for (let n = 499; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
     context.slicewidth = context.virtualwidth;
     if (context.slicewidth > rect.width)
