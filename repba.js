@@ -416,8 +416,6 @@ function drawslices()
             {
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
-                galleryobj.slidetop = 36;
-                galleryobj.slidefactor = 36;//
             }
             else
             {
@@ -1124,14 +1122,19 @@ CanvasRenderingContext2D.prototype.hide = function ()
 
 CanvasRenderingContext2D.prototype.tab = function ()
 {
-    var context = this;
-    context.slidestart = context.timeobj.current();
-    context.slidestop = (context.timeobj.length()/context.virtualwidth)*galleryobj.slidetop;
-    context.slidereduce = context.slidestop/galleryobj.slidefactor;
-    galleryobj.slidetop *= 2;
-    galleryobj.slidefactor *= 2;
-    clearInterval(context.timemain);
-    context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
+    if (context.slidereduce)
+    {
+        context.slidereduce *= 0.75;
+    }
+    else
+    {
+        var context = this;
+        context.slidestart = context.timeobj.current();
+        context.slidestop = (context.timeobj.length()/context.virtualwidth)*galleryobj.slidetop;
+        context.slidereduce = context.slidestop/galleryobj.slidefactor;
+        clearInterval(context.timemain);
+        context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
+    }
 }
 
 CanvasRenderingContext2D.prototype.refresh = function ()
