@@ -679,7 +679,7 @@ function setevents(context, obj)
     context.keyup_ = k.keyup;
     context.keydown_ = k.keydown;
 
-    var k = contextmenlst.findIndex(function (a) { return a.name == obj.contextmenu });
+    var k = contextmenulst.findIndex(function (a) { return a.name == obj.contextmenu });
     k = contextmenulst[k];
     context.contextmenu = k.click;
 
