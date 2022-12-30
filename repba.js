@@ -2845,7 +2845,7 @@ function resetcanvas()
     }
 
     var canvaslen = url.safari?Math.ceil(context.virtualwidth/MAXVIRTUAL):1;
-    var e = slicelst[498];//slices-1];
+    var e = slicelst[slices-1];
     var delay = e.delay;
     var slices = Math.ceil(e.slices/canvaslen);
     context.delayinterval = delay/100000;
