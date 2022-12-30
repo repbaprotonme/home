@@ -3185,8 +3185,8 @@ fetch(path)
 
         var lst =
         [
-            { line:"Image Viewer", line2: "https://reportbase.com", line3: "Tom Brinkman", function() {menuhide(); } },
-            { line:"Interactive 360° Panoramas", line2: "High Resolution Images", line3: "Wrap-Around Srolling", function() {menuhide(); } },
+            { line1:"Image Viewer", line2: "https://reportbase.com", line3: "Tom Brinkman", function() {menuhide(); } },
+            { line1:"Interactive 360° Panoramas", line2: "High Resolution Images", line3: "Wrap-Around Srolling", function() {menuhide(); } },
         ];
 
         var slices = _7cnvctx.sliceobj;
