@@ -3141,6 +3141,8 @@ fetch(path)
             { title:"NorthWest", width: 0, height: 1},
         ];
 
+        var slices = _7cnvctx.sliceobj;
+        slices.data = lst;
         _7cnvctx.buttonheight = 240;
         _7cnvctx.delayinterval = DELAYCENTER / slices.data.length;
         _7cnvctx.virtualheight = slices.data.length*_7cnvctx.buttonheight;
