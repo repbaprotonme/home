@@ -2590,7 +2590,6 @@ var drawlst =
         a.draw(context, rect,
         [
             0,
-            (user.index+1).toFixed(0),
             user.line1,
             user.line2,
             user.line3,
