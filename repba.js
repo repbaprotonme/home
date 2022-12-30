@@ -593,17 +593,6 @@ function drawslices()
     }
 }
 
-let helplst =
-[
-    { title:"0", path: "NAME", func: function() {menuhide(); } },
-    { title:"1", path: "NAME", func: function() {menuhide(); } },
-    { title:"2", path: "NAME", func: function() {menuhide(); } },
-    { title:"3", path: "NAME", func: function() {menuhide(); } },
-    { title:"4", path: "NAME", func: function() {menuhide(); } },
-    { title:"5", path: "NAME", func: function() {menuhide(); } },
-    { title:"6", path: "NAME", func: function() {menuhide(); } },
-];
-
 const opts =
 {
     synchronized: true,
@@ -652,7 +641,7 @@ var eventlst =
     {name: "_4cnvctx", mouse: "BOSS", guide: "GUIDE", thumb: "BOSS",  tap: "BOSS", pan: "BOSS", swipe: "BOSS", draw: "BOSS", wheel: "BOSS", drop: "BOSS", key: "BOSS", press: "BOSS", pinch: "BOSS"},
     {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_6cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
-    {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "HMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "GMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_8cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "GMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_9cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
 ];
@@ -2745,41 +2734,6 @@ var drawlst =
     }
 },
 {
-    name: "HMENU",
-    draw: function (context, rect, user, time)
-    {
-        context.save();
-        rect.height = context.buttonheight;
-        rect.width -= 40;
-        context.translate(-rect.width/2, -rect.height/2);
-        user.fitwidth = rect.width;
-        user.fitheight = rect.height+70;
-        var clr = "rgba(0,0,0,0.5)";
-        var tap = "rgba(200,0,0,0.75)";
-        var select = "rgba(200,0,0,0.75)";
-
-        context.font = "0.9rem Archivo Black";
-        var hh = photo.help.height/helplst.length;
-        var r = calculateAspectRatioFit(photo.help.width, hh, rect.width-20, rect.height+120-20);
-        var x = rect.x+(rect.width-r.width)/2;
-        var y = (rect.height-r.height)/2;
-
-        if (user.tap)
-            clr = tap;
-
-        var a = new Expand(new Rounded(clr, 2, "white", 8, 8), 0, 60);
-        a.draw(context, rect, 0, 0);
-
-        var yy = Number(user.title)*hh;
-        context.drawImage(photo.help,
-            0, yy, photo.help.width, hh,
-            x, y, r.width, r.height);
-
-        context.restore();
-
-    }
-},
-{
     name: "BOSS",
     draw: function (unused, rect, user, time)
     {
@@ -2831,7 +2785,7 @@ function resetcanvas()
     let slicelst = [];
     for (let n = 499; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
-    context.slicewidth = context.virtualwidth/24;
+    context.slicewidth = context.virtualwidth/galleryobj.virtualcolumns;
     if (context.slicewidth > rect.width)
         context.slicewidth = rect.width;
 
@@ -2898,8 +2852,6 @@ var templatelst =
         footobj.show = 1;
         galleryobj.maxmegapix = 4000000;
         headobj.enabled = 0;
-        galleryobj.slidetop = 36;
-        galleryobj.slidefactor = 36;
         loomobj.split(50, "70-85", loomobj.length());
         poomobj.split(50, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2913,8 +2865,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 36;
-        galleryobj.slidefactor = 36;
         loomobj.split(50, "70-95", loomobj.length());
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2928,8 +2878,6 @@ var templatelst =
     init: function ()
     {
         thumbpos.enabled = 0;
-        galleryobj.slidetop = 36;
-        galleryobj.slidefactor = 36*2;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2942,8 +2890,6 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
-        galleryobj.slidetop = 36;
-        galleryobj.slidefactor = 36*6;
         loomobj.split(0, "0-25", loomobj.length());
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2957,8 +2903,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 36;
-        galleryobj.slidefactor = 36*4;
         loomobj.split(0, "30-80", loomobj.length());
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2972,8 +2916,6 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
-        galleryobj.slidetop = 36;
-        galleryobj.slidefactor = 36*2;
         loomobj.split(50, "50-90", loomobj.length());
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2987,8 +2929,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 36;
-        galleryobj.slidefactor = 36;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3002,8 +2942,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 36;
-        galleryobj.slidefactor = 36;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3017,8 +2955,6 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        galleryobj.slidetop = 36;
-        galleryobj.slidefactor = 36;
         loomobj.split(50, "90-95", loomobj.length());
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3092,9 +3028,8 @@ fetch(path)
             galleryobj.quality = 75;
         if (typeof galleryobj.galleryobj  === "undefined")
             galleryobj.maxmegapix = 9000000;
-
-        photo.help = new Image();
-        photo.help.src = "https://reportbase.com/image/HELP"+'/w='+360;
+        if (typeof galleryobj.virtualcolumns  === "undefined")
+            galleryobj.virtualcolumns = 24;
 
         if (galleryobj.length() < 2)
             bodyobj.enabled = 0;
@@ -3199,8 +3134,6 @@ fetch(path)
         _3cnvctx.rvalue = 2;
         _3cnvctx.slidereduce = 0.75;
 
-        var slices = _7cnvctx.sliceobj;
-        slices.data= helplst;
         _7cnvctx.buttonheight = 240;
         _7cnvctx.delayinterval = DELAYCENTER / slices.data.length;
         _7cnvctx.virtualheight = slices.data.length*_7cnvctx.buttonheight;
@@ -3242,7 +3175,7 @@ fetch(path)
             contextobj.reset();
         }})
 
-        slices.data.push({title:"Help", path: "HELP", func: function(){ menushow(_7cnvctx); }})
+        slices.data.push({title:"Help", path: "HELP", func: function(){ }})
         slices.data.push({title:"Thumbnail", path: "THUMB", func: function(){ menushow(_3cnvctx); }})
         slices.data.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
         slices.data.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
@@ -3315,7 +3248,7 @@ var ContextObj = (function ()
 			}
             else
             {
-                w = Math.min(_4cnv.width-ALIEXTENT*2-10,Math.min(480,window.innerWidth-ALIEXTENT*2));
+                w = Math.min(_4cnv.width-ALIEXTENT*2-10,Math.min(360,window.innerWidth-ALIEXTENT*2));
                 l = Math.floor((window.innerWidth-w)/2);
 				context.show(l, 0, w, _4cnv.height);
 			}
@@ -4168,10 +4101,7 @@ var headlst =
 		{
             if (context.page.hitest(x,y))
             {
-                var ctx = _8cnvctx;
-                if (photo.menu.complete && photo.menu.naturalHeight)
-                    ctx = _5cnvctx;
-                ctx.timeobj.set((1-galleryobj.berp())*TIMEOBJ);
+                _8cnvctx.timeobj.set((1-galleryobj.berp())*TIMEOBJ);
                 menushow(ctx)
             }
             else if (context.prevpage.hitest(x,y))
