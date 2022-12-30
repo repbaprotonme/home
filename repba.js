@@ -3096,6 +3096,7 @@ fetch(path)
             context.fillText("  ", 0, 0);
             context.slideshow = 0;
             context.lastime = 0;
+            context.slidestop = 0;
             context.buttonheight = ALIEXTENT/2;
             setevents(context, eventlst[n]);
             context.sliceobj = new makeoption("", []);
