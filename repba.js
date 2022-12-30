@@ -4385,14 +4385,14 @@ var footlst =
             {
                 if (rowobj.current() >= rowobj.length()-1)
                     return;
-                context.movedown();
+                _4cnvctx.movedown();
                 contextobj.reset();
             }
             else if (context.up.hitest(x,y))
             {
                 if (!rowobj.current())
                     return;
-                context.moveup();
+                _4cnvctx.moveup();
                 contextobj.reset();
             }
             else if (context.leftab.hitest(x,y))
