@@ -1221,8 +1221,9 @@ var makehammer = function (context, v, t)
     ham.element.addEventListener("contextmenu", function (evt)
     {
    	    evt.preventDefault();
-        if (typeof (ham.panel.contextmenu) !== "function")
-            return;
+        var x = evt.center.x - evt.target.offsetLeft;
+        var y = evt.center.y - evt.target.offsetTop;
+        if (typeof (ham.panel.contextmenu) == "function")
             ham.panel.contextmenu(context, new rectangle(0, 0, ham.element.width, ham.element.height), x, y);
     }, false);
 
@@ -2352,7 +2353,7 @@ var taplst =
             context.tapping = 1;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},500)
+            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},1000)
         }
         else
         {
