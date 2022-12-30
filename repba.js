@@ -3129,16 +3129,23 @@ fetch(path)
         ];
 
         var slices = _3cnvctx.sliceobj;
-        slices.data= lst;
+        slices.data = lst;
         _3cnvctx.delayinterval = DELAYCENTER / slices.data.length;
         _3cnvctx.virtualheight = slices.data.length*_3cnvctx.buttonheight;
         _3cnvctx.rvalue = 2;
         _3cnvctx.slidereduce = 0.75;
 
+        var lst =
+        [
+            { title:"NorthWest", width: 0, height: 1l},
+            { title:"NorthWest", width: 0, height: 1l},
+        ];
+
         _7cnvctx.buttonheight = 240;
         _7cnvctx.delayinterval = DELAYCENTER / slices.data.length;
         _7cnvctx.virtualheight = slices.data.length*_7cnvctx.buttonheight;
-        _7cnvctx.rvalue = 10;
+        _7cnvctx.rvalue = 2;
+        _7cnvctx.slidereduce = 0.75;
 
         var slices = _8cnvctx.sliceobj;
         slices.data = [];
@@ -3176,7 +3183,7 @@ fetch(path)
             contextobj.reset();
         }})
 
-        slices.data.push({title:"Help", path: "HELP", func: function(){ }})
+        slices.data.push({title:"Help", path: "HELP", func: function(menushow(_7cnvctx)){ }})
         slices.data.push({title:"Thumbnail", path: "THUMB", func: function(){ menushow(_3cnvctx); }})
         slices.data.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
         slices.data.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
