@@ -4197,7 +4197,7 @@ var headlst =
             context.nextpage2 = new rectangle()
             context.picture = new rectangle()
             context.font = "1rem Archivo Black";
-            var j = rect.width < 420 ? (rect.width-ALIEXTENT*4):180;
+            var j = rect.width < 420 ? (rect.width-ALIEXTENT*4):120;
             var s = _5cnvctx.enabled || _8cnvctx.enabled;
             var a = new Layer(
             [
@@ -4264,7 +4264,7 @@ var headlst =
                 ])
            ]);
 
-            var k = headobj.pages?gallerobj.length():(galleryobj.current()+1);
+            var k = headobj.pages?(galleryobj.current()+" of "+gallerobj.length()) :(galleryobj.current()+1);
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
             a.draw(context, rect, [0,0,0,debugobj.enabled?j:k,0,0,0], time);
             context.restore()
