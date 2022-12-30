@@ -58,9 +58,8 @@ let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
 url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-//todo: thumb height
-//todo; hide thumb
-//
+//todo; height thumb
+
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 url.path = "HOME";
@@ -392,7 +391,7 @@ var colobj = new makeoption("COLUMNS", [0,10,20,30,40,50,60,70,80,90,99].reverse
 var channelobj = new makeoption("CHANNELS", [0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,99]);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
 thumbpos.set(7);
-thumbpos.enabled = 1;
+thumbpos.enabled = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 1;
 
 function drawslices()
 {
@@ -1038,6 +1037,7 @@ addressobj.full = function ()
     var out = url.origin;
     out +=
         "/?p="+url.path+"."+galleryobj.current().pad(2)+
+        "&h="+thumbpos.enabled+
         "&z="+Number(zoom.current()).toFixed(2)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
@@ -1487,7 +1487,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(-rowobj.length()/25);
+            rowobj.add(rowobj.length()/25);
             contextobj.reset();
         }
 	},
@@ -1522,7 +1522,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(rowobj.length()/25);
+            rowobj.add(-rowobj.length()/25);
             contextobj.reset();
         }
 	},
@@ -4382,22 +4382,6 @@ var footlst =
     {
         this.press = function (context, rect, x, y)
         {
-            if (x < rect.width/2)
-            {
-                if (!rowobj.current())
-                    return;
-                _4cnvctx.moveup();
-                contextobj.reset();
-            }
-            else
-            {
-                if (rowobj.current() >= rowobj.length()-1)
-                    return;
-                _4cnvctx.movedown();
-                contextobj.reset();
-            }
-
-            addressobj.update();
         };
 
         this.tap = function (context, rect, x, y)
@@ -4441,13 +4425,9 @@ var footlst =
             }
             else if (context.leftab.hitest(x,y))
             {
-                _4cnvctx.autodirect = 1;
-                _4cnvctx.tab();
             }
             else if (context.rightab.hitest(x,y))
             {
-                _4cnvctx.autodirect = -1;
-                _4cnvctx.tab();
             }
 
             addressobj.update();
