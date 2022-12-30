@@ -638,15 +638,15 @@ let contextlst = [_1cnvctx,_2cnvctx,_3cnvctx,_4cnvctx,_5cnvctx,_6cnvctx,_7cnvctx
 let canvaslst = [];
 var eventlst =
 [
-    {name: "_1cnvctx", mouse: "DEFAULT", guide: "DEFAULT", thumb: "DEFAULT", tap: "DEFAULT", pan: "DEFAULT", swipe: "DEFAULT", draw: "DEFAULT", wheel: "DEFAULT", drop: "DEFAULT", key: "DEFAULT", press: "DEFAULT", pinch: "DEFAULT"},
-    {name: "_2cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
-    {name: "_3cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
-    {name: "_4cnvctx", mouse: "BOSS", guide: "GUIDE", thumb: "BOSS",  tap: "BOSS", pan: "BOSS", swipe: "BOSS", draw: "BOSS", wheel: "BOSS", drop: "BOSS", key: "BOSS", press: "BOSS", pinch: "BOSS"},
-    {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
-    {name: "_6cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
-    {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "EMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
-    {name: "_8cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "GMENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
-    {name: "_9cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_1cnvctx", mouse: "DEFAULT", guide: "DEFAULT", thumb: "DEFAULT", tap: "DEFAULT", pan: "DEFAULT", swipe: "DEFAULT", draw: "DEFAULT", wheel: "DEFAULT", contextmenu: "DEFAULT", drop: "DEFAULT", key: "DEFAULT", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_2cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", contextmenu: "DEFAULT", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_3cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", contextmenu: "DEFAULT", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_4cnvctx", mouse: "BOSS", guide: "GUIDE", thumb: "BOSS",  tap: "BOSS", pan: "BOSS", swipe: "BOSS", draw: "BOSS", wheel: "BOSS", contextmenu: "BOSS", drop: "BOSS", key: "BOSS", press: "BOSS", pinch: "BOSS"},
+    {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel: contextmenu: "DEFAULT", "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_6cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: contextmenu: "DEFAULT", "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "EMENU", wheel: contextmenu: "DEFAULT", "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_8cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "GMENU", wheel: contextmenu: "DEFAULT", "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_9cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: contextmenu: "DEFAULT", "MENU", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
 ];
 
 function seteventspanel(panel)
@@ -678,6 +678,10 @@ function setevents(context, obj)
     k = keylst[k];
     context.keyup_ = k.keyup;
     context.keydown_ = k.keydown;
+
+    var k = contextmenlst.findIndex(function (a) { return a.name == obj.contextmenu });
+    k = contextmenulst[k];
+    context.contextmenu = k.click;
 
     var k = wheelst.findIndex(function (a) { return a.name == obj.wheel });
     k = wheelst[k];
@@ -1219,7 +1223,7 @@ var makehammer = function (context, v, t)
    	    evt.preventDefault();
         if (typeof (ham.panel.contextmenu) !== "function")
             return;
-        ham.panel.contextmenu();
+            ham.panel.contextmenu(context, new rectangle(0, 0, ham.element.width, ham.element.height), x, y);
     }, false);
 
     ham.element.addEventListener("mouseout", function (evt)
@@ -1407,6 +1411,25 @@ var _9ham = makehammer(_9cnvctx,0.5,15);
 var headham = makehammer(headcnvctx,0.5,15);
 var footham = makehammer(footcnvctx,0.5,15);
 _4ham.get('pinch').set({ enable: true });
+
+var contextmenulst =
+[
+{
+    name: "DEFAULT",
+    up: function (context, ctrl, shift) { },
+    click: function (context, rect, x, y)
+    {
+    },
+},
+{
+    name: "BOSS",
+    click: function (context, rect, x, y)
+    {
+        context.autodirect = x<rect.width/2?-1:1;
+        context.tab();
+    },
+},
+]
 
 var wheelst =
 [
@@ -4104,10 +4127,10 @@ var YollPanel = function ()
         	context.press_(context, rect, x, y, shift, ctrl);
 	}
 
-	this.rightclick = function(context, rect, x, y)
+	this.contextmenu = function(context, rect, x, y)
 	{
-   		if (context.rightclick_)
-        	context.rightclick_(context, rect, x, y);
+        if (context.contextmenu)
+            context.contextmenu(context, rect, x, y);
 	}
 };
 
