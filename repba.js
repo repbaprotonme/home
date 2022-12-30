@@ -1,4 +1,4 @@
-//todo: https://obfuscator.io/
+//todo: https://obfuscator.io/ .
 //todo: safari max size
 
 /* +=
@@ -44,7 +44,6 @@ const ARROWFILL = "white";
 const TIMEMAIN = 8;
 
 globalobj = {};
-
 let photo = {}
 photo.image = 0;
 photo.menu = 0;
@@ -1126,9 +1125,9 @@ CanvasRenderingContext2D.prototype.tab = function ()
     var context = this;
     context.slidestart = context.timeobj.current();
     context.slidestop += (context.timeobj.length()/context.virtualwidth)*galleryobj.slidetop;
+    context.slidereduce = context.slidestop/galleryobj.slidefactor;
     if (context.slidestop > 36)
         context.slidestop = 36;
-    context.slidereduce = context.slidestop/galleryobj.slidefactor;
     clearInterval(context.timemain);
     context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
 }
