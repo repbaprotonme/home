@@ -1586,7 +1586,7 @@ stretchobj = new makeoption("STRETCH", [pretchobj,letchobj]);
 var poomobj = new makeoption("PORTZOOM", 100);
 var loomobj = new makeoption("LANDZOOM", 100);
 var zoomobj = new makeoption("ZOOM", [poomobj,loomobj]);
-zoomobj.getcurrent().set(url.zoom);
+zoomobj.getcurrent().getcurrent().set(url.zoom);
 
 var traitobj = new makeoption("TRAIT", 100);
 var scapeobj = new makeoption("SCAPE", 100);
