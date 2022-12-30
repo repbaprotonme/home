@@ -1160,8 +1160,6 @@ var makehammer = function (context, v, t)
     ham.get('swipe').set({ velocity: 0.6});//0.30
 	ham.get('swipe').set({ threshold: 20});//10
 	ham.get('press').set({ time: 500 });//251
-	//ham.get('pan').set({ threshold: 10 });
-//	ham.get('pinch').set({ enable: false });
 
 	ham.on("pinch", function (evt)
 	{
@@ -1216,27 +1214,12 @@ var makehammer = function (context, v, t)
             ham.panel.swipeupdown(context, new rectangle(0, 0, ham.element.width, ham.element.height), x, y, evt);
     });
 
-    ham.element.addEventListener("dragleave", function (evt)
+    ham.element.addEventListener("contextmenu", function (evt)
     {
    	    evt.preventDefault();
-    }, false);
-
-    ham.element.addEventListener("dragenter", function (evt)
-    {
-   	    evt.preventDefault();
-    }, false);
-
-    ham.element.addEventListener("dragover", function (evt)
-    {
-   	    evt.preventDefault();
-    }, false);
-
-    ham.element.addEventListener("drop", function (evt)
-    {
-   	    evt.preventDefault();
-        if (typeof (ham.panel.drop) !== "function")
+        if (typeof (ham.panel.contextmenu) !== "function")
             return;
-        ham.panel.drop(context, evt);
+        ham.panel.contextmenu();
     }, false);
 
     ham.element.addEventListener("mouseout", function (evt)
@@ -4443,8 +4426,8 @@ var footlst =
             var a =
                new Col([0,0,20,60,24,ALIEXTENT-16,24,60,20,0,0],
                [
-                    new Rectangle(context.up),
                     new Rectangle(context.leftab),
+                    new Rectangle(context.up),
                     0,
                     new Layer(
                     [
