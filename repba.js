@@ -2831,7 +2831,7 @@ function resetcanvas()
     let slicelst = [];
     for (let n = 399; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
-//    context.slicewidth = context.virtualwidth;
+    context.slicewidth = context.virtualwidth;
     if (context.slicewidth > rect.width)
         context.slicewidth = rect.width;
 
