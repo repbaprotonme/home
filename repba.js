@@ -4264,8 +4264,8 @@ var headlst =
                 ])
            ]);
 
-            var s = (galleryobj.current()+1)+" of "+gallerobj.length()
-            var k = headobj.pages?s:(galleryobj.current()+1);
+            var s = (galleryobj.current()+1)+" of "+galleryobj.length()
+            var k = headobj.pages?s:(galleryobj.current()+1).toFixed(0);
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
             a.draw(context, rect, [0,0,0,debugobj.enabled?j:k,0,0,0], time);
             context.restore()
