@@ -1035,9 +1035,10 @@ addressobj.full = function ()
 {
     var zoom = zoomobj.getcurrent();
     var out = url.origin;
+    var h = thumbpos.enabled?1:0;
     out +=
         "/?p="+url.path+"."+galleryobj.current().pad(2)+
-        "&h="+thumbpos.enabled?1:0+
+        "&h="+h+
         "&z="+Number(zoom.current()).toFixed(2)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
