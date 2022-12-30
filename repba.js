@@ -1125,7 +1125,11 @@ CanvasRenderingContext2D.prototype.tab = function ()
     var context = this;
     context.slidestart = context.timeobj.current();
     context.slidestop += (context.timeobj.length()/context.virtualwidth)*galleryobj.slidetop;
-    context.slidereduce = context.slidestop/galleryobj.slidefactor;
+    context.slidereduce = context.slBear8517%Bear8517%
+1119     this.canvas.height = 0;
+1120     this.enabled = 0;
+1119     this.canvas.height = 0;
+1120     this.enabled = 0;          idestop/galleryobj.slidefactor;
     if (context.slidestop > 36)
         context.slidestop = 36;
     clearInterval(context.timemain);
@@ -1496,7 +1500,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(-rowobj.length()/25);
+            rowobj.add(-rowobj.length()/15);
             contextobj.reset();
         }
 	},
@@ -1531,7 +1535,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(rowobj.length()/25);
+            rowobj.add(rowobj.length()/15);
             contextobj.reset();
         }
 	},
