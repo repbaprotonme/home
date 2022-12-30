@@ -1468,8 +1468,8 @@ var wheelst =
         }
         else if (shift)
         {
-            rowobj.add(-rowobj.length()/25);
-            contextobj.reset();
+            _4cnvctx.timeobj.rotate(-TIMEOBJ/100);
+            context.refresh();
         }
         else if (ctrl)
         {
@@ -1480,8 +1480,8 @@ var wheelst =
         }
         else
         {
-            _4cnvctx.timeobj.rotate(-TIMEOBJ/100);
-            context.refresh();
+            rowobj.add(-rowobj.length()/25);
+            contextobj.reset();
         }
 	},
  	down: function (context, x, y, ctrl, shift)
@@ -1503,8 +1503,8 @@ var wheelst =
         }
         else if (shift)
         {
-            rowobj.add(rowobj.length()/25);
-            contextobj.reset();
+            _4cnvctx.timeobj.rotate(TIMEOBJ/100);
+            context.refresh();
         }
         else if (ctrl)
         {
@@ -1515,8 +1515,8 @@ var wheelst =
         }
         else
         {
-            _4cnvctx.timeobj.rotate(TIMEOBJ/100);
-            context.refresh();
+            rowobj.add(rowobj.length()/25);
+            contextobj.reset();
         }
 	},
 },
@@ -1973,8 +1973,8 @@ var keylst =
         }
         else if (evt.key == "ArrowLeft" || evt.key == "h")
         {
-            context.autodirect = 1;
             evt.preventDefault();
+            context.autodirect = 1;
             context.tab();
         }
         else if (evt.key == "ArrowRight" || evt.key == "l")
@@ -1987,8 +1987,6 @@ var keylst =
         {
             if (!rowobj.current())
                 return;
-            context.moving = -1;
-            setTimeout(function(){context.moving = 0; context.refresh();},400)
             context.moveup();
             contextobj.reset();
             evt.preventDefault();
@@ -1997,8 +1995,6 @@ var keylst =
         {
             if (rowobj.current() >= rowobj.length()-1)
                 return;
-            context.moving = 1;
-            setTimeout(function(){context.moving = 0; context.refresh();},400)
             context.movedown();
             contextobj.reset();
             evt.preventDefault();
@@ -4389,7 +4385,7 @@ var footlst =
                     return;
                 context.zooming = 1;
                 setTimeout(function(){context.zooming = 0; _4cnvctx.refresh();},400)
-                zoom.add(10);
+                zoom.add(4);
                 contextobj.reset()
             }
             else if (context.keyzoomdown && context.keyzoomdown.hitest(x,y))
@@ -4399,8 +4395,22 @@ var footlst =
                     return;
                  context.zooming = -1;
                 setTimeout(function(){context.zooming = 0; _4cnvctx.refresh();},400)
-                zoom.add(-10);
+                zoom.add(-4);
                 contextobj.reset()
+            }
+            else if (context.down.hitest(x,y))
+            {
+                if (!rowobj.current())
+                    return;
+                context.movedown();
+                contextobj.reset();
+            }
+            else if (context.up.hitest(x,y))
+            {
+                if (!rowobj.current())
+                    return;
+                context.moveup();
+                contextobj.reset();
             }
             else if (context.leftab.hitest(x,y))
             {
@@ -4425,12 +4435,15 @@ var footlst =
             context.progresscircle = new rectangle();
             context.keyzoomup = new rectangle()
             context.keyzoomdown = new rectangle()
+            context.up = new rectangle()
+            context.down = new rectangle()
             context.leftab = new rectangle()
             context.rightab = new rectangle()
 
             var a =
-               new Col([0,20,60,24,ALIEXTENT-16,24,60,20,0],
+               new Col([0,0,20,60,24,ALIEXTENT-16,24,60,20,0,0],
                [
+                    new Rectangle(context.up),
                     new Rectangle(context.leftab),
                     0,
                     new Layer(
@@ -4453,6 +4466,7 @@ var footlst =
                         new Shrink(new Plus(ARROWFILL),22,22),
                     ]),
                     0,
+                    new Rectangle(context.down),
                     new Rectangle(context.rightab),
                ]);
 
