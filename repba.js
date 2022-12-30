@@ -57,7 +57,7 @@ function randomNumber(min, max) { return Math.floor(Math.random() * (max - min) 
 let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
-url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
+url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
 
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
@@ -1586,8 +1586,6 @@ stretchobj = new makeoption("STRETCH", [pretchobj,letchobj]);
 var poomobj = new makeoption("PORTZOOM", 100);
 var loomobj = new makeoption("LANDZOOM", 100);
 var zoomobj = new makeoption("ZOOM", [poomobj,loomobj]);
-poomobj.set(url.zoom);
-loomobj.set(url.zoom);
 
 var traitobj = new makeoption("TRAIT", 100);
 var scapeobj = new makeoption("SCAPE", 100);
@@ -2906,8 +2904,8 @@ var templatelst =
         footobj.show = 1;
         galleryobj.maxmegapix = 4000000;
         headobj.enabled = 0;
-        loomobj.split(50, "70-85", loomobj.length());
-        poomobj.split(50, "50-85", poomobj.length());
+        loomobj.split(url.zoom, "70-85", loomobj.length());
+        poomobj.split(url.zoom, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2917,8 +2915,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        loomobj.split(50, "70-95", loomobj.length());
-        poomobj.split(50, "50-90", poomobj.length());
+        loomobj.split(url.zoom, "70-95", loomobj.length());
+        poomobj.split(url.zoom, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2928,8 +2926,8 @@ var templatelst =
     init: function ()
     {
         thumbpos.enabled = 0;
-        loomobj.split(0, "0-25", loomobj.length());
-        poomobj.split(0, "0-25", poomobj.length());
+        loomobj.split(url.zoom, "0-25", loomobj.length());
+        poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2949,8 +2947,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        loomobj.split(0, "30-80", loomobj.length());
-        poomobj.split(0, "0-80", poomobj.length());
+        loomobj.split(url.zoom, "30-80", loomobj.length());
+        poomobj.split(url.zoom, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2960,8 +2958,8 @@ var templatelst =
     init: function (j)
     {
         footobj.show = 1;
-        loomobj.split(50, "50-90", loomobj.length());
-        poomobj.split(50, "40-90", poomobj.length());
+        loomobj.split(url.zoom, "50-90", loomobj.length());
+        poomobj.split(url.zoom, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(75, "0.1-1.0", scapeobj.length());
    }
@@ -2971,8 +2969,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        loomobj.split(50, "90-95", loomobj.length());
-        poomobj.split(50, "60-90", poomobj.length());
+        loomobj.split(url.zoom, "90-95", loomobj.length());
+        poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2982,8 +2980,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        loomobj.split(50, "90-95", loomobj.length());
-        poomobj.split(50, "60-90", poomobj.length());
+        loomobj.split(url.zoom, "90-95", loomobj.length());
+        poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2993,8 +2991,8 @@ var templatelst =
     init: function ()
     {
         footobj.show = 1;
-        loomobj.split(50, "90-95", loomobj.length());
-        poomobj.split(50, "60-90", poomobj.length());
+        loomobj.split(url.zoom, "90-95", loomobj.length());
+        poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
