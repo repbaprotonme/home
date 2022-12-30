@@ -4380,6 +4380,26 @@ var footlst =
     },
     new function()
     {
+        this.press = function (context, rect, x, y)
+        {
+            if (x < rect.width/2)
+            {
+                if (!rowobj.current())
+                    return;
+                _4cnvctx.moveup();
+                contextobj.reset();
+            }
+            else
+            {
+                if (rowobj.current() >= rowobj.length()-1)
+                    return;
+                _4cnvctx.movedown();
+                contextobj.reset();
+            }
+
+            addressobj.update();
+        };
+
         this.tap = function (context, rect, x, y)
         {
             if (context.progresscircle.hitest(x,y))
@@ -4432,6 +4452,7 @@ var footlst =
 
             addressobj.update();
         };
+
         this.draw = function (context, rect, user, time)
         {
             context.clear();
