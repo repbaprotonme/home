@@ -58,7 +58,9 @@ let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
 url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-
+//todo: thumb height
+//todo; hide thumb
+//
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 url.path = "HOME";
@@ -1455,7 +1457,7 @@ var wheelst =
             {
                 context.pinching = 0;
                 context.refresh();
-            }, 1000);
+            }, 100);
 
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
@@ -1490,7 +1492,7 @@ var wheelst =
             {
                 context.pinching = 0;
                 context.refresh();
-            }, 1000);
+            }, 100);
 
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
@@ -4436,7 +4438,7 @@ var footlst =
                     new Layer(
                     [
                         new Rectangle(context.keyzoomdown),
-                        new Shrink(new Circle(context.zooming == -1?"red":SCROLLNAB,"white",3),10,10),
+                        new Shrink(new Circle(context.zooming == -1?"red":SCROLLNAB,"white",0),10,10),
                         new Shrink(new Minus(ARROWFILL),22,22),
                     ]),
                     0,
@@ -4449,7 +4451,7 @@ var footlst =
                     new Layer(
                     [
                         new Rectangle(context.keyzoomup),
-                        new Shrink(new Circle(context.zooming == 1?"red":SCROLLNAB,"white",3),10,10),
+                        new Shrink(new Circle(context.zooming == 1?"red":SCROLLNAB,"white",0),10,10),
                         new Shrink(new Plus(ARROWFILL),22,22),
                     ]),
                     0,
