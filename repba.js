@@ -416,7 +416,7 @@ function drawslices()
             {
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
-                galleryobj.slidefactor = 36;
+                galleryobj.slidestop = 36;
             }
             else
             {
@@ -1127,7 +1127,7 @@ CanvasRenderingContext2D.prototype.tab = function ()
     context.slidestart = context.timeobj.current();
     context.slidestop = (context.timeobj.length()/context.virtualwidth)*galleryobj.slidetop;
     context.slidereduce = context.slidestop/galleryobj.slidefactor;
-    galleryobj.slidefactor *= 0.5;
+    galleryobj.slidestop *= 1.25;
     clearInterval(context.timemain);
     context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
 }
