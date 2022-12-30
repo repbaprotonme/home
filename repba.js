@@ -4438,7 +4438,7 @@ var footlst =
                     new Layer(
                     [
                         new Rectangle(context.keyzoomdown),
-                        new Shrink(new Circle(context.zooming == -1?"red":SCROLLNAB,"white",0),10,10),
+ //                       new Shrink(new Circle(context.zooming == -1?"red":SCROLLNAB,"white",0),10,10),
                         new Shrink(new Minus(ARROWFILL),22,22),
                     ]),
                     0,
@@ -4451,7 +4451,7 @@ var footlst =
                     new Layer(
                     [
                         new Rectangle(context.keyzoomup),
-                        new Shrink(new Circle(context.zooming == 1?"red":SCROLLNAB,"white",0),10,10),
+//                        new Shrink(new Circle(context.zooming == 1?"red":SCROLLNAB,"white",0),10,10),
                         new Shrink(new Plus(ARROWFILL),22,22),
                     ]),
                     0,
