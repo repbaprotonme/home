@@ -416,7 +416,7 @@ function drawslices()
             {
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
-                galleryobj.slidestop = 36;
+                galleryobj.slidefactor = 36;
             }
             else
             {
