@@ -2905,8 +2905,6 @@ var templatelst =
         poomobj.split(50, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2918,8 +2916,6 @@ var templatelst =
         poomobj.split(50, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2931,8 +2927,6 @@ var templatelst =
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2943,8 +2937,6 @@ var templatelst =
         poomobj.split(0, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2956,8 +2948,6 @@ var templatelst =
         poomobj.split(0, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
     }
 },
 {
@@ -2969,8 +2959,6 @@ var templatelst =
         poomobj.split(50, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(75, "0.1-1.0", scapeobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
    }
 },
 {
@@ -2982,8 +2970,6 @@ var templatelst =
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(1, "1-20", speedxobj.length());
-        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 {
@@ -2995,8 +2981,6 @@ var templatelst =
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(1, "1-20", speedxobj.length());
-        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 {
@@ -3008,8 +2992,6 @@ var templatelst =
         poomobj.split(50, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        speedxobj.split(1, "1-20", speedxobj.length());
-        speedyobj.split(1, "1-20", speedyobj.length());
     }
 },
 ];
@@ -3068,6 +3050,8 @@ fetch(path)
 
         pretchobj.split(60, "40-90", pretchobj.length());
         letchobj.split(60, "40-90", letchobj.length());
+        speedxobj.split(3, "1-20", speedxobj.length());
+        speedyobj.split(3, "1-20", speedyobj.length());
 
         if (typeof galleryobj.slidetop === "undefined")
             galleryobj.slidetop = 36;
@@ -3186,7 +3170,7 @@ fetch(path)
         var lst =
         [
             { line1:"Image Viewer", line2: "https://reportbase.com", line3: "Tom Brinkman", function() {menuhide(); } },
-            { line1:"Interactive 360° Panoramas", line2: "High Resolution Images", line3: "Wrap-Around Srolling", function() {menuhide(); } },
+            { line1:"Interactive 360° Panoramas", line2: "High Resolution Images", line3: "Side-scrolling Cylinders", function() {menuhide(); } },
         ];
 
         var slices = _7cnvctx.sliceobj;
