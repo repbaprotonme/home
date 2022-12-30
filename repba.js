@@ -1457,7 +1457,7 @@ var wheelst =
             {
                 context.pinching = 0;
                 context.refresh();
-            }, 100);
+            }, 500);
 
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
@@ -1492,7 +1492,7 @@ var wheelst =
             {
                 context.pinching = 0;
                 context.refresh();
-            }, 100);
+            }, 500);
 
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
@@ -2350,7 +2350,7 @@ var taplst =
             context.tapping = 1;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},100)
+            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},500)
         }
         else
         {
@@ -4197,7 +4197,7 @@ var headlst =
             context.nextpage2 = new rectangle()
             context.picture = new rectangle()
             context.font = "1rem Archivo Black";
-            var j = rect.width < 420 ? (rect.width-ALIEXTENT*4):120;
+            var j = rect.width < 420 ? (rect.width-ALIEXTENT*4):180;
             var s = _5cnvctx.enabled || _8cnvctx.enabled;
             var a = new Layer(
             [
