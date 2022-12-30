@@ -1,4 +1,5 @@
 //todo: https://obfuscator.io/ .....
+//todo: safari max size
 
 /* +=
 Copyright 2017 Tom Brinkman
@@ -4102,7 +4103,7 @@ var headlst =
             if (context.page.hitest(x,y))
             {
                 _8cnvctx.timeobj.set((1-galleryobj.berp())*TIMEOBJ);
-                menushow(ctx)
+                menushow(_8cnvctx)
             }
             else if (context.prevpage.hitest(x,y))
             {
@@ -4384,9 +4385,10 @@ var footlst =
             context.rightab = new rectangle()
 
             var a =
-               new Col([0,60,24,ALIEXTENT-16,24,60,0],
+               new Col([0,20,60,24,ALIEXTENT-16,24,60,20,0],
                [
                     new Rectangle(context.leftab),
+                    0,
                     new Layer(
                     [
                         new Rectangle(context.keyzoomdown),
@@ -4406,6 +4408,7 @@ var footlst =
                         new Shrink(new Circle(context.zooming == 1?"red":SCROLLNAB,"white",3),10,10),
                         new Shrink(new Plus(ARROWFILL),22,22),
                     ]),
+                    0,
                     new Rectangle(context.rightab),
                ]);
 
