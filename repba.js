@@ -1122,13 +1122,13 @@ CanvasRenderingContext2D.prototype.hide = function ()
 
 CanvasRenderingContext2D.prototype.tab = function ()
 {
+    var context = this;
     if (context.slidereduce)
     {
         context.slidereduce *= 0.75;
     }
     else
     {
-        var context = this;
         context.slidestart = context.timeobj.current();
         context.slidestop = (context.timeobj.length()/context.virtualwidth)*galleryobj.slidetop;
         context.slidereduce = context.slidestop/galleryobj.slidefactor;
