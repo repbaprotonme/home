@@ -1031,7 +1031,7 @@ addressobj.full = function ()
     var out = url.origin;
     out +=
         "/?p="+url.path+"."+galleryobj.current().pad(4)+
-        "&z="+(100*zoomobj.berp()).toFixed(2)+
+        "&z="+zoomobj.getcurrent().getcurrent().toFixed(2)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
     return out;
@@ -1585,7 +1585,7 @@ stretchobj = new makeoption("STRETCH", [pretchobj,letchobj]);
 var poomobj = new makeoption("PORTZOOM", 100);
 var loomobj = new makeoption("LANDZOOM", 100);
 var zoomobj = new makeoption("ZOOM", [poomobj,loomobj]);
-rowobj.set(url.zoom/100);
+rowobj.set(url.zoom);
 
 var traitobj = new makeoption("TRAIT", 100);
 var scapeobj = new makeoption("SCAPE", 100);
