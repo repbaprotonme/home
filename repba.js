@@ -1484,7 +1484,7 @@ var wheelst =
         }
         else if (shift)
         {
-            _4cnvctx.timeobj.rotate(-TIMEOBJ/100);
+            _4cnvctx.timeobj.rotate(TIMEOBJ/100);
             context.refresh();
         }
         else if (ctrl)
@@ -1496,7 +1496,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(rowobj.length()/25);
+            rowobj.add(-rowobj.length()/25);
             contextobj.reset();
         }
 	},
@@ -1519,7 +1519,7 @@ var wheelst =
         }
         else if (shift)
         {
-            _4cnvctx.timeobj.rotate(TIMEOBJ/100);
+            _4cnvctx.timeobj.rotate(-TIMEOBJ/100);
             context.refresh();
         }
         else if (ctrl)
@@ -1531,7 +1531,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(-rowobj.length()/25);
+            rowobj.add(rowobj.length()/25);
             contextobj.reset();
         }
 	},
@@ -2851,7 +2851,7 @@ function resetcanvas()
     let slicelst = [];
     for (let n = 499; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
-    context.slicewidth = context.virtualwidth/galleryobj.virtualcolumns;
+    context.slicewidth = 90;//context.virtualwidth/galleryobj.virtualcolumns;
     if (context.slicewidth > rect.width)
         context.slicewidth = rect.width;
 
