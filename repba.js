@@ -57,9 +57,9 @@ function randomNumber(min, max) { return Math.floor(Math.random() * (max - min) 
 let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
+url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
 
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-url.safari = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 0;
 
 url.path = "HOME";
 url.project = 0;
@@ -1029,7 +1029,9 @@ var addressobj = {}
 addressobj.full = function ()
 {
     var out = url.origin;
-    out += "/?p="+url.path+"."+galleryobj.current().pad(4)+
+    out +=
+        "/?p="+url.path+"."+galleryobj.current().pad(4)+
+        "&z="+(100*zoomobj.berp()).toFixed(2)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
     return out;
@@ -1583,6 +1585,7 @@ stretchobj = new makeoption("STRETCH", [pretchobj,letchobj]);
 var poomobj = new makeoption("PORTZOOM", 100);
 var loomobj = new makeoption("LANDZOOM", 100);
 var zoomobj = new makeoption("ZOOM", [poomobj,loomobj]);
+rowobj.set(url.zoom/100);
 
 var traitobj = new makeoption("TRAIT", 100);
 var scapeobj = new makeoption("SCAPE", 100);
@@ -2847,7 +2850,7 @@ function resetcanvas()
             break;
     }
 
-    var canvaslen = url.safari?Math.ceil(context.virtualwidth/MAXVIRTUAL):1;
+    var canvaslen = SAFARI?Math.ceil(context.virtualwidth/MAXVIRTUAL):1;
     var e = slicelst[slices-1];
     var delay = e.delay;
     var slices = Math.ceil(e.slices/canvaslen);
@@ -3169,7 +3172,7 @@ fetch(path)
 
         var lst =
         [
-            { line1:"Image Viewer", line2: "https://reportbase.com", line3: "Tom Brinkman", function() {menuhide(); } },
+            { line1:"Image Research", line2: "https://reportbase.com", line3: "Tom Brinkman", function() {menuhide(); } },
             { line1:"Interactive 360° Panoramas", line2: "High Resolution Images", line3: "Side-scrolling Cylinders", function() {menuhide(); } },
         ];
 
