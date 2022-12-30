@@ -3137,8 +3137,8 @@ fetch(path)
 
         var lst =
         [
-            { title:"NorthWest", width: 0, height: 1l},
-            { title:"NorthWest", width: 0, height: 1l},
+            { title:"NorthWest", width: 0, height: 1},
+            { title:"NorthWest", width: 0, height: 1},
         ];
 
         _7cnvctx.buttonheight = 240;
