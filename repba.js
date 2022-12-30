@@ -2350,7 +2350,7 @@ var taplst =
             context.tapping = 1;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},1000)
+            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},100)
         }
         else
         {
@@ -4157,7 +4157,7 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                footobj.enabled = footobj.enabled?0:1;
+                headobj.pages = headobj.pages?0:1;
                 context.refresh();
                 pageresize();
             }
@@ -4234,7 +4234,7 @@ var headlst =
                             0,
                             new Layer(
                             [
-                                footobj.enabled?new Fill(THUMBSELECT):0,
+                            //    footobj.enabled?new Fill(THUMBSELECT):0,
                                 new Shrink(new Text("white", "center", "middle",0,0,1),20,20),
                             ]),
                             0,
@@ -4264,11 +4264,8 @@ var headlst =
                 ])
            ]);
 
-            var k = (galleryobj.current()+1).toFixed(0);
+            var k = headobj.pages?gallerobj.length():(galleryobj.current()+1);
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
-            var e = galleryobj.getcurrent();
-            var b = e[0];
-            var f = e[1]+"x"+e[2];
             a.draw(context, rect, [0,0,0,debugobj.enabled?j:k,0,0,0], time);
             context.restore()
 		};
