@@ -1046,11 +1046,18 @@ addressobj.full = function ()
 
 addressobj.update = function()
 {
-    clearTimeout(globalobj.addresstime);
-    globalobj.addresstime = setTimeout(function()
+    try
     {
-        history.replaceState(null, document.title, addressobj.full());
-    }, 100);
+        clearTimeout(globalobj.addresstime);
+        globalobj.addresstime = setTimeout(function()
+        {
+            history.replaceState(null, document.title, addressobj.full());
+        }, 100);
+    }
+    catch(e)
+    {
+
+    }
 }
 
 history.pushState(null, null, document.URL);
