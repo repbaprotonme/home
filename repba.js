@@ -1032,7 +1032,7 @@ addressobj.full = function ()
 {
     var zoom = zoomobj.getcurrent();
     var out = url.origin;
-    var h = thumbpos.enabled?1:0;
+    var h = headobj.enabled?1:0;
     out +=
         "/?p="+url.path+"."+galleryobj.current().pad(2)+
         "&h="+h+
