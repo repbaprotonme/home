@@ -4354,8 +4354,6 @@ var bodylst =
             var e = galleryobj.getcurrent();
             a.draw(context, rect,
                     [
-                        e?e[0]:"",
-                        e:?(e[1]+"X"+e[2]):"",
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
