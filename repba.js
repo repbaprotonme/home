@@ -56,6 +56,10 @@ function randomNumber(min, max) { return Math.floor(Math.random() * (max - min) 
 let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
+url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 24;
+url.hideui = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 0;
+url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 36;
+url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
 //todo; height thumb
 
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -511,9 +515,9 @@ function drawslices()
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
         if (!context.pressed && thumbpos.enabled)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
-        if (!thumbpos.enabled && bodyobj.enabled && context.panning && !galleryobj.hideui)
+        if (!thumbpos.enabled && bodyobj.enabled && context.panning && !url.hideui)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
-        else if (!context.isthumbrect && bodyobj.enabled && !context.pressed && !galleryobj.hideui)
+        else if (!context.isthumbrect && bodyobj.enabled && !context.pressed && !url.hideui)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
         context.setcolumncomplete = 1;
     }
@@ -1034,6 +1038,10 @@ addressobj.full = function ()
     out +=
         "/?p="+url.path+"."+galleryobj.current().pad(2)+
         "&h="+h+
+        "&u="+url.hideui+
+        "&v="+url.virtualcols+
+        "&f="+galleryobj.slidefactor+
+        "&s="+galleryobj.slidetop+
         "&z="+Number(zoom.current()).toFixed(2)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
@@ -2451,7 +2459,7 @@ var thumblst =
             x = rect.x+rect.width-w-THUMBORDER;
         context.thumbrect = new rectangle(x,y,w,h);
 
-        if (galleryobj.hideui)
+        if (url.hideui)
             return;
 
         context.save();
@@ -2688,7 +2696,7 @@ var drawlst =
         }
         else if (user.path == "MINIMAL")
         {
-            if (galleryobj.hideui)
+            if (url.hideui)
                 clr = MENUSELECT;
         }
         else if (user.path == "DEBUG")
@@ -2846,7 +2854,7 @@ function resetcanvas()
     let slicelst = [];
     for (let n = 499; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
-    context.slicewidth = context.virtualwidth/galleryobj.virtualcolumns;
+    context.slicewidth = context.virtualwidth/url.virtualcols;
     if (context.slicewidth > rect.width)
         context.slicewidth = rect.width;
 
@@ -3058,17 +3066,10 @@ fetch(path)
         speedxobj.split(3, "1-20", speedxobj.length());
         speedyobj.split(3, "1-20", speedyobj.length());
 
-galleryobj.hideui = 1;
-        if (typeof galleryobj.slidetop === "undefined")
-            galleryobj.slidetop = 3;//36
-        if (typeof galleryobj.slidefactor === "undefined")
-            galleryobj.slidefactor = 3200;//36
         if (typeof galleryobj.quality  === "undefined")
             galleryobj.quality = 75;
         if (typeof galleryobj.galleryobj  === "undefined")
             galleryobj.maxmegapix = 9000000;
-        if (typeof galleryobj.virtualcolumns  === "undefined")
-            galleryobj.virtualcolumns = 24;
 
         if (galleryobj.length() < 2)
             bodyobj.enabled = 0;
@@ -4597,11 +4598,11 @@ window.addEventListener("keydown", function (evt)
 
 function pageresize()
 {
-    var h = (headobj.enabled && !galleryobj.hideui) ? ALIEXTENT : 0;
+    var h = (headobj.enabled && !url.hideui) ? ALIEXTENT : 0;
     headcnvctx.show(0,0,window.innerWidth,h);
     headobj.set(h?1:0);
     headham.panel = headobj.getcurrent();
-    var h = (footobj.enabled && !galleryobj.hideui) ? ALIEXTENT : 0;
+    var h = (footobj.enabled && !url.hideui) ? ALIEXTENT : 0;
     footcnvctx.show(0,window.innerHeight-h, window.innerWidth, h);
     footobj.set(h?1:0);
     footham.panel = footobj.getcurrent();
