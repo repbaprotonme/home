@@ -3062,7 +3062,7 @@ fetch(path)
         if (typeof galleryobj.slidetop === "undefined")
             galleryobj.slidetop = 18;
         if (typeof galleryobj.slidefactor === "undefined")
-            galleryobj.slidefactor = 144;
+            galleryobj.slidefactor = 720;
         if (typeof galleryobj.quality  === "undefined")
             galleryobj.quality = 75;
         if (typeof galleryobj.galleryobj  === "undefined")
