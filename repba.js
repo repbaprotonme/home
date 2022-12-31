@@ -388,9 +388,6 @@ var speedyobj = new makeoption("SPEEDY", 100);
 var guideobj = new makeoption("GUIDE", guidelst);
 var colobj = new makeoption("COLUMNS", [0,10,20,30,40,50,60,70,80,90,99].reverse());
 var channelobj = new makeoption("CHANNELS", [0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,99]);
-var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
-thumbpos.set(7);
-thumbpos.enabled = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 1;
 
 function drawslices()
 {
@@ -2916,7 +2913,6 @@ var templatelst =
     name: "COMIC",
     init: function ()
     {
-        footobj.show = 1;
         galleryobj.maxmegapix = 4000000;
         headobj.enabled = 0;
         loomobj.split(url.zoom, "70-85", loomobj.length());
@@ -2929,7 +2925,6 @@ var templatelst =
     name: "PORTRAIT",
     init: function ()
     {
-        footobj.show = 1;
         loomobj.split(url.zoom, "70-95", loomobj.length());
         poomobj.split(url.zoom, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2961,7 +2956,6 @@ var templatelst =
     name: "WIDE",
     init: function ()
     {
-        footobj.show = 1;
         loomobj.split(url.zoom, "30-80", loomobj.length());
         poomobj.split(url.zoom, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2972,7 +2966,6 @@ var templatelst =
     name: "LANDSCAPE",
     init: function (j)
     {
-        footobj.show = 1;
         loomobj.split(url.zoom, "50-90", loomobj.length());
         poomobj.split(url.zoom, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2983,7 +2976,6 @@ var templatelst =
     name: "EXTRATALL",
     init: function ()
     {
-        footobj.show = 1;
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2994,7 +2986,6 @@ var templatelst =
     name: "TALL",
     init: function ()
     {
-        footobj.show = 1;
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3005,7 +2996,6 @@ var templatelst =
     name: "LEGEND",
     init: function ()
     {
-        footobj.show = 1;
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -4308,7 +4298,10 @@ var headlst =
 ];
 
 var headobj = new makeoption("", headlst);
-headobj.enabled = 0;
+headobj.enabled = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
+var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
+thumbpos.set(7);
+thumbpos.enabled = !headobj.enabled;
 
 var bodylst =
 [
@@ -4495,7 +4488,7 @@ var footlst =
 ];
 
 var footobj = new makeoption("", footlst);
-footobj.enabled = 0;
+footobj.enabled = 1;
 
 function menushow(context)
 {
