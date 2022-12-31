@@ -3249,6 +3249,11 @@ fetch(path)
             contextobj.reset();
         }})
 
+        slices.data_.push({ title:"Original", path: "ORIGINAL", func: function()
+        {
+           window.location.href = photo.image.original;
+        }});
+
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
         slices.data.push({title:"Thumbnail", path: "THUMB", func: function(){ menushow(_3cnvctx); }})
         slices.data.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
@@ -3359,6 +3364,7 @@ var ContextObj = (function ()
                 seteventspanel(new Empty());
                 photo.image = new Image();
                 photo.image.crossOrigin = 1;
+                photo.image.original = path;
                 photo.image.src = path;
 
                 photo.image.onerror =
