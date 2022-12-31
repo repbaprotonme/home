@@ -2364,7 +2364,7 @@ var taplst =
         {
             headobj.enabled = headobj.enabled?0:1;
             thumbpos.enabled = !headobj.enabled;
-            if (!thumbpos.enabled && footobj.show)
+            if (!thumbpos.enabled)
                 footobj.enabled = 1;
             else
                 footobj.enabled = 0;
