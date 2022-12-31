@@ -2364,11 +2364,7 @@ var taplst =
         {
             headobj.enabled = headobj.enabled?0:1;
             thumbpos.enabled = !headobj.enabled;
-            if (!thumbpos.enabled)
-                footobj.enabled = 1;
-            else
-                footobj.enabled = 0;
-
+            footobj.enabled = thumbpos.enabled?0:1;
             pageresize();
             context.refresh();
             reset();
@@ -4483,11 +4479,11 @@ var footlst =
 
 var footobj = new makeoption("", footlst);
 var headobj = new makeoption("", headlst);
-headobj.enabled = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
 thumbpos.set(7);
-thumbpos.enabled = !headobj.enabled;
-footobj.enabled = !thumbpos.enabled;
+headobj.enabled = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
+thumbpos.enabled = headobj.enabled?0:1;
+footobj.enabled = thumbpos.enabled?0:1;
 
 function menushow(context)
 {
