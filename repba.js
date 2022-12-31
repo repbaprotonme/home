@@ -56,7 +56,6 @@ function randomNumber(min, max) { return Math.floor(Math.random() * (max - min) 
 let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
-url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
 //todo; height thumb
 
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -1600,6 +1599,9 @@ stretchobj = new makeoption("STRETCH", [pretchobj,letchobj]);
 var poomobj = new makeoption("PORTZOOM", 100);
 var loomobj = new makeoption("LANDZOOM", 100);
 var zoomobj = new makeoption("ZOOM", [poomobj,loomobj]);
+url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
+poomobj.set(url.zoom);
+loomobj.set(url.zoom);
 
 var traitobj = new makeoption("TRAIT", 100);
 var scapeobj = new makeoption("SCAPE", 100);
