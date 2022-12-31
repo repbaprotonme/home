@@ -3358,7 +3358,7 @@ var ContextObj = (function ()
                     var e = galleryobj.getcurrent();
                     document.title = this.oxtent;
                     if (e[0])
-                        documnt.title = e[0]+"("+document.title+")";
+                        document.title = e[0]+"("+document.title+")";
 
                     if (globalobj.promptedfile)
                     {
