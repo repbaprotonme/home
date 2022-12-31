@@ -1643,8 +1643,8 @@ function dropfiles(files)
     if (!files || !files.length)
         return;
     delete photo.image;
-//    galleryobj.data = ["",0,0];
-//    galleryobj.set(0);
+    galleryobj.data = ["",0,0];
+    galleryobj.set(0);
     _4cnvctx.setcolumncomplete = 0;
     globalobj.promptedfile = URL.createObjectURL(files[0]);
     thumbpos.enabled = 1;
