@@ -3058,10 +3058,11 @@ fetch(path)
         speedxobj.split(3, "1-20", speedxobj.length());
         speedyobj.split(3, "1-20", speedyobj.length());
 
+galleryobj.hideui = 1;
         if (typeof galleryobj.slidetop === "undefined")
-            galleryobj.slidetop = 3;
+            galleryobj.slidetop = 3;//36
         if (typeof galleryobj.slidefactor === "undefined")
-            galleryobj.slidefactor = 3200;
+            galleryobj.slidefactor = 3200;//36
         if (typeof galleryobj.quality  === "undefined")
             galleryobj.quality = 75;
         if (typeof galleryobj.galleryobj  === "undefined")
