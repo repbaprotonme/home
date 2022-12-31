@@ -1643,8 +1643,8 @@ function dropfiles(files)
     if (!files || !files.length)
         return;
     delete photo.image;
-    galleryobj.data = ["",0,0];
-    galleryobj.set(0);
+//    galleryobj.data = ["",0,0];
+//    galleryobj.set(0);
     _4cnvctx.setcolumncomplete = 0;
     globalobj.promptedfile = URL.createObjectURL(files[0]);
     thumbpos.enabled = 1;
@@ -4354,9 +4354,9 @@ var bodylst =
             var e = galleryobj.getcurrent();
             a.draw(context, rect,
                     [
-                        e[0],
+                        e?e[0]:"",
+                        e:?(e[1]+"X"+e[2]):"",
                         window.rect.width+"X"+window.rect.height,
-                        e[1]+"X"+e[2],
                         photo.image.width+"X"+photo.image.height,
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
                         context.visibles.toFixed(0)+"-"+context.sliceobj.length(),
