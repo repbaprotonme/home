@@ -2593,9 +2593,10 @@ var drawlst =
         var a = new Layer(
         [
             new Expand(new Rounded(clr, 2, "white", 8, 8), 0, 12),
-            new RowA([0,20,20,20,0],
+            new RowA([0,20,20,20,20,0],
             [
                 0,
+                new Text("white", "center", "middle", 0, 0, 1),
                 new Text("white", "center", "middle", 0, 0, 1),
                 new Text("white", "center", "middle", 0, 0, 1),
                 new Text("white", "center", "middle", 0, 0, 1),
@@ -2609,6 +2610,7 @@ var drawlst =
             user.line1,
             user.line2,
             user.line3,
+            user.line4,
             0
         ], time);
         context.restore();
@@ -3187,8 +3189,8 @@ fetch(path)
 
         var lst =
         [
-            { line1:"Image Research", line2: "https://reportbase.com", line3: "Tom Brinkman", function() {menuhide(); } },
-            { line1:"Interactive 360° Panoramas", line2: "High Resolution Images", line3: "Side-scrolling Cylinders", function() {menuhide(); } },
+            { line1:"Image Research", line2: "https://reportbase.com", line3: "Tom Brinkman", line4: "images@reportbase.com", func: function() {menuhide(); } },
+            { line1:"360° Panoramas", line2: "High Resolutions", line3: "Side Scrollers", line4: "Wrap Arounds", func: function() {menuhide(); } },
         ];
 
         var slices = _7cnvctx.sliceobj;
