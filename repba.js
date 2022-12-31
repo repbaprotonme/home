@@ -4302,6 +4302,10 @@ headobj.enabled = url.searchParams.has("h") ? Number(url.searchParams.get("h")) 
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
 thumbpos.set(7);
 thumbpos.enabled = !headobj.enabled;
+if (!thumbpos.enabled && footobj.show)
+    footobj.enabled = 1;
+else
+    footobj.enabled = 0;
 
 var bodylst =
 [
