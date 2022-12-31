@@ -3059,7 +3059,7 @@ fetch(path)
         speedyobj.split(3, "1-20", speedyobj.length());
 
         if (typeof galleryobj.slidetop === "undefined")
-            galleryobj.slidetop = 9;
+            galleryobj.slidetop = 3;
         if (typeof galleryobj.slidefactor === "undefined")
             galleryobj.slidefactor = 720;
         if (typeof galleryobj.quality  === "undefined")
