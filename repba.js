@@ -1483,7 +1483,7 @@ var wheelst =
         }
         else if (shift)
         {
-            _4cnvctx.timeobj.rotate(TIMEOBJ*0.025);
+            _4cnvctx.timeobj.rotate(TIMEOBJ*(window.innerWidth/context.virtualwidth));
             context.refresh();
         }
         else if (ctrl)
@@ -1495,7 +1495,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(-rowobj.length()*0.05);
+            rowobj.add(-rowobj.length()*0.025);
             contextobj.reset();
         }
 	},
@@ -1518,7 +1518,7 @@ var wheelst =
         }
         else if (shift)
         {
-            _4cnvctx.timeobj.rotate(-TIMEOBJ*0.025);
+            _4cnvctx.timeobj.rotate(-TIMEOBJ*(window.innerWidth/context.virtualwidth));
             context.refresh();
         }
         else if (ctrl)
@@ -1530,7 +1530,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(rowobj.length()*0.05);
+            rowobj.add(rowobj.length()*0.025);
             contextobj.reset();
         }
 	},
