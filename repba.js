@@ -4639,7 +4639,7 @@ function pageresize()
 
 window.onerror = function(message, source, lineno, colno, error)
 {
-    //window.alert( error+","+lineno+","+console.trace());
+    window.alert( error+","+lineno+","+console.trace());
 };
 
 document.addEventListener("touchstart", function(evt) { }, {passive: false});
