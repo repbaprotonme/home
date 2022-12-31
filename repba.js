@@ -3249,7 +3249,7 @@ fetch(path)
             contextobj.reset();
         }})
 
-        slices.data_.push({ title:"Original", path: "ORIGINAL", func: function()
+        slices.data.push({ title:"Original", path: "ORIGINAL", func: function()
         {
            window.location.href = photo.image.original;
         }});
