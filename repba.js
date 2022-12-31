@@ -2944,8 +2944,8 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
-        loomobj.split(0, "0-25", loomobj.length());
-        poomobj.split(0, "0-25", poomobj.length());
+        loomobj.split(url.zoom, "0-25", loomobj.length());
+        poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -3060,7 +3060,7 @@ fetch(path)
         speedyobj.split(3, "1-20", speedyobj.length());
 
         if (typeof galleryobj.slidetop === "undefined")
-            galleryobj.slidetop = 36;
+            galleryobj.slidetop = 18;
         if (typeof galleryobj.slidefactor === "undefined")
             galleryobj.slidefactor = 54;
         if (typeof galleryobj.quality  === "undefined")
