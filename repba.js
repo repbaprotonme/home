@@ -1483,7 +1483,7 @@ var wheelst =
         }
         else if (shift)
         {
-            _4cnvctx.timeobj.rotate(TIMEOBJ/100);
+            _4cnvctx.timeobj.rotate(TIMEOBJ*0.025);
             context.refresh();
         }
         else if (ctrl)
@@ -1518,7 +1518,7 @@ var wheelst =
         }
         else if (shift)
         {
-            _4cnvctx.timeobj.rotate(-TIMEOBJ/100);
+            _4cnvctx.timeobj.rotate(-TIMEOBJ*0.025);
             context.refresh();
         }
         else if (ctrl)
