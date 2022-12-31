@@ -2852,7 +2852,7 @@ function resetcanvas()
     let slicelst = [];
     for (let n = 499; n >= 1; n=n-1)
         slicelst.push({slices: n*3, delay: SLICERADIUS/n});
-    context.slicewidth = 90;//context.virtualwidth/galleryobj.virtualcolumns;
+    context.slicewidth = context.virtualwidth/galleryobj.virtualcolumns;
     if (context.slicewidth > rect.width)
         context.slicewidth = rect.width;
 
@@ -3074,7 +3074,7 @@ fetch(path)
         if (typeof galleryobj.slidetop === "undefined")
             galleryobj.slidetop = 36;
         if (typeof galleryobj.slidefactor === "undefined")
-            galleryobj.slidefactor = 36;
+            galleryobj.slidefactor = 54;
         if (typeof galleryobj.quality  === "undefined")
             galleryobj.quality = 75;
         if (typeof galleryobj.galleryobj  === "undefined")
