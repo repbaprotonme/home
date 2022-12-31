@@ -3356,9 +3356,10 @@ var ContextObj = (function ()
                     this.size = ((this.width * this.height)/1000000).toFixed(1) + "MP";
                     this.extent = this.width + "x" + this.height;
                     var e = galleryobj.getcurrent();
-                    document.title = this.extent;
                     if (e[0])
-                        document.title = e[0]+"("+document.title+")";
+                        document.title = e[0]+" ("+this.extent+")";
+                    else
+                        document.title = this.extent;
 
                     if (globalobj.promptedfile)
                     {
