@@ -2484,14 +2484,6 @@ var thumblst =
         }
         else if (photo.image.aspect < 3.0)
         {
-            var x = rect.x+THUMBORDER;
-            var y = headcnv.height+THUMBORDER;
-            if (row == 1)
-                y = rect.height-h-footcnv.height-THUMBORDER;
-            context.thumbrect = new rectangle(x,y,w,h);
-        }
-        else
-        {
             var y = headcnv.height+THUMBORDER;
             if (row == 1)
                 y = (rect.height-h)/2;
@@ -2503,6 +2495,14 @@ var thumblst =
                 x = rect.x+(rect.width-w)/2;
             else if (col == 2)
                 x = rect.x+rect.width-w-THUMBORDER;
+            context.thumbrect = new rectangle(x,y,w,h);
+        }
+        else
+        {
+            var x = rect.x+THUMBORDER;
+            var y = headcnv.height+THUMBORDER;
+            if (row == 1)
+                y = rect.height-h-footcnv.height-THUMBORDER;
             context.thumbrect = new rectangle(x,y,w,h);
         }
 
