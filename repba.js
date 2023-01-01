@@ -1467,11 +1467,10 @@ var contextmenulst =
     name: "BOSS",
     click: function (context, rect, x, y)
     {
-        if (!headobj.enabled)
-        {
-            thumbpos.set(thumbpos.data.hitest(x,y))
-            context.refresh();
-        }
+        headobj.enabled = 0;
+        footobj.enabled = 0;
+        thumbpos.set(thumbpos.data.hitest(x,y))
+        context.refresh();
     },
 },
 ]
@@ -2402,6 +2401,7 @@ var taplst =
         }
         else
         {
+            thumbpos.set(thumbpos.data.hitest(x,y))
             headobj.enabled = headobj.enabled?0:1;
             footobj.enabled = headobj.enabled;
             pageresize();
