@@ -1467,10 +1467,7 @@ var contextmenulst =
     name: "BOSS",
     click: function (context, rect, x, y)
     {
-        headobj.enabled = 0;
-        footobj.enabled = 0;
-        thumbpos.set(thumbpos.data.hitest(x,y))
-        context.refresh();
+        menushow(_9cnvctx);
     },
 },
 ]
