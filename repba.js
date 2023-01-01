@@ -3420,9 +3420,13 @@ var ContextObj = (function ()
                     resetcanvas(context);
                     seteventspanel(new YollPanel());
                     reset();
-
-                    if (url.autostart)
-                        _4cnvctx.tab();
+                    contextobj.reset()
+                    setTimeout(function()
+                    {
+                        contextobj.reset();
+                        if (url.autostart)
+                            _4cnvctx.tab();
+                    }, 400);
 
                     setTimeout(function()
                     {
@@ -4016,10 +4020,8 @@ function menuhide()
 function reset()
 {
     contextobj.reset()
-    setTimeout(function()
-    {
-        contextobj.reset();
-    }, 400);
+    setTimeout(function() { contextobj.reset(); }, 400);
+    setTimeout(function() { contextobj.reset(); }, 1000);
 }
 
 function resize()
