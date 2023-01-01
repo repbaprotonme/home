@@ -41,7 +41,7 @@ const THUMBFILL = "rgba(0,0,0,0.25)";
 const THUMBFILL2 = "rgba(0,0,0,0.40)";
 const THUMBSTROKE = "rgba(255,255,235,0.35)";
 const ARROWFILL = "white";
-const TIMEMAIN = 8;
+const TIMEMAIN = 4;
 
 globalobj = {};
 let photo = {}
