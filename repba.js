@@ -62,7 +62,6 @@ url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2
 url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
 url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
-//t207.246.108.73odo; height thumb
 
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
@@ -3218,26 +3217,6 @@ fetch(path)
 
         var lst =
         [
-            { title:"NorthWest", path: "THUMBNAIL", id: 0, func: thumbnail},
-            { title:"North", path: "THUMBNAIL", id: 1, func: thumbnail},
-            { title:"NorthEast", path: "THUMBNAIL", id: 2, func: thumbnail},
-            { title:"West", path: "THUMBNAIL", id: 3, func: thumbnail},
-            { title:"Center", path: "THUMBNAIL", id: 4, func: thumbnail},
-            { title:"East", path: "THUMBNAIL", id: 5, func: thumbnail},
-            { title:"SouthWest", path: "THUMBNAIL", id: 6, func: thumbnail},
-            { title:"South", path: "THUMBNAIL", id: 7, func: thumbnail},
-            { title:"SouthEast", path: "THUMBNAIL", id: 8, func: thumbnail},
-        ];
-
-        var slices = _3cnvctx.sliceobj;
-        slices.data = lst;
-        _3cnvctx.delayinterval = DELAYCENTER / slices.data.length;
-        _3cnvctx.virtualheight = slices.data.length*_3cnvctx.buttonheight;
-        _3cnvctx.rvalue = 2;
-        _3cnvctx.slidereduce = 0.75;
-
-        var lst =
-        [
             { line1:"Image Research", line2: "https://repba.com", line3: "images@repba.com", line4: "Tom Brinkman", func: function() {menuhide(); } },
             { line1:"High Resolution", line2: "360° Panoramas", line3: "Image Stretching", line4: "Image Zooming", func: function() {menuhide(); } },
         ];
@@ -3291,7 +3270,6 @@ fetch(path)
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
-        slices.data.push({title:"Thumbnail", path: "THUMB", func: function(){ menushow(_3cnvctx); }})
         slices.data.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
         slices.data.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
         {
