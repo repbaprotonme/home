@@ -2491,7 +2491,7 @@ var thumblst =
         }
         else
         {
-            var x = rect.x+rect.width-w-THUMBORDER;
+            var x = rect.x+(rect.width-w)/2;
             var y = rect.height-h-footcnv.height-THUMBORDER;
             context.thumbrect = new rectangle(x,y,w,h);
         }
@@ -3016,7 +3016,7 @@ var templatelst =
         loomobj.split(url.zoom, "30-80", loomobj.length());
         poomobj.split(url.zoom, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
-        scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        scapeobj.split(50, "0.1-1.0", scapeobj.length());
         thumbpos.set(1);
     }
 },
