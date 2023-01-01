@@ -2852,7 +2852,7 @@ function resetcanvas()
     zoomobj.set(window.landscape);
 
     thumbpos.data = []
-    var a =i  new Grid (1, 2, 0, new Push());
+    var a = new Grid (1, 2, 0, new Push());
     a.draw(context, window.rect, thumbpos.data, 0);
 
     if (!photo.image.height)
