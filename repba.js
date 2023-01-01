@@ -2858,7 +2858,7 @@ function resetcanvas()
         a.draw(context, window.rect, thumbpos.data, 0);
         thumbpos.set(1);
     }
-    else if (photo.image..aspect < 3.0)
+    else if (photo.image.aspect < 3.0)
     {
         var a = new Grid (3, 3, 0, new Push());
         a.draw(context, window.rect, thumbpos.data, 0);
