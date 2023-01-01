@@ -2474,18 +2474,37 @@ var thumblst =
         var col = pos%cols;
         var w = r.width;
 
-        var y = headcnv.height+THUMBORDER;
-        if (row == 1)
-            y = (rect.height-h)/2;
-        else if (row == 2)
-            y = rect.height-h-footcnv.height-THUMBORDER;
+        if (photo.image.aspect < 0.5)
+        {
+            var x = rect.x+THUMBORDER;
+            var y = headcnv.height+THUMBORDER;
+            else
+                x = rect.x+rect.width-w-THUMBORDER;
+            context.thumbrect = new rectangle(x,y,w,h);
+        }
+        else if (photo.image.aspect < 3.0)
+        {
+            var x = rect.x+THUMBORDER;
+            var y = headcnv.height+THUMBORDER;
+            else
+                y = rect.height-h-footcnv.height-THUMBORDER;
+            context.thumbrect = new rectangle(x,y,w,h);
+        }
+        else
+        {
+            var y = headcnv.height+THUMBORDER;
+            if (row == 1)
+                y = (rect.height-h)/2;
+            else if (row == 2)
+                y = rect.height-h-footcnv.height-THUMBORDER;
 
-        var x = rect.x+THUMBORDER;
-        if (col == 1)
-            x = rect.x+(rect.width-w)/2;
-        else if (col == 2)
-            x = rect.x+rect.width-w-THUMBORDER;
-        context.thumbrect = new rectangle(x,y,w,h);
+            var x = rect.x+THUMBORDER;
+            if (col == 1)
+                x = rect.x+(rect.width-w)/2;
+            else if (col == 2)
+                x = rect.x+rect.width-w-THUMBORDER;
+            context.thumbrect = new rectangle(x,y,w,h);
+        }
 
         if (url.hideui)
             return;
