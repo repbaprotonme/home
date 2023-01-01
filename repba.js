@@ -2478,7 +2478,7 @@ var thumblst =
         {
             var x = rect.x+THUMBORDER;
             var y = headcnv.height+THUMBORDER;
-            else
+            if (col == 1)
                 x = rect.x+rect.width-w-THUMBORDER;
             context.thumbrect = new rectangle(x,y,w,h);
         }
@@ -2486,7 +2486,7 @@ var thumblst =
         {
             var x = rect.x+THUMBORDER;
             var y = headcnv.height+THUMBORDER;
-            else
+            if (row == 1)
                 y = rect.height-h-footcnv.height-THUMBORDER;
             context.thumbrect = new rectangle(x,y,w,h);
         }
