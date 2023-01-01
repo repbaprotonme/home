@@ -3114,7 +3114,6 @@ fetch(path)
             context.slideshow = 0;
             context.lastime = 0;
             context.slidereduce = 0;
-            context.movingpage = -1;
             context.slidestop = 0;
             context.buttonheight = ALIEXTENT/2;
             setevents(context, eventlst[n]);
@@ -3424,7 +3423,7 @@ var ContextObj = (function ()
                     contextobj.reset()
                     if (url.autostart)
                     {
-                        context.autodirect = _4cnvctx.movingpage==1?-1:1
+                        context.autodirect = -1
                         _4cnvctx.tab();
                     }
 
