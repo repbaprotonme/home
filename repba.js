@@ -419,7 +419,7 @@ function drawslices()
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
             }
-            else if (context.slidebottom)
+            else if (context.slidesbottom)
             {
                 context.timeobj.rotate(context.autodirect*context.slidesbottom);
             }
