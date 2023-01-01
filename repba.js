@@ -3419,14 +3419,11 @@ var ContextObj = (function ()
                     contextobj.resize(context);
                     resetcanvas(context);
                     seteventspanel(new YollPanel());
-                    reset();
                     contextobj.reset()
-                    setTimeout(function()
-                    {
-                        contextobj.reset();
-                        if (url.autostart)
-                            _4cnvctx.tab();
-                    }, 400);
+                    if (url.autostart)
+                        _4cnvctx.tab();
+                    setTimeout(function() { contextobj.reset(); }, 400);
+                    setTimeout(function() { contextobj.reset(); }, 1000);
 
                     setTimeout(function()
                     {
