@@ -2468,7 +2468,9 @@ var thumblst =
             jp = 1;
         }
 
-       if (photo.image.aspect < 0.5)
+        var w = r.width;
+
+        if (photo.image.aspect < 0.5)
         {
             var x = rect.x+THUMBORDER;
             var y = headcnv.height+THUMBORDER;
@@ -2482,7 +2484,6 @@ var thumblst =
             var pos = thumbpos.current();
             var row = Math.floor(pos/cols);
             var col = pos%cols;
-            var w = r.width;
 
              var y = headcnv.height+THUMBORDER;
             if (row == 1)
