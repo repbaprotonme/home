@@ -3422,7 +3422,11 @@ var ContextObj = (function ()
                     seteventspanel(new YollPanel());
                     contextobj.reset()
                     if (url.autostart)
+                    {
+                        context.autodirect = _4cnvctx.movingpage
                         _4cnvctx.tab();
+                    }
+
                     setTimeout(function() { contextobj.reset(); }, 400);
                     setTimeout(function() { contextobj.reset(); }, 1000);
 
