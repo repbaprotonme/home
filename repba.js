@@ -1462,8 +1462,8 @@ var contextmenulst =
     name: "BOSS",
     click: function (context, rect, x, y)
     {
-        context.autodirect = x<rect.width/2?1:-1;
-        context.tab();
+        thumbpos.set(thumbpos.hitest(x,y)))
+        context.refresh();
     },
 },
 ]
@@ -1494,7 +1494,7 @@ var wheelst =
     name: "BOSS",
     up: function (context, x, y, ctrl, shift)
     {
-        context.pinching = 1;
+        //context.pinching = 1;
         clearTimeout(globalobj.pinch);
         globalobj.pinch = setTimeout(function()
             {
@@ -1506,7 +1506,7 @@ var wheelst =
         var isthumbrect = thumbobj.current()==0 && thumb;
         if (thumbpos.enabled && isthumbrect)
         {
-            heightobj.getcurrent().add(-1);
+            heightobj.getcurrent().add(1);
             context.refresh();
         }
         else if (shift)
@@ -1529,7 +1529,7 @@ var wheelst =
 	},
  	down: function (context, x, y, ctrl, shift)
     {
-        context.pinching = 1;
+        //context.pinching = 1;
         clearTimeout(globalobj.pinch);
         globalobj.pinch = setTimeout(function()
             {
@@ -1541,7 +1541,7 @@ var wheelst =
         var isthumbrect = thumbobj.current()==0 && thumb;
         if (thumbpos.enabled && isthumbrect)
         {
-            heightobj.getcurrent().add(1);
+            heightobj.getcurrent().add(-1);
             context.refresh();
         }
         else if (shift)
@@ -2364,7 +2364,7 @@ var taplst =
         {
             _4cnvctx.movepage(1);
         }
-         else if (context.keymoveup && context.keymoveup.hitest(x,y))
+        else if (context.keymoveup && context.keymoveup.hitest(x,y))
         {
             if (!rowobj.current())
                 return;
