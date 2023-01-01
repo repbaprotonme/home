@@ -2861,13 +2861,11 @@ function resetcanvas()
     {
         var a = new Grid (3, 3, 0, new Push());
         a.draw(context, window.rect, thumbpos.data, 0);
-        thumbpos.set(7);
     }
     else
     {
         var a = new Grid (1, 2, 0, new Push());
         a.draw(context, window.rect, thumbpos.data, 0);
-        thumbpos.set(1);
     }
 
     if (!photo.image.height)
