@@ -59,7 +59,7 @@ url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
 url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 24;
 url.hideui = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 0;
 url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 54;
+url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
 url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0.25;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
 //t207.246.108.73odo; height thumb
