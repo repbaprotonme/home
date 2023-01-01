@@ -2852,8 +2852,24 @@ function resetcanvas()
     zoomobj.set(window.landscape);
 
     thumbpos.data = []
-    var a = new Grid (1, 2, 0, new Push());
-    a.draw(context, window.rect, thumbpos.data, 0);
+    if (this.aspect < 0.5)
+    {
+        var a = new Grid (2, 1, 0, new Push());
+        a.draw(context, window.rect, thumbpos.data, 0);
+        thumbpos.set(1);
+    }
+    else if (this.aspect < 3.0)
+    {
+        var a = new Grid (3, 3, 0, new Push());
+        a.draw(context, window.rect, thumbpos.data, 0);
+        thumbpos.set(1);
+    }
+    else
+    {
+        var a = new Grid (1, 2, 0, new Push());
+        a.draw(context, window.rect, thumbpos.data, 0);
+        thumbpos.set(1);
+    }
 
     if (!photo.image.height)
         return;
@@ -4530,7 +4546,6 @@ var footlst =
 var footobj = new makeoption("", footlst);
 var headobj = new makeoption("", headlst);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
-thumbpos.set(7);//todo
 var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
 headobj.enabled = j;
 footobj.enabled = j;
