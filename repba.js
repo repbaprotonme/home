@@ -3042,7 +3042,7 @@ var templatelst =
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(1);
+        thumbpos.set(7);
     }
 },
 {
@@ -3053,7 +3053,7 @@ var templatelst =
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(1);
+        thumbpos.set(7);
     }
 },
 {
@@ -3064,7 +3064,7 @@ var templatelst =
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(1);
+        thumbpos.set(7);
     }
 },
 ];
