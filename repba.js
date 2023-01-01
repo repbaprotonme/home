@@ -1497,18 +1497,18 @@ var wheelst =
     name: "BOSS",
     up: function (context, x, y, ctrl, shift)
     {
-        //context.pinching = 1;
-        clearTimeout(globalobj.pinch);
-        globalobj.pinch = setTimeout(function()
-            {
-                context.pinching = 0;
-                context.refresh();
-            }, 500);
-
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
         if (thumbpos.enabled && isthumbrect)
         {
+            context.pinching = 1;
+            clearTimeout(globalobj.pinch);
+            globalobj.pinch = setTimeout(function()
+                {
+                    context.pinching = 0;
+                    context.refresh();
+                }, 500);
+
             heightobj.getcurrent().add(1);
             context.refresh();
         }
@@ -1532,18 +1532,18 @@ var wheelst =
 	},
  	down: function (context, x, y, ctrl, shift)
     {
-        //context.pinching = 1;
-        clearTimeout(globalobj.pinch);
-        globalobj.pinch = setTimeout(function()
-            {
-                context.pinching = 0;
-                context.refresh();
-            }, 500);
-
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
         if (thumbpos.enabled && isthumbrect)
         {
+            context.pinching = 1;
+            clearTimeout(globalobj.pinch);
+            globalobj.pinch = setTimeout(function()
+                {
+                    context.pinching = 0;
+                    context.refresh();
+                }, 500);
+
             heightobj.getcurrent().add(-1);
             context.refresh();
         }
