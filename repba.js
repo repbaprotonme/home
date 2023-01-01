@@ -41,7 +41,7 @@ const THUMBFILL = "rgba(0,0,0,0.25)";
 const THUMBFILL2 = "rgba(0,0,0,0.40)";
 const THUMBSTROKE = "rgba(255,255,235,0.35)";
 const ARROWFILL = "white";
-const TIMEMAIN = 4;
+const TIMEMAIN = 12;
 
 globalobj = {};
 let photo = {}
@@ -3462,8 +3462,8 @@ var ContextObj = (function ()
                         _4cnvctx.tab();
                     }
 
-                    setTimeout(function() { contextobj.reset(); }, 400);
-                    setTimeout(function() { contextobj.reset(); }, 1000);
+                    setTimeout(function() { if (!_4cnvctx.setcolumncomplete) contextobj.reset(); }, 400);
+                    setTimeout(function() { if (!_4cnvctx.setcolumncomplete) contextobj.reset(); }, 1000);
 
                     setTimeout(function()
                     {
