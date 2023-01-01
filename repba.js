@@ -58,8 +58,8 @@ url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEO
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
 url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 24;
 url.hideui = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 0;
-url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 0.5;
-url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 0;
+url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 36;
+url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
 //todo; height thumb
 
@@ -4518,7 +4518,7 @@ var footobj = new makeoption("", footlst);
 var headobj = new makeoption("", headlst);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
 thumbpos.set(7);//todo
-var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
+var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : ;
 headobj.enabled = j;
 footobj.enabled = j;
 
