@@ -3423,7 +3423,7 @@ var ContextObj = (function ()
                     contextobj.reset()
                     if (url.autostart)
                     {
-                        context.autodirect = -1
+                        context.autodirect = _4cnvctx.movingpage!=1?1:-1
                         _4cnvctx.tab();
                     }
 
