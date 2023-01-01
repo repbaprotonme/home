@@ -62,7 +62,7 @@ url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 3
 url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
 url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0.25;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
-//todo; height thumb
+//t207.246.108.73odo; height thumb
 
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
@@ -2470,15 +2470,7 @@ var thumblst =
 
         var w = r.width;
 
-        if (photo.image.aspect < 0.5)
-        {
-            var x = rect.x+THUMBORDER;
-            var y = headcnv.height+THUMBORDER;
-            if (thumbpos.current() == 1)
-                x = rect.x+rect.width-w-THUMBORDER;
-            context.thumbrect = new rectangle(x,y,w,h);
-        }
-        else if (photo.image.aspect < 3.0)
+        if (photo.image.aspect < 3.0)
         {
             var cols = 3;
             var pos = thumbpos.current();
@@ -2500,7 +2492,7 @@ var thumblst =
         }
         else
         {
-            var x = rect.x+THUMBORDER;
+            var x = rect.x+rect.width-w-THUMBORDER;
             var y = headcnv.height+THUMBORDER;
             if (thumbpos.current() == 1)
                 y = rect.height-h-footcnv.height-THUMBORDER;
