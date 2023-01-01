@@ -419,9 +419,9 @@ function drawslices()
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
             }
-            else if (context.slidesbottom)
+            else if (context.slidebottom)
             {
-                context.timeobj.rotate(context.autodirect*context.slidesbottom);
+                context.timeobj.rotate(context.autodirect*context.slidebottom);
             }
             else
             {
@@ -1041,13 +1041,14 @@ addressobj.full = function ()
     var zoom = zoomobj.getcurrent();
     var out = url.origin;
     out +=
-        "/?p="+url.path+"."+galleryobj.current().pad(2)+
+        "/?p="+galleryobj.getcurrent()[0]+
         "&h="+headobj.enabled+
         "&u="+url.hideui+
         "&v="+url.virtualcols+
         "&a="+url.autostart+
         "&f="+url.slidefactor+
         "&s="+url.slidetop+
+        "&b="+url.slidebottom+
         "&z="+Number(zoom.current()).toFixed(2)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
@@ -1135,7 +1136,7 @@ CanvasRenderingContext2D.prototype.tab = function ()
     var context = this;
     context.slidestart = context.timeobj.current();
     context.slidestop = (context.timeobj.length()/context.virtualwidth)*url.slidetop;
-    context.slidesbottom = (context.timeobj.length()/context.virtualwidth)*url.slidebottom;
+    context.slidebottom = (context.timeobj.length()/context.virtualwidth)*url.slidebottom;
     context.slidereduce = url.slidefactor?context.slidestop/url.slidefactor:0;
     clearInterval(context.timemain);
     context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
