@@ -4518,7 +4518,7 @@ var footobj = new makeoption("", footlst);
 var headobj = new makeoption("", headlst);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
 thumbpos.set(7);//todo
-var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : j;
+var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
 headobj.enabled = j;
 footobj.enabled = j;
 
