@@ -3424,6 +3424,9 @@ var ContextObj = (function ()
                     seteventspanel(new YollPanel());
                     reset();
 
+                    if (url.autostart)
+                        _4cnvctx.tab();
+
                     setTimeout(function()
                     {
                         photo.menu = new Image();
@@ -3446,9 +3449,6 @@ var ContextObj = (function ()
                         img3.path = galleryobj.getcurrent()[0]
                         img3.onload = function() { loaded.add(img3.path); }
                         galleryobj.set(k);
-
-                        if (url.autostart)
-                            _4cnvctx.tab();
                     }, 250);
                 }
 			}
