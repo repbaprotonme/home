@@ -1462,8 +1462,11 @@ var contextmenulst =
     name: "BOSS",
     click: function (context, rect, x, y)
     {
-        thumbpos.set(thumbpos.hitest(x,y))
-        context.refresh();
+        if (thumbpos.enabled)
+        {
+            thumbpos.set(thumbpos.data.hitest(x,y))
+            context.refresh();
+        }
     },
 },
 ]
