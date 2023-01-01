@@ -514,9 +514,9 @@ function drawslices()
             headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
         if (!context.pressed && footcnv.height)
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
-        if (!context.pressed && thumbpos.enabled)
+        if (!context.pressed && !headobj.enabled)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
-        if (!thumbpos.enabled && bodyobj.enabled && context.panning && !url.hideui)
+        if (headobj.enabled && bodyobj.enabled && context.panning && !url.hideui)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
         else if (!context.isthumbrect && bodyobj.enabled && !context.pressed && !url.hideui)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
@@ -1035,10 +1035,9 @@ addressobj.full = function ()
 {
     var zoom = zoomobj.getcurrent();
     var out = url.origin;
-    var h = headobj.enabled?1:0;
     out +=
         "/?p="+url.path+"."+galleryobj.current().pad(2)+
-        "&h="+h+
+        "&h="+headobj.enabled+
         "&u="+url.hideui+
         "&v="+url.virtualcols+
         "&a="+url.autostart+
@@ -1109,7 +1108,7 @@ CanvasRenderingContext2D.prototype.movepage = function(j)
     {
         delete photo.image;
         _4cnvctx.setcolumncomplete = 0;
-        if (!thumbpos.enabled)
+        if (headobj.enabled)
             rowobj.set(0);
         galleryobj.rotate(j);
         contextobj.reset();
@@ -1462,7 +1461,7 @@ var contextmenulst =
     name: "BOSS",
     click: function (context, rect, x, y)
     {
-        if (thumbpos.enabled)
+        if (!headobj.enabled)
         {
             thumbpos.set(thumbpos.data.hitest(x,y))
             context.refresh();
@@ -1499,7 +1498,7 @@ var wheelst =
     {
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
-        if (thumbpos.enabled && isthumbrect)
+        if (!headobj.enabled && isthumbrect)
         {
             context.pinching = 1;
             clearTimeout(globalobj.pinch);
@@ -1534,7 +1533,7 @@ var wheelst =
     {
         var thumb = context.thumbrect && context.thumbrect.hitest(x,y);
         var isthumbrect = thumbobj.current()==0 && thumb;
-        if (thumbpos.enabled && isthumbrect)
+        if (!headobj.enabled && isthumbrect)
         {
             context.pinching = 1;
             clearTimeout(globalobj.pinch);
@@ -1580,7 +1579,7 @@ var pinchlst =
     name: "BOSS",
     pinch: function (context, scale)
     {
-        if (thumbpos.enabled && context.isthumbrect)
+        if (!headobj.enabled && context.isthumbrect)
         {
             var obj = heightobj.getcurrent();
             var data = obj.data;
@@ -1675,8 +1674,8 @@ function dropfiles(files)
     galleryobj.set(0);
     _4cnvctx.setcolumncomplete = 0;
     globalobj.promptedfile = URL.createObjectURL(files[0]);
-    thumbpos.enabled = 1;
-    footobj.enabled = 0;
+    headobj.enabled = 1;
+    footobj.enabled = 1;
     contextobj.reset();
 }
 
@@ -1744,7 +1743,7 @@ var panlst =
         x = pt?pt.x:x;
         y = pt?pt.y:y;
 
-        if (context.isthumbrect && thumbpos.enabled)
+        if (context.isthumbrect && !headobj.enabled)
         {
             var k = guideobj.getcurrent();
             k.pan(context, rect, x, y, type);
@@ -1867,14 +1866,14 @@ var presslst =
         context.panning = 0;
         context.pressed = 0;
         bodyobj.enabled = 1;
-        thumbpos.enabled = 1;
+        headobj.enabled = 0;
         context.refresh()
     },
     press: function (context, rect, x, y)
     {
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
         headobj.enabled = 0;
-        thumbpos.enabled = 1;
+        headobj.enabled = 0;
         footobj.enabled = 0;
         bodyobj.enabled = 1;
         context.panning = 1;
@@ -1913,7 +1912,7 @@ var swipelst =
         {
             evt.preventDefault();
             var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-            if (thumbpos.enabled && isthumbrect)
+            if (!headobj.enabled && isthumbrect)
                 return;
             context.autodirect = evt.type == "swipeleft"?-1:1;
             context.tab();
@@ -2052,7 +2051,6 @@ var keylst =
         {
             headobj.enabled = 1;
             footobj.enabled = 1;
-            thumbpos.enabled = 0;
             debugobj.enabled=debugobj.enabled?0:1;
             pageresize()
             context.refresh();
@@ -2385,7 +2383,7 @@ var taplst =
             context.movedown()
             contextobj.reset();
         }
-        else if (thumbpos.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
+        else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
             context.hithumb(x,y);
             var zoom = zoomobj.getcurrent()
@@ -2400,8 +2398,7 @@ var taplst =
         else
         {
             headobj.enabled = headobj.enabled?0:1;
-            thumbpos.enabled = !headobj.enabled;
-            footobj.enabled = thumbpos.enabled?0:1;
+            footobj.enabled = headobj.enabled;
             pageresize();
             context.refresh();
             reset();
@@ -2717,7 +2714,7 @@ var drawlst =
             if (user.index == galleryobj.current())
                 clr = MENUSELECT;
         }
-        else if (thumbpos.enabled && user.path == "THUMBNAIL")
+        else if (!headobj.enabled && user.path == "THUMBNAIL")
         {
             if (user.id == thumbpos.current())
                 clr = MENUSELECT;
@@ -2968,7 +2965,7 @@ var templatelst =
     name: "SIDESCROLL",
     init: function ()
     {
-        thumbpos.enabled = 0;
+        headobj.enabled = 1;
         loomobj.split(url.zoom, "0-25", loomobj.length());
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3169,13 +3166,15 @@ fetch(path)
 
         function thumbnail()
         {
-            if (thumbpos.enabled && this.id == thumbpos.current())
+            if (!headobj.enabled && this.id == thumbpos.current())
             {
-                thumbpos.enabled = 0;
+                headobj.enabled = 1;
+                footobj.enabled = 1;
             }
             else
             {
-                thumbpos.enabled = 1;
+                headobj.enabled = 0;
+                footobj.enabled = 0;
                 thumbpos.set(this.id);
             }
 
@@ -3248,7 +3247,6 @@ fetch(path)
         {
             headobj.enabled = 1;
             footobj.enabled = 1;
-            thumbpos.enabled = 0;
             debugobj.enabled=debugobj.enabled?0:1;
             pageresize()
             contextobj.reset();
@@ -4521,9 +4519,8 @@ var headobj = new makeoption("", headlst);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
 thumbpos.set(7);//todo
 var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : j;
-thumbpos.enabled = j;
-headobj.enabled = !j;
-footobj.enabled = !j;
+headobj.enabled = j;
+footobj.enabled = j;
 
 function menushow(context)
 {
