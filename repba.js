@@ -2862,7 +2862,7 @@ function resetcanvas()
     {
         var a = new Grid (3, 3, 0, new Push());
         a.draw(context, window.rect, thumbpos.data, 0);
-        thumbpos.set(1);
+        thumbpos.set(7);
     }
     else
     {
