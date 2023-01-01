@@ -4213,11 +4213,14 @@ var headlst =
             {
                 menushow(_9cnvctx);
             }
-            else if (context.extent.hitest(x,y))
+            else
             {
-            }
-            else if (context.size.hitest(x,y))
-            {
+                thumbpos.set(thumbpos.data.hitest(x,0))
+                headobj.enabled = headobj.enabled?0:1;
+                footobj.enabled = headobj.enabled;
+                pageresize();
+                _4cnvctx.refresh();
+                reset();
             }
 
             _4cnvctx.refresh();
@@ -4459,11 +4462,14 @@ var footlst =
                 _4cnvctx.moveup();
                 contextobj.reset();
             }
-            else if (context.leftab.hitest(x,y))
+            else
             {
-            }
-            else if (context.rightab.hitest(x,y))
-            {
+                thumbpos.set(thumbpos.data.hitest(x,window.innerHeight-1))
+                headobj.enabled = headobj.enabled?0:1;
+                footobj.enabled = headobj.enabled;
+                pageresize();
+                _4cnvctx.refresh();
+                reset();
             }
 
             addressobj.update();
