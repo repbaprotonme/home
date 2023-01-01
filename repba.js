@@ -3114,6 +3114,7 @@ fetch(path)
             context.slideshow = 0;
             context.lastime = 0;
             context.slidereduce = 0;
+            context.movingpage = -1;
             context.slidestop = 0;
             context.buttonheight = ALIEXTENT/2;
             setevents(context, eventlst[n]);
