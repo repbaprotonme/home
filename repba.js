@@ -2856,7 +2856,6 @@ function resetcanvas()
     {
         var a = new Grid (2, 1, 0, new Push());
         a.draw(context, window.rect, thumbpos.data, 0);
-        thumbpos.set(1);
     }
     else if (photo.image.aspect < 3.0)
     {
@@ -2967,6 +2966,7 @@ var templatelst =
         poomobj.split(url.zoom, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        thumbpos.set(7);
     }
 },
 {
@@ -2977,6 +2977,7 @@ var templatelst =
         poomobj.split(url.zoom, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        thumbpos.set(7);
     }
 },
 {
@@ -2987,6 +2988,7 @@ var templatelst =
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        thumbpos.set(1);
     }
 },
 {
@@ -2997,6 +2999,7 @@ var templatelst =
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        thumbpos.set(1);
     }
 },
 {
@@ -3007,6 +3010,7 @@ var templatelst =
         poomobj.split(url.zoom, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        thumbpos.set(1);
     }
 },
 {
@@ -3017,6 +3021,7 @@ var templatelst =
         poomobj.split(url.zoom, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(75, "0.1-1.0", scapeobj.length());
+        thumbpos.set(7);
    }
 },
 {
@@ -3027,6 +3032,7 @@ var templatelst =
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        thumbpos.set(1);
     }
 },
 {
@@ -3037,6 +3043,7 @@ var templatelst =
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        thumbpos.set(1);
     }
 },
 {
@@ -3047,6 +3054,7 @@ var templatelst =
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        thumbpos.set(1);
     }
 },
 ];
