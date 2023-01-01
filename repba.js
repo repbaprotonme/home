@@ -1878,7 +1878,6 @@ var presslst =
     {
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
         headobj.enabled = 0;
-        headobj.enabled = 0;
         footobj.enabled = 0;
         bodyobj.enabled = 1;
         context.panning = 1;
@@ -2949,7 +2948,6 @@ var templatelst =
     init: function ()
     {
         galleryobj.maxmegapix = 4000000;
-        headobj.enabled = 0;
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2970,7 +2968,6 @@ var templatelst =
     name: "SIDESCROLL",
     init: function ()
     {
-        headobj.enabled = 1;
         loomobj.split(url.zoom, "0-25", loomobj.length());
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
