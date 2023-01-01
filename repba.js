@@ -60,6 +60,7 @@ url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) 
 url.hideui = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 0;
 url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 36;
 url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
+url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 0;
 //todo; height thumb
 
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -1040,6 +1041,7 @@ addressobj.full = function ()
         "&h="+h+
         "&u="+url.hideui+
         "&v="+url.virtualcols+
+        "&a="+url.autostart+
         "&f="+url.slidefactor+
         "&s="+url.slidetop+
         "&z="+Number(zoom.current()).toFixed(2)+
@@ -1129,7 +1131,7 @@ CanvasRenderingContext2D.prototype.tab = function ()
     var context = this;
     context.slidestart = context.timeobj.current();
     context.slidestop = (context.timeobj.length()/context.virtualwidth)*url.slidetop;
-    context.slidereduce = context.slidestop/url.slidefactor;
+    context.slidereduce = url.slidefactor?context.slidestop/url.slidefactor:0;
     clearInterval(context.timemain);
     context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
 }
@@ -3441,6 +3443,8 @@ var ContextObj = (function ()
                         img3.onload = function() { loaded.add(img3.path); }
                         galleryobj.set(k);
 
+                        if (url.autostart)
+                            _4cnvctx.tab();
                     }, 250);
                 }
 			}
