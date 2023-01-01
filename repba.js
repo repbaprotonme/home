@@ -2852,13 +2852,13 @@ function resetcanvas()
     zoomobj.set(window.landscape);
 
     thumbpos.data = []
-    if (this.aspect < 0.5)
+    if (photo.image.aspect < 0.5)
     {
         var a = new Grid (2, 1, 0, new Push());
         a.draw(context, window.rect, thumbpos.data, 0);
         thumbpos.set(1);
     }
-    else if (this.aspect < 3.0)
+    else if (photo.image..aspect < 3.0)
     {
         var a = new Grid (3, 3, 0, new Push());
         a.draw(context, window.rect, thumbpos.data, 0);
