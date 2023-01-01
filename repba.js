@@ -2468,23 +2468,23 @@ var thumblst =
             jp = 1;
         }
 
-        var cols = 3;
-        var pos = thumbpos.current();
-        var row = Math.floor(pos/cols);
-        var col = pos%cols;
-        var w = r.width;
-
-        if (photo.image.aspect < 0.5)
+       if (photo.image.aspect < 0.5)
         {
             var x = rect.x+THUMBORDER;
             var y = headcnv.height+THUMBORDER;
-            if (col == 1)
+            if (thumbpos.current() == 1)
                 x = rect.x+rect.width-w-THUMBORDER;
             context.thumbrect = new rectangle(x,y,w,h);
         }
         else if (photo.image.aspect < 3.0)
         {
-            var y = headcnv.height+THUMBORDER;
+            var cols = 3;
+            var pos = thumbpos.current();
+            var row = Math.floor(pos/cols);
+            var col = pos%cols;
+            var w = r.width;
+
+             var y = headcnv.height+THUMBORDER;
             if (row == 1)
                 y = (rect.height-h)/2;
             else if (row == 2)
@@ -2501,7 +2501,7 @@ var thumblst =
         {
             var x = rect.x+THUMBORDER;
             var y = headcnv.height+THUMBORDER;
-            if (row == 1)
+            if (thumbpos.current() == 1)
                 y = rect.height-h-footcnv.height-THUMBORDER;
             context.thumbrect = new rectangle(x,y,w,h);
         }
