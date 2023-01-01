@@ -4519,10 +4519,11 @@ var footlst =
 var footobj = new makeoption("", footlst);
 var headobj = new makeoption("", headlst);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
-thumbpos.set(7);
-headobj.enabled = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
-thumbpos.enabled = headobj.enabled?0:1;
-footobj.enabled = thumbpos.enabled?0:1;
+thumbpos.set(7);//todo
+var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : j;
+thumbpos.enabled = j;
+headobj.enabled = !j;
+footobj.enabled = !j;
 
 function menushow(context)
 {
