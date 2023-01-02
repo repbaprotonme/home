@@ -3407,9 +3407,9 @@ var ContextObj = (function ()
                         var k;
                         if (this.aspect < 0.5)
                             k = "TALL"
-                        else if (this.aspect < 1.3)
+                        else if (this.aspect < 1.0)
                             k = "PORTRAIT"
-                        else if (this.aspect < 3.0)
+                        else if (this.aspect < 2.0)
                             k = "LANDSCAPE"
                         else if (this.aspect < 6.0)
                             k = "WIDE"
