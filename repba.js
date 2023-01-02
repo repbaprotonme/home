@@ -4029,6 +4029,7 @@ function menuhide()
     _7cnvctx.hide();
     _8cnvctx.hide();
     _9cnvctx.hide();
+    bodyobj.set(0);
     _4cnvctx.refresh();
     return k;
 }
@@ -4416,7 +4417,7 @@ var bodylst =
                 0);
             context.restore();
         }
-    }
+    },
     new function()
     {
         this.draw = function (context, rect, user, time)
