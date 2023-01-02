@@ -4207,10 +4207,10 @@ var headlst =
 		{
             if (context.page.hitest(x,y))
             {
-                bodyobj.set(1);
-                _4cnvctx.refresh();
                 _8cnvctx.timeobj.set((1-galleryobj.berp())*TIMEOBJ);
                 menushow(_8cnvctx)
+                bodyobj.set(_8cnvctx.enabled?1:0);
+                _4cnvctx.refresh();
             }
             else if (context.prevpage.hitest(x,y))
             {
