@@ -3245,26 +3245,6 @@ fetch(path)
 
         }});
 
-        slices.data.push({ title:"Logout", path: "LOGOUT", func: function()
-        {
-
-        }});
-
-        slices.data.push({ title:"Upload", path: "UPLOAD", func: function()
-        {
-
-        }});
-
-        slices.data.push({ title:"Delete", path: "DELETE", func: function()
-        {
-
-        }});
-
-        slices.data.push({ title:"Home", path: "HOME", func: function()
-        {
-
-        }});
-
         slices.data.push({ title:"Download", path: "ORIGINAL", func: function()
         {
            window.location.href = photo.image.original;
@@ -4428,7 +4408,13 @@ var bodylst =
                     new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
                     [
                         0,
-                        0,
+                        new Row([0,ALIEXTENT,ALIEXTENT,0],
+                            [
+                                0,
+                                new Fill("red"),
+                                new Fill("blue"),
+                                0,
+                            ]),
                         0,
                         new Row([0,ALIEXTENT,ALIEXTENT,ALIEXTENT,0],
                             [
