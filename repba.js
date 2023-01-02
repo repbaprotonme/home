@@ -510,8 +510,6 @@ function drawslices()
 
         context.slicescount++;
         context.restore();
-        delete context.keymoveup;
-        delete context.keymovedown;
         delete context.moveprev;
         delete context.movenext;
         if (!context.pressed && headcnv.height)
@@ -2361,24 +2359,6 @@ var taplst =
         {
             _4cnvctx.movepage(1);
         }
-        else if (context.keymoveup && context.keymoveup.hitest(x,y))
-        {
-            if (!rowobj.current())
-                return;
-            context.moving = -1;
-            setTimeout(function(){context.moving = 0; context.refresh();},400)
-            context.moveup()
-            contextobj.reset();
-        }
-        else if (context.keymovedown && context.keymovedown.hitest(x,y))
-        {
-            if (rowobj.current() >= rowobj.length()-1)
-                return;
-            context.moving = 1;
-            setTimeout(function(){context.moving = 0; context.refresh();},400)
-            context.movedown()
-            contextobj.reset();
-        }
         else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
             context.hithumb(x,y);
@@ -4226,6 +4206,8 @@ var headlst =
 		{
             if (context.page.hitest(x,y))
             {
+                bodyobj.set(1);
+                _4cnvctx.refresh();
                 _8cnvctx.timeobj.set((1-galleryobj.berp())*TIMEOBJ);
                 menushow(_8cnvctx)
             }
@@ -4373,10 +4355,8 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
-            context.restore();
+            context.save();
             context.font = "1rem Archivo Black";
-            context.keymoveup = new rectangle()
-            context.keymovedown = new rectangle()
             context.moveprev = new rectangle()
             context.movenext = new rectangle()
             var zoom = zoomobj.getcurrent();
@@ -4423,7 +4403,6 @@ var bodylst =
                         ]),
                     ]);
 
-            var e = galleryobj.getcurrent();
             a.draw(context, rect,
                     [
                         0,
@@ -4435,6 +4414,33 @@ var bodylst =
                         0,
                     ],
                 0);
+            context.restore();
+        }
+    }
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.save();
+            context.font = "1rem Archivo Black";
+            var a =
+                    new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
+                    [
+                        0,
+                        0,
+                        0,
+                        new Row([0,ALIEXTENT,ALIEXTENT,ALIEXTENT,0],
+                            [
+                                0,
+                                new Fill("red"),
+                                new Fill("Green"),
+                                new Fill("blue"),
+                                0,
+                            ]),
+                        0,
+                    ]);
+
+            a.draw(context, rect, 0, 0);
             context.restore();
         }
     }
