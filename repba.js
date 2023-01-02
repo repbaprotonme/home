@@ -2481,7 +2481,7 @@ var thumblst =
         var blackfill = new Fill(THUMBFILL);
         var blackfill2 = new Fill("rgba(0,0,0,0.4)");
 
-        if (jp || context.panning)
+        if (context.isthumbrect && (jp || context.panning))
         {
             if (!context.pressed)
             {
@@ -2719,26 +2719,6 @@ var drawlst =
         else if (user.path == "FULLSCREEN")
         {
             if (screenfull.isFullscreen)
-                clr = MENUSELECT;
-        }
-        else if (user.path == "GUIDENONE")
-        {
-            if (guideobj.current() == 0)
-                clr = MENUSELECT;
-        }
-        else if (user.path == "GUIDEHORZ")
-        {
-            if (guideobj.current() == 1)
-                clr = MENUSELECT;
-        }
-        else if (user.path == "GUIDEVERT")
-        {
-            if (guideobj.current() == 2)
-                clr = MENUSELECT;
-        }
-        else if (user.path == "GUIDEGRID")
-        {
-            if (guideobj.current() == 3)
                 clr = MENUSELECT;
         }
 
@@ -3033,6 +3013,7 @@ var templatelst =
     name: "LEGEND",
     init: function ()
     {
+        guideobj.set(1);
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3157,21 +3138,6 @@ fetch(path)
         _5cnvctx.rvalue = 10;
         _5cnvctx.virtualheight = slices.data.length*_5cnvctx.buttonheight;
 
-        var lst =
-        [
-            { title:"None", path: "GUIDENONE", func: function() { guideobj.set(0); _4cnvctx.refresh() } },
-            { title:"Horizontal", path: "GUIDEHORZ", func: function() { guideobj.set(1); _4cnvctx.refresh() } },
-            { title:"Vertical", path: "GUIDEVERT", func: function() { guideobj.set(2); _4cnvctx.refresh() } },
-            { title:"Grid", path: "GUIDEGRID", func: function() { guideobj.set(3); _4cnvctx.refresh() } },
-        ];
-
-        var slices = _6cnvctx.sliceobj;
-        slices.data= lst;
-        _6cnvctx.delayinterval = DELAYCENTER / slices.data.length;
-        _6cnvctx.virtualheight = slices.data.length*_6cnvctx.buttonheight;
-        _6cnvctx.rvalue = 2;
-        _6cnvctx.slidereduce = 0.75;
-
         function thumbnail()
         {
             if (!headobj.enabled && this.id == thumbpos.current())
@@ -3251,7 +3217,6 @@ fetch(path)
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
-        slices.data.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
         slices.data.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
         {
             if (screenfull.isEnabled)
@@ -4343,7 +4308,7 @@ var bodylst =
             context.moveprev = new rectangle()
             context.movenext = new rectangle()
             var zoom = zoomobj.getcurrent();
-            var j = context.panning || headcnv.height;
+            var j = headcnv.height;
             var a =
                     new Col([60,0,60],
                     [
@@ -4415,12 +4380,12 @@ var bodylst =
                                 0,
                                 new Layer(
                                 [
-                                    new Fill("black"),
+                                    new Fill(MENUCOLOR),
                                     new Shrink(new Plus(ARROWFILL),22,22),
                                 ]),
                                 new Layer(
                                 [
-                                    new Fill("black"),
+                                    new Fill(MENUCOLOR),
                                     new Shrink(new Minus(ARROWFILL),22,22),
                                 ]),
                                 0,
@@ -4431,17 +4396,17 @@ var bodylst =
                                 0,
                                 new Layer(
                                 [
-                                    new Fill("black"),
+                                    new Fill(MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
                                 new Layer(
                                 [
-                                    new Fill("black"),
+                                    new Fill(MENUCOLOR),
                                     new Shrink(new Circle("white"),20,20)
                                 ]),
                                 new Layer(
                                 [
-                                    new Fill("black"),
+                                    new Fill(MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,180),20,20),
                                 ]),
                                 0,
