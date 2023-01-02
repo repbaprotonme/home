@@ -3280,7 +3280,7 @@ fetch(path)
 
         }});
 
-        slices.data.push({ title:"Homee", path: "HOME", func: function()
+        slices.data.push({ title:"Home", path: "HOME", func: function()
         {
 
         }});
@@ -4383,18 +4383,18 @@ var bodylst =
             var a =
                     new Col([60,0,60],
                     [
-                            headcnv.height?0:new Row([rect.height/7,60,0],
+                        context.panning?0:new Row([rect.height/7,60,0],
+                        [
+                            0,
+                            new Layer(
                             [
-                                0,
-                                new Layer(
-                                [
-                                    new Rectangle(context.moveprev),
-                                    new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
-                                    new Shrink(new Arrow(ARROWFILL,270),22,22),
-                                ]),
-                                0,
+                                new Rectangle(context.moveprev),
+                                new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
+                                new Shrink(new Arrow(ARROWFILL,270),22,22),
                             ]),
-                        !debugobj.enabled?0: new Row([0,30*7,0],
+                            0,
+                        ]),
+                        debugobj.enabled?new Row([0,30*7,0],
                         [
                             0,
                             new RowA([0,30,30,30,30,30,0],
@@ -4408,28 +4408,30 @@ var bodylst =
                                 0,
                            ]),
                             0,
-                        ]),
-                            headcnv.height?0:new Row([rect.height/7,60,0],
+                        ]):0,
+                        context.panning?0:new Row([rect.height/7,60,0],
+                        [
+                            0,
+                            new Layer(
                             [
-                                0,
-                                new Layer(
-                                [
-                                    new Rectangle(context.movenext),
-                                    new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
-                                    new Shrink(new Arrow(ARROWFILL,90),22,22),
-                                ]),
-                                0,
+                                new Rectangle(context.movenext),
+                                new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
+                                new Shrink(new Arrow(ARROWFILL,90),22,22),
                             ]),
+                            0,
+                        ]),
                     ]);
 
             var e = galleryobj.getcurrent();
             a.draw(context, rect,
                     [
+                        0,
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
                         context.visibles.toFixed(0)+"-"+context.sliceobj.length(),
                         context.slicewidth.toFixed(0),
+                        0,
                     ],
                 0);
             context.restore();
