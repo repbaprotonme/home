@@ -1113,7 +1113,7 @@ CanvasRenderingContext2D.prototype.movepage = function(j)
     {
         delete photo.image;
         _4cnvctx.setcolumncomplete = 0;
-        if (headobj.enabled)
+        if (rowobj.enabled)
             rowobj.set(0);
         galleryobj.rotate(j);
         contextobj.reset();
@@ -2393,7 +2393,7 @@ var taplst =
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},1000)
         }
-        else
+        else if (y > 80 && y < rect.height - 80)
         {
             thumbpos.set(thumbpos.data.hitest(x,y))
             headobj.enabled = headobj.enabled?0:1;
@@ -2965,8 +2965,8 @@ var templatelst =
     name: "COMIC",
     init: function ()
     {
+        rowobj.enabled = 1;
         galleryobj.maxmegapix = 4000000;
-        channelobj.data = [0,20,40,60,80,100];
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -4226,12 +4226,6 @@ var headlst =
             }
             else
             {
-                thumbpos.set(thumbpos.data.hitest(x,0))
-                headobj.enabled = headobj.enabled?0:1;
-                footobj.enabled = headobj.enabled;
-                pageresize();
-                _4cnvctx.refresh();
-                reset();
             }
 
             _4cnvctx.refresh();
@@ -4475,12 +4469,6 @@ var footlst =
             }
             else
             {
-                thumbpos.set(thumbpos.data.hitest(x,window.innerHeight-1))
-                headobj.enabled = headobj.enabled?0:1;
-                footobj.enabled = headobj.enabled;
-                pageresize();
-                _4cnvctx.refresh();
-                reset();
             }
 
             addressobj.update();
