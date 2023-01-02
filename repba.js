@@ -2393,7 +2393,7 @@ var taplst =
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},1000)
         }
-        else if (y > 80 && y < rect.height - 80)
+        else if ((headobj.enabled && y > 80 && y < rect.height - 80) }} !headobj.enabled)
         {
             thumbpos.set(thumbpos.data.hitest(x,y))
             headobj.enabled = headobj.enabled?0:1;
