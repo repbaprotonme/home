@@ -4208,6 +4208,8 @@ var headlst =
             }
             else if (context.option.hitest(x,y))
             {
+                bodyobj.set(0);
+                _4cnvctx.refresh();
                 menushow(_9cnvctx);
             }
             else
@@ -4411,17 +4413,37 @@ var bodylst =
                         new Row([0,ALIEXTENT,ALIEXTENT,0],
                             [
                                 0,
-                                new Fill("red"),
-                                new Fill("blue"),
+                                new Layer(
+                                [
+                                    new Fill("black"),
+                                    new Shrink(new Plus(ARROWFILL),22,22),
+                                ]),
+                                new Layer(
+                                [
+                                    new Fill("black"),
+                                    new Shrink(new Minus(ARROWFILL),22,22),
+                                ]),
                                 0,
                             ]),
                         0,
                         new Row([0,ALIEXTENT,ALIEXTENT,ALIEXTENT,0],
                             [
                                 0,
-                                new Fill("red"),
-                                new Fill("Green"),
-                                new Fill("blue"),
+                                new Layer(
+                                [
+                                    new Fill("black"),
+                                    new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES-HNUB),
+                                ]),
+                                new Layer(
+                                [
+                                    new Fill("black"),
+                                    new Shrink(new Circle(SCROLLNAB,"white",3),0,0)
+                                ]),
+                                new Layer(
+                                [
+                                    new Fill("black"),
+                                    new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES-HNUB),
+                                ]),
                                 0,
                             ]),
                         0,
@@ -4516,7 +4538,6 @@ var footlst =
                     new Layer(
                     [
                         new Rectangle(context.keyzoomdown),
- //                       new Shrink(new Circle(context.zooming == -1?"red":SCROLLNAB,"white",0),10,10),
                         new Shrink(new Minus(ARROWFILL),22,22),
                     ]),
                     0,
@@ -4529,7 +4550,6 @@ var footlst =
                     new Layer(
                     [
                         new Rectangle(context.keyzoomup),
-//                        new Shrink(new Circle(context.zooming == 1?"red":SCROLLNAB,"white",0),10,10),
                         new Shrink(new Plus(ARROWFILL),22,22),
                     ]),
                     0,
