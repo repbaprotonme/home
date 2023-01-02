@@ -1468,6 +1468,7 @@ var contextmenulst =
     click: function (context, rect, x, y)
     {
         menushow(_9cnvctx);
+        context.refresh();
     },
 },
 ]
@@ -1672,12 +1673,8 @@ function dropfiles(files)
     if (!files || !files.length)
         return;
     delete photo.image;
-    //galleryobj.data = [0];
-    //galleryobj.set(0);
     _4cnvctx.setcolumncomplete = 0;
     globalobj.promptedfile = URL.createObjectURL(files[0]);
-    headobj.enabled = 1;
-    footobj.enabled = 1;
     contextobj.reset();
 }
 
@@ -3248,7 +3245,7 @@ fetch(path)
 
         var slices = _9cnvctx.sliceobj;
         slices.data= [];
-        slices.data.push({title:"Open...", path: "LOAD", func: function()
+        slices.data.push({title:"Load...", path: "LOAD", func: function()
         {
             menuhide();
             promptFile().then(function(files) { dropfiles(files); })
@@ -3271,7 +3268,7 @@ fetch(path)
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
-        slices.data.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
+        //slices.data.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
         slices.data.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
         {
             if (screenfull.isEnabled)
