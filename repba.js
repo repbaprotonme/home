@@ -3260,13 +3260,38 @@ fetch(path)
             contextobj.reset();
         }})
 
-        slices.data.push({ title:"Original", path: "ORIGINAL", func: function()
+        slices.data.push({ title:"Login", path: "LOGIN", func: function()
+        {
+
+        }});
+
+        slices.data.push({ title:"Logout", path: "LOGOUT", func: function()
+        {
+
+        }});
+
+        slices.data.push({ title:"Upload", path: "UPLOAD", func: function()
+        {
+
+        }});
+
+        slices.data.push({ title:"Delete", path: "DELETE", func: function()
+        {
+
+        }});
+
+        slices.data.push({ title:"Homee", path: "HOME", func: function()
+        {
+
+        }});
+
+        slices.data.push({ title:"Download", path: "ORIGINAL", func: function()
         {
            window.location.href = photo.image.original;
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
-        //slices.data.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
+        slices.data.push({title:"Guidelines", path: "GUIDE", func: function(){ menushow(_6cnvctx); }})
         slices.data.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
         {
             if (screenfull.isEnabled)
@@ -4372,15 +4397,15 @@ var bodylst =
                         !debugobj.enabled?0: new Row([0,30*7,0],
                         [
                             0,
-                            new RowA([30,30,30,30,30,30,30],
+                            new RowA([0,30,30,30,30,30,0],
                             [
+                                0,
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                0,
                            ]),
                             0,
                         ]),
