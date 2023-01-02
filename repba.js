@@ -3116,8 +3116,8 @@ fetch(path)
 
         pretchobj.split(60, "40-90", pretchobj.length());
         letchobj.split(60, "40-90", letchobj.length());
-        speedxobj.split(3, "1-20", speedxobj.length());
-        speedyobj.split(3, "1-20", speedyobj.length());
+        speedxobj.split(2, "1-20", speedxobj.length());
+        speedyobj.split(2, "1-20", speedyobj.length());
 
         if (typeof galleryobj.quality  === "undefined")
             galleryobj.quality = 75;
@@ -4380,10 +4380,11 @@ var bodylst =
             context.moveprev = new rectangle()
             context.movenext = new rectangle()
             var zoom = zoomobj.getcurrent();
+            var j = context.panning || headcnv.height;
             var a =
                     new Col([60,0,60],
                     [
-                        context.panning?0:new Row([rect.height/7,60,0],
+                        j?0:new Row([rect.height/7,60,0],
                         [
                             0,
                             new Layer(
@@ -4409,7 +4410,7 @@ var bodylst =
                            ]),
                             0,
                         ]):0,
-                        context.panning?0:new Row([rect.height/7,60,0],
+                        j?0:new Row([rect.height/7,60,0],
                         [
                             0,
                             new Layer(
