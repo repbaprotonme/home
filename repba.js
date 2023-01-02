@@ -4432,17 +4432,17 @@ var bodylst =
                                 new Layer(
                                 [
                                     new Fill("black"),
-                                    new Shrink(new Arrow(ARROWFILL,0),ARROWBORES,ARROWBORES),
+                                    new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
                                 new Layer(
                                 [
                                     new Fill("black"),
-                                    new Shrink(new Circle("white"),15,15)
+                                    new Shrink(new Circle("white"),20,20)
                                 ]),
                                 new Layer(
                                 [
                                     new Fill("black"),
-                                    new Shrink(new Arrow(ARROWFILL,180),ARROWBORES,ARROWBORES),
+                                    new Shrink(new Arrow(ARROWFILL,180),20,20),
                                 ]),
                                 0,
                             ]),
