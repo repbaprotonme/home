@@ -2969,6 +2969,7 @@ var templatelst =
     init: function ()
     {
         galleryobj.maxmegapix = 4000000;
+        channelobj.data = [0,20,40,60,80,100]);
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -3027,7 +3028,7 @@ var templatelst =
         loomobj.split(url.zoom, "50-90", loomobj.length());
         poomobj.split(url.zoom, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
-        scapeobj.split(75, "0.1-1.0", scapeobj.length());
+        scapeobj.split(50, "0.1-1.0", scapeobj.length());
         thumbpos.set(7);
    }
 },
