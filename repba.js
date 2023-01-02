@@ -2466,7 +2466,7 @@ var thumblst =
 
         var w = r.width;
 
-        if (photo.image.aspect < 1.2)
+        if (photo.image.aspect < 2.0)
         {
             var cols = 3;
             var pos = thumbpos.current();
@@ -2863,7 +2863,7 @@ function resetcanvas()
         var a = new Grid (2, 1, 0, new Push());
         a.draw(context, window.rect, thumbpos.data, 0);
     }
-    else if (photo.image.aspect < 3.0)
+    else if (photo.image.aspect < 2.0)
     {
         var a = new Grid (3, 3, 0, new Push());
         a.draw(context, window.rect, thumbpos.data, 0);
