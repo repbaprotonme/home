@@ -2699,8 +2699,8 @@ var drawlst =
         [
             0,
             (user.index+1).toFixed(0),
-            user.title[0],
-            user.title[1]+"x"+user.title[2],
+            user.title,
+            user.width+"x"+user.height,
             0
         ], time);
         context.restore();
