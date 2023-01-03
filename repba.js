@@ -2358,13 +2358,21 @@ var taplst =
         }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
-            _8cnvctx.timeobj.set(galleryobj.current() - TIMEOBJ*0.2);
-            _4cnvctx.refresh();
+            var context = _8cnvctx;
+            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*6;
+            context.swipetype = evt.type;
+            context.slidereduce = context.slideshow/15;
+            clearInterval(context.timemain);
+            context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
         else if (context.menudown && context.menudown.hitest(x,y))
         {
-            _8cnvctx.timeobj.set(galleryobj.current() + TIMEOBJ*0.2);
-            _4cnvctx.refresh();
+            var context = _8cnvctx;
+            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*6;
+            context.swipetype = evt.type;
+            context.slidereduce = context.slideshow/15;
+            clearInterval(context.timemain);
+            context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
