@@ -60,7 +60,7 @@ url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) 
 url.hideui = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 0;
 url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
 url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
-url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0.2;
+url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
 
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -411,7 +411,7 @@ function drawslices()
         else
             context.lastime = context.timeobj.current();
 
-        if (!context.pinching && !context.panning && context.timemain)
+        if (!url.slidebottom && !context.pinching && !context.panning && context.timemain)
         {
             if ( context.slidestop - context.slidereduce > 0)
             {
@@ -2359,6 +2359,21 @@ var taplst =
         {
             _4cnvctx.movepage(1);
         }
+        else if (context.menuup && context.menuup.hitest(x,y))
+        {
+            _8cnvctx.timeobj.set(_8cnvctx.current() - TIMEOBJ*0.2);
+            _4cnvctx.refresh();
+        }
+        else if (context.menudown && context.menudown.hitest(x,y))
+        {
+            _8cnvctx.timeobj.set(_8cnvctx.current() + TIMEOBJ*0.2);
+            _4cnvctx.refresh();
+        }
+        else if (context.menuhome && context.menuhome.hitest(x,y))
+        {
+            _8cnvctx.timeobj.set((1-galleryobj.berp())*TIMEOBJ);
+            _4cnvctx.refresh();
+        }
         else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
             context.hithumb(x,y);
@@ -3173,7 +3188,7 @@ fetch(path)
 
         var slices = _8cnvctx.sliceobj;
         slices.data = [];
-        var items = galleryobj.length();
+        var items = galleryobj.length();//todo: not needed
         for (var n = 0; n < items; ++n)
         {
             var k = galleryobj.data[n];
@@ -4370,6 +4385,9 @@ var bodylst =
         this.draw = function (context, rect, user, time)
         {
             context.save();
+            context.menuup = new rectangle()
+            context.menuhome = new rectangle()
+            context.menudown = new rectangle()
             context.font = "1rem Archivo Black";
             var a =
                     new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
@@ -4396,16 +4414,19 @@ var bodylst =
                                 0,
                                 new Layer(
                                 [
+                                    new Rectangle(context.menuup),
                                     new Fill(MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
                                 new Layer(
                                 [
+                                    new Rectangle(context.menuhome),
                                     new Fill(MENUCOLOR),
                                     new Shrink(new Circle("white"),20,20)
                                 ]),
                                 new Layer(
                                 [
+                                    new Rectangle(context.menudown),
                                     new Fill(MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,180),20,20),
                                 ]),
