@@ -3200,12 +3200,13 @@ fetch(path)
         _7cnvctx.slidereduce = 0.75;
 
         var slices = _8cnvctx.sliceobj;
-        slices.data = [];
-        var items = galleryobj.length();//todo: not needed
-        for (var n = 0; n < items; ++n)
+        slices.data = galleryobj.data;
+        for (var n = 0; n < galleryobj.data.length; ++n)
         {
             var k = galleryobj.data[n];
-            slices.data.push({index:n, title:k, path: "PROJECT", func: project})
+            k.index = n;
+            k.path = "PROJECT";
+            k.func = project;
         }
 
         _8cnvctx.timeobj.set((1-galleryobj.berp())*TIMEOBJ);
