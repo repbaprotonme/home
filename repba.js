@@ -3204,6 +3204,9 @@ fetch(path)
         for (var n = 0; n < galleryobj.data.length; ++n)
         {
             var k = galleryobj.data[n];
+            k.title = k[0];
+            k.width = k[1];
+            k.height = k[2];
             k.index = n;
             k.path = "PROJECT";
             k.func = project;
