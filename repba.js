@@ -2382,8 +2382,8 @@ var taplst =
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
-            var j = galleryobj.berp() < 0.5 ?
-                0 ; (1-galleryobj.berp())*TIMEOBJ;
+            var j = galleryobj.berp() < 0.5 ? 0 :
+                (1-galleryobj.berp())*TIMEOBJ;
             _8cnvctx.timeobj.set(j);
             _4cnvctx.refresh();
         }
