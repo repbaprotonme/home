@@ -4452,7 +4452,7 @@ var bodylst =
                         0,
                     ]);
 
-            a.draw(context, rect, ignores, 0);
+            a.draw(context, rect, context.ignores, 0);
             context.restore();
         }
     }
