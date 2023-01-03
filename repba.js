@@ -1,4 +1,4 @@
-//todo: https://obfuscator.io/
+//todo: https://obfuscator.io/a..
 //todo: safari max size
 //todo: slow pan
 
@@ -2383,12 +2383,12 @@ var taplst =
         }
         else if (context.addimage && context.addimage.hitest(x,y))
         {
-            galleryobj.mode = galleryobj.mode ? 0 : 1;
+            galleryobj.mode = galleryobj.mode == 1  ? 0 : 1;
             context.refresh();
         }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
-            galleryobj.mode = galleryobj.mode ? 0 : 2;
+            galleryobj.mode = galleryobj.mode == 2 ? 0 : 2;
             context.refresh();
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
