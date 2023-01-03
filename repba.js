@@ -2360,7 +2360,7 @@ var taplst =
         {
             var context = _8cnvctx;
             context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*6;
-            context.swipetype = evt.type;
+            context.swipetype = "swipeup";
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
@@ -2369,7 +2369,7 @@ var taplst =
         {
             var context = _8cnvctx;
             context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*6;
-            context.swipetype = evt.type;
+            context.swipetype = "swipedown";
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
