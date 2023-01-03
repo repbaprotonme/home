@@ -2943,7 +2943,7 @@ var templatelst =
     {
         rowobj.enabled = 1;
         galleryobj.maxmegapix = 4000000;
-        loomobj.split(url.zoom, "50-85", loomobj.length());
+        loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
@@ -2954,8 +2954,8 @@ var templatelst =
     name: "PORTRAIT",
     init: function ()
     {
-        loomobj.split(url.zoom, "40-95", loomobj.length());
-        poomobj.split(url.zoom, "40-95", poomobj.length());
+        loomobj.split(url.zoom, "70-95", loomobj.length());
+        poomobj.split(url.zoom, "50-95", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
         thumbpos.set(7);
