@@ -513,6 +513,11 @@ function drawslices()
         delete context.moveprev;
         delete context.movenext;
         delete context.ignores;
+        delete context.addimage;
+        delete context.delimage;
+        delete context.menuup;
+        delete context.menuhome;
+        delete context.menudown;
         if (!context.pressed && headcnv.height)
             headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
         if (!context.pressed && footcnv.height)
@@ -2376,6 +2381,16 @@ var taplst =
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
+        else if (context.delimage && context.delimage.hitest(x,y)>=0)
+        {
+            galleryobj.mode = galleryobj.mode ? 0 : 1;
+            context.refresh();
+        }
+        else if (context.addimage && context.addimage.hitest(x,y)>=0)
+        {
+            galleryobj.mode = galleryobj.mode ? 0 : 2;
+            context.refresh();
+        }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
 
@@ -3048,6 +3063,7 @@ var describeobj = new makeoption("", 0);
 describeobj.positions = [0,0,0];
 
 var galleryobj = new makeoption("", 0);
+galleryobj.mode = 0;
 galleryobj.path = function()
 {
     var k = galleryobj.getcurrent();
@@ -4390,6 +4406,8 @@ var bodylst =
         {
             context.save();
             context.ignores = [];
+            context.addimage  = new rectangle()
+            context.delimage  = new rectangle()
             context.menuup = new rectangle()
             context.menuhome = new rectangle()
             context.menudown = new rectangle()
@@ -4404,12 +4422,14 @@ var bodylst =
                                 new Rectangles(),
                                 new Layer(
                                 [
-                                    new Fill(MENUCOLOR),
+                                    new Fill(galleryobj.mode == 1 ? "rgb(0,50,0)" : MENUCOLOR),
+                                    new Rectangle(context.addimage),
                                     new Shrink(new Plus(ARROWFILL),22,22),
                                 ]),
                                 new Layer(
                                 [
-                                    new Fill(MENUCOLOR),
+                                    new Fill(galleryobj.mode == 2 ? "rgb(0,0,50)" : MENUCOLOR),
+                                    new Rectangle(context.delimage),
                                     new Shrink(new Minus(ARROWFILL),22,22),
                                 ]),
                                 new Rectangles(),
