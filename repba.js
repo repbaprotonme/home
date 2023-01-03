@@ -2383,7 +2383,7 @@ var taplst =
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
             var obj = _8cnvctx.timeobj;
-            var j = obj.berp() < 0.5 ? 0 : (1-obj.berp())*TIMEOBJ;
+            var j = obj.berp() > 0.5 ? 0 : (1-obj.berp())*TIMEOBJ;
             obj.set(j);
             _4cnvctx.refresh();
         }
