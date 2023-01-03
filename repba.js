@@ -1,5 +1,6 @@
-//todo: https://obfuscator.io/ ..I
+//todo: https://obfuscator.io/
 //todo: safari max size
+//todo: slow pan
 
 /* +=
 Copyright 2017 Tom Brinkman
@@ -41,7 +42,6 @@ const THUMBFILL = "rgba(0,0,0,0.25)";
 const THUMBFILL2 = "rgba(0,0,0,0.40)";
 const THUMBSTROKE = "rgba(255,255,235,0.35)";
 const ARROWFILL = "white";
-const TIMEMAIN = 8;
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 globalobj = {};
@@ -63,6 +63,7 @@ url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2
 url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
 url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : (SAFARI?0:0.2);
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
+url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 18;
 
 url.path = "HOME";
 url.project = 0;
@@ -1045,6 +1046,7 @@ addressobj.full = function ()
         "&f="+url.slidefactor+
         "&s="+url.slidetop+
         "&b="+url.slidebottom+
+        "&n="+url.timemain+
         "&z="+Number(zoom.current()).toFixed(2)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
@@ -1135,7 +1137,7 @@ CanvasRenderingContext2D.prototype.tab = function ()
     context.slidebottom = (context.timeobj.length()/context.virtualwidth)*url.slidebottom;
     context.slidereduce = url.slidefactor?context.slidestop/url.slidefactor:0;
     clearInterval(context.timemain);
-    context.timemain = setInterval(function () { drawslices() }, TIMEMAIN);
+    context.timemain = setInterval(function () { drawslices() }, url.timemain);
 }
 
 CanvasRenderingContext2D.prototype.refresh = function ()
@@ -3221,7 +3223,7 @@ fetch(path)
 
         var slices = _9cnvctx.sliceobj;
         slices.data= [];
-        slices.data.push({title:"Load...", path: "LOAD", func: function()
+        slices.data.push({title:"Open", path: "OPEN", func: function()
         {
             menuhide();
             promptFile().then(function(files) { dropfiles(files); })
@@ -3241,11 +3243,6 @@ fetch(path)
         slices.data.push({ title:"Login", path: "LOGIN", func: function()
         {
 
-        }});
-
-        slices.data.push({ title:"Download", path: "ORIGINAL", func: function()
-        {
-           window.location.href = photo.image.original;
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
