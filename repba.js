@@ -2475,11 +2475,11 @@ var thumblst =
 
         var w = r.width;
 
-        if (photo.image.aspect < 2.0)
+        if (photo.image.aspect < 1.5)
         {
             var cols = 3;
             var pos = thumbpos.current();
-            var row = Math.floor(pos/cols);
+            var row = 1;//Math.floor(pos/cols);
             var col = pos%cols;
 
              var y = headcnv.height+THUMBORDER;
@@ -2847,14 +2847,9 @@ function resetcanvas()
     zoomobj.set(window.landscape);
 
     thumbpos.data = []
-    if (photo.image.aspect < 0.5)
+    if (photo.image.aspect < 1.5)
     {
-        var a = new Grid (2, 1, 0, new Rectangles());
-        a.draw(context, window.rect, thumbpos.data, 0);
-    }
-    else if (photo.image.aspect < 2.0)
-    {
-        var a = new Grid (3, 3, 0, new Rectangles());
+        var a = new Grid (3, 1, 0, new Rectangles());
         a.draw(context, window.rect, thumbpos.data, 0);
     }
     else
