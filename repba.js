@@ -2345,11 +2345,6 @@ var taplst =
 	{
         clearInterval(context.timemain);
         context.timemain = 0;
-        if (menuvisible())
-        {
-            menuhide();
-            return;
-        }
 
         if (context.moveprev && context.moveprev.hitest(x,y))
         {
