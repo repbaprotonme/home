@@ -2355,6 +2355,15 @@ var taplst =
             menuhide();
             _4cnvctx.movepage(1);
         }
+        else if (context.menudown && context.menudown.hitest(x,y))
+        {
+            var context = _8cnvctx;
+            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
+            context.swipetype = "swipedown";
+            context.slidereduce = context.slideshow/15;
+            clearInterval(context.timemain);
+            context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+        }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
             var context = _8cnvctx;
@@ -2364,14 +2373,8 @@ var taplst =
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
-        else if (context.menudown && context.menudown.hitest(x,y))
+        else if (context.ignores && context.ignores.hitest(x,y))
         {
-            var context = _8cnvctx;
-            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
-            context.swipetype = "swipedown";
-            context.slidereduce = context.slideshow/15;
-            clearInterval(context.timemain);
-            context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
@@ -2391,9 +2394,12 @@ var taplst =
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},1000)
         }
-        else
+        else if (menuenabled())
         {
             menuhide();
+        }
+        else
+        {
             thumbpos.set(thumbpos.data.hitest(x,y))
             headobj.enabled = headobj.enabled?0:1;
             footobj.enabled = headobj.enabled;
@@ -2839,17 +2845,17 @@ function resetcanvas()
     thumbpos.data = []
     if (photo.image.aspect < 0.5)
     {
-        var a = new Grid (2, 1, 0, new Push());
+        var a = new Grid (2, 1, 0, new Rectangles());
         a.draw(context, window.rect, thumbpos.data, 0);
     }
     else if (photo.image.aspect < 2.0)
     {
-        var a = new Grid (3, 3, 0, new Push());
+        var a = new Grid (3, 3, 0, new Rectangles());
         a.draw(context, window.rect, thumbpos.data, 0);
     }
     else
     {
-        var a = new Grid (1, 2, 0, new Push());
+        var a = new Grid (1, 2, 0, new Rectangles());
         a.draw(context, window.rect, thumbpos.data, 0);
     }
 
@@ -3596,7 +3602,7 @@ var Rectangle = function (r)
     }
 }
 
-var Push = function ()
+var Rectangles = function ()
 {
     this.draw = function (context, rect, user, time)
     {
@@ -3971,7 +3977,7 @@ function rotate(pointX, pointY, originX, originY, angle)
 	return k;
 }
 
-function menuvisible()
+function menuenabled()
 {
     var k = _2cnv.height || _3cnv.height || _5cnv.height || _6cnv.height || _7cnv.height ||
         _8cnv.height || _9cnv.height;
@@ -3980,7 +3986,7 @@ function menuvisible()
 
 function menuhide()
 {
-    var k = menuvisible();
+    var k = menuenabled();
     _2cnvctx.enabled = 0;
     _3cnvctx.enabled = 0;
     _5cnvctx.enabled = 0;
@@ -4391,6 +4397,7 @@ var bodylst =
         this.draw = function (context, rect, user, time)
         {
             context.save();
+            context.ignores = [];
             context.menuup = new rectangle()
             context.menuhome = new rectangle()
             context.menudown = new rectangle()
@@ -4399,9 +4406,10 @@ var bodylst =
                     new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
                     [
                         0,
-                        new Row([0,ALIEXTENT,ALIEXTENT,0],
+                        new RowA([0,30,ALIEXTENT,ALIEXTENT,30,0],
                             [
                                 0,
+                                new Rectangles(),
                                 new Layer(
                                 [
                                     new Fill(MENUCOLOR),
@@ -4412,15 +4420,17 @@ var bodylst =
                                     new Fill(MENUCOLOR),
                                     new Shrink(new Minus(ARROWFILL),22,22),
                                 ]),
+                                new Rectangles(),
                                 0,
                             ]),
                         0,
-                        new Row([0,ALIEXTENT,ALIEXTENT,ALIEXTENT,0],
+                        new RowA([0,30,ALIEXTENT,ALIEXTENT,ALIEXTENT,30,0],
                             [
                                 0,
+                                new Rectangles(),
                                 new Layer(
                                 [
-                                    new Rectangle(context.menuup),
+                                    new Rectangle(context.menudown),
                                     new Fill(MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
@@ -4432,16 +4442,17 @@ var bodylst =
                                 ]),
                                 new Layer(
                                 [
-                                    new Rectangle(context.menudown),
+                                    new Rectangle(context.menuup),
                                     new Fill(MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,180),20,20),
                                 ]),
+                                new Rectangles(),
                                 0,
                             ]),
                         0,
                     ]);
 
-            a.draw(context, rect, 0, 0);
+            a.draw(context, rect, ignores, 0);
             context.restore();
         }
     }
