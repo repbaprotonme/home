@@ -42,6 +42,7 @@ const THUMBFILL2 = "rgba(0,0,0,0.40)";
 const THUMBSTROKE = "rgba(255,255,235,0.35)";
 const ARROWFILL = "white";
 const TIMEMAIN = 8;
+const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 globalobj = {};
 let photo = {}
@@ -60,10 +61,8 @@ url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) 
 url.hideui = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 0;
 url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
 url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
-url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
+url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : (SAFARI?0:0.2);
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
-
-const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 url.path = "HOME";
 url.project = 0;
@@ -411,7 +410,7 @@ function drawslices()
         else
             context.lastime = context.timeobj.current();
 
-        if (!url.slidebottom && !context.pinching && !context.panning && context.timemain)
+        if (!context.pinching && !context.panning && context.timemain)
         {
             if ( context.slidestop - context.slidereduce > 0)
             {
@@ -2359,7 +2358,7 @@ var taplst =
         else if (context.menuup && context.menuup.hitest(x,y))
         {
             var context = _8cnvctx;
-            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*6;
+            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
             context.swipetype = "swipeup";
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
@@ -2368,7 +2367,7 @@ var taplst =
         else if (context.menudown && context.menudown.hitest(x,y))
         {
             var context = _8cnvctx;
-            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*6;
+            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
             context.swipetype = "swipedown";
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
