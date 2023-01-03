@@ -2373,8 +2373,9 @@ var taplst =
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
-        else if (context.ignores && context.ignores.hitest(x,y))
+        else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
+
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
@@ -3546,7 +3547,7 @@ Array.prototype.hitest = function (x, y)
         break;
     }
 
-    return n;
+    return n==this.length?-1:n;
 };
 
 Math.getPans = function (size, extent, factor)
