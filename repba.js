@@ -2381,12 +2381,12 @@ var taplst =
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
-        else if (context.delimage && context.delimage.hitest(x,y)>=0)
+        else if (context.addimage && context.addimage.hitest(x,y)>=0)
         {
             galleryobj.mode = galleryobj.mode ? 0 : 1;
             context.refresh();
         }
-        else if (context.addimage && context.addimage.hitest(x,y)>=0)
+        else if (context.delimage && context.delimage.hitest(x,y)>=0)
         {
             galleryobj.mode = galleryobj.mode ? 0 : 2;
             context.refresh();
@@ -4422,13 +4422,13 @@ var bodylst =
                                 new Rectangles(),
                                 new Layer(
                                 [
-                                    new Fill(galleryobj.mode == 1 ? "rgb(0,50,0)" : MENUCOLOR),
+                                    new Fill(galleryobj.mode == 1 ? "rgba(0,255,0,0.75)" : MENUCOLOR),
                                     new Rectangle(context.addimage),
                                     new Shrink(new Plus(ARROWFILL),22,22),
                                 ]),
                                 new Layer(
                                 [
-                                    new Fill(galleryobj.mode == 2 ? "rgb(0,0,50)" : MENUCOLOR),
+                                    new Fill(galleryobj.mode == 2 ? "rgba(0,0,255,0.75)" : MENUCOLOR),
                                     new Rectangle(context.delimage),
                                     new Shrink(new Minus(ARROWFILL),22,22),
                                 ]),
