@@ -2358,12 +2358,12 @@ var taplst =
         }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
-            _8cnvctx.timeobj.set(_8cnvctx.current() - TIMEOBJ*0.2);
+            _8cnvctx.timeobj.set(galleryobj.current() - TIMEOBJ*0.2);
             _4cnvctx.refresh();
         }
         else if (context.menudown && context.menudown.hitest(x,y))
         {
-            _8cnvctx.timeobj.set(_8cnvctx.current() + TIMEOBJ*0.2);
+            _8cnvctx.timeobj.set(galleryobj.current() + TIMEOBJ*0.2);
             _4cnvctx.refresh();
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
