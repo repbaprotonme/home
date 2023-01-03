@@ -2381,12 +2381,12 @@ var taplst =
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
-        else if (context.addimage && context.addimage.hitest(x,y)>=0)
+        else if (context.addimage && context.addimage.hitest(x,y))
         {
             galleryobj.mode = galleryobj.mode ? 0 : 1;
             context.refresh();
         }
-        else if (context.delimage && context.delimage.hitest(x,y)>=0)
+        else if (context.delimage && context.delimage.hitest(x,y))
         {
             galleryobj.mode = galleryobj.mode ? 0 : 2;
             context.refresh();
