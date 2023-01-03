@@ -2348,10 +2348,12 @@ var taplst =
 
         if (context.moveprev && context.moveprev.hitest(x,y))
         {
+            menuhide();
             _4cnvctx.movepage(-1);
         }
         else if (context.movenext && context.movenext.hitest(x,y))
         {
+            menuhide();
             _4cnvctx.movepage(1);
         }
         else if (context.menuup && context.menuup.hitest(x,y))
@@ -2371,6 +2373,7 @@ var taplst =
         }
         else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
+            menuhide();
             context.hithumb(x,y);
             var zoom = zoomobj.getcurrent()
             var b = !Number(zoom.getcurrent()/100) && !zoom.current()
@@ -2383,6 +2386,7 @@ var taplst =
         }
         else
         {
+            menuhide();
             thumbpos.set(thumbpos.data.hitest(x,y))
             headobj.enabled = headobj.enabled?0:1;
             footobj.enabled = headobj.enabled;
