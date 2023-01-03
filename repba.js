@@ -4406,7 +4406,7 @@ var bodylst =
                     new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
                     [
                         0,
-                        new RowA([0,30,ALIEXTENT,ALIEXTENT,30,0],
+                        new Row([0,30,ALIEXTENT,ALIEXTENT,30,0],
                             [
                                 0,
                                 new Rectangles(),
@@ -4424,7 +4424,7 @@ var bodylst =
                                 0,
                             ]),
                         0,
-                        new RowA([0,30,ALIEXTENT,ALIEXTENT,ALIEXTENT,30,0],
+                        new Row([0,30,ALIEXTENT,ALIEXTENT,ALIEXTENT,30,0],
                             [
                                 0,
                                 new Rectangles(),
