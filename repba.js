@@ -2383,7 +2383,7 @@ var taplst =
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
             var obj = _8cnvctx.timeobj;
-            var j = obj.berp() > 0.5 ? 0 : (1-galleryobj.berp())*TIMEOBJ;
+            var j = obj.berp() == 0 ? (1-galleryobj.berp())*TIMEOBJ : 0;
             obj.set(j);
             _4cnvctx.refresh();
         }
