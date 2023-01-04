@@ -4428,15 +4428,14 @@ var bodylst =
             var a = new Col([0,w,0],
                     [
                         0,
-                        new Row([0,40*4,0],
+                        new Row([0,60+40*3,0],
                         [
                             0,
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,60,40,40,40,0],
+                                new RowA([0,40,40,40],
                                 [
-                                    0,
                                     new Layer(
                                     [
                                         new Fill("rgba(0,0,0,0.75)"),
@@ -4459,7 +4458,6 @@ var bodylst =
                                     [
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    0,
                                 ])
                             ]),
                             0,
@@ -4469,12 +4467,10 @@ var bodylst =
 
             a.draw(context, rect,
                 [
-                    0,
-                    galleryobj.getcurrent().name,
+                    galleryobj.getcurrent().title,
                     "Login",
                     "Add Image",
                     "Delete Image",
-                    0,
                 ],
                 0);
             context.restore();
