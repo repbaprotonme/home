@@ -1041,7 +1041,7 @@ addressobj.full = function ()
     var zoom = zoomobj.getcurrent();
     var out = url.origin;
     out +=
-        "/?p="+galleryobj.getcurrent()[0]+
+        "/?p="+galleryobj.getcurrent().title+
         "&h="+headobj.enabled+
         "&v="+url.virtualcols+
         "&a="+url.autostart+
@@ -1098,7 +1098,7 @@ CanvasRenderingContext2D.prototype.movepage = function(j)
     if (!_4cnvctx.setcolumncomplete)
         return;
     galleryobj.rotate(j);
-    var path = galleryobj.getcurrent()[0];
+    var path = galleryobj.getcurrent().title;
     galleryobj.rotate(-j);
     if (_4cnvctx.movingpage || !loaded.has(path) || galleryobj.length() == 1)
     {
@@ -3037,9 +3037,9 @@ galleryobj.mode = 0;
 galleryobj.path = function()
 {
     var k = galleryobj.getcurrent();
-    var name = k[0];
-    var w = k[1];
-    var h = k[2];
+    var name = k.title;
+    var w = k.width;
+    var h = k.height;
     var a = w/h;
 
     if (w > h)
@@ -4434,17 +4434,31 @@ var bodylst =
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40,40,0],
+                                new RowA([0,60,40,40,40,0],
                                 [
                                     0,
                                     new Layer(
                                     [
                                         new Fill("rgba(0,0,0,0.75)"),
+                                        new Col([60,0,60],
+                                        [
+                                            new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
+                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                                        ])
+                                    ]),
+                                    new Layer(
+                                    [
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    new Layer(
+                                    [
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
                                     0,
                                 ])
                             ]),
@@ -4456,7 +4470,7 @@ var bodylst =
             a.draw(context, rect,
                 [
                     0,
-                    "Customize",
+                    galleryobj.getcurrent().name,
                     "Login",
                     "Add Image",
                     "Delete Image",
