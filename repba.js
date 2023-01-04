@@ -514,6 +514,7 @@ function drawslices()
         delete context.login;
         delete context.moveprev;
         delete context.movenext;
+        delete context.delconfir;
         delete context.ignores;
         delete context.menuup;
         delete context.menuhome;
@@ -2404,12 +2405,28 @@ var taplst =
                 promptFile().then(function(files) { dropfiles(files); })
             },400)
         }
+        else if (context.delconfirm && context.delconfirm.hitest(x,y))
+        {
+            context.tapindex = 1;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                context.refresh();
+            }, 400)
+        }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
             context.tapindex = 3;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();}, 400)
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                bodyobj.set(3);
+                context.refresh();
+            }, 400)
         }
         else if (context.taphelp && context.taphelp.hitest(x,y))
         {
@@ -3356,7 +3373,7 @@ var ContextObj = (function ()
 				return;
 			}
 
-            var w = Math.min(480,window.innerWidth-ALIEXTENT*2);
+            var w = Math.min(ALIEXTENT*8,window.innerWidth-ALIEXTENT*2);
             var l = Math.floor((window.innerWidth-w)/2);
             context.show(l, 0, w, _4cnv.height);
         },
@@ -4568,14 +4585,84 @@ var bodylst =
                         galleryobj.getcurrent().title,
                     ],
                     "Login",
-                    "Add Image",
-                    "Delete Image",
+                    "Insert",
+                    "Delete",
                     "Help",
                 ],
                 0);
             context.restore();
         }
-    }
+    },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.delconfirm = new rectangle()
+            context.movenext = new rectangle()
+            context.moveprev = new rectangle()
+            context.ignores = [];
+            context.save();
+            context.font = "1rem Archivo Black";
+            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
+            var a = new Col([0,w,0],
+                    [
+                        0,
+                        new Row([0,ALIEXTENT+40*1,0],
+                        [
+                            0,
+                            new Layer(
+                            [
+                                new Fill(MENUCOLOR),
+                                new RowA([0,40],
+                                [
+                                    new Layer(
+                                    [
+                                        new Fill(MENUCOLOR),
+                                        new Col([ALIEXTENT,0,ALIEXTENT],
+                                        [
+                                            new Layer(
+                                            [
+                                                context.movingpage == -1 ? new Fill("rgb(0,0,150)") : 0,
+                                                new Rectangle(context.moveprev),
+                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
+                                            ]),
+                                            new LayerA(
+                                            [
+                                                new Rectangles(),
+                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            ]),
+                                            new Layer(
+                                            [
+                                                context.movingpage == 1 ? new Fill("rgb(0,0,150)") : 0,
+                                                new Rectangle(context.movenext),
+                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                                            ]),
+                                        ])
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.delconfirm),
+                                        context.tapindex == 1 ? new Fill("rgb(0,0,150)") : 0,
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                ])
+                            ]),
+                            0,
+                        ]),
+                        0,
+                    ]);
+
+                a.draw(context, rect,
+                [
+                    [
+                        context.ignores,
+                        galleryobj.getcurrent().title,
+                    ],
+                    "Delete",
+                ],
+                0);
+            context.restore();
+        }
 ];
 
 var bodyobj = new makeoption("", bodylst);
