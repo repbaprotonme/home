@@ -4427,7 +4427,7 @@ var bodylst =
             var a = new Col([0,_8cnv.width,0],
                     [
                         0,
-                        new RowA([0,30*4,0],
+                        new Row([0,30*4,0],
                         [
                             0,
                             new Layer(
