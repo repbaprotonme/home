@@ -4442,7 +4442,7 @@ var bodylst =
             context.moveprev = new rectangle()
             context.login = new rectangle()
             context.addimage = new rectangle()
-            context.removeimage = new rectangle()
+            context.delimage = new rectangle()
             context.ignores = [];
             context.save();
             context.font = "1rem Archivo Black";
