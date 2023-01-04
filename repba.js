@@ -2461,12 +2461,6 @@ var taplst =
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},1000)
         }
-        else if (menuenabled())
-        {
-            bodyobj.set(0)
-            menuhide();
-            context.refresh();
-        }
         else if (bodyobj.current())
         {
             bodyobj.set(0)
@@ -4900,7 +4894,7 @@ function pageresize()
     headcnvctx.show(0,0,window.innerWidth,h);
     headobj.set(h?1:0);
     headham.panel = headobj.getcurrent();
-    var h = footobj.enabled ? ALIEXTENT : 0;
+    var h = footobj.enabled ? 80 : 0;
     footcnvctx.show(0,window.innerHeight-h, window.innerWidth, h);
     footobj.set(h?1:0);
     footham.panel = footobj.getcurrent();
