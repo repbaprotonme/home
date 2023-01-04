@@ -3356,18 +3356,9 @@ var ContextObj = (function ()
 				return;
 			}
 
-            if (context.index == 4)
-            {
-//                w = Math.min(_4cnv.width,Math.min(600,window.innerWidth));
-//              l = Math.floor((window.innerWidth-w)/2);
-//				context.show(l, 0, w, _4cnv.height);
-			}
-            else
-            {
-                var w = Math.min(480,window.innerWidth-ALIEXTENT*2);
-                var l = Math.floor((window.innerWidth-w)/2);
-				context.show(l, 0, w, _4cnv.height);
-			}
+            var w = Math.min(480,window.innerWidth-ALIEXTENT*2);
+            var l = Math.floor((window.innerWidth-w)/2);
+            context.show(l, 0, w, _4cnv.height);
         },
 
 		reset: function ()
