@@ -509,6 +509,9 @@ function drawslices()
 
         context.slicescount++;
         context.restore();
+        delete context.addimage;
+        delete context.delimage;
+        delete context.login;
         delete context.moveprev;
         delete context.movenext;
         delete context.ignores;
@@ -2378,6 +2381,15 @@ var taplst =
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
 
+        }
+        else if (context.login && context.login.hitest(x,y))
+        {
+        }
+        else if (context.addimage && context.addimage.hitest(x,y))
+        {
+        }
+        else if (context.delimage && context.delimage.hitest(x,y))
+        {
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
@@ -4428,6 +4440,9 @@ var bodylst =
         {
             context.movenext = new rectangle()
             context.moveprev = new rectangle()
+            context.login = new rectangle()
+            context.addimage = new rectangle()
+            context.removeimage = new rectangle()
             context.ignores = [];
             context.save();
             context.font = "1rem Archivo Black";
@@ -4467,14 +4482,17 @@ var bodylst =
                                     ]),
                                     new Layer(
                                     [
+                                        new Rectangle(context.login),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                     new Layer(
                                     [
+                                        new Rectangle(context.addimage),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                     new Layer(
                                     [
+                                        new Rectangle(context.delimage),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                 ])
