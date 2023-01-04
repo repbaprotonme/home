@@ -2463,6 +2463,10 @@ var taplst =
             context.tapping = 1;
             context.refresh();
         }
+        else if (menuenabled())
+        {
+            menuhide();
+        }
         else if (bodyobj.current())
         {
             bodyobj.set(0)
