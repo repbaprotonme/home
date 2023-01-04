@@ -2942,7 +2942,6 @@ var templatelst =
         poomobj.split(url.zoom, "50-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(7);
     }
 },
 {
@@ -2953,7 +2952,6 @@ var templatelst =
         poomobj.split(url.zoom, "50-95", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(7);
     }
 },
 {
@@ -2964,7 +2962,6 @@ var templatelst =
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(1);
     }
 },
 {
@@ -2975,7 +2972,6 @@ var templatelst =
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(1);
     }
 },
 {
@@ -2986,7 +2982,6 @@ var templatelst =
         poomobj.split(url.zoom, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(50, "0.1-1.0", scapeobj.length());
-        thumbpos.set(1);
     }
 },
 {
@@ -2997,7 +2992,6 @@ var templatelst =
         poomobj.split(url.zoom, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(50, "0.1-1.0", scapeobj.length());
-        thumbpos.set(7);
    }
 },
 {
@@ -3008,7 +3002,6 @@ var templatelst =
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(7);
     }
 },
 {
@@ -3019,7 +3012,6 @@ var templatelst =
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(7);
     }
 },
 {
@@ -3031,7 +3023,6 @@ var templatelst =
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
-        thumbpos.set(7);
     }
 },
 ];
@@ -4573,6 +4564,7 @@ var footlst =
 var footobj = new makeoption("", footlst);
 var headobj = new makeoption("", headlst);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
+thumbpos.set(1);
 var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
 headobj.enabled = j;
 footobj.enabled = j;
