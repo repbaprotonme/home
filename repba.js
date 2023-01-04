@@ -58,13 +58,13 @@ let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
 url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 18;
-url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 12;
-url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 72;
+url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
 url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
 url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 8;
 
-https://www.youtube.com/watch?v=kzE2voHjp3Uhttps://www.youtube.com/watch?v=kzE2voHjp3Uhttps://www.youtube.com/watch?v=kzE2voHjp3Uurl.path = "HOME";
+url.path = "HOME";
 url.project = 0;
 if (url.searchParams.has("p"))
 {
@@ -4428,13 +4428,13 @@ var bodylst =
             var a = new Col([0,w,0],
                     [
                         0,
-                        new Row([0,30*4,0],
+                        new Row([0,40*4,0],
                         [
                             0,
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,30,30,30,30,0],
+                                new RowA([0,40,40,40,40,0],
                                 [
                                     0,
                                     new Layer(
