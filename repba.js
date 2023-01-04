@@ -4445,7 +4445,7 @@ var bodylst =
                                     new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     0,
-                                ]
+                                ])
                             ]),
                             0,
                         ]),
