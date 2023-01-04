@@ -1522,7 +1522,7 @@ var wheelst =
         {
             context.slideshow = 0;
             var zoom = zoomobj.getcurrent()
-            zoom.add(-10);
+            zoom.add(10);
             contextobj.reset();
         }
         else
@@ -1557,7 +1557,7 @@ var wheelst =
         {
             context.slideshow = 0;
             var zoom = zoomobj.getcurrent()
-            zoom.add(10);
+            zoom.add(-10);
             contextobj.reset();
         }
         else
@@ -4426,6 +4426,9 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
+            context.movenext = new rectangle()
+            context.moveprev = new rectangle()
+            context.ignores = [];
             context.save();
             context.font = "1rem Archivo Black";
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
@@ -4445,9 +4448,21 @@ var bodylst =
                                         new Fill(MENUCOLOR),
                                         new Col([ALIEXTENT,0,ALIEXTENT],
                                         [
-                                            new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
-                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                                            new Layer(
+                                            [
+                                                new Rectangle(context.moveprev),
+                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
+                                            ]),
+                                            new LayerA(
+                                            [
+                                                new Rectangles(),
+                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            ]),
+                                            new Layer(
+                                            [
+                                                new Rectangle(context.movenext),
+                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                                            ]),
                                         ])
                                     ]),
                                     new Layer(
@@ -4471,7 +4486,10 @@ var bodylst =
 
             a.draw(context, rect,
                 [
-                    galleryobj.getcurrent().title,
+                    [
+                        context.ignores,
+                        galleryobj.getcurrent().title,
+                    ],
                     "Login",
                     "Add Image",
                     "Delete Image",
