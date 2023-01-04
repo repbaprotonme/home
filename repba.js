@@ -4174,11 +4174,8 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                bodyobj.set(2)
+                bodyobj.set(bodyobj.current()?0:2)
                 _4cnvctx.refresh();
-                headobj.pages = headobj.pages?0:1;
-                context.refresh();
-                pageresize();
             }
             else if (context.nextpage.hitest(x,y))
             {
