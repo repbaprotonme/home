@@ -1802,7 +1802,7 @@ var panlst =
     panend: function (context, rect, x, y)
 	{
         //setTimeout(function()
-        {
+        //{
             context.pressed = 0;
             context.clearpoints();
             context.panning = 0;
