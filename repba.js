@@ -3200,8 +3200,21 @@ fetch(path)
 
         var lst =
         [
-            { line1:"Image Research", line2: "https://repba.com", line3: "images@repba.com", line4: "Tom Brinkman", func: function() {menuhide(); } },
-            { line1:"High Resolution", line2: "360° Panoramas", line3: "Image Stretching", line4: "Image Zooming", func: function() {menuhide(); } },
+            {
+                line1: "Image Research",
+                line2: "https://repba.com",
+                line3: "images@repba.com",
+                line4: "Tom Brinkman",
+                func: function() {menuhide(); }
+            },
+            {
+                line1: "High Resolution",
+                line2: "360° Panoramas",
+                line3: "Image Stretching",
+                line4: "Image Zooming",
+                //
+                func: function() {menuhide(); }
+            },
         ];
 
         var slices = _7cnvctx.sliceobj;
@@ -3323,14 +3336,14 @@ var ContextObj = (function ()
 
             if (context.index == 4)
             {
-                w = Math.min(_4cnv.width,Math.min(600,window.innerWidth));
-                l = Math.floor((window.innerWidth-w)/2);
-				context.show(l, 0, w, _4cnv.height);
+//                w = Math.min(_4cnv.width,Math.min(600,window.innerWidth));
+//              l = Math.floor((window.innerWidth-w)/2);
+//				context.show(l, 0, w, _4cnv.height);
 			}
             else
             {
-                w = Math.min(_4cnv.width-ALIEXTENT*2-10,Math.min(360,window.innerWidth-ALIEXTENT*2));
-                l = Math.floor((window.innerWidth-w)/2);
+                var w = Math.min(480,window.innerWidth-ALIEXTENT*2);
+                var l = Math.floor((window.innerWidth-w)/2);
 				context.show(l, 0, w, _4cnv.height);
 			}
         },
