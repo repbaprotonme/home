@@ -2501,7 +2501,7 @@ var thumblst =
     {
         var th = heightobj.getcurrent().getcurrent();
         var headers = headcnv.height*2;
-        var THUMBORDER = 0;
+        var THUMBORDER = 8;
         var width = rect.width-THUMBORDER*2;
         var height = rect.height-headers-THUMBORDER*2;
         if (width < 0 || height < 0)
