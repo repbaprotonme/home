@@ -2452,7 +2452,7 @@ var taplst =
             obj.set(j);
             _4cnvctx.refresh();
         }
-        else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
+        else if (context.thumbrect && context.thumbrect.hitest(x,y))
         {
             menuhide();
             context.hithumb(x,y);
@@ -2463,30 +2463,9 @@ var taplst =
             context.tapping = 1;
             context.refresh();
         }
-        else if (menuenabled())
-        {
-            menuhide();
-        }
-        else if (bodyobj.current())
-        {
-            bodyobj.set(0)
-            context.refresh();
-        }
-        else if (context.tapping)
-        {
-            context.tapping = 0;
-            context.refresh();
-        }
         else
         {
-
-            thumbpos.set(thumbpos.data.hitest(x,y))
-            bodyobj.set(0)
-            headobj.enabled = headobj.enabled?0:1;
-            footobj.enabled = headobj.enabled;
-            pageresize();
-            context.refresh();
-            reset();
+            masterhide();
         }
 
         addressobj.update();
@@ -4278,6 +4257,7 @@ var headlst =
             }
             else
             {
+                masterhide()
             }
 
             _4cnvctx.refresh();
@@ -4733,6 +4713,7 @@ var footlst =
             }
             else
             {
+                masterhide()
             }
 
             addressobj.update();
@@ -4900,6 +4881,35 @@ window.addEventListener("keydown", function (evt)
     if (context.keydown_)
         return context.keydown_(evt);
 }, false);
+
+function masterhide()
+{
+    var context = _4cnvctx;
+    if (menuenabled())
+    {
+        menuhide();
+    }
+    else if (bodyobj.current())
+    {
+        bodyobj.set(0)
+        context.refresh();
+    }
+    else if (context.tapping)
+    {
+        context.tapping = 0;
+        context.refresh();
+    }
+    else
+    {
+        thumbpos.set(thumbpos.data.hitest(x,y))
+        bodyobj.set(0)
+        headobj.enabled = headobj.enabled?0:1;
+        footobj.enabled = headobj.enabled;
+        pageresize();
+        context.refresh();
+        reset();
+    }
+}
 
 function pageresize()
 {
