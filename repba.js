@@ -2368,7 +2368,7 @@ var taplst =
             context.swipetype = "swipedown";
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
-            context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+            context.timemain = setInterval(function () { _4cnvctx.refresh(); }, globalobj.timemain);
             context.tapgroup = 3;
             clearInterval(context.timetap);
             context.timetap = setInterval(function () { context.tapgroup = 0; _4cnvctx.refresh(); }, 400);
@@ -2380,7 +2380,7 @@ var taplst =
             context.swipetype = "swipeup";
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
-            context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+            context.timemain = setInterval(function () { _4cnvctx.refresh(); }, globalobj.timemain);
             context.tapgroup = 1;
             clearInterval(context.timetap);
             context.timetap = setInterval(function () { context.tapgroup = 0; _4cnvctx.refresh(); }, 400);
@@ -2391,13 +2391,13 @@ var taplst =
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
+            context.tapgroup = 2;
+            clearInterval(context.timetap);
+            context.timetap = setInterval(function () { context.tapgroup = 0; _4cnvctx.refresh(); }, 400);
             var obj = _8cnvctx.timeobj;
             var j = obj.berp() == 0 ? (1-galleryobj.berp())*TIMEOBJ : 0;
             obj.set(j);
             _4cnvctx.refresh();
-            context.tapgroup = 2;
-            clearInterval(context.timetap);
-            context.timetap = setInterval(function () { context.tapgroup = 0; _4cnvctx.refresh(); }, 400);
         }
         else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
