@@ -2462,7 +2462,7 @@ var taplst =
             context.tapping = 1;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();},1000)
+            globalobj.tapthumb = setTimeout(function(){context.tapping = 0; context.refresh();}, galleryobj.tapdelay)
         }
         else if (bodyobj.current())
         {
@@ -3149,9 +3149,11 @@ fetch(path)
 
         pretchobj.split(60, "40-90", pretchobj.length());
         letchobj.split(60, "40-90", letchobj.length());
-        speedxobj.split(2, "1-20", speedxobj.length());
-        speedyobj.split(2, "1-20", speedyobj.length());
+        speedxobj.split(3, "1-20", speedxobj.length());
+        speedyobj.split(3, "1-20", speedyobj.length());
 
+        if (typeof galleryobj.tapdelay  === "undefined")
+            galleryobj.tapdelay = 2000;
         if (typeof galleryobj.quality  === "undefined")
             galleryobj.quality = 75;
         if (typeof galleryobj.galleryobj  === "undefined")
