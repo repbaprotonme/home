@@ -2388,18 +2388,21 @@ var taplst =
         else if (context.login && context.login.hitest(x,y))
         {
             context.tapindex = 1;
+            context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
         }
         else if (context.addimage && context.addimage.hitest(x,y))
         {
             context.tapindex = 2;
+            context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
         }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
             context.tapindex = 3;
+            context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
         }
