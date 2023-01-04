@@ -2387,12 +2387,21 @@ var taplst =
         }
         else if (context.login && context.login.hitest(x,y))
         {
+            context.tapindex = rect.id;
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
         }
         else if (context.addimage && context.addimage.hitest(x,y))
         {
+            context.tapindex = rect.id;
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
         }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
+            context.tapindex = rect.id;
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
@@ -3778,6 +3787,7 @@ var RowA = function (e, panel)
             y += j[n];
             if (typeof (panel[n]) != "object")
                 continue;
+            r.id = n;
             panel[n].draw(context, r, user[n], time);
         }
     };
@@ -4488,16 +4498,19 @@ var bodylst =
                                     new Layer(
                                     [
                                         new Rectangle(context.login),
+                                        context.tapindex == 1 ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                     new Layer(
                                     [
                                         new Rectangle(context.addimage),
+                                        context.tapindex == 2 ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                     new Layer(
                                     [
                                         new Rectangle(context.delimage),
+                                        context.tapindex == 3 ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                 ])
