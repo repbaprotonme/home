@@ -521,9 +521,9 @@ function drawslices()
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
         if (!context.pressed && !headobj.enabled)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
-        if (headobj.enabled && bodyobj.enabled && context.panning)
+        if (headobj.enabled && context.panning)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
-        else if (!context.isthumbrect && bodyobj.enabled && !context.pressed)
+        else if (!context.isthumbrect && !context.pressed)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
         context.setcolumncomplete = 1;
     }
@@ -1863,7 +1863,6 @@ var presslst =
         context.isthumbrect = 0;
         context.panning = 0;
         context.pressed = 0;
-        bodyobj.enabled = 1;
         headobj.enabled = 0;
         context.refresh()
     },
@@ -1872,7 +1871,6 @@ var presslst =
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
         headobj.enabled = 0;
         footobj.enabled = 0;
-        bodyobj.enabled = 1;
         context.panning = 1;
         context.pressed = 1;
         pageresize();
@@ -2408,6 +2406,7 @@ var taplst =
         else
         {
             thumbpos.set(thumbpos.data.hitest(x,y))
+            bodyobj.set(0)
             headobj.enabled = headobj.enabled?0:1;
             footobj.enabled = headobj.enabled;
             pageresize();
@@ -3089,9 +3088,6 @@ fetch(path)
             galleryobj.quality = 75;
         if (typeof galleryobj.galleryobj  === "undefined")
             galleryobj.maxmegapix = 9000000;
-
-        if (galleryobj.length() < 2)
-            bodyobj.enabled = 0;
 
         for (var n = 0; n < contextlst.length; ++n)
         {
@@ -3998,6 +3994,7 @@ function resize()
     var n = eventlst.findIndex(function(a){return a.name == "_4cnvctx";})
     setevents(_4cnvctx, eventlst[n])
     pageresize();
+    bodyobj.set(0)
     _4cnvctx.refresh();
 }
 
@@ -4008,6 +4005,7 @@ function escape()
     menuhide();
     var n = eventlst.findIndex(function(a){return a.name == "_4cnvctx";})
     setevents(_4cnvctx, eventlst[n])
+    bodyobj.set(0)
     _4cnvctx.setcolumncomplete = 0;
     reset();
     pageresize();
@@ -4455,7 +4453,6 @@ var bodylst =
 ];
 
 var bodyobj = new makeoption("", bodylst);
-bodyobj.enabled = 1;
 
 var footlst =
 [
