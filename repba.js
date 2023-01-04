@@ -3411,7 +3411,7 @@ var ContextObj = (function ()
                         _4cnvctx.tab();
                     }
 
-                    setTimeout(function() { if (!_4cnvctx.setcolumncomplete) contextobj.reset(); }, 400);
+                    //setTimeout(function() { if (!_4cnvctx.setcolumncomplete) contextobj.reset(); }, 400);
                     setTimeout(function() { if (!_4cnvctx.setcolumncomplete) contextobj.reset(); }, 1000);
 
                     setTimeout(function()
