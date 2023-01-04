@@ -57,13 +57,13 @@ function randomNumber(min, max) { return Math.floor(Math.random() * (max - min) 
 let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
-url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 16;
+url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 18;
 url.hideui = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 0;
 url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
-url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0.3;
+url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 54;
+url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
-url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 16;
+url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 18;
 
 url.path = "HOME";
 url.project = 0;
@@ -513,8 +513,6 @@ function drawslices()
         delete context.moveprev;
         delete context.movenext;
         delete context.ignores;
-        delete context.addimage;
-        delete context.delimage;
         delete context.menuup;
         delete context.menuhome;
         delete context.menudown;
@@ -2371,6 +2369,9 @@ var taplst =
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+            context.menudown.enabled = 1;
+            clearInterval(context.menudown.time);
+            context.menudown.time= setInterval(function () { context.menudown.enabled = 0; context.refresh(); }, 400);
         }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
@@ -2380,16 +2381,9 @@ var taplst =
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
-        }
-        else if (context.addimage && context.addimage.hitest(x,y))
-        {
-            galleryobj.mode = galleryobj.mode == 1  ? 0 : 1;
-            context.refresh();
-        }
-        else if (context.delimage && context.delimage.hitest(x,y))
-        {
-            galleryobj.mode = galleryobj.mode == 2 ? 0 : 2;
-            context.refresh();
+            context.menuup.enabled = 1;
+            clearInterval(context.menuup.time);
+            context.menuup.time= setInterval(function () { context.menuup.enabled = 0; context.refresh(); }, 400);
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
@@ -2401,6 +2395,9 @@ var taplst =
             var j = obj.berp() == 0 ? (1-galleryobj.berp())*TIMEOBJ : 0;
             obj.set(j);
             _4cnvctx.refresh();
+            context.menuhome.enabled = 1;
+            clearInterval(context.menuhome.time);
+            context.menuhome.time= setInterval(function () { context.menuhome.enabled = 0; context.refresh(); }, 400);
         }
         else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
@@ -4406,8 +4403,6 @@ var bodylst =
         {
             context.save();
             context.ignores = [];
-            context.addimage  = new rectangle()
-            context.delimage  = new rectangle()
             context.menuup = new rectangle()
             context.menuhome = new rectangle()
             context.menudown = new rectangle()
@@ -4416,20 +4411,18 @@ var bodylst =
                     new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
                     [
                         0,
-                        new Row([0,30,ALIEXTENT,ALIEXTENT,30,0],
+                        1?0:new Row([0,30,ALIEXTENT,ALIEXTENT,30,0],
                             [
                                 0,
                                 new Rectangles(),
                                 new Layer(
                                 [
-                                    new Fill(galleryobj.mode == 1 ? "rgba(0,255,0,0.75)" : MENUCOLOR),
-                                    new Rectangle(context.addimage),
+                                    new Fill(galleryobj.mode == 1 ? "rgba(0,155,0,0.75)" : MENUCOLOR),
                                     new Shrink(new Plus(ARROWFILL),22,22),
                                 ]),
                                 new Layer(
                                 [
-                                    new Fill(galleryobj.mode == 2 ? "rgba(255,0,0,0.75)" : MENUCOLOR),
-                                    new Rectangle(context.delimage),
+                                    new Fill(galleryobj.mode == 2 ? "rgba(155,0,0,0.75)" : MENUCOLOR),
                                     new Shrink(new Minus(ARROWFILL),22,22),
                                 ]),
                                 new Rectangles(),
@@ -4443,19 +4436,19 @@ var bodylst =
                                 new Layer(
                                 [
                                     new Rectangle(context.menudown),
-                                    new Fill(MENUCOLOR),
+                                    new Fill(context.menudown.enabled?"rgb(0,0,70)":MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
                                 new Layer(
                                 [
                                     new Rectangle(context.menuhome),
-                                    new Fill(MENUCOLOR),
+                                    new Fill(context.menuhome.enabled?"rgb(0,0,70)":MENUCOLOR),
                                     new Shrink(new Circle("white"),20,20)
                                 ]),
                                 new Layer(
                                 [
                                     new Rectangle(context.menuup),
-                                    new Fill(MENUCOLOR),
+                                    new Fill(context.menuup.enabled?"rgb(0,0,70)":MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,180),20,20),
                                 ]),
                                 new Rectangles(),
