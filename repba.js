@@ -4499,7 +4499,7 @@ var bodylst =
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40],
+                                new RowA([0,40,40,40,40,20],
                                 [
                                     new Layer(
                                     [
@@ -4549,6 +4549,7 @@ var bodylst =
                                         context.tapindex == context.taphelp ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
+                                    0,
                                 ])
                             ]),
                             0,
@@ -4565,6 +4566,8 @@ var bodylst =
                     "Login",
                     "Add Image",
                     "Delete Image",
+                    "Help",
+                    0,
                 ],
                 0);
             context.restore();
