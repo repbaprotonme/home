@@ -1761,8 +1761,9 @@ var panlst =
         }
         else
         {
-            if (type == "panleft" || type == "panright")
+            if (context.type != 2 && (type == "panleft" || type == "panright"))
             {
+                context.type = 1
                 context.autodirect = (type == "panleft")?-1:1;
                 var len = context.timeobj.length();
                 var diff = context.startx-x;
@@ -1775,8 +1776,9 @@ var panlst =
                 context.timeobj.set(j);
                 context.refresh()
             }
-            else if (type == "panup" || type == "pandown")
+            else if (context.type != 1 && (type == "panup" || type == "pandown"))
             {
+                context.type = 2
                 var zoom = zoomobj.getcurrent()
                 if (Number(zoom.getcurrent()))
                 {
@@ -1795,6 +1797,7 @@ var panlst =
     },
 	panstart: function (context, rect, x, y)
 	{
+        context.type = 0;
         context.startx = x;
         context.starty = y;
         context.startt = context.timeobj.current();
