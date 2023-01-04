@@ -1630,6 +1630,7 @@ var pinchlst =
         setTimeout(function()
         {
             context.isthumbrect = 0;
+            context.tapping = 0;
             context.pinching = 0;
             context.refresh();
             addressobj.update();
