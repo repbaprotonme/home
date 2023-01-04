@@ -4419,7 +4419,7 @@ var bodylst =
                                 new Layer(
                                 [
                                     new Rectangle(context.menudown),
-                                    new Fill(context.tapgroup==3"rgb(0,0,70)":MENUCOLOR),
+                                    new Fill(context.tapgroup==3?"rgb(0,0,70)":MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
                                 new Layer(
