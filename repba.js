@@ -2369,9 +2369,9 @@ var taplst =
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
-            context.menudown.enabled = 1;
-            clearInterval(context.menudown.time);
-            context.menudown.time= setInterval(function () { context.menudown.enabled = 0; context.refresh(); }, 400);
+            context.tapgroup = 3;
+            clearInterval(context.timetap);
+            context.timetap = setInterval(function () { context.tapgroup = 0; context.refresh(); }, 400);
         }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
@@ -2381,9 +2381,9 @@ var taplst =
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
-            context.menuup.enabled = 1;
-            clearInterval(context.menuup.time);
-            context.menuup.time= setInterval(function () { context.menuup.enabled = 0; context.refresh(); }, 400);
+            context.tapgroup = 1;
+            clearInterval(context.timetap);
+            context.timetap = setInterval(function () { context.tapgroup = 0; context.refresh(); }, 400);
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
@@ -2395,9 +2395,9 @@ var taplst =
             var j = obj.berp() == 0 ? (1-galleryobj.berp())*TIMEOBJ : 0;
             obj.set(j);
             _4cnvctx.refresh();
-            context.menuhome.enabled = 1;
-            clearInterval(context.menuhome.time);
-            context.menuhome.time= setInterval(function () { context.menuhome.enabled = 0; context.refresh(); }, 400);
+            context.tapgroup = 2;
+            clearInterval(context.timetap);
+            context.timetap = setInterval(function () { context.tapgroup = 0; context.refresh(); }, 400);
         }
         else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
@@ -4411,23 +4411,6 @@ var bodylst =
                     new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
                     [
                         0,
-                        1?0:new Row([0,30,ALIEXTENT,ALIEXTENT,30,0],
-                            [
-                                0,
-                                new Rectangles(),
-                                new Layer(
-                                [
-                                    new Fill(galleryobj.mode == 1 ? "rgba(0,155,0,0.75)" : MENUCOLOR),
-                                    new Shrink(new Plus(ARROWFILL),22,22),
-                                ]),
-                                new Layer(
-                                [
-                                    new Fill(galleryobj.mode == 2 ? "rgba(155,0,0,0.75)" : MENUCOLOR),
-                                    new Shrink(new Minus(ARROWFILL),22,22),
-                                ]),
-                                new Rectangles(),
-                                0,
-                            ]),
                         0,
                         new Row([0,30,ALIEXTENT,ALIEXTENT,ALIEXTENT,30,0],
                             [
@@ -4436,19 +4419,19 @@ var bodylst =
                                 new Layer(
                                 [
                                     new Rectangle(context.menudown),
-                                    new Fill(context.menudown.enabled?"rgb(0,0,70)":MENUCOLOR),
+                                    new Fill(context.tapgroup==3"rgb(0,0,70)":MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
                                 new Layer(
                                 [
                                     new Rectangle(context.menuhome),
-                                    new Fill(context.menuhome.enabled?"rgb(0,0,70)":MENUCOLOR),
+                                    new Fill(context.tapgroup==2?"rgb(0,0,70)":MENUCOLOR),
                                     new Shrink(new Circle("white"),20,20)
                                 ]),
                                 new Layer(
                                 [
                                     new Rectangle(context.menuup),
-                                    new Fill(context.menuup.enabled?"rgb(0,0,70)":MENUCOLOR),
+                                    new Fill(context.tapgroup==1?"rgb(0,0,70)":MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,180),20,20),
                                 ]),
                                 new Rectangles(),
