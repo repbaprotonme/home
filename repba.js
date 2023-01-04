@@ -2437,7 +2437,7 @@ var taplst =
             {
                 context.tapindex = 0;
                 var obj = galleryobj.getcurrent();
-                window.open("https://reportbase.com/image/"+obj.title+"/w="obj.width,"Reportbase");
+                window.open("https://reportbase.com/image/"+obj.title+"/w="+obj.width,"Reportbase");
                 context.refresh();
             }, 400)
         }
