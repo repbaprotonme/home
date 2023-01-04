@@ -4310,7 +4310,6 @@ var headlst =
                             0,
                             new Layer(
                             [
-                                bodyobj.current() ? new Fill(MENUSELECT) : 0,
                                 _4cnvctx.movingpage == -1 ?
                                     new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
                                 new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES-HNUB),
@@ -4326,7 +4325,7 @@ var headlst =
                             0,
                             new Layer(
                             [
-                            //    footobj.enabled?new Fill(THUMBSELECT):0,
+                                bodyobj.current()?new Fill(THUMBSELECT):0,
                                 new Shrink(new Text("white", "center", "middle",0,0,1),20,20),
                             ]),
                             0,
