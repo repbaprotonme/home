@@ -4424,7 +4424,8 @@ var bodylst =
         {
             context.save();
             context.font = "1rem Archivo Black";
-            var a = new Col([0,_8cnv.width,0],
+            var w = Math.min(480,rect.width-40);
+            var a = new Col([0,w,0],
                     [
                         0,
                         new Row([0,30*4,0],
