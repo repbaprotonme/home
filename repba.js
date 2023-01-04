@@ -3228,6 +3228,7 @@ fetch(path)
         {
             bodyobj.set(2)
             _4cnvctx.refresh();
+            menuhide();
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
