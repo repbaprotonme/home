@@ -3989,7 +3989,6 @@ function menuhide()
     _7cnvctx.hide();
     _8cnvctx.hide();
     _9cnvctx.hide();
-    bodyobj.set(0);
     _4cnvctx.refresh();
     return k;
 }
