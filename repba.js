@@ -4486,6 +4486,7 @@ var bodylst =
             context.login = new rectangle()
             context.addimage = new rectangle()
             context.delimage = new rectangle()
+            context.taphelp = new rectangle()
             context.ignores = [];
             context.save();
             context.font = "1rem Archivo Black";
