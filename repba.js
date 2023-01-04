@@ -19,7 +19,6 @@ const THUMBLINEOUT = 4.0;
 const JULIETIME = 100;
 const DELAY = 10000000;
 const HNUB = 10;
-const THUMBORDER = 16;
 const ALIEXTENT = 60;
 const ARROWBORES = 22;
 const DELAYCENTER = 3.926;
@@ -2502,6 +2501,7 @@ var thumblst =
     {
         var th = heightobj.getcurrent().getcurrent();
         var headers = headcnv.height*2;
+        var THUMBORDER = 0;
         var width = rect.width-THUMBORDER*2;
         var height = rect.height-headers-THUMBORDER*2;
         if (width < 0 || height < 0)
