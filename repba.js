@@ -2397,7 +2397,12 @@ var taplst =
             context.tapindex = 2;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                context.refresh();
+                promptFile().then(function(files) { dropfiles(files); })
+            },400)
         }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
