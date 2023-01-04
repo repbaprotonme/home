@@ -3234,7 +3234,7 @@ fetch(path)
             contextobj.reset();
         }})
 
-        slices.data.push({ title:"Login", path: "LOGIN", func: function()
+        slices.data.push({ title:"Customize", path: "CUSTOMIZE", func: function()
         {
 
         }});
