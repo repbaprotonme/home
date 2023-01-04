@@ -3226,7 +3226,8 @@ fetch(path)
 
         slices.data.push({ title:"Customize", path: "CUSTOMIZE", func: function()
         {
-
+            bodyobj.set(2)
+            _4cnvctx.refresh();
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
@@ -4444,6 +4445,7 @@ var bodylst =
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 0,
                            ]),
                             0,
@@ -4455,6 +4457,7 @@ var bodylst =
                 [
                     0,
                     "Customize",
+                    "Login",
                     "Add Image",
                     "Delete Image",
                     0,
