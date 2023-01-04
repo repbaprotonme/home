@@ -58,8 +58,8 @@ let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
 url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 18;
-url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
+url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 12;
+url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 72;
 url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
 url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 8;
@@ -4436,18 +4436,13 @@ var bodylst =
             var a = new Col([0,_8cnv.width,0],
                     [
                         0,
-                        new Row([0,30*3,0],
+                        new RowA([0,30,30,30,30,0],
                         [
                             0,
-                            new RowA([0,30,30,30,0],
-                            [
-                                0,
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                0,
-                           ]),
+                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                             0,
                         ]),
                         0,
