@@ -4310,6 +4310,7 @@ var headlst =
                             0,
                             new Layer(
                             [
+                                bodyobj.current() ? new Fill(MENUSELECT) : 0,
                                 _4cnvctx.movingpage == -1 ?
                                     new Shrink(new Circle(SCROLLNAB,"white",3),0,0) : 0,
                                 new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES-HNUB),
