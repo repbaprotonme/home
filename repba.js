@@ -4427,13 +4427,25 @@ var bodylst =
             var a = new Col([0,_8cnv.width,0],
                     [
                         0,
-                        new RowA([0,30,30,30,30,0],
+                        new RowA([0,30*4,0],
                         [
                             0,
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                            new Layer(
+                            [
+                                new Fill(MENUCOLOR),
+                                new RowA([0,30,30,30,30,0],
+                                [
+                                    0
+                                    new Layer(
+                                    [
+                                        new Fill("rgba(0,0,0,0.75)"),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                ]
+                            ]),
                             0,
                         ]),
                         0,
