@@ -3222,6 +3222,19 @@ fetch(path)
                 line4: "Image Zooming",
                 //Sidescrolling  todo
                 //Wrap-Around:w
+                //Ultra-wide Imagas
+                //Drone PHotograhy
+                func: function() {menuhide(); }
+            },
+            {
+                line1: "Image Viewer",
+                line2: "Digital Art",
+                line3: "Graphic Novels",
+                line4: "Drone Photgraphy",
+                //Sidescrolling  todo
+                //Wrap-Around:w
+                //Ultra-wide Imagas
+                //Drone PHotograhy
                 func: function() {menuhide(); }
             },
         ];
