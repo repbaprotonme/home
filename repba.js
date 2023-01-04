@@ -2387,19 +2387,19 @@ var taplst =
         }
         else if (context.login && context.login.hitest(x,y))
         {
-            context.tapindex = rect.id;
+            context.tapindex = 1;
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
         }
         else if (context.addimage && context.addimage.hitest(x,y))
         {
-            context.tapindex = rect.id;
+            context.tapindex = 2;
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
         }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
-            context.tapindex = rect.id;
+            context.tapindex = 3;
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
         }
