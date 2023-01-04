@@ -4435,7 +4435,7 @@ var bodylst =
                                 new Fill(MENUCOLOR),
                                 new RowA([0,30,30,30,30,0],
                                 [
-                                    0
+                                    0,
                                     new Layer(
                                     [
                                         new Fill("rgba(0,0,0,0.75)"),
@@ -4444,6 +4444,7 @@ var bodylst =
                                     new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    0,
                                 ]
                             ]),
                             0,
