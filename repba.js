@@ -4174,6 +4174,8 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
+                bodyobj.set(2)
+                _4cnvctx.refresh();
                 headobj.pages = headobj.pages?0:1;
                 context.refresh();
                 pageresize();
@@ -4281,9 +4283,8 @@ var headlst =
            ]);
 
             var s = (galleryobj.current()+1)+" of "+galleryobj.length()
-            var k = headobj.pages?s:galleryobj.getcurrent()[0];
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
-            a.draw(context, rect, [0,0,0,debugobj.enabled?j:k,0,0,0], time);
+            a.draw(context, rect, [0,0,0,debugobj.enabled?j:s,0,0,0], time);
             context.restore()
 		};
 	},
@@ -4471,10 +4472,9 @@ var bodylst =
                         0,
                     ]);
 
-            var s = (galleryobj.current()+1)+" of "+galleryobj.length()
             a.draw(context, rect,
                 [
-                    s,
+                    galleryobj.getcurrent().title,
                     "Login",
                     "Add Image",
                     "Delete Image",
