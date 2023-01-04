@@ -4084,6 +4084,7 @@ function resize()
     var n = eventlst.findIndex(function(a){return a.name == "_4cnvctx";})
     setevents(_4cnvctx, eventlst[n])
     pageresize();
+    _4cnvctx.tapping = 0;
     bodyobj.set(0)
     _4cnvctx.refresh();
 }
@@ -4091,6 +4092,7 @@ function resize()
 function escape()
 {
     clearInterval(_4cnvctx.timemain);
+    _4cnvctx.tapping = 0;
     _4cnvctx.timemain = 0;
     menuhide();
     var n = eventlst.findIndex(function(a){return a.name == "_4cnvctx";})
