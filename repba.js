@@ -2401,7 +2401,9 @@ var taplst =
         }
         else if (menuenabled())
         {
+            bodyobj.set(0)
             menuhide();
+            context.refresh();
         }
         else
         {
