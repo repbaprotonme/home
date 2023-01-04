@@ -1801,7 +1801,7 @@ var panlst =
     },
     panend: function (context, rect, x, y)
 	{
-        setTimeout(function()
+        //setTimeout(function()
         {
             context.pressed = 0;
             context.clearpoints();
@@ -1817,7 +1817,7 @@ var panlst =
             pageresize();
             contextobj.reset();
             addressobj.update();
-        }, 20);
+        //}, 20);
     }
 },
 ];
