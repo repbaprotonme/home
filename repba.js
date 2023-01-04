@@ -4663,6 +4663,7 @@ var bodylst =
                 0);
             context.restore();
         }
+    }
 ];
 
 var bodyobj = new makeoption("", bodylst);
