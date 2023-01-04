@@ -2405,8 +2405,14 @@ var taplst =
             menuhide();
             context.refresh();
         }
+        else if (bodyobj.current())
+        {
+            bodyobj.set(0)
+            context.refresh();
+        }
         else
         {
+
             thumbpos.set(thumbpos.data.hitest(x,y))
             bodyobj.set(0)
             headobj.enabled = headobj.enabled?0:1;
@@ -4424,11 +4430,11 @@ var bodylst =
         {
             context.save();
             context.font = "1rem Archivo Black";
-            var w = Math.min(480,rect.width-40);
+            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
             var a = new Col([0,w,0],
                     [
                         0,
-                        new Row([0,60+40*3,0],
+                        new Row([0,ALIEXTENT+40*3,0],
                         [
                             0,
                             new Layer(
@@ -4438,8 +4444,8 @@ var bodylst =
                                 [
                                     new Layer(
                                     [
-                                        new Fill("rgba(0,0,0,0.75)"),
-                                        new Col([60,0,60],
+                                        new Fill(MENUCOLOR),
+                                        new Col([ALIEXTENT,0,ALIEXTENT],
                                         [
                                             new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
                                             new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
