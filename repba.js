@@ -509,12 +509,12 @@ function drawslices()
         context.slicescount++;
         context.restore();
         delete context.addimage;
-        delete context.taphelp;
+        delete context.downimage;
         delete context.delimage;
         delete context.login;
         delete context.moveprev;
         delete context.movenext;
-        delete context.delconfir;
+        delete context.delconfirm;
         delete context.ignores;
         delete context.menuup;
         delete context.menuhome;
@@ -2428,12 +2428,18 @@ var taplst =
                 context.refresh();
             }, 400)
         }
-        else if (context.taphelp && context.taphelp.hitest(x,y))
+        else if (context.downimage && context.downimage.hitest(x,y))
         {
             context.tapindex = 4;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; menushow(_7cnvctx); context.refresh();}, 400)
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                var obj = galleryobj.getcurrent();
+                window.open("https://reportbase.com/image/"+obj.title+"/w="obj.width,"Reportbase");
+                context.refresh();
+            }, 400)
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
@@ -4507,7 +4513,7 @@ var bodylst =
             context.login = new rectangle()
             context.addimage = new rectangle()
             context.delimage = new rectangle()
-            context.taphelp = new rectangle()
+            context.downimage = new rectangle()
             context.ignores = [];
             context.save();
             context.font = "1rem Archivo Black";
@@ -4567,7 +4573,7 @@ var bodylst =
                                     ]),
                                     new Layer(
                                     [
-                                        new Rectangle(context.taphelp),
+                                        new Rectangle(context.downimage),
                                         context.tapindex == 4 ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
@@ -4587,7 +4593,7 @@ var bodylst =
                     "Login",
                     "Insert",
                     "Delete",
-                    "Help",
+                    "Download",
                 ],
                 0);
             context.restore();
