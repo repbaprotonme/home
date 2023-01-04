@@ -58,14 +58,13 @@ let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
 url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 18;
-url.hideui = url.searchParams.has("u") ? Number(url.searchParams.get("u")) : 0;
 url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 54;
+url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
 url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
-url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 4;
+url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 8;
 
-url.path = "HOME";
+https://www.youtube.com/watch?v=kzE2voHjp3Uhttps://www.youtube.com/watch?v=kzE2voHjp3Uhttps://www.youtube.com/watch?v=kzE2voHjp3Uurl.path = "HOME";
 url.project = 0;
 if (url.searchParams.has("p"))
 {
@@ -522,9 +521,9 @@ function drawslices()
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
         if (!context.pressed && !headobj.enabled)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
-        if (headobj.enabled && bodyobj.enabled && context.panning && !url.hideui)
+        if (headobj.enabled && bodyobj.enabled && context.panning)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
-        else if (!context.isthumbrect && bodyobj.enabled && !context.pressed && !url.hideui)
+        else if (!context.isthumbrect && bodyobj.enabled && !context.pressed)
             bodyobj.getcurrent().draw(context, rect, 0, 0);
         context.setcolumncomplete = 1;
     }
@@ -1044,7 +1043,6 @@ addressobj.full = function ()
     out +=
         "/?p="+galleryobj.getcurrent()[0]+
         "&h="+headobj.enabled+
-        "&u="+url.hideui+
         "&v="+url.virtualcols+
         "&a="+url.autostart+
         "&f="+url.slidefactor+
@@ -2499,9 +2497,6 @@ var thumblst =
             context.thumbrect = new rectangle(x,y,w,h);
         }
 
-        if (url.hideui)
-            return;
-
         context.save();
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
@@ -2732,11 +2727,6 @@ var drawlst =
         else if (!headobj.enabled && user.path == "THUMBNAIL")
         {
             if (user.id == thumbpos.current())
-                clr = MENUSELECT;
-        }
-        else if (user.path == "MINIMAL")
-        {
-            if (url.hideui)
                 clr = MENUSELECT;
         }
         else if (user.path == "DEBUG")
@@ -4346,7 +4336,7 @@ var bodylst =
                             ]),
                             0,
                         ]),
-                        debugobj.enabled?new Row([0,30*7,0],
+                        debugobj.enabled?new Row([0,30*5,0],
                         [
                             0,
                             new RowA([0,30,30,30,30,30,0],
@@ -4433,6 +4423,43 @@ var bodylst =
                     ]);
 
             a.draw(context, rect, context.ignores, 0);
+            context.restore();
+        }
+    },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.save();
+            context.font = "1rem Archivo Black";
+            var a = new Col([0,_8cnv.width,0],
+                    [
+                        0,
+                        new Row([0,30*3,0],
+                        [
+                            0,
+                            new RowA([0,30,30,30,0],
+                            [
+                                0,
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                0,
+                           ]),
+                            0,
+                        ]),
+                        0,
+                    ]);
+
+            a.draw(context, rect,
+                [
+                    0,
+                    "Customize",
+                    "Add Image",
+                    "Delete Image",
+                    0,
+                ],
+                0);
             context.restore();
         }
     }
@@ -4662,11 +4689,11 @@ window.addEventListener("keydown", function (evt)
 
 function pageresize()
 {
-    var h = (headobj.enabled && !url.hideui) ? ALIEXTENT : 0;
+    var h = headobj.enabled ? ALIEXTENT : 0;
     headcnvctx.show(0,0,window.innerWidth,h);
     headobj.set(h?1:0);
     headham.panel = headobj.getcurrent();
-    var h = (footobj.enabled && !url.hideui) ? ALIEXTENT : 0;
+    var h = footobj.enabled ? ALIEXTENT : 0;
     footcnvctx.show(0,window.innerHeight-h, window.innerWidth, h);
     footobj.set(h?1:0);
     footham.panel = footobj.getcurrent();
