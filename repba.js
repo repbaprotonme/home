@@ -1240,6 +1240,15 @@ var makehammer = function (context, v, t)
             ham.panel.swipeupdown(context, new rectangle(0, 0, ham.element.width, ham.element.height), x, y, evt);
     });
 
+    ham.element.addEventListener("auxclick", function (evt)
+    {
+   	    evt.preventDefault();
+        var x = evt.offsetX;
+        var y = evt.offsetY;
+        if (typeof (ham.panel.auxclick) == "function")//todo
+            ham.panel.auxclick(context, new rectangle(0, 0, ham.element.width, ham.element.height), x, y);
+    }, false);
+
     ham.element.addEventListener("contextmenu", function (evt)
     {
    	    evt.preventDefault();
@@ -1751,10 +1760,8 @@ var panlst =
         }
         else
         {
-            //if (context.type != 2 && (type == "panleft" || type == "panright"))
-            if ( (type == "panleft" || type == "panright"))
+            if (type == "panleft" || type == "panright")
             {
-                context.type = 1
                 context.autodirect = (type == "panleft")?-1:1;
                 var len = context.timeobj.length();
                 var diff = context.startx-x;
@@ -1767,10 +1774,8 @@ var panlst =
                 context.timeobj.set(j);
                 context.refresh()
             }
-//            else if (context.type != 1 && (type == "panup" || type == "pandown"))
-            else if ( (type == "panup" || type == "pandown"))
+            else if (type == "panup" || type == "pandown")
             {
-                context.type = 2
                 var zoom = zoomobj.getcurrent()
                 if (Number(zoom.getcurrent()))
                 {
@@ -1789,7 +1794,6 @@ var panlst =
     },
 	panstart: function (context, rect, x, y)
 	{
-        context.type = 0;
         context.startx = x;
         context.starty = y;
         context.startt = context.timeobj.current();
@@ -2958,7 +2962,7 @@ var templatelst =
         galleryobj.maxmegapix = 4000000;
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "50-85", poomobj.length());
-        traitobj.split(70, "0.1-1.0", traitobj.length());
+        traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -2968,7 +2972,7 @@ var templatelst =
     {
         loomobj.split(url.zoom, "70-95", loomobj.length());
         poomobj.split(url.zoom, "50-95", poomobj.length());
-        traitobj.split(70, "0.1-1.0", traitobj.length());
+        traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -4464,6 +4468,7 @@ var bodylst =
                                         [
                                             new Layer(
                                             [
+                                                context.movingpage == -1 ? new Fill(MENUSELECT) : 0,
                                                 new Rectangle(context.moveprev),
                                                 new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
                                             ]),
@@ -4474,6 +4479,7 @@ var bodylst =
                                             ]),
                                             new Layer(
                                             [
+                                                context.movingpage == 1 ? new Fill(MENUSELECT) : 0,
                                                 new Rectangle(context.movenext),
                                                 new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
                                             ]),
