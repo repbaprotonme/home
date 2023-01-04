@@ -4468,7 +4468,7 @@ var bodylst =
                                         [
                                             new Layer(
                                             [
-                                                context.movingpage == -1 ? new Fill(MENUSELECT) : 0,
+                                                context.movingpage == -1 ? new Fill("rgb(0,0,150)") : 0,
                                                 new Rectangle(context.moveprev),
                                                 new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
                                             ]),
@@ -4479,7 +4479,7 @@ var bodylst =
                                             ]),
                                             new Layer(
                                             [
-                                                context.movingpage == 1 ? new Fill(MENUSELECT) : 0,
+                                                context.movingpage == 1 ? new Fill("rgb(0,0,150)") : 0,
                                                 new Rectangle(context.movenext),
                                                 new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
                                             ]),
@@ -4507,7 +4507,7 @@ var bodylst =
                         0,
                     ]);
 
-            a.draw(context, rect,
+                a.draw(context, rect,
                 [
                     [
                         context.ignores,
