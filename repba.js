@@ -4471,9 +4471,10 @@ var bodylst =
                         0,
                     ]);
 
+            var s = (galleryobj.current()+1)+" of "+galleryobj.length()
             a.draw(context, rect,
                 [
-                    galleryobj.getcurrent().title,
+                    s,
                     "Login",
                     "Add Image",
                     "Delete Image",
