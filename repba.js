@@ -2371,7 +2371,7 @@ var taplst =
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
             context.tapgroup = 3;
             clearInterval(context.timetap);
-            context.timetap = setInterval(function () { context.tapgroup = 0; context.refresh(); }, 400);
+            context.timetap = setInterval(function () { context.tapgroup = 0; _4cnvctx.refresh(); }, 400);
         }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
@@ -2383,7 +2383,7 @@ var taplst =
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
             context.tapgroup = 1;
             clearInterval(context.timetap);
-            context.timetap = setInterval(function () { context.tapgroup = 0; context.refresh(); }, 400);
+            context.timetap = setInterval(function () { context.tapgroup = 0; _4cnvctx.refresh(); }, 400);
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
@@ -2397,7 +2397,7 @@ var taplst =
             _4cnvctx.refresh();
             context.tapgroup = 2;
             clearInterval(context.timetap);
-            context.timetap = setInterval(function () { context.tapgroup = 0; context.refresh(); }, 400);
+            context.timetap = setInterval(function () { context.tapgroup = 0; _4cnvctx.refresh(); }, 400);
         }
         else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
@@ -4420,19 +4420,19 @@ var bodylst =
                                 new Layer(
                                 [
                                     new Rectangle(context.menudown),
-                                    new Fill(context.tapgroup==3?"rgb(0,0,70)":MENUCOLOR),
+                                    new Fill(context.tapgroup==3?"rgb(0,0,150)":MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
                                 new Layer(
                                 [
                                     new Rectangle(context.menuhome),
-                                    new Fill(context.tapgroup==2?"rgb(0,0,70)":MENUCOLOR),
+                                    new Fill(context.tapgroup==2?"rgb(0,0,150)":MENUCOLOR),
                                     new Shrink(new Circle("white"),20,20)
                                 ]),
                                 new Layer(
                                 [
                                     new Rectangle(context.menuup),
-                                    new Fill(context.tapgroup==1?"rgb(0,0,70)":MENUCOLOR),
+                                    new Fill(context.tapgroup==1?"rgb(0,0,150)":MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,180),20,20),
                                 ]),
                                 new Rectangles(),
