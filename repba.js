@@ -4493,13 +4493,13 @@ var bodylst =
             var a = new Col([0,w,0],
                     [
                         0,
-                        new Row([0,ALIEXTENT+40*4+20,0],
+                        new Row([0,ALIEXTENT+40*4,0],
                         [
                             0,
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40,40,20],
+                                new RowA([0,40,40,40,40],
                                 [
                                     new Layer(
                                     [
@@ -4549,7 +4549,6 @@ var bodylst =
                                         context.tapindex == context.taphelp ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    0,
                                 ])
                             ]),
                             0,
@@ -4567,7 +4566,6 @@ var bodylst =
                     "Add Image",
                     "Delete Image",
                     "Help",
-                    0,
                 ],
                 0);
             context.restore();
