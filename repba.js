@@ -509,6 +509,7 @@ function drawslices()
         context.slicescount++;
         context.restore();
         delete context.addimage;
+        delete context.taphelp;
         delete context.delimage;
         delete context.login;
         delete context.moveprev;
@@ -2386,14 +2387,14 @@ var taplst =
         }
         else if (context.login && context.login.hitest(x,y))
         {
-            context.tapindex = 1;
+            context.tapindex = context.login;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
+            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();}, 400)
         }
         else if (context.addimage && context.addimage.hitest(x,y))
         {
-            context.tapindex = 2;
+            context.tapindex = context.addimage;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
@@ -2405,10 +2406,17 @@ var taplst =
         }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
-            context.tapindex = 3;
+            context.tapindex = context.delimage;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();},400)
+            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();}, 400)
+        }
+        else if (context.taphelp && context.taphelp.hitest(x,y))
+        {
+            context.tapindex = context.taphelp;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; menushow(_7cnvctx); context.refresh();}, 400)
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
@@ -2561,7 +2569,7 @@ var thumblst =
             context.drawImage(photo.image, x, y, w, h);
         }
 
-        context.lineWidth = context.isthumbrect?2:8;
+        context.lineWidth = context.isthumbrect?2:THUMBORDER;
         var whitestroke = new StrokeRect(THUMBSTROKE);
         var r = new rectangle(x,y,w,h);
         whitestroke.draw(context, r, 0, 0);
@@ -2587,7 +2595,7 @@ var thumblst =
         var jj = context.timeobj.berp();
         var bb = w*(1-jj);
         var xx = x+bb-ww/2;
-        context.lineWidth = 3;
+        context.lineWidth = THUMBORDER/2;
         var r = new rectangle(xx,yy,ww,hh);
         blackfill2.draw(context, r, 0, 0);
         whitestroke.draw(context, r, 0, 0);
@@ -3212,7 +3220,8 @@ fetch(path)
                 line2: "360° Panoramas",
                 line3: "Image Stretching",
                 line4: "Image Zooming",
-                //
+                //Sidescrolling  todo
+                //Wrap-Around:w
                 func: function() {menuhide(); }
             },
         ];
@@ -4367,7 +4376,7 @@ var bodylst =
             var a =
                     new Col([60,0,60],
                     [
-                        j?0:new Row([rect.height/7,60,0],
+                        j?0:new Row([90,60,0],
                         [
                             0,
                             new Layer(
@@ -4393,7 +4402,7 @@ var bodylst =
                            ]),
                             0,
                         ]):0,
-                        j?0:new Row([rect.height/7,60,0],
+                        j?0:new Row([90,60,0],
                         [
                             0,
                             new Layer(
@@ -4519,19 +4528,25 @@ var bodylst =
                                     new Layer(
                                     [
                                         new Rectangle(context.login),
-                                        context.tapindex == 1 ? new Fill("rgb(0,0,150)") : 0,
+                                        context.tapindex == context.login ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                     new Layer(
                                     [
                                         new Rectangle(context.addimage),
-                                        context.tapindex == 2 ? new Fill("rgb(0,0,150)") : 0,
+                                        context.tapindex == context.delimage ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                     new Layer(
                                     [
                                         new Rectangle(context.delimage),
-                                        context.tapindex == 3 ? new Fill("rgb(0,0,150)") : 0,
+                                        context.tapindex == context.delimage ? new Fill("rgb(0,0,150)") : 0,
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.taphelp),
+                                        context.tapindex == context.taphelp ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                 ])
