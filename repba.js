@@ -3289,7 +3289,7 @@ var ContextObj = (function ()
 
                             galleryobj.set(k);
                         }, 1000);
-                    }, 1000);
+                    }, 1);
                 }
 			}
 
