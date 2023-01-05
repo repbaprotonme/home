@@ -2453,7 +2453,7 @@ var taplst =
             obj.set(j);
             _4cnvctx.refresh();
         }
-        else if (context.thumbrect && context.thumbrect.hitest(x,y))
+        else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
             menuhide();
             context.hithumb(x,y);
