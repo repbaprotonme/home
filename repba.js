@@ -1481,6 +1481,7 @@ var contextmenulst =
     name: "BOSS",
     click: function (context, rect, x, y)
     {
+        masterhide(x, y)
     },
 },
 ]
