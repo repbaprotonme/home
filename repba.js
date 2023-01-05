@@ -247,9 +247,6 @@ var guidelst =
             var isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
             if (!isthumbrect)
                 return;
-            var pt = context.getweightedpoint(x,y);
-            x = pt?pt.x:x;
-            y = pt?pt.y:y;
             var index = Math.floor(((y-context.thumbrect.y)/context.thumbrect.height)
                     *channelobj.data.length);
             var row = (channelobj.data[index]/100)*rowobj.length();
@@ -1753,10 +1750,6 @@ var panlst =
         if ( context.pinching )
              return;
 
-        var pt = context.getweightedpoint(x,y);
-//        x = pt?pt.x:x;
-//        y = pt?pt.y:y;
-
         if (context.isthumbrect && !headobj.enabled)
         {
             if ((type == "panleft" || type == "panright"))
@@ -1774,12 +1767,11 @@ var panlst =
         }
         else
         {
-            if (context.type != 2 && (type == "panleft" || type == "panright"))
+            if ((type == "panleft" || type == "panright"))
             {
-                context.type = 1
                 context.autodirect = (type == "panleft")?-1:1;
                 var len = context.timeobj.length();
-                var diff = context.startx-x;
+                var diff = context.startx-context.starty;
                 var jvalue = ((len/context.virtualwidth)*speedxobj.getcurrent())*diff;
                 var j = context.startt - jvalue;
                 if (j < 0)
@@ -1789,14 +1781,14 @@ var panlst =
                 context.timeobj.set(j);
                 context.refresh()
             }
-            else if (context.type != 1 && (type == "panup" || type == "pandown"))
+            else if ((type == "panup" || type == "pandown"))
             {
-                context.type = 2
                 var zoom = zoomobj.getcurrent()
                 if (Number(zoom.getcurrent()))
                 {
                     var h = (rect.height*(1-zoom.getcurrent()/100))*2;
                     y = ((y/rect.height)*speedyobj.getcurrent())*h;
+                    context.starty = y
                     var k = panvert(rowobj, h-y);
                     if (k == -1)
                         return;
@@ -1810,7 +1802,6 @@ var panlst =
     },
 	panstart: function (context, rect, x, y)
 	{
-        context.type = 0;
         context.startx = x;
         context.starty = y;
         context.startt = context.timeobj.current();
@@ -1818,14 +1809,12 @@ var panlst =
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
         clearInterval(context.timemain);
         context.timemain = 0;
-        context.clearpoints();
         context.panning = 1;
         context.refresh();
     },
     panend: function (context, rect, x, y)
 	{
         context.pressed = 0;
-        context.clearpoints();
         context.panning = 0;
         context.isthumbrect = 0;
         var zoom = zoomobj.getcurrent()
@@ -2104,234 +2093,6 @@ var keylst =
 },
 
 ];
-
-CanvasRenderingContext2D.prototype.clearpoints = function()
-{
-    this.w1 = this.w2 = this.w3 =
-    this.w4 = this.w5 = this.w6 = this.w7 =
-    this.w8 = this.w9 = this.w10 =
-    this.w11 = this.w12 = this.w9 = this.w10 = this.w11 =
-    this.w12 = this.w13 = this.w14 =
-    this.w15 = this.w16 = this.w17 =
-    this.w18 = this.w19 = this.w20 =
-    this.w21 = this.w22 = this.w23 =
-    this.w24 = this.w25 = this.w26 =
-    this.w27 = this.w28 = this.w29 = this.w30 =
-    this.x1 = this.x2 = this.x3 =
-    this.x4 = this.x5 = this.x6 = this.x7 =
-    this.x8 = this.x9 = this.x10 =
-    this.x11 = this.x12 = this.x9 = this.x10 = this.x11 =
-    this.x12 = this.x13 = this.x14 =
-    this.x15 = this.x16 = this.x17 =
-    this.x18 = this.x19 = this.x20 =
-    this.x21 = this.x22 = this.x23 =
-    this.x24 = this.x25 = this.x26 =
-    this.x27 = this.x28 = this.x29 = this.x30 =
-    this.y1 = this.y2 = this.y3 = this.y4 =
-    this.y5 = this.y6 = this.y7 =
-    this.y8 = this.y9 = this.y10 =
-    this.y11 = this.y12 = this.y13 =
-    this.y14 = this.y15 = this.y16 =
-    this.y17 = this.y18 = this.y19 =
-    this.y20 = this.y21 = this.y22 =
-    this.y23 = this.y24 = this.y25 =
-    this.y26 = this.y27 = this.y28 =
-    this.y29 = this.y30 =
-    0;
-}
-
-CanvasRenderingContext2D.prototype.getweightedpoint = function(x,y)
-{
-    this.x30 = this.x29;
-    this.x29 = this.x28;
-    this.x28 = this.x27;
-    this.x27 = this.x26;
-    this.x26 = this.x25;
-    this.x25 = this.x24;
-    this.x24 = this.x23;
-    this.x23 = this.x22;
-    this.x22 = this.x21;
-    this.x21 = this.x20;
-    this.x20 = this.x19;
-    this.x19 = this.x18;
-    this.x18 = this.x17;
-    this.x17 = this.x16;
-    this.x16 = this.x15;
-    this.x15 = this.x14;
-    this.x14 = this.x13;
-    this.x13 = this.x12;
-    this.x12 = this.x11;
-    this.x11 = this.x10;
-    this.x10 = this.x9;
-    this.x9 = this.x8;
-    this.x8 = this.x7;
-    this.x7 = this.x6;
-    this.x6 = this.x5;
-    this.x5 = this.x4;
-    this.x4 = this.x3;
-    this.x3 = this.x2;
-    this.x2 = this.x1;
-    this.x1 = x;
-    this.y30 = this.y29;
-    this.y29 = this.y28;
-    this.y28 = this.y27;
-    this.y27 = this.y26;
-    this.y26 = this.y25;
-    this.y25 = this.y24;
-    this.y24 = this.y23;
-    this.y23 = this.y22;
-    this.y22 = this.y21;
-    this.y21 = this.y20;
-    this.y20 = this.y19;
-    this.y19 = this.y18;
-    this.y18 = this.y17;
-    this.y17 = this.y16
-    this.y16 = this.y15;
-    this.y15 = this.y14;
-    this.y14 = this.y14;
-    this.y13 = this.y12;
-    this.y12 = this.y11;
-    this.y11 = this.y10;
-    this.y10 = this.y9;
-    this.y9 = this.y8;
-    this.y8 = this.y7;
-    this.y7 = this.y6;
-    this.y6 = this.y5;
-    this.y5 = this.y4;
-    this.y4 = this.y3;
-    this.y3 = this.y2;
-    this.y2 = this.y1;
-    this.y1 = y;
-
-    var x,y;
-    if (this.x25)
-    {
-        x = (this.x25+this.x24+this.x23+this.x22+this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/25;
-        y = (this.y25+this.y24+this.y23+this.y22+this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/25;
-    }
-    else if (this.x24)
-    {
-        x = (this.x24+this.x23+this.x22+this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/24;
-        y = (this.y24+this.y23+this.y22+this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/24;
-    }
-    else if (this.x23)
-    {
-        x = (this.x23+this.x22+this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/23;
-        y = (this.y23+this.y22+this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/23;
-    }
-    else if (this.x22)
-    {
-        x = (this.x22+this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/22;
-        y = (this.y22+this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/22;
-    }
-    else if (this.x21)
-    {
-        x = (this.x21+this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/21;
-        y = (this.y21+this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/21;
-    }
-    else if (this.x20)
-    {
-        x = (this.x20+this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/20;
-        y = (this.y20+this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/20;
-    }
-    else if (this.x19)
-    {
-        x = (this.x19+this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/19;
-        y = (this.y19+this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/19;
-    }
-    else if (this.x18)
-    {
-        x = (this.x18+this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/18;
-        y = (this.y18+this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/18;
-    }
-    else if (this.x17)
-    {
-        x = (this.x17+this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/17;
-        y = (this.y17+this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/17;
-    }
-    else if (this.x16)
-    {
-        x = (this.x16+this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/16;
-        y = (this.y16+this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/16;
-    }
-    else if (this.x15)
-    {
-        x = (this.x15+this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/15;
-        y = (this.y15+this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/15;
-    }
-    else if (this.x14)
-    {
-        x = (this.x14+this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/14;
-        y = (this.y14+this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/14;
-    }
-    else if (this.x13)
-    {
-        x = (this.x13+this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/13;
-        y = (this.y13+this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/13;
-    }
-    else if (this.x12)
-    {
-        x = (this.x12+this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/12;
-        y = (this.y12+this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/12;
-     }
-    else if (this.x11)
-     {
-        x = (this.x11+this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/11;
-        y = (this.y11+this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/11;
-     }
-    else if (this.x10)
-     {
-        x = (this.x10+this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/10;
-        y = (this.y10+this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/10;
-     }
-    else if (this.x9)
-     {
-        x = (this.x9+this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/9;
-        y = (this.y9+this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/9;
-     }
-    else if (this.x8)
-     {
-        x = (this.x8+this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/8;
-        y = (this.y8+this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/8;
-     }
-     if (this.x7)
-     {
-        x = (this.x7+this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/7;
-        y = (this.y7+this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/7;
-     }
-    else if (this.x6)
-     {
-        x = (this.x6+this.x5+this.x4+this.x3+this.x2+this.x1)/6;
-        y = (this.y6+this.y5+this.y4+this.y3+this.y2+this.y1)/6;
-     }
-    else if (this.x5)
-    {
-        x = (this.x5+this.x4+this.x3+this.x2+this.x1)/5;
-        y = (this.y5+this.y4+this.y3+this.y2+this.y1)/5;
-     }
-    else if (this.x4)
-    {
-        x = (this.x4+this.x3+this.x2+this.x1)/4;
-        y = (this.y4+this.y3+this.y2+this.y1)/4;
-     }
-    else if (this.x3)
-     {
-        x = (this.x3+this.x2+this.x1)/3;
-        y = (this.y3+this.y2+this.y1)/3;
-     }
-    else if (this.x2)
-     {
-        x = (this.x2+this.x1)/2;
-        y = (this.y2+this.y1)/2;
-     }
-    else if (this.x1)
-     {
-        x = (this.x1)/1;
-        y = (this.y1)/1;
-     }
-
-    return {x,y}
-}
 
 CanvasRenderingContext2D.prototype.hithumb = function(x,y)
 {
