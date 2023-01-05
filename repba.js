@@ -3229,13 +3229,6 @@ var ContextObj = (function ()
                         delete globalobj.promptedfile;
                     }
 
-                    var k = galleryobj.current();
-                    galleryobj.rotate(1);
-                    var img1 = new Image();
-                    img1.src = galleryobj.path();
-                    img1.path = galleryobj.getcurrent()[0]
-                    img1.onload = function() { loaded.add(img1.path); }
-
                     clearInterval(context.timemain);
                     context.timemain = 0;
                     pageresize();
@@ -3251,6 +3244,13 @@ var ContextObj = (function ()
                             context.autodirect = _4cnvctx.movingpage==1?-1:1
                         _4cnvctx.tab();
                     }
+
+                    var k = galleryobj.current();
+                    galleryobj.rotate(1);
+                    var img1 = new Image();
+                    img1.src = galleryobj.path();
+                    img1.path = galleryobj.getcurrent()[0]
+                    img1.onload = function() { loaded.add(img1.path); }
 
                     setTimeout(function()
                     {
