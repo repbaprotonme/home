@@ -2465,7 +2465,7 @@ var taplst =
         }
         else
         {
-            masterhide();
+            masterhide(x, y);
         }
 
         addressobj.update();
@@ -4257,7 +4257,7 @@ var headlst =
             }
             else
             {
-                masterhide()
+                masterhide(x, 0)
             }
 
             _4cnvctx.refresh();
@@ -4713,7 +4713,7 @@ var footlst =
             }
             else
             {
-                masterhide()
+                masterhide(x, 0)
             }
 
             addressobj.update();
@@ -4882,7 +4882,7 @@ window.addEventListener("keydown", function (evt)
         return context.keydown_(evt);
 }, false);
 
-function masterhide()
+function masterhide(x, y)
 {
     var context = _4cnvctx;
     if (menuenabled() || bodyobj.current())
