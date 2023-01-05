@@ -4272,7 +4272,11 @@ var headlst =
                 _4cnvctx.refresh();
                 menushow(_9cnvctx);
             }
-            else
+            else if (context.leftab.hitest(x,y))
+            {
+                masterhide(x, 0)
+            }
+            else if (context.rightab.hitest(x,y))
             {
                 masterhide(x, 0)
             }
@@ -4292,10 +4296,8 @@ var headlst =
             context.prevpage = new rectangle()
             context.nextpage = new rectangle()
             context.thumbnail = new rectangle()
-            context.extent = new rectangle()
-            context.size = new rectangle()
-            context.prevpage2 = new rectangle()
-            context.nextpage2 = new rectangle()
+            context.leftab = new rectangle()
+            context.rightab = new rectangle()
             context.picture = new rectangle()
             context.font = "1rem Archivo Black";
             var j = rect.width < 420 ? (rect.width-ALIEXTENT*4):180;
@@ -4311,7 +4313,7 @@ var headlst =
                         new PagePanel(s?0.115:0.1),
                         new Rectangle(context.page),
                     ]),
-                    0,
+                    new Rectangle(context.leftab),
                     new Layer(
                     [
                         new Rectangle(context.prevpage),
@@ -4355,7 +4357,7 @@ var headlst =
                             0,
                         ]),
                     ]),
-                    0,
+                    new Rectangle(context.rightab),
                     new Layer(
                     [
                         _9cnvctx.enabled ? new Fill(BUTTONBACK):0,
@@ -4728,7 +4730,11 @@ var footlst =
                 _4cnvctx.moveup();
                 contextobj.reset();
             }
-            else
+            else if (context.leftab.hitest(x,y))
+            {
+                masterhide(x, 0)
+            }
+            else if (context.rightab.hitest(x,y))
             {
                 masterhide(x, 0)
             }
