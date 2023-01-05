@@ -4758,14 +4758,14 @@ var footlst =
             context.rightab = new rectangle()
 
             var a =
-               new Col([0,20,60,24,ALIEXTENT-16,24,60,20,0],
+               new Col([0,20,ALIEXTENT,20,ALIEXTENT-16,20,ALIEXTENT,20,0],
                [
                     new Rectangle(context.leftab),
                     0,
                     new Layer(
                     [
                         new Rectangle(context.keyzoomdown),
-                        new Shrink(new Minus(ARROWFILL),0,0),
+                        new Minus(ARROWFILL),
                     ]),
                     0,
                     new Layer(
@@ -4777,7 +4777,7 @@ var footlst =
                     new Layer(
                     [
                         new Rectangle(context.keyzoomup),
-                        new Shrink(new Plus(ARROWFILL),0,0),
+                        new Plus(ARROWFILL),
                     ]),
                     0,
                     new Rectangle(context.rightab),
