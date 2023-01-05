@@ -2804,8 +2804,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        loomobj.split(url.zoom, "20-70", loomobj.length());
-        poomobj.split(url.zoom, "0-70", poomobj.length());
+        loomobj.split(url.zoom, "20-80", loomobj.length());
+        poomobj.split(url.zoom, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(50, "0.1-1.0", scapeobj.length());
     }
@@ -3246,50 +3246,28 @@ var ContextObj = (function ()
                         _4cnvctx.tab();
                     }
 
-                    setTimeout(function()
-                    {
-                        var k = galleryobj.current();
-                        galleryobj.rotate(1);
-                        if (!loaded.has(galleryobj.path()))
-                        {
-                            var img1 = new Image();
-                            img1.src = galleryobj.path();
-                            img1.path = galleryobj.getcurrent()[0]
-                            img1.onload = function() { loaded.add(img1.path); }
-                            galleryobj.rotate(1);
-                        }
-
-                        setTimeout(function()
-                        {
-                            if (!loaded.has(galleryobj.path()))
-                            {
-                                var img2 = new Image();
-                                img2.src = galleryobj.path();
-                                img2.path = galleryobj.getcurrent()[0]
-                                img2.onload = function() { loaded.add(img2.path); }
-                            }
-
-                            galleryobj.rotate(1);
-                            if (!loaded.has(galleryobj.path()))
-                            {
-                                var img3 = new Image();
-                                img3.src = galleryobj.path();
-                                img3.path = galleryobj.getcurrent()[0]
-                                img3.onload = function() { loaded.add(img3.path); }
-                            }
-
-                            galleryobj.rotate(-3);
-                            if (!loaded.has(galleryobj.path()))
-                            {
-                                var img3 = new Image();
-                                img4.src = galleryobj.path();
-                                img4.path = galleryobj.getcurrent()[0]
-                                img4.onload = function() { loaded.add(img3.path); }
-                            }
-
-                            galleryobj.set(k);
-                        }, 1000);
-                    }, 1);
+                    var k = galleryobj.current();
+                    galleryobj.rotate(1);
+                    var img1 = new Image();
+                    img1.src = galleryobj.path();
+                    img1.path = galleryobj.getcurrent()[0]
+                    img1.onload = function() { loaded.add(img1.path); }
+                    galleryobj.rotate(1);
+                    var img2 = new Image();
+                    img2.src = galleryobj.path();
+                    img2.path = galleryobj.getcurrent()[0]
+                    img2.onload = function() { loaded.add(img2.path); }
+                    galleryobj.rotate(1);
+                    var img3 = new Image();
+                    img3.src = galleryobj.path();
+                    img3.path = galleryobj.getcurrent()[0]
+                    img3.onload = function() { loaded.add(img3.path); }
+                    galleryobj.rotate(-3);
+                    var img3 = new Image();
+                    img4.src = galleryobj.path();
+                    img4.path = galleryobj.getcurrent()[0]
+                    img4.onload = function() { loaded.add(img3.path); }
+                    galleryobj.set(k);
                 }
 			}
 
