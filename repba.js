@@ -46,7 +46,6 @@ const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 globalobj = {};
 let photo = {}
 photo.image = 0;
-photo.menu = 0;
 photo.help = 0;
 
 let loaded = new Set()
@@ -2591,7 +2590,7 @@ var drawlst =
 {
     name: "PMENU",
     draw: function (context, rect, user, time)
-    {
+    {/*
         context.save();
         rect.height = context.buttonheight;
         rect.width -= 40;
@@ -2648,6 +2647,7 @@ var drawlst =
 
         a.draw(context, rect, [user.title[0],0,(user.index+1)+"",0,user.title[1]+"x"+user.title[2]], time);
         context.restore();
+        */
     }
 },
 {
@@ -3229,6 +3229,13 @@ var ContextObj = (function ()
                         delete globalobj.promptedfile;
                     }
 
+                    var k = galleryobj.current();
+                    galleryobj.rotate(1);
+                    var img1 = new Image();
+                    img1.src = galleryobj.path();
+                    img1.path = galleryobj.getcurrent()[0]
+                    img1.onload = function() { loaded.add(img1.path); }
+
                     clearInterval(context.timemain);
                     context.timemain = 0;
                     pageresize();
@@ -3245,20 +3252,8 @@ var ContextObj = (function ()
                         _4cnvctx.tab();
                     }
 
-                    //setTimeout(function() { if (!_4cnvctx.setcolumncomplete) contextobj.reset(); }, 400);
-                    setTimeout(function() { if (!_4cnvctx.setcolumncomplete) contextobj.reset(); }, 1000);
-
                     setTimeout(function()
                     {
-                        photo.menu = new Image();
-                        photo.menu.src = "https://reportbase.com/image/"+url.path+'/w='+360;
-
-                        var k = galleryobj.current();
-                        galleryobj.rotate(1);
-                        var img1 = new Image();
-                        img1.src = galleryobj.path();
-                        img1.path = galleryobj.getcurrent()[0]
-                        img1.onload = function() { loaded.add(img1.path); }
                         galleryobj.rotate(1);
                         var img2 = new Image();
                         img2.src = galleryobj.path();
@@ -3270,7 +3265,7 @@ var ContextObj = (function ()
                         img3.path = galleryobj.getcurrent()[0]
                         img3.onload = function() { loaded.add(img3.path); }
                         galleryobj.set(k);
-                    }, 250);
+                    }, 2000);
                 }
 			}
 
