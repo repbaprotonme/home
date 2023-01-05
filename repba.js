@@ -510,7 +510,6 @@ function drawslices()
         context.restore();
         delete context.addimage;
         delete context.downimage;
-        delete context.selectrect;
         delete context.delimage;
         delete context.login;
         delete context.moveprev;
@@ -520,6 +519,7 @@ function drawslices()
         delete context.menuup;
         delete context.menuhome;
         delete context.menudown;
+        context.selectrect = []
         if (!context.pressed && headcnv.height)
             headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
         if (!context.pressed && footcnv.height)
@@ -970,6 +970,7 @@ var Arrow = function (color, degrees)
     this.draw = function (context, rect, user, time)
     {
         context.save();
+        //context.translate(rect.width/2,rect.height/2);//todo
 	    var w = rect.width
         var h = rect.height
         var x = rect.x
@@ -2613,7 +2614,6 @@ var thumblst =
         var xx = x+bb-ww/2;
         context.lineWidth = THUMBORDER/2;
         var r = new rectangle(xx,yy,ww,hh);
-        context.selectrect = []
         context.selectrect.push(r);
         blackfill2.draw(context, r, 0, 0);
         whitestroke.draw(context, r, 0, 0);
