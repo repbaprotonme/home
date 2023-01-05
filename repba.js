@@ -2567,7 +2567,7 @@ var thumblst =
         var blackfill = new Fill(THUMBFILL);
         var blackfill2 = new Fill("rgba(0,0,0,0.4)");
 
-        if (context.isthumbrect && (jp || context.panning))
+        if (context.isthumbrect && (jp))// || context.panning))
         {
             if (!context.pressed)
             {
