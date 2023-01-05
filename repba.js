@@ -1765,6 +1765,12 @@ var panlst =
     var pt = context.getweightedpoint(x,y);
     x = pt?pt.x:x;
     y = pt?pt.y:y;
+    var pt = context.getweightedpoint(x,y);
+    x = pt?pt.x:x;
+    y = pt?pt.y:y;
+    var pt = context.getweightedpoint(x,y);
+    x = pt?pt.x:x;
+    y = pt?pt.y:y;
             var k = guideobj.getcurrent();
             k.pan(context, rect, x, y, type);
         }
