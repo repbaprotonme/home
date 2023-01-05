@@ -894,7 +894,7 @@ var Plus = function (color)
     this.draw = function (context, rect, user, time)
     {
         context.save();
-        context.translate(rect.width/2-11,rect.height/2-11);
+        context.translate(rect.width/2-6,rect.height/2-6);
 	    var w = rect.width
         var h = rect.height
         var x = rect.x;
