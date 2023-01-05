@@ -894,6 +894,7 @@ var Plus = function (color)
     this.draw = function (context, rect, user, time)
     {
         context.save();
+        context.translate(rect.width/2,rect.height/2);
 	    var w = rect.width
         var h = rect.height
         var x = rect.x;
@@ -938,6 +939,7 @@ var Minus = function (color)
     this.draw = function (context, rect, user, time)
     {
         context.save();
+        context.translate(rect.width/2,rect.height/2);
 	    var w = rect.width
         var h = rect.height
         var x = rect.x;
@@ -2381,7 +2383,7 @@ var taplst =
         }
         else if (context.selectrect && context.selectrect.hitest(x,y)>=0)
         {
-            context.tapping = 1;
+            context.tapping = context.tapping?0:1;
             context.refresh();
         }
         else if (context.menuup && context.menuup.hitest(x,y))
