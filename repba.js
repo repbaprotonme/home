@@ -1759,13 +1759,43 @@ var panlst =
 
         if (context.isthumbrect && !headobj.enabled)
         {
-            if (context.type != 2 && (type == "panleft" || type == "panright"))
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+            //if (context.type != 2 && (type == "panleft" || type == "panright"))
+            if ( (type == "panleft" || type == "panright"))
             {
                 context.type = 1
                 var k = guideobj.getcurrent();
                 k.pan(context, rect, x, context.starty, type);
             }
-            else if (context.type != 1 && (type == "panup" || type == "pandown"))
+            //else if (context.type != 1 && (type == "panup" || type == "pandown"))
+            else if ( (type == "panup" || type == "pandown"))
             {
                 context.type = 2
                 var k = guideobj.getcurrent();
