@@ -1,0 +1,1 @@
+wrangler generate short-linker https://github.com/cloudflare/worker-template

@@ -33,7 +33,7 @@ const PROGRESSFALL = "rgba(0,0,0,0.5)";
 const SCROLLNUB = "rgba(0,0,0,0.5)";
 const SCROLLNAB = "rgba(0,0,0,0.5)";
 const SCROLLBACK = "rgba(255,255,255,0.75)";
-const HEADBACK = "rgba(0,0,0,0.2)";
+const HEADBACK = "rgba(0,0,0,0.4)";
 const MENUCOLOR = "rgba(0,0,0,0.50)";
 const BUTTONBACK = "rgba(0,0,0,0.25)";
 const OPTIONFILL = "rgb(255,255,255)";
@@ -4066,10 +4066,7 @@ var headlst =
             context.font = "1rem Archivo Black";
             var j = rect.width < 420 ? (rect.width-ALIEXTENT*4):180;
             var s = _5cnvctx.enabled || _8cnvctx.enabled;
-            var a = new Layer(
-            [
-                //new Fill(HEADBACK),
-                new ColA([ALIEXTENT,0,ALIEXTENT,j,ALIEXTENT,0,ALIEXTENT],
+            var a = new ColA([ALIEXTENT,0,ALIEXTENT,j,ALIEXTENT,0,ALIEXTENT],
                 [
                     new Layer(
                     [
@@ -4101,7 +4098,7 @@ var headlst =
                             0,
                             new Layer(
                             [
-                                bodyobj.current()?new Fill(THUMBSELECT):0,
+                                bodyobj.current()?new Fill(HEADBACK):0,
                                 new Shrink(new Text("white", "center", "middle",0,0,1),20,20),
                             ]),
                             0,
@@ -4128,33 +4125,13 @@ var headlst =
                         new OptionPanel((!_9cnvctx.enabled)?0.1:0.115),
                         new Rectangle(context.option),
                     ])
-                ])
-           ]);
+                ]);
 
             var s = (galleryobj.current()+1)+" of "+galleryobj.length()
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
             a.draw(context, rect, [0,0,0,debugobj.enabled?j:s,0,0,0], time);
             context.restore()
 		};
-	},
-	new function ()
-	{
-		this.tap = function (context, rect, x, y)
-		{
-            headobj.enabled = headobj.enabled?0:1;
-            pageresize();
-            _4cnvctx.refresh();
-		};
-
-		this.draw = function (context, rect, user, time)
-		{
-            var a = new Layer(
-            [
-               new Fill(HEADBACK),
-            ]);
-
-            a.draw(context,rect,0,0);
- 		};
 	},
 ];
 
