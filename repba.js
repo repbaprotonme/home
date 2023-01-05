@@ -1766,8 +1766,18 @@ var panlst =
                 y = pt?pt.y:y;
             }
 
-            var k = guideobj.getcurrent();
-            k.pan(context, rect, x, y, type);
+            if ((type == "panleft" || type == "panright"))
+            {
+                var k = guideobj.getcurrent();
+                k.pan(context, rect, x, context.starty, type);
+                context.startx = x;
+            }
+            else if (context.type != 1 && (type == "panup" || type == "pandown"))
+            {
+                var k = guideobj.getcurrent();
+                k.pan(context, rect, context.startx, y, type);
+                context.starty = y;
+            }
         }
         else
         {
