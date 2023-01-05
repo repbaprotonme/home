@@ -3245,15 +3245,14 @@ var ContextObj = (function ()
                         _4cnvctx.tab();
                     }
 
-                    var k = galleryobj.current();
-                    galleryobj.rotate(1);
-                    var img1 = new Image();
-                    img1.src = galleryobj.path();
-                    img1.path = galleryobj.getcurrent()[0]
-                    img1.onload = function() { loaded.add(img1.path); }
-
                     setTimeout(function()
                     {
+                        var k = galleryobj.current();
+                        galleryobj.rotate(1);
+                        var img1 = new Image();
+                        img1.src = galleryobj.path();
+                        img1.path = galleryobj.getcurrent()[0]
+                        img1.onload = function() { loaded.add(img1.path); }
                         galleryobj.rotate(1);
                         var img2 = new Image();
                         img2.src = galleryobj.path();
@@ -3265,7 +3264,7 @@ var ContextObj = (function ()
                         img3.path = galleryobj.getcurrent()[0]
                         img3.onload = function() { loaded.add(img3.path); }
                         galleryobj.set(k);
-                    }, 2000);
+                    }, 10);
                 }
 			}
 
