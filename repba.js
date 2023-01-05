@@ -4764,7 +4764,7 @@ var footlst =
                     0,
                     new Layer(
                     [
-                        new Fill("red"),
+                     //   new Fill("red"),
                         new Rectangle(context.keyzoomdown),
                         new Minus(ARROWFILL),
                     ]),
@@ -4777,7 +4777,7 @@ var footlst =
                     0,
                     new Layer(
                     [
-                        new Fill("red"),
+                    //    new Fill("red"),
                         new Rectangle(context.keyzoomup),
                         new Plus(ARROWFILL),
                     ]),
