@@ -1838,6 +1838,85 @@ var panlst =
         x = pt?pt.x:x;
         y = pt?pt.y:y;
 
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
+        var pt = context.getweightedpoint(x,y);
+        x = pt?pt.x:x;
+        y = pt?pt.y:y;
+
 
             var k = guideobj.getcurrent();
             k.pan(context, rect, x, y, type);
@@ -3457,7 +3536,7 @@ var ContextObj = (function ()
 				return;
 			}
 
-            var w = Math.min(ALIEXTENT*8,window.innerWidth-ALIEXTENT*2);
+            var w = Math.min(ALIEXTENT*7,window.innerWidth-ALIEXTENT*2);
             var l = Math.floor((window.innerWidth-w)/2);
             context.show(l, 0, w, _4cnv.height);
         },
