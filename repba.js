@@ -1787,20 +1787,8 @@ var panlst =
         x = pt?pt.x:x;
         y = pt?pt.y:y;
 
-            //if (context.type != 2 && (type == "panleft" || type == "panright"))
-            if ( (type == "panleft" || type == "panright"))
-            {
-                context.type = 1
-                var k = guideobj.getcurrent();
-                k.pan(context, rect, x, context.starty, type);
-            }
-            //else if (context.type != 1 && (type == "panup" || type == "pandown"))
-            else if ( (type == "panup" || type == "pandown"))
-            {
-                context.type = 2
-                var k = guideobj.getcurrent();
-                k.pan(context, rect, context.startx, y, type);
-            }
+            var k = guideobj.getcurrent();
+            k.pan(context, rect, x, y, type);
         }
         else
         {
