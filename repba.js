@@ -510,6 +510,7 @@ function drawslices()
         context.restore();
         delete context.addimage;
         delete context.downimage;
+        delete context.selectrect;
         delete context.delimage;
         delete context.login;
         delete context.moveprev;
@@ -2378,6 +2379,11 @@ var taplst =
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
+        else if (context.selectrect && context.selectrect.hitest(x,y)>=0)
+        {
+            context.tapping = 1;
+            context.refresh();
+        }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
             var context = _8cnvctx;
@@ -2605,18 +2611,22 @@ var thumblst =
         var xx = x+bb-ww/2;
         context.lineWidth = THUMBORDER/2;
         var r = new rectangle(xx,yy,ww,hh);
+        context.selectrect = []
+        context.selectrect.push(r);
         blackfill2.draw(context, r, 0, 0);
         whitestroke.draw(context, r, 0, 0);
 
         if (xx > x)//leftside
         {
             var r = new rectangle(xx-w,yy,ww,hh);
+            context.selectrect.push(r);
             blackfill2.draw(context, r, 0, 0);
             whitestroke.draw(context, r, 0, 0);
         }
         else if (xx < x)//right side
         {
             var r = new rectangle(w+xx,yy,ww,hh);
+            context.selectrect.push(r);
             blackfill2.draw(context, r, 0, 0);
             whitestroke.draw(context, r, 0, 0);
         }
@@ -4743,7 +4753,7 @@ var footlst =
                     new Layer(
                     [
                         new Rectangle(context.keyzoomdown),
-                        new Shrink(new Minus(ARROWFILL),22,22),
+                        new Shrink(new Minus(ARROWFILL),0,0),
                     ]),
                     0,
                     new Layer(
@@ -4755,7 +4765,7 @@ var footlst =
                     new Layer(
                     [
                         new Rectangle(context.keyzoomup),
-                        new Shrink(new Plus(ARROWFILL),22,22),
+                        new Shrink(new Plus(ARROWFILL),0,0),
                     ]),
                     0,
                     new Rectangle(context.rightab),
