@@ -4885,12 +4885,9 @@ window.addEventListener("keydown", function (evt)
 function masterhide()
 {
     var context = _4cnvctx;
-    if (menuenabled())
+    if (menuenabled() || bodyobj.current())
     {
         menuhide();
-    }
-    else if (bodyobj.current())
-    {
         bodyobj.set(0)
         context.refresh();
     }
