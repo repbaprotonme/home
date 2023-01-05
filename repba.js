@@ -502,7 +502,6 @@ function drawslices()
         context.slicescount++;
         context.restore();
         delete context.addimage;
-        delete context.downimage;
         delete context.selectrect;
         delete context.delimage;
         delete context.login;
@@ -745,7 +744,7 @@ function calculateAspectRatioFit(imgwidth, imgheight, rectwidth, rectheight)
 	return new rectangle(xstart, ystart, width, height);
 }
 
-function download(name, text)
+function downloadtext(name, text)
 {
 	var element = document.createElement('a');
 	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -2200,19 +2199,6 @@ var taplst =
                 context.refresh();
             }, 400)
         }
-        else if (context.downimage && context.downimage.hitest(x,y))
-        {
-            context.tapindex = 4;
-            context.refresh();
-            clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function()
-            {
-                context.tapindex = 0;
-                var obj = galleryobj.getcurrent();
-                window.open("https://reportbase.com/image/"+obj.title+"/w="+obj.width,"Reportbase");
-                context.refresh();
-            }, 400)
-        }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
             var obj = _8cnvctx.timeobj;
@@ -3090,6 +3076,13 @@ fetch(path)
             bodyobj.set(2)
             _4cnvctx.refresh();
             menuhide();
+        }});
+
+        slices.data.push({ title:"Download", path: "DOWNLOAD", func: function()
+        {
+            context.refresh();
+            var obj = galleryobj.getcurrent();
+            window.open("https://reportbase.com/image/"+obj.title+"/w="+obj.width,"Reportbase");
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
@@ -4288,7 +4281,6 @@ var bodylst =
             context.login = new rectangle()
             context.addimage = new rectangle()
             context.delimage = new rectangle()
-            context.downimage = new rectangle()
             context.ignores = [];
             context.save();
             context.font = "1rem Archivo Black";
@@ -4296,13 +4288,13 @@ var bodylst =
             var a = new Col([0,w,0],
                     [
                         0,
-                        new Row([0,ALIEXTENT+40*4,0],
+                        new Row([0,ALIEXTENT+40*3,0],
                         [
                             0,
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40,40],
+                                new RowA([0,40,40,40],
                                 [
                                     new Layer(
                                     [
@@ -4346,12 +4338,6 @@ var bodylst =
                                         context.tapindex == 3 ? new Fill("rgb(0,0,150)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.downimage),
-                                        context.tapindex == 4 ? new Fill("rgb(0,0,150)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
                                 ])
                             ]),
                             0,
@@ -4366,9 +4352,8 @@ var bodylst =
                         galleryobj.getcurrent().title,
                     ],
                     "Login",
-                    "Insert",
-                    "Delete",
-                    "Download",
+                    "Add Image",
+                    "Delete Image",
                 ],
                 0);
             context.restore();
