@@ -1771,7 +1771,7 @@ var panlst =
             {
                 context.autodirect = (type == "panleft")?-1:1;
                 var len = context.timeobj.length();
-                var diff = context.startx-context.starty;
+                var diff = context.startx-x;
                 var jvalue = ((len/context.virtualwidth)*speedxobj.getcurrent())*diff;
                 var j = context.startt - jvalue;
                 if (j < 0)
@@ -1788,7 +1788,6 @@ var panlst =
                 {
                     var h = (rect.height*(1-zoom.getcurrent()/100))*2;
                     y = ((y/rect.height)*speedyobj.getcurrent())*h;
-                    context.starty = y
                     var k = panvert(rowobj, h-y);
                     if (k == -1)
                         return;
