@@ -1,4 +1,4 @@
-//todo: https://obfuscator.io/a....
+//todo: https://obfuscator.io/a....i.
 //todo: safari max size
 //todo: slow pan
 
