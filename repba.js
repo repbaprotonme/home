@@ -1647,9 +1647,6 @@ stretchobj = new makeoption("STRETCH", [pretchobj,letchobj]);
 var poomobj = new makeoption("PORTZOOM", 100);
 var loomobj = new makeoption("LANDZOOM", 100);
 var zoomobj = new makeoption("ZOOM", [poomobj,loomobj]);
-url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-poomobj.set(url.zoom);
-loomobj.set(url.zoom);
 
 var traitobj = new makeoption("TRAIT", 100);
 var scapeobj = new makeoption("SCAPE", 100);
@@ -2776,6 +2773,7 @@ var templatelst =
     {
         rowobj.enabled = 1;
         galleryobj.maxmegapix = 4000000;
+        url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "50-85", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2786,6 +2784,7 @@ var templatelst =
     name: "PORTRAIT",
     init: function ()
     {
+        url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         loomobj.split(url.zoom, "70-95", loomobj.length());
         poomobj.split(url.zoom, "50-95", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2796,6 +2795,7 @@ var templatelst =
     name: "SIDESCROLL",
     init: function ()
     {
+        url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(url.zoom, "0-25", loomobj.length());
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2806,6 +2806,7 @@ var templatelst =
     name: "ULTRAWIDE",
     init: function ()
     {
+        url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(url.zoom, "0-25", loomobj.length());
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2816,6 +2817,7 @@ var templatelst =
     name: "WIDE",
     init: function ()
     {
+        url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         loomobj.split(url.zoom, "30-80", loomobj.length());
         poomobj.split(url.zoom, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2826,6 +2828,7 @@ var templatelst =
     name: "LANDSCAPE",
     init: function (j)
     {
+        url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         loomobj.split(url.zoom, "50-90", loomobj.length());
         poomobj.split(url.zoom, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2836,6 +2839,7 @@ var templatelst =
     name: "EXTRATALL",
     init: function ()
     {
+        url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2846,6 +2850,7 @@ var templatelst =
     name: "TALL",
     init: function ()
     {
+        url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -2856,6 +2861,7 @@ var templatelst =
     name: "LEGEND",
     init: function ()
     {
+        url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         guideobj.set(1);
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
@@ -2918,6 +2924,8 @@ fetch(path)
         templateobj.set(j);
         templateobj.getcurrent().init();
 
+        poomobj.set(url.zoom);
+        loomobj.set(url.zoom);
         pretchobj.split(60, "40-90", pretchobj.length());
         letchobj.split(60, "40-90", letchobj.length());
         speedxobj.split(3, "1-20", speedxobj.length());
