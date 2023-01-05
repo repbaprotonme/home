@@ -510,6 +510,7 @@ function drawslices()
         context.restore();
         delete context.addimage;
         delete context.downimage;
+        delete context.selectrect;
         delete context.delimage;
         delete context.login;
         delete context.moveprev;
@@ -519,7 +520,6 @@ function drawslices()
         delete context.menuup;
         delete context.menuhome;
         delete context.menudown;
-        context.selectrect = []
         if (!context.pressed && headcnv.height)
             headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
         if (!context.pressed && footcnv.height)
@@ -2382,11 +2382,6 @@ var taplst =
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
         }
-        else if (context.selectrect && context.selectrect.hitest(x,y)>=0)
-        {
-            context.tapping = context.tapping?0:1;
-            context.refresh();
-        }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
             var context = _8cnvctx;
@@ -2464,14 +2459,22 @@ var taplst =
         }
         else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
-            menuhide();
-            context.hithumb(x,y);
-            var zoom = zoomobj.getcurrent()
-            var b = !Number(zoom.getcurrent()/100) && !zoom.current()
-            if (!b)
-                contextobj.reset()
-            context.tapping = 1;
-            context.refresh();
+            if (context.selectrect && context.selectrect.hitest(x,y)>=0)
+            {
+                context.tapping = context.tapping?0:1;
+                context.refresh();
+            }
+            else
+            {
+                menuhide();
+                context.hithumb(x,y);
+                var zoom = zoomobj.getcurrent()
+                var b = !Number(zoom.getcurrent()/100) && !zoom.current()
+                if (!b)
+                    contextobj.reset()
+                context.tapping = 1;
+                context.refresh();
+            }
         }
         else
         {
@@ -2614,6 +2617,7 @@ var thumblst =
         var xx = x+bb-ww/2;
         context.lineWidth = THUMBORDER/2;
         var r = new rectangle(xx,yy,ww,hh);
+        context.selectrect = []
         context.selectrect.push(r);
         blackfill2.draw(context, r, 0, 0);
         whitestroke.draw(context, r, 0, 0);
