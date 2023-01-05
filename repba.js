@@ -1772,7 +1772,7 @@ var panlst =
                 k.pan(context, rect, x, context.starty, type);
                 context.startx = x;
             }
-            else if (context.type != 1 && (type == "panup" || type == "pandown"))
+            else if ((type == "panup" || type == "pandown"))
             {
                 var k = guideobj.getcurrent();
                 k.pan(context, rect, context.startx, y, type);
