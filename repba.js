@@ -939,7 +939,7 @@ var Minus = function (color)
     this.draw = function (context, rect, user, time)
     {
         context.save();
-        context.translate(rect.width/2,rect.height/2);
+        context.translate(rect.width/2-5,rect.height/2-5);
 	    var w = rect.width
         var h = rect.height
         var x = rect.x;
