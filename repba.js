@@ -2144,6 +2144,8 @@ CanvasRenderingContext2D.prototype.clearpoints = function()
 
 CanvasRenderingContext2D.prototype.getweightedpoint = function(x,y)
 {
+    return {x,y}
+
     this.x30 = this.x29;
     this.x29 = this.x28;
     this.x28 = this.x27;
