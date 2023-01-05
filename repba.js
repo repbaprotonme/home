@@ -4908,11 +4908,6 @@ function masterhide(x, y)
         bodyobj.set(0)
         context.refresh();
     }
-    else if (context.tapping)
-    {
-        context.tapping = 0;
-        context.refresh();
-    }
     else
     {
         thumbpos.set(thumbpos.data.hitest(x,y))
