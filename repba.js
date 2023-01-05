@@ -2793,8 +2793,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        loomobj.split(url.zoom, "0-25", loomobj.length());
-        poomobj.split(url.zoom, "0-25", poomobj.length());
+        loomobj.split(url.zoom, "0-50", loomobj.length());
+        poomobj.split(url.zoom, "0-50", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -2804,8 +2804,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        loomobj.split(url.zoom, "30-80", loomobj.length());
-        poomobj.split(url.zoom, "0-80", poomobj.length());
+        loomobj.split(url.zoom, "20-70", loomobj.length());
+        poomobj.split(url.zoom, "0-70", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(50, "0.1-1.0", scapeobj.length());
     }
@@ -3289,7 +3289,7 @@ var ContextObj = (function ()
 
                             galleryobj.set(k);
                         }, 1000);
-                    }, 10);
+                    }, 1000);
                 }
 			}
 
