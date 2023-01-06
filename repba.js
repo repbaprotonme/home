@@ -2337,7 +2337,7 @@ var thumblst =
         }
 
         context.lineWidth = context.isthumbrect?2:THUMBORDER;
-        var whitestroke = new StrokeRect(THUMBSTROKE);
+        var whitestroke = new StrokeRect(context.freepan?"RGBA(255,155,0,0.5)":THUMBSTROKE);
         var r = new rectangle(x,y,w,h);
         whitestroke.draw(context, r, 0, 0);
         var whitestroke = new StrokeRect(THUMBSTROKE);
