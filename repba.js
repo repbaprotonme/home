@@ -4915,6 +4915,7 @@ function masterhide(x, y)
     }
     else
     {
+        context.tapping = 0;
         thumbpos.set(thumbpos.data.hitest(x,y))
         bodyobj.set(0)
         headobj.enabled = headobj.enabled?0:1;
