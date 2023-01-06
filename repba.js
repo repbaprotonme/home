@@ -3248,8 +3248,8 @@ var ContextObj = (function ()
                             context.autodirect = -1;
                         else
                             context.autodirect = _4cnvctx.movingpage==1?-1:1
-                        _4cnvctx.tab();
                         globalobj.masterload = masterload;
+                        _4cnvctx.tab();
                     }
                 }
 			}
