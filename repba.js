@@ -57,7 +57,7 @@ function randomNumber(min, max) { return Math.floor(Math.random() * (max - min) 
 let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
-url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 18;
+url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 36;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
 url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 8;
 
@@ -2796,7 +2796,7 @@ var templatelst =
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
-        url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
+        url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0.3;
         loomobj.split(url.zoom, "0-25", loomobj.length());
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -4223,7 +4223,7 @@ var bodylst =
                         ]),
                     ]);
 
-            var eff = rect.width/(context.slicewidth*context.visibles)
+            var eff = (context.slicewidth*context.visibles)/rect.width;
 
             a.draw(context, rect,
                     [
