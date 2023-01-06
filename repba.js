@@ -408,6 +408,8 @@ function drawslices()
             {
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
+                if (globalobj.reload)
+                    reload();
             }
             else if (context.slidebottom)
             {
@@ -3244,30 +3246,8 @@ var ContextObj = (function ()
                         else
                             context.autodirect = _4cnvctx.movingpage==1?-1:1
                         _4cnvctx.tab();
+                        globalobj.reload = 1;
                     }
-
-                    var k = galleryobj.current();
-                    galleryobj.rotate(1);
-                    var img1 = new Image();
-                    img1.src = galleryobj.path();
-                    img1.path = galleryobj.getcurrent().title
-                    img1.onload = function() { loaded.add(img1.path); }
-                    galleryobj.rotate(1);
-                    var img2 = new Image();
-                    img2.src = galleryobj.path();
-                    img2.path = galleryobj.getcurrent().title
-                    img2.onload = function() { loaded.add(img2.path); }
-                    galleryobj.rotate(1);
-                    var img3 = new Image();
-                    img3.src = galleryobj.path();
-                    img3.path = galleryobj.getcurrent().title
-                    img3.onload = function() { loaded.add(img3.path); }
-                    galleryobj.rotate(-3);
-                    var img4 = new Image();
-                    img4.src = galleryobj.path();
-                    img4.path = galleryobj.getcurrent().title
-                    img4.onload = function() { loaded.add(img3.path); }
-                    galleryobj.set(k);
                 }
 			}
 
@@ -3284,6 +3264,32 @@ var ContextObj = (function ()
 })();
 
 var contextobj = new ContextObj();
+
+function reload()
+{
+    var k = galleryobj.current();
+    galleryobj.rotate(1);
+    var img1 = new Image();
+    img1.src = galleryobj.path();
+    img1.path = galleryobj.getcurrent().title
+    img1.onload = function() { loaded.add(img1.path); }
+    galleryobj.rotate(1);
+    var img2 = new Image();
+    img2.src = galleryobj.path();
+    img2.path = galleryobj.getcurrent().title
+    img2.onload = function() { loaded.add(img2.path); }
+    galleryobj.rotate(1);
+    var img3 = new Image();
+    img3.src = galleryobj.path();
+    img3.path = galleryobj.getcurrent().title
+    img3.onload = function() { loaded.add(img3.path); }
+    galleryobj.rotate(-3);
+    var img4 = new Image();
+    img4.src = galleryobj.path();
+    img4.path = galleryobj.getcurrent().title
+    img4.onload = function() { loaded.add(img3.path); }
+    galleryobj.set(k);
+}
 
 function gridToRect(cols, rows, margin, width, height)
 {
