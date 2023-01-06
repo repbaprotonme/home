@@ -1870,12 +1870,14 @@ var presslst =
         context.isthumbrect = 0;
         context.panning = 0;
         context.pressed = 0;
-        headobj.enabled = 0;
+        headobj.enabled = headobj.save;
+        footobj.enabled = headobj.save;
         context.refresh()
     },
     press: function (context, rect, x, y)
     {
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
+        headobj.save = headobj.enabled;
         headobj.enabled = 0;
         footobj.enabled = 0;
         context.panning = 1;
