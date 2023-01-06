@@ -490,6 +490,7 @@ function drawslices()
         var w = x1-x;
         if (x+w > context.colwidth && x < rect.width+context.colwidth)
         {
+            var slice = slicelst[0];
             slice.visible = 1;
             slice.strechwidth = w;
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
