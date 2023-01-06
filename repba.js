@@ -44,6 +44,8 @@ const ARROWFILL = "white";
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 globalobj = {};
+globalobj.masterload = function(){}
+
 let photo = {}
 photo.image = 0;
 photo.help = 0;
@@ -405,11 +407,7 @@ function drawslices()
             {
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
-                if (globalobj.masterload)
-                {
-                    globalobj.masterload();
-                    delete globalobj.masterload;
-                }
+                globalobj.masterload();
             }
             else if (context.slidebottom)
             {
@@ -3306,7 +3304,7 @@ function masterload()
         imglst[n].onload = function() { loaded.add(this.path); }
     }
 
-    galleryobj.rotate(-size);
+    galleryobj.rotate(-5);
     var img = new Image();
     img.src = galleryobj.path();
     img.path = galleryobj.getcurrent().title
