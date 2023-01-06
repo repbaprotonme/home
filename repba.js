@@ -2162,7 +2162,12 @@ var taplst =
             context.tapindex = 1;
             context.refresh();
             clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function(){context.tapindex = 0; context.refresh();}, 400)
+            globalobj.tapthumb = setTimeout(function()
+            {
+               context.tapindex = 0;
+               context.refresh();
+               window.location.href = "https://auth.reportbase.com/login";
+            }, 400)
         }
         else if (context.addimage && context.addimage.hitest(x,y))
         {
