@@ -1870,11 +1870,11 @@ var presslst =
     name: "BOSS",
     pressup: function (context, rect, x, y)
     {
-        context.freepan = context.freepan?0:1;
-        context.refresh();
     },
     press: function (context, rect, x, y)
     {
+        context.freepan = context.freepan?0:1;
+        context.refresh();
     }
 },
 ];
