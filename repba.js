@@ -3277,7 +3277,6 @@ function masterload()
     {
         galleryobj.rotate(1);
         imglst[n] = new Image()];
-
         imglst[n].src = galleryobj.path();
         imglst[n].path = galleryobj.getcurrent().title
         imglst[n].onload = function() { loaded.add(this.path); }
