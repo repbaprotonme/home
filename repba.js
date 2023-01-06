@@ -1748,15 +1748,18 @@ var panlst =
 
         if (context.isthumbrect && !headobj.enabled)
         {
-            if ((type == "panleft" || type == "panright"))
+            var k = guideobj.getcurrent();
+            if (context.freepan)
             {
-                var k = guideobj.getcurrent();
+                k.pan(context, rect, x, y, type);
+            }
+            else if ((type == "panleft" || type == "panright"))
+            {
                 k.pan(context, rect, x, context.starty, type);
                 context.startx = x;
             }
             else if ((type == "panup" || type == "pandown"))
             {
-                var k = guideobj.getcurrent();
                 k.pan(context, rect, context.startx, y, type);
                 context.starty = y;
             }
@@ -1867,25 +1870,11 @@ var presslst =
     name: "BOSS",
     pressup: function (context, rect, x, y)
     {
-        context.isthumbrect = 0;
-        context.panning = 0;
-        context.pressed = 0;
-        headobj.enabled = headobj.save;
-        footobj.enabled = footobj.save;
-        context.refresh()
     },
     press: function (context, rect, x, y)
     {
-        context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
-        headobj.save = headobj.enabled;
-        footobj.save = footobj.enabled;
-        headobj.enabled = 0;
-        footobj.enabled = 0;
-        context.panning = 1;
-        context.pressed = 1;
-        pageresize();
+        context.freepan = context.freepan?0:1;
         context.refresh();
-        addressobj.update();
     }
 },
 ];
