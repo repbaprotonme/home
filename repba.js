@@ -4465,9 +4465,10 @@ var bodylst =
                 if (!slicelst[m].visible)
                     continue;
                 visibles += 1;
-                width += slicelst[m].stretchwidth;
-                min = Math.min(min,width);
-                max = Math.max(max,width);
+                var w = slicelst[m].stretchwidth;
+                width += w;
+                min = Math.min(min,w);
+                max = Math.max(max,w);
             }
 
             var eff = width/rect.width;
