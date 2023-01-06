@@ -440,8 +440,9 @@ function drawslices()
         var bx = Math.berp(-1, 1, b) * context.virtualpinch - context.virtualeft;
         var extra = context.colwidth;
         var width = rect.width+extra;
-        context.visibles = 0;
         var x1,xn,s1,sn;
+        for (var m = 0; m < slicelst.length; ++m)
+            slicelst[m].visible = 0;
 
         for (var m = 1; m < slicelst.length; ++m)
         {
@@ -469,6 +470,8 @@ function drawslices()
                 continue;
             }
 
+            slice.visible = 1;
+            slice.strechwidth = stretchwidth;
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.bx, 0, stretchwidth, rect.height);
 
@@ -481,14 +484,14 @@ function drawslices()
             }
 
             bx = bx2;
-            context.visibles++
         }
 
         var x = xn+sn;
         var w = x1-x;
         if (x+w > context.colwidth && x < rect.width+context.colwidth)
         {
-            context.visibles++
+            slice.visible = 1;
+            slice.strechwidth = w;
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
             if (debugobj.enabled)
@@ -500,7 +503,6 @@ function drawslices()
             }
         }
 
-        context.slicescount++;
         context.restore();
         delete context.addimage;
         delete context.selectrect;
@@ -3428,7 +3430,6 @@ var ContextObj = (function ()
 
         resetcontext4: function (context)
        	{
-            context.slicescount = 0;
             if (photo.image)
             {
                 contextobj.resize(context);
@@ -4449,8 +4450,18 @@ var bodylst =
                             0,
                         ]),
                     ]);
+            var width = 0;
+            var visibles = 0;
+            for (var m = 0; m < slicelst.length; ++m)
+            {
+                if (!slicelst[m].visible)
+                    continue;
+                visibles += 1;
+                width += slicelist[m].stretchwidth;
+            }
 
-            var eff = (context.slicewidth*context.visibles)/rect.width;
+            var eff = width/rect.width;
+            //todo panormaic distortion
 
             a.draw(context, rect,
                     [
@@ -4458,7 +4469,7 @@ var bodylst =
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
-                        context.visibles.toFixed(0)+"-"+context.sliceobj.length(),
+                        visibles.toFixed(0)+"-"+context.sliceobj.length(),
                         context.slicewidth.toFixed(0),
                         eff.toFixed(2),
                         0,
