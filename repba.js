@@ -4194,12 +4194,13 @@ var bodylst =
                             ]),
                             0,
                         ]),
-                        debugobj.enabled?new Row([0,30*5,0],
+                        debugobj.enabled?new Row([0,30*6,0],
                         [
                             0,
-                            new RowA([0,30,30,30,30,30,0],
+                            new RowA([0,30,30,30,30,30,30,0],
                             [
                                 0,
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
@@ -4222,6 +4223,8 @@ var bodylst =
                         ]),
                     ]);
 
+            var eff = rect.width/(context.slicewidth*context.visibles)
+
             a.draw(context, rect,
                     [
                         0,
@@ -4230,6 +4233,7 @@ var bodylst =
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
                         context.visibles.toFixed(0)+"-"+context.sliceobj.length(),
                         context.slicewidth.toFixed(0),
+                        eff.toFixed(2),
                         0,
                     ],
                 0);
