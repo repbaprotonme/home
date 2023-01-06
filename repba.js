@@ -1871,10 +1871,12 @@ var presslst =
     pressup: function (context, rect, x, y)
     {
         context.freepan = 0;
+        context.refresh();
     },
     press: function (context, rect, x, y)
     {
         context.freepan = 1;
+        context.refresh();
     }
 },
 ];
