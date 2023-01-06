@@ -2316,7 +2316,7 @@ var thumblst =
         context.shadowOffsetY = 0;
 
         var blackfill = new Fill(THUMBFILL);
-        var blackfill2 = new Fill("rgba(0,0,0,0.4)");
+        var blackfill2 = new Fill(context.freepan?"rgba(255,155,0,0.3)":"rgba(0,0,0,0.4)");
 
         if (context.isthumbrect && (jp))// || context.panning))
         {
@@ -2337,7 +2337,7 @@ var thumblst =
         }
 
         context.lineWidth = context.isthumbrect?2:THUMBORDER;
-        var whitestroke = new StrokeRect(context.freepan?"RGBA(255,155,0,0.5)":THUMBSTROKE);
+        var whitestroke = new StrokeRect(THUMBSTROKE);
         var r = new rectangle(x,y,w,h);
         whitestroke.draw(context, r, 0, 0);
         var whitestroke = new StrokeRect(THUMBSTROKE);
