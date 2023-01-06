@@ -4458,7 +4458,7 @@ var bodylst =
                 if (!slicelst[m].visible)
                     continue;
                 visibles += 1;
-                width += slicelist[m].stretchwidth;
+                width += slicelst[m].stretchwidth;
             }
 
             var eff = width/rect.width;
