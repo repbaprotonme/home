@@ -1870,11 +1870,11 @@ var presslst =
     name: "BOSS",
     pressup: function (context, rect, x, y)
     {
+        context.freepan = 0;
     },
     press: function (context, rect, x, y)
     {
-        context.freepan = context.freepan?0:1;
-        context.refresh();
+        context.freepan = 1;
     }
 },
 ];
@@ -3296,10 +3296,12 @@ function masterload()
     for (var n = 0; n < size; ++n)
     {
         galleryobj.rotate(1);
+        if (loaded.has(galleryobj.getcurrent().title))
+            continue;
         imglst[n] = new Image();
         imglst[n].src = galleryobj.path();
-        imglst[n].path = galleryobj.getcurrent().title
-        imglst[n].onload = function() { loaded.add(this.path); }
+        imglst[n].title = galleryobj.getcurrent().title
+        imglst[n].onload = function() { loaded.add(this.title); }
     }
 
     galleryobj.rotate(-5);
