@@ -408,8 +408,11 @@ function drawslices()
             {
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
-                if (globalobj.reload)
-                    reload();
+                if (globalobj.masterload)
+                {
+                    globalobj.masterload();
+                    delete globalobj.masterload;
+                }
             }
             else if (context.slidebottom)
             {
@@ -3246,7 +3249,7 @@ var ContextObj = (function ()
                         else
                             context.autodirect = _4cnvctx.movingpage==1?-1:1
                         _4cnvctx.tab();
-                        globalobj.reload = 1;
+                        globalobj.masterload = masterload;
                     }
                 }
 			}
@@ -3265,29 +3268,23 @@ var ContextObj = (function ()
 
 var contextobj = new ContextObj();
 
-function reload()
+function masterload()
 {
     var k = galleryobj.current();
-    galleryobj.rotate(1);
-    var img1 = new Image();
-    img1.src = galleryobj.path();
-    img1.path = galleryobj.getcurrent().title
-    img1.onload = function() { loaded.add(img1.path); }
-    galleryobj.rotate(1);
-    var img2 = new Image();
-    img2.src = galleryobj.path();
-    img2.path = galleryobj.getcurrent().title
-    img2.onload = function() { loaded.add(img2.path); }
-    galleryobj.rotate(1);
-    var img3 = new Image();
-    img3.src = galleryobj.path();
-    img3.path = galleryobj.getcurrent().title
-    img3.onload = function() { loaded.add(img3.path); }
-    galleryobj.rotate(-3);
-    var img4 = new Image();
-    img4.src = galleryobj.path();
-    img4.path = galleryobj.getcurrent().title
-    img4.onload = function() { loaded.add(img3.path); }
+    for (var n = 0; n < 4; ++n)
+    {
+        galleryobj.rotate(1);
+        var img = new Image();
+        img.src = galleryobj.path();
+        img.path = galleryobj.getcurrent().title
+        img.onload = function() { console.log(img.path); loaded.add(img.path); }
+    }
+
+    galleryobj.rotate(-4);
+    var img = new Image();
+    img.src = galleryobj.path();
+    img.path = galleryobj.getcurrent().title
+    img.onload = function() { console.log(img.path); loaded.add(img.path); }
     galleryobj.set(k);
 }
 
