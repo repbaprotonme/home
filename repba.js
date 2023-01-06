@@ -408,6 +408,7 @@ function drawslices()
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
                 globalobj.masterload();
+                globalobj.masterload = function(){}
             }
             else if (context.slidebottom)
             {
