@@ -407,8 +407,6 @@ function drawslices()
             {
                 context.slidestop -= context.slidereduce;
                 context.timeobj.rotate(context.autodirect*context.slidestop);
-                globalobj.masterload();
-                globalobj.masterload = function(){}
             }
             else if (context.slidebottom)
             {
@@ -418,6 +416,8 @@ function drawslices()
             {
                 clearInterval(context.timemain);
                 context.timemain = 0;
+                globalobj.masterload();
+                globalobj.masterload = function(){}
                 addressobj.update();
             }
         }
