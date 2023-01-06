@@ -4426,13 +4426,12 @@ var bodylst =
                             ]),
                             0,
                         ]),
-                        debugobj.enabled?new Row([0,30*7,0],
+                        debugobj.enabled?new Row([0,30*6,0],
                         [
                             0,
-                            new RowA([0,30,30,30,30,30,30,30,0],
+                            new RowA([0,30,30,30,30,30,30,0],
                             [
                                 0,
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
@@ -4455,11 +4454,10 @@ var bodylst =
                             0,
                         ]),
                     ]);
+
             var width = 0;
             var visibles = 0;
             var slicelst = context.sliceobj.data;
-            var min = 10000;
-            var max = 0;
             for (var m = 0; m < slicelst.length; ++m)
             {
                 if (!slicelst[m].visible)
@@ -4467,13 +4465,9 @@ var bodylst =
                 visibles += 1;
                 var w = slicelst[m].stretchwidth;
                 width += w;
-                min = Math.min(min,w);
-                max = Math.max(max,w);
             }
 
             var eff = width/rect.width;
-            var dis = min/max;
-
             a.draw(context, rect,
                     [
                         0,
@@ -4482,8 +4476,7 @@ var bodylst =
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
                         visibles.toFixed(0)+"-"+context.sliceobj.length(),
                         context.slicewidth.toFixed(0),
-                        eff.toFixed(2),
-                        dis.toFixed(2),
+                        eff.toFixed(4),
                         0,
                     ],
                 0);
