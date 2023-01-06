@@ -3276,18 +3276,18 @@ function masterload()
     for (var n = 0; n < size; ++n)
     {
         galleryobj.rotate(1);
-        var img = new Image();
-        img.src = galleryobj.path();
-        img.path = galleryobj.getcurrent().title
-        imglst.push(img);
-        img.onload = function() { console.log(imglst[n].path); loaded.add(imglst[n].path); }
+        imglst[n] = new Image()];
+
+        imglst[n].src = galleryobj.path();
+        imglst[n].path = galleryobj.getcurrent().title
+        imglst[n].onload = function() { loaded.add(this.path); }
     }
 
     galleryobj.rotate(-size);
     var img = new Image();
     img.src = galleryobj.path();
     img.path = galleryobj.getcurrent().title
-    img.onload = function() { console.log(img.path); loaded.add(img.path); }
+    img.onload = function() { loaded.add(this.path); }
     galleryobj.set(k);
 }
 
