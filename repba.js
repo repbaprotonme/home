@@ -442,7 +442,10 @@ function drawslices()
         var width = rect.width+extra;
         var x1,xn,s1,sn;
         for (var m = 0; m < slicelst.length; ++m)
+        {
             slicelst[m].visible = 0;
+            slicelst[m].stretchwidth = 0;
+        }
 
         for (var m = 1; m < slicelst.length; ++m)
         {
@@ -4423,12 +4426,13 @@ var bodylst =
                             ]),
                             0,
                         ]),
-                        debugobj.enabled?new Row([0,30*6,0],
+                        debugobj.enabled?new Row([0,30*7,0],
                         [
                             0,
-                            new RowA([0,30,30,30,30,30,30,0],
+                            new RowA([0,30,30,30,30,30,30,30,0],
                             [
                                 0,
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
@@ -4454,16 +4458,20 @@ var bodylst =
             var width = 0;
             var visibles = 0;
             var slicelst = context.sliceobj.data;
+            var min = 10000;
+            var max = 0;
             for (var m = 0; m < slicelst.length; ++m)
             {
                 if (!slicelst[m].visible)
                     continue;
                 visibles += 1;
                 width += slicelst[m].stretchwidth;
+                min = Math.min(min,width);
+                max = Math.max(max,width);
             }
 
             var eff = width/rect.width;
-            //todo panormaic distortion
+            var dis = min/max;
 
             a.draw(context, rect,
                     [
@@ -4474,6 +4482,7 @@ var bodylst =
                         visibles.toFixed(0)+"-"+context.sliceobj.length(),
                         context.slicewidth.toFixed(0),
                         eff.toFixed(2),
+                        dis.toFixed(2),
                         0,
                     ],
                 0);
