@@ -3270,17 +3270,20 @@ var contextobj = new ContextObj();
 
 function masterload()
 {
+    var imglst = [];
     var k = galleryobj.current();
-    for (var n = 0; n < 4; ++n)
+    var size = 4;
+    for (var n = 0; n < size; ++n)
     {
         galleryobj.rotate(1);
         var img = new Image();
         img.src = galleryobj.path();
         img.path = galleryobj.getcurrent().title
-        img.onload = function() { console.log(img.path); loaded.add(img.path); }
+        imglst.push(img);
+        img.onload = function() { console.log(imglst[n].path); loaded.add(imglst[n].path); }
     }
 
-    galleryobj.rotate(-4);
+    galleryobj.rotate(-size);
     var img = new Image();
     img.src = galleryobj.path();
     img.path = galleryobj.getcurrent().title
