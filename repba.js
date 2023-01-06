@@ -4452,6 +4452,7 @@ var bodylst =
                     ]);
             var width = 0;
             var visibles = 0;
+            var slicelst = context.sliceobj.data;
             for (var m = 0; m < slicelst.length; ++m)
             {
                 if (!slicelst[m].visible)
