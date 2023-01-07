@@ -44,7 +44,6 @@ const ARROWFILL = "white";
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 globalobj = {};
-globalobj.masterload = function(){}
 
 let photo = {}
 photo.image = 0;
@@ -411,13 +410,22 @@ function drawslices()
             else if (context.slidebottom)
             {
                 context.timeobj.rotate(context.autodirect*context.slidebottom);
+                if (globalobj.masterload)
+                {
+                    globalobj.masterload();
+                    globalobj.masterload = 0;
+                }
             }
             else
             {
                 clearInterval(context.timemain);
                 context.timemain = 0;
-                globalobj.masterload();
-                globalobj.masterload = function(){}
+                if (globalobj.masterload)
+                {
+                    globalobj.masterload();
+                    globalobj.masterload = 0;
+                }
+
                 addressobj.update();
             }
         }
@@ -2564,7 +2572,7 @@ var thumblst =
                 guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
             }
         }
-        else if (context.pinching || context.tapping)
+        else if (globalobj.masterload || context.pinching || context.tapping)
         {
             blackfill.draw(context, context.thumbrect, 0, 0);
             guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
