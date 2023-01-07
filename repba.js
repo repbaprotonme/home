@@ -2397,7 +2397,8 @@ var taplst =
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
-
+            const authClient = createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
+            console.log(authClient)
         }
         else if (context.login && context.login.hitest(x,y))
         {
@@ -2448,7 +2449,7 @@ var taplst =
         }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
-            context.tapindex = 3;
+            context.tapindex = 2;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
@@ -4585,7 +4586,7 @@ var bodylst =
                                         [
                                             new Layer(
                                             [
-                                                context.movingpage == -1 ? new Fill("rgb(0,0,150)") : 0,
+                                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
                                                 new Rectangle(context.moveprev),
                                                 new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
                                             ]),
@@ -4596,7 +4597,7 @@ var bodylst =
                                             ]),
                                             new Layer(
                                             [
-                                                context.movingpage == 1 ? new Fill("rgb(0,0,150)") : 0,
+                                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
                                                 new Rectangle(context.movenext),
                                                 new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
                                             ]),
