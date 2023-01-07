@@ -2574,7 +2574,8 @@ var thumblst =
                 guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
             }
         }
-        else if (globalobj.masterload || context.pinching || context.tapping)
+        //else if (globalobj.masterload || context.pinching || context.tapping)
+        else if (context.pinching || context.tapping)
         {
             blackfill.draw(context, context.thumbrect, 0, 0);
             guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
