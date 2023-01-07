@@ -2384,7 +2384,6 @@ var taplst =
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
-            const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
             authClient.getAuthenticationInfoOrNull(false)
                 .then(function(client)
                 {
@@ -2400,7 +2399,8 @@ var taplst =
             {
                context.tapindex = 0;
                context.refresh();
-               window.location.href = "https://auth.reportbase.com/login";
+               authClient.redirectToLoginPage()
+               //window.location.href = "https://auth.reportbase.com/login";
             }, 400)
         }
         else if (context.logout && context.logout.hitest(x,y))
@@ -2412,7 +2412,6 @@ var taplst =
             {
                 context.tapindex = 0;
                 context.refresh();
-                const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
                 authClient.logout(false);
             }, 400)
         }
@@ -2425,8 +2424,8 @@ var taplst =
             {
                context.tapindex = 0;
                context.refresh();
-//authClient.redirectToAccountPage()
-                window.location.href = "https://auth.reportbase.com/account";
+               authClient.redirectToAccountPage()
+               // window.location.href = "https://auth.reportbase.com/account";
             }, 400)
         }
         else if (context.addimage && context.addimage.hitest(x,y))
@@ -3177,6 +3176,8 @@ galleryobj.path = function()
     var s = 'https://reportbase.com/image/'+name+'/w='+w+',h='+h+',quality='+q;
     return s;
 }
+
+authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
 
 var path = "https://reportbase.com/gallery/" + url.path;
 fetch(path)
