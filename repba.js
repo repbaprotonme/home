@@ -1,6 +1,5 @@
 //todo: https://obfuscator.io
 //todo: safari max size
-//todo: slow pan
 
 /* +=
 Copyright 2017 Tom Brinkman
@@ -965,7 +964,6 @@ var Arrow = function (color, degrees)
     this.draw = function (context, rect, user, time)
     {
         context.save();
-        //context.translate(rect.width/2,rect.height/2);//todo
 	    var w = rect.width
         var h = rect.height
         var x = rect.x
@@ -1243,7 +1241,7 @@ var makehammer = function (context, v, t)
    	    evt.preventDefault();
         var x = evt.offsetX;
         var y = evt.offsetY;
-        if (typeof (ham.panel.auxclick) == "function")//todo
+        if (typeof (ham.panel.auxclick) == "function")
             ham.panel.auxclick(context, new rectangle(0, 0, ham.element.width, ham.element.height), x, y);
     }, false);
 
@@ -3233,7 +3231,7 @@ fetch(path)
                 line2: "360° Panoramas",
                 line3: "Image Stretching",
                 line4: "Image Zooming",
-                //Sidescrolling  todo
+                //Sidescrolling
                 //Wrap-Around:w
                 //Ultra-wide Imagas
                 //Drone PHotograhy
@@ -3244,7 +3242,7 @@ fetch(path)
                 line2: "Digital Art",
                 line3: "Graphic Novels",
                 line4: "Drone Photgraphy",
-                //Sidescrolling  todo
+                //Sidescrolling
                 //Wrap-Around:w
                 //Ultra-wide Imagas
                 //Drone PHotograhy
@@ -3299,14 +3297,14 @@ fetch(path)
             contextobj.reset();
         }})
 
-        slices.data.push({ title:"Add Image", path: "ADDELETE", func: function()
+        slices.data.push({ title:"Add Image", path: "ADDIMG", func: function()
         {
             menuhide();
             bodyobj.set(2)
             _4cnvctx.refresh();
         }});
 
-        slices.data.push({ title:"Delete Image", path: "ADDELETE", func: function()
+        slices.data.push({ title:"Delete Image", path: "DELIMG", func: function()
         {
             menuhide();
             bodyobj.set(2)
