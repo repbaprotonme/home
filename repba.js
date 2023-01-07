@@ -3507,13 +3507,14 @@ var ContextObj = (function ()
                         globalobj.masterload = 1;
                         _4cnvctx.tab();
                     }
-
+/*
                     const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
                     authClient.getAuthenticationInfoOrNull(false)
                         .then(function(client)
                         {
                              globalobj.user = client.user;
                         })
+*/
                 }
 			}
 
@@ -4624,7 +4625,7 @@ var bodylst =
                     ],
                     "Add Image",
                     "Delete Image",
-                    globalobj.user ? globalobj.user.email : "Login",
+                    "Login",
                     "Account",
                 ],
                 0);
