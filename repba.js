@@ -410,25 +410,18 @@ function drawslices()
             else if (context.slidebottom)
             {
                 context.timeobj.rotate(context.autodirect*context.slidebottom);
-                if (globalobj.masterload)
-                {
-                    globalobj.masterload();
-                    globalobj.masterload = 0;
-                    context.refresh();
-                }
             }
             else
             {
                 clearInterval(context.timemain);
                 context.timemain = 0;
-                if (globalobj.masterload)
+                setTimeout(function()
                 {
                     globalobj.masterload();
                     globalobj.masterload = 0;
                     context.refresh();
-                }
-
-                addressobj.update();
+                    addressobj.update();
+                }, 1000);
             }
         }
 
