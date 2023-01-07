@@ -2352,12 +2352,10 @@ var taplst =
 
         if (context.moveprev && context.moveprev.hitest(x,y))
         {
-            menuhide();
             _4cnvctx.movepage(-1);
         }
         else if (context.movenext && context.movenext.hitest(x,y))
         {
-            menuhide();
             _4cnvctx.movepage(1);
         }
         else if (context.menudown && context.menudown.hitest(x,y))
