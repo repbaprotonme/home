@@ -2536,7 +2536,7 @@ var thumblst =
                 guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
             }
         }
-        else if (globalobj.masterload || context.pinching || context.tapping)
+        else if (context.pinching || context.tapping)
         {
             blackfill.draw(context, context.thumbrect, 0, 0);
             guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
@@ -2995,7 +2995,7 @@ var templatelst =
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "0-25", loomobj.length());
         poomobj.split(url.zoom, "0-25", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3008,7 +3008,7 @@ var templatelst =
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "0-50", loomobj.length());
         poomobj.split(url.zoom, "0-50", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3021,7 +3021,7 @@ var templatelst =
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "20-80", loomobj.length());
         poomobj.split(url.zoom, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3034,7 +3034,7 @@ var templatelst =
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 56;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "50-90", loomobj.length());
         poomobj.split(url.zoom, "40-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3299,11 +3299,11 @@ fetch(path)
             contextobj.reset();
         }})
 
-        slices.data.push({ title:"Customize", path: "CUSTOMIZE", func: function()
+        slices.data.push({ title:"Add/Delete Images", path: "ADDELETE", func: function()
         {
+            menuhide();
             bodyobj.set(2)
             _4cnvctx.refresh();
-            menuhide();
         }});
 
         slices.data.push({ title:"Download", path: "DOWNLOAD", func: function()
@@ -3320,7 +3320,7 @@ fetch(path)
 
         slices.data.push({ title:"Logout", path: "LOGOUT", func: function()
         {
-            authClient.logout(false);
+            authClient.logout(true);
         }});
 
         slices.data.push({ title:"Account", path: "ACCOUNT", func: function()
