@@ -411,14 +411,12 @@ function drawslices()
             {
                 clearInterval(context.timemain);
                 context.timemain  = 0;
-                /*
                 if (globalobj.masterload)
                 {
-                    globalobj.masterload();
+                    masterload();
                     globalobj.masterload = 0;
                     context.refresh();
                 }
-                */
             }
         }
 
@@ -2574,8 +2572,7 @@ var thumblst =
                 guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
             }
         }
-        //else if (globalobj.masterload || context.pinching || context.tapping)
-        else if (context.pinching || context.tapping)
+        else if (globalobj.masterload || context.pinching || context.tapping)
         {
             blackfill.draw(context, context.thumbrect, 0, 0);
             guideobj.getcurrent().draw(context, context.thumbrect, 0, 0);
@@ -3507,8 +3504,7 @@ var ContextObj = (function ()
                             context.autodirect = -1;
                         else
                             context.autodirect = _4cnvctx.movingpage==1?-1:1
-                        //globalobj.masterload = masterload;
-                        masterload();
+                        globalobj.masterload = masterload;
                         _4cnvctx.tab();
                     }
                 }
