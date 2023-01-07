@@ -3038,8 +3038,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 36;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 18;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 144;
         url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
         loomobj.split(url.zoom, "0-50", loomobj.length());
         poomobj.split(url.zoom, "0-50", poomobj.length());
