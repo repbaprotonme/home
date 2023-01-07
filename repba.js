@@ -2383,12 +2383,6 @@ var taplst =
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
-            const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
-            authClient.getAuthenticationInfoOrNull(false)
-                .then(function(client)
-                {
-                    console.log(auth)
-                })
         }
         else if (context.login && context.login.hitest(x,y))
         {
@@ -4292,8 +4286,14 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                bodyobj.set(bodyobj.current()?0:2)
-                _4cnvctx.refresh();
+                const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
+                authClient.getAuthenticationInfoOrNull(false)
+                    .then(function(client)
+                    {
+                        bodyobj.set(bodyobj.current()?0:2)
+                        _4cnvctx.refresh();
+                        globalobj.user = client.user;
+                    })
             }
             else if (context.nextpage.hitest(x,y))
             {
@@ -4623,7 +4623,7 @@ var bodylst =
                     ],
                     "Add Image",
                     "Delete Image",
-                    "Login",
+                    globalobj.user.email,
                     "Account",
                 ],
                 0);
