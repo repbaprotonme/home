@@ -410,14 +410,13 @@ function drawslices()
             else
             {
                 clearInterval(context.timemain);
+                context.timemain  = 0;
                 if (globalobj.masterload)
                 {
                     globalobj.masterload();
                     globalobj.masterload = 0;
+                    context.refresh();
                 }
-
-                context.refresh();
-                addressobj.update();
             }
         }
 
