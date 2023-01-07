@@ -2385,10 +2385,10 @@ var taplst =
         {
             const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
             authClient.getAuthenticationInfoOrNull(false)
-                .then(client)
+                .then(function(client)
                 {
                     console.log(auth)
-                }
+                })
         }
         else if (context.login && context.login.hitest(x,y))
         {
