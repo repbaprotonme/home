@@ -2380,7 +2380,7 @@ var taplst =
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
-            authClient.getAuthenticationInfoOrNull(false)
+             authClient.getAuthenticationInfoOrNull(false)
                 .then(function(client)
                 {
                      globalobj.user = client.user;
@@ -4062,7 +4062,7 @@ function menuenabled()
 
 function menuhide()
 {
-    bodybobj.set(0)
+    bodyobj.set(0)
     var k = menuenabled();
     _2cnvctx.enabled = 0;
     _3cnvctx.enabled = 0;
