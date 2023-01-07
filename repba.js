@@ -3033,8 +3033,8 @@ var templatelst =
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
-        loomobj.split(url.zoom, "50-90", loomobj.length());
-        poomobj.split(url.zoom, "25-90", poomobj.length());
+        loomobj.split(url.zoom, "25-90", loomobj.length());
+        poomobj.split(url.zoom, "0-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
         scapeobj.split(50, "0.1-1.0", scapeobj.length());
    }
