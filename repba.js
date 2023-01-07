@@ -414,6 +414,7 @@ function drawslices()
                 {
                     globalobj.masterload();
                     globalobj.masterload = 0;
+                    context.refresh();
                 }
             }
             else
@@ -424,6 +425,7 @@ function drawslices()
                 {
                     globalobj.masterload();
                     globalobj.masterload = 0;
+                    context.refresh();
                 }
 
                 addressobj.update();
