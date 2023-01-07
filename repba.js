@@ -2381,7 +2381,8 @@ var taplst =
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
             const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
-            console.log(authClient)
+            var auth = authClient.getAuthenticationInfoOrNull(false);
+            console.log(auth)
         }
         else if (context.login && context.login.hitest(x,y))
         {
