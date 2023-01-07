@@ -2425,7 +2425,8 @@ var taplst =
             {
                context.tapindex = 0;
                context.refresh();
-               window.location.href = "https://auth.reportbase.com/account";
+//authClient.redirectToAccountPage()
+                window.location.href = "https://auth.reportbase.com/account";
             }, 400)
         }
         else if (context.addimage && context.addimage.hitest(x,y))
@@ -4567,13 +4568,13 @@ var bodylst =
             var a = new Col([0,w,0],
                     [
                         0,
-                        new Row([0,ALIEXTENT+40*4,0],
+                        new Row([0,ALIEXTENT+40*5,0],
                         [
                             0,
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40,40,40],
+                                new RowA([0,40,40,40,40,40,40],
                                 [
                                     new Layer(
                                     [
