@@ -3299,7 +3299,14 @@ fetch(path)
             contextobj.reset();
         }})
 
-        slices.data.push({ title:"Add/Delete Images", path: "ADDELETE", func: function()
+        slices.data.push({ title:"Add Image", path: "ADDELETE", func: function()
+        {
+            menuhide();
+            bodyobj.set(2)
+            _4cnvctx.refresh();
+        }});
+
+        slices.data.push({ title:"Delete Image", path: "ADDELETE", func: function()
         {
             menuhide();
             bodyobj.set(2)
