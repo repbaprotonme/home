@@ -3237,7 +3237,7 @@ fetch(path)
 
         function project()
         {
-            menuhide();
+           menuhide();
             galleryobj.set(this.index);
             window.location.href = addressobj.full();
         }
@@ -4116,6 +4116,7 @@ function menuhide()
     _7cnvctx.hide();
     _8cnvctx.hide();
     _9cnvctx.hide();
+    bodybobj.set(0)
     _4cnvctx.refresh();
     return k;
 }
