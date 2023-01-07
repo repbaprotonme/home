@@ -3059,8 +3059,8 @@ var templatelst =
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
-        loomobj.split(url.zoom, "90-95", loomobj.length());
-        poomobj.split(url.zoom, "60-90", poomobj.length());
+        loomobj.split(url.zoom, "80-90", loomobj.length());
+        poomobj.split(url.zoom, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
@@ -3331,6 +3331,12 @@ fetch(path)
         slices.data.push({ title:"Account", path: "ACCOUNT", func: function()
         {
             authClient.redirectToAccountPage()
+        }});
+
+        slices.data.push({ title:"Config", path: "CONFIG", func: function()
+        {
+            var path = "https://reportbase.com/gallery/" + url.path;
+            window.location.href = path;
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
