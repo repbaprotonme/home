@@ -411,12 +411,14 @@ function drawslices()
             {
                 clearInterval(context.timemain);
                 context.timemain  = 0;
+                /*
                 if (globalobj.masterload)
                 {
                     globalobj.masterload();
                     globalobj.masterload = 0;
                     context.refresh();
                 }
+                */
             }
         }
 
@@ -3504,7 +3506,8 @@ var ContextObj = (function ()
                             context.autodirect = -1;
                         else
                             context.autodirect = _4cnvctx.movingpage==1?-1:1
-                        globalobj.masterload = masterload;
+                        //globalobj.masterload = masterload;
+                        masterload();
                         _4cnvctx.tab();
                     }
                 }
