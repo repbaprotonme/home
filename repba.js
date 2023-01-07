@@ -1,4 +1,4 @@
-//todo: https://obfuscator.io/a....i.i.a.....
+//todo: https://obfuscator.io
 //todo: safari max size
 //todo: slow pan
 
@@ -3048,7 +3048,7 @@ var templatelst =
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
         url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0.3;
         loomobj.split(url.zoom, "0-25", loomobj.length());
         poomobj.split(url.zoom, "0-25", poomobj.length());
@@ -3062,7 +3062,7 @@ var templatelst =
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 56;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
         url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
         loomobj.split(url.zoom, "0-50", loomobj.length());
         poomobj.split(url.zoom, "0-50", poomobj.length());
@@ -3076,7 +3076,7 @@ var templatelst =
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 56;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
         url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
         loomobj.split(url.zoom, "20-80", loomobj.length());
         poomobj.split(url.zoom, "0-80", poomobj.length());
@@ -4559,6 +4559,7 @@ var bodylst =
         {
             context.movenext = new rectangle()
             context.moveprev = new rectangle()
+            context.account = new rectangle()
             context.login = new rectangle()
             context.addimage = new rectangle()
             context.delimage = new rectangle()
