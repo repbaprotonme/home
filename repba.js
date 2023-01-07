@@ -4574,7 +4574,7 @@ var bodylst =
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40,40,40,40],
+                                new RowA([0,40,40,40,40,40],
                                 [
                                     new Layer(
                                     [
