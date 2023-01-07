@@ -3504,9 +3504,16 @@ var ContextObj = (function ()
                             context.autodirect = -1;
                         else
                             context.autodirect = _4cnvctx.movingpage==1?-1:1
-                        globalobj.masterload = masterload;
+                        globalobj.masterload = 1;
                         _4cnvctx.tab();
                     }
+
+                    const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
+                    authClient.getAuthenticationInfoOrNull(false)
+                        .then(function(client)
+                        {
+                             globalobj.user = client.user;
+                        })
                 }
 			}
 
@@ -4286,14 +4293,8 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
-                authClient.getAuthenticationInfoOrNull(false)
-                    .then(function(client)
-                    {
-                        bodyobj.set(bodyobj.current()?0:2)
-                        _4cnvctx.refresh();
-                        globalobj.user = client.user;
-                    })
+                bodyobj.set(bodyobj.current()?0:2)
+                _4cnvctx.refresh();
             }
             else if (context.nextpage.hitest(x,y))
             {
@@ -4623,7 +4624,7 @@ var bodylst =
                     ],
                     "Add Image",
                     "Delete Image",
-                    globalobj.user.email,
+                    globalobj.user ? globalobj.user.email : "Login",
                     "Account",
                 ],
                 0);
