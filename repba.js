@@ -522,6 +522,7 @@ function drawslices()
         delete context.selectrect;
         delete context.delimage;
         delete context.login;
+        delete context.account;
         delete context.moveprev;
         delete context.movenext;
         delete context.delconfirm;
@@ -2400,7 +2401,7 @@ var taplst =
         }
         else if (context.login && context.login.hitest(x,y))
         {
-            context.tapindex = 1;
+            context.tapindex = 3;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
@@ -2410,9 +2411,21 @@ var taplst =
                window.location.href = "https://auth.reportbase.com/login";
             }, 400)
         }
+        else if (context.account && context.account.hitest(x,y))
+        {
+            context.tapindex = 4;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function()
+            {
+               context.tapindex = 0;
+               context.refresh();
+               window.location.href = "https://auth.reportbase.com/account";
+            }, 400)
+        }
         else if (context.addimage && context.addimage.hitest(x,y))
         {
-            context.tapindex = 2;
+            context.tapindex = 1;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
@@ -2424,7 +2437,7 @@ var taplst =
         }
         else if (context.delconfirm && context.delconfirm.hitest(x,y))
         {
-            context.tapindex = 1;
+            context.tapindex = 2;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
@@ -3011,7 +3024,7 @@ var templatelst =
         url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "50-85", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
+        traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -3025,7 +3038,7 @@ var templatelst =
         url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
         loomobj.split(url.zoom, "70-95", loomobj.length());
         poomobj.split(url.zoom, "50-95", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
+        traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -3095,7 +3108,7 @@ var templatelst =
         url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
+        traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -3109,7 +3122,7 @@ var templatelst =
         url.slidebottom = url.searchParams.has("b") ? Number(url.searchParams.get("b")) : 0;
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
+        traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -3124,7 +3137,7 @@ var templatelst =
         guideobj.set(1);
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
+        traitobj.split(70, "0.1-1.0", traitobj.length());
         scapeobj.split(100, "0.1-1.0", scapeobj.length());
     }
 },
@@ -4556,13 +4569,13 @@ var bodylst =
             var a = new Col([0,w,0],
                     [
                         0,
-                        new Row([0,ALIEXTENT+40*3,0],
+                        new Row([0,ALIEXTENT+40*4,0],
                         [
                             0,
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40],
+                                new RowA([0,40,40,40,40],
                                 [
                                     new Layer(
                                     [
@@ -4590,20 +4603,26 @@ var bodylst =
                                     ]),
                                     new Layer(
                                     [
-                                        new Rectangle(context.login),
-                                        context.tapindex == 1 ? new Fill("rgb(0,0,150)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                    new Layer(
-                                    [
                                         new Rectangle(context.addimage),
-                                        context.tapindex == 2 ? new Fill("rgb(0,0,150)") : 0,
+                                        context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                     new Layer(
                                     [
                                         new Rectangle(context.delimage),
-                                        context.tapindex == 3 ? new Fill("rgb(0,0,150)") : 0,
+                                        context.tapindex == 2 ? new Fill("rgba(0,0,150,0.5)") : 0,
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.login),
+                                        context.tapindex == 3 ? new Fill("rgba(0,0,150,0.5)") : 0,
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.account),
+                                        context.tapindex == 4 ? new Fill("rgba(0,0,150,0.5)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                 ])
@@ -4619,9 +4638,10 @@ var bodylst =
                         context.ignores,
                         galleryobj.getcurrent().title,
                     ],
-                    "Login",
                     "Add Image",
                     "Delete Image",
+                    "Login",
+                    "Account",
                 ],
                 0);
             context.restore();
