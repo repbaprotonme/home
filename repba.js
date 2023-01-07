@@ -510,6 +510,7 @@ function drawslices()
         delete context.selectrect;
         delete context.delimage;
         delete context.login;
+        delete context.logout;
         delete context.account;
         delete context.moveprev;
         delete context.movenext;
@@ -2402,9 +2403,22 @@ var taplst =
                window.location.href = "https://auth.reportbase.com/login";
             }, 400)
         }
-        else if (context.account && context.account.hitest(x,y))
+        else if (context.logout && context.logout.hitest(x,y))
         {
             context.tapindex = 4;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                context.refresh();
+                const authClient = PropelAuth.createClient({authUrl: "https://auth.reportbase.com", enableBackgroundTokenRefresh: true})
+                authClient.logout(false);
+            }, 400)
+        }
+        else if (context.account && context.account.hitest(x,y))
+        {
+            context.tapindex = 5;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
@@ -4543,6 +4557,7 @@ var bodylst =
             context.moveprev = new rectangle()
             context.account = new rectangle()
             context.login = new rectangle()
+            context.logout = new rectangle()
             context.addimage = new rectangle()
             context.delimage = new rectangle()
             context.ignores = [];
@@ -4558,7 +4573,7 @@ var bodylst =
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40,40],
+                                new RowA([0,40,40,40,40,40],
                                 [
                                     new Layer(
                                     [
@@ -4604,8 +4619,14 @@ var bodylst =
                                     ]),
                                     new Layer(
                                     [
-                                        new Rectangle(context.account),
+                                        new Rectangle(context.logout),
                                         context.tapindex == 4 ? new Fill("rgba(0,0,150,0.5)") : 0,
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.account),
+                                        context.tapindex == 5 ? new Fill("rgba(0,0,150,0.5)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                 ])
@@ -4623,7 +4644,8 @@ var bodylst =
                     ],
                     "Add Image",
                     "Delete Image",
-                    "Login",
+                    globalobj.user?globalobj.user.email:"Login",
+                    "Logout",
                     "Account",
                 ],
                 0);
