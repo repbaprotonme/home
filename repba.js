@@ -509,12 +509,8 @@ function drawslices()
         delete context.addimage;
         delete context.selectrect;
         delete context.delimage;
-        delete context.login;
-        delete context.logout;
-        delete context.account;
         delete context.moveprev;
         delete context.movenext;
-        delete context.delconfirm;
         delete context.ignores;
         delete context.menuup;
         delete context.menuhome;
@@ -2390,44 +2386,6 @@ var taplst =
                      globalobj.user = client.user;
                 })
         }
-        else if (context.login && context.login.hitest(x,y))
-        {
-            context.tapindex = 3;
-            context.refresh();
-            clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function()
-            {
-               context.tapindex = 0;
-               context.refresh();
-               authClient.redirectToLoginPage()
-               //window.location.href = "https://auth.reportbase.com/login";
-            }, 400)
-        }
-        else if (context.logout && context.logout.hitest(x,y))
-        {
-            context.tapindex = 4;
-            context.refresh();
-            clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function()
-            {
-                context.tapindex = 0;
-                context.refresh();
-                authClient.logout(false);
-            }, 400)
-        }
-        else if (context.account && context.account.hitest(x,y))
-        {
-            context.tapindex = 5;
-            context.refresh();
-            clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function()
-            {
-               context.tapindex = 0;
-               context.refresh();
-               authClient.redirectToAccountPage()
-               // window.location.href = "https://auth.reportbase.com/account";
-            }, 400)
-        }
         else if (context.addimage && context.addimage.hitest(x,y))
         {
             context.tapindex = 1;
@@ -2440,17 +2398,6 @@ var taplst =
                 promptFile().then(function(files) { dropfiles(files); })
             },400)
         }
-        else if (context.delconfirm && context.delconfirm.hitest(x,y))
-        {
-            context.tapindex = 2;
-            context.refresh();
-            clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function()
-            {
-                context.tapindex = 0;
-                context.refresh();
-            }, 400)
-        }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
             context.tapindex = 2;
@@ -2459,7 +2406,6 @@ var taplst =
             globalobj.tapthumb = setTimeout(function()
             {
                 context.tapindex = 0;
-                bodyobj.set(3);
                 context.refresh();
             }, 400)
         }
@@ -3369,6 +3315,21 @@ fetch(path)
             window.open("https://reportbase.com/image/"+obj.title+"/w="+obj.width,"Reportbase");
         }});
 
+        slices.data.push({ title:"Login", path: "LOGIN", func: function()
+        {
+            authClient.redirectToLoginPage()
+        }});
+
+        slices.data.push({ title:"Logout", path: "LOGOUT", func: function()
+        {
+            authClient.logout(false);
+        }});
+
+        slices.data.push({ title:"Account", path: "ACCOUNT", func: function()
+        {
+            authClient.redirectToAccountPage()
+        }});
+
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
         slices.data.push({title:"Fullscreen", path: "FULLSCREEN", func: function ()
         {
@@ -4101,6 +4062,7 @@ function menuenabled()
 
 function menuhide()
 {
+    bodybobj.set(0)
     var k = menuenabled();
     _2cnvctx.enabled = 0;
     _3cnvctx.enabled = 0;
@@ -4116,7 +4078,6 @@ function menuhide()
     _7cnvctx.hide();
     _8cnvctx.hide();
     _9cnvctx.hide();
-    bodybobj.set(0)
     _4cnvctx.refresh();
     return k;
 }
@@ -4558,9 +4519,6 @@ var bodylst =
         {
             context.movenext = new rectangle()
             context.moveprev = new rectangle()
-            context.account = new rectangle()
-            context.login = new rectangle()
-            context.logout = new rectangle()
             context.addimage = new rectangle()
             context.delimage = new rectangle()
             context.ignores = [];
@@ -4570,13 +4528,13 @@ var bodylst =
             var a = new Col([0,w,0],
                     [
                         0,
-                        new Row([0,ALIEXTENT+40*5,0],
+                        new Row([0,ALIEXTENT+40*2,0],
                         [
                             0,
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40,40,40],
+                                new RowA([0,40,40],
                                 [
                                     new Layer(
                                     [
@@ -4614,24 +4572,6 @@ var bodylst =
                                         context.tapindex == 2 ? new Fill("rgba(0,0,150,0.5)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.login),
-                                        context.tapindex == 3 ? new Fill("rgba(0,0,150,0.5)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.logout),
-                                        context.tapindex == 4 ? new Fill("rgba(0,0,150,0.5)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.account),
-                                        context.tapindex == 5 ? new Fill("rgba(0,0,150,0.5)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
                                 ])
                             ]),
                             0,
@@ -4647,85 +4587,11 @@ var bodylst =
                     ],
                     "Add Image",
                     "Delete Image",
-                    globalobj.user?globalobj.user.email:"Login",
-                    "Logout",
-                    "Account",
                 ],
                 0);
             context.restore();
         }
     },
-    new function()
-    {
-        this.draw = function (context, rect, user, time)
-        {
-            context.delconfirm = new rectangle()
-            context.movenext = new rectangle()
-            context.moveprev = new rectangle()
-            context.ignores = [];
-            context.save();
-            context.font = "1rem Archivo Black";
-            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var a = new Col([0,w,0],
-                    [
-                        0,
-                        new Row([0,ALIEXTENT+40*1,0],
-                        [
-                            0,
-                            new Layer(
-                            [
-                                new Fill(MENUCOLOR),
-                                new RowA([0,40],
-                                [
-                                    new Layer(
-                                    [
-                                        new Fill(MENUCOLOR),
-                                        new Col([ALIEXTENT,0,ALIEXTENT],
-                                        [
-                                            new Layer(
-                                            [
-                                                context.movingpage == -1 ? new Fill("rgb(0,0,150)") : 0,
-                                                new Rectangle(context.moveprev),
-                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
-                                            ]),
-                                            new LayerA(
-                                            [
-                                                new Rectangles(),
-                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            ]),
-                                            new Layer(
-                                            [
-                                                context.movingpage == 1 ? new Fill("rgb(0,0,150)") : 0,
-                                                new Rectangle(context.movenext),
-                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
-                                            ]),
-                                        ])
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.delconfirm),
-                                        context.tapindex == 1 ? new Fill("rgb(0,0,150)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                ])
-                            ]),
-                            0,
-                        ]),
-                        0,
-                    ]);
-
-                a.draw(context, rect,
-                [
-                    [
-                        context.ignores,
-                        galleryobj.getcurrent().title,
-                    ],
-                    "Delete",
-                ],
-                0);
-            context.restore();
-        }
-    }
 ];
 
 var bodyobj = new makeoption("", bodylst);
