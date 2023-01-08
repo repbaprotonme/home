@@ -55,9 +55,9 @@ function randomNumber(min, max) { return Math.floor(Math.random() * (max - min) 
 let url = new URL(window.location.href);
 url.time = url.searchParams.has("t") ? Number(url.searchParams.get("t")) : TIMEOBJ/2;
 url.row = url.searchParams.has("r") ? Number(url.searchParams.get("r")) : 50;
-url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 36;
+url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) : 24;
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
-url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 8;
+url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 12;
 
 url.path = "HOME";
 url.project = 0;
@@ -2966,8 +2966,8 @@ var templatelst =
         rowobj.enabled = 1;
         galleryobj.maxmegapix = 4000000;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 256;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 5;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 144;
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "35-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2979,8 +2979,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 256;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 5;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 144;
         loomobj.split(url.zoom, "70-95", loomobj.length());
         poomobj.split(url.zoom, "35-95", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
