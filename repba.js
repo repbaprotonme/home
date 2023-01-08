@@ -3828,6 +3828,7 @@ var ContextObj = (function ()
                         else
                             k = "ULTRAWIDE"
 
+                        zoomobj.set(50);
                         var j = templatelst.findIndex(function(a){return a.name == k;})
                         templateobj.set(j);
                         templateobj.getcurrent().init();
