@@ -507,7 +507,6 @@ function drawslices()
         context.restore();
         delete context.addimage;
         delete context.selectrect;
-        delete context.dragdrop;
         delete context.openimage;
         delete context.delimage;
         delete context.moveprev;
@@ -522,10 +521,7 @@ function drawslices()
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
         if (!context.pressed && !headobj.enabled)
             thumbobj.getcurrent().draw(context, rect, 0, 0);
-        if (headobj.enabled && context.panning)
-            bodyobj.getcurrent().draw(context, rect, 0, 0);
-        else if (!context.isthumbrect && !context.pressed)
-            bodyobj.getcurrent().draw(context, rect, 0, 0);
+        bodyobj.getcurrent().draw(context, rect, 0, 0);
         context.setcolumncomplete = 1;
     }
 
@@ -2408,17 +2404,6 @@ var taplst =
                 promptFile().then(function(files) { dropfiles(files); })
             }, 400)
         }
-        else if (context.dragdrop && context.dragdrop.hitest(x,y))
-        {
-            context.tapindex = 2;
-            context.refresh();
-            clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function()
-            {
-                context.tapindex = 0;
-                context.refresh();
-            }, 400)
-        }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
             context.tapindex = 2;
@@ -3323,13 +3308,6 @@ fetch(path)
         }})
 
         slices.data.push({ title:"Add Image", path: "ADDIMG", func: function()
-        {
-            menuhide();
-            bodyobj.set(2)
-            _4cnvctx.refresh();
-        }});
-
-        slices.data.push({ title:"Delete Image", path: "DELIMG", func: function()
         {
             menuhide();
             bodyobj.set(2)
@@ -4422,6 +4400,12 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
+        }
+    },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
             context.save();
             context.font = "1rem Archivo Black";
             context.moveprev = new rectangle()
@@ -4633,7 +4617,6 @@ var bodylst =
             context.movenext = new rectangle()
             context.moveprev = new rectangle()
             context.openimage = new rectangle()
-            context.dragdrop = new rectangle()
             context.ignores = [];
             context.save();
             context.font = "1rem Archivo Black";
@@ -4641,13 +4624,13 @@ var bodylst =
             var a = new Col([0,w,0],
                     [
                         0,
-                        new Row([0,ALIEXTENT+40*2,0],
+                        new Row([0,ALIEXTENT+40*3,0],
                         [
                             0,
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40],
+                                new RowA([0,40,40,40],
                                 [
                                     new Layer(
                                     [
@@ -4679,12 +4662,8 @@ var bodylst =
                                         context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.dragdrop),
-                                        context.tapindex == 2 ? new Fill("rgba(0,0,150,0.5)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
+                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 ])
                             ]),
                             0,
@@ -4699,7 +4678,8 @@ var bodylst =
                         "Free 8k-32K Image Viewer",
                     ],
                     "Open Image",
-                    "Drag and Drop"
+                    "Drop Image Here",
+                    "images@repba.com"
                 ],
                 0);
             context.restore();
