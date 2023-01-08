@@ -520,7 +520,11 @@ function drawslices()
         if (!context.pressed && footcnv.height)
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
         bodyobj.set(0)
-        if (!context.pressed && !headobj.enabled)
+        if (_8cnvctx.enabled)
+        {
+            bodyobj.set(2)
+        }
+        else if (!context.pressed && !headobj.enabled)
         {
             thumbobj.getcurrent().draw(context, rect, 0, 0);
             bodyobj.set(1)
@@ -3315,7 +3319,6 @@ fetch(path)
         slices.data.push({ title:"Add Image", path: "ADDIMG", func: function()
         {
             menuhide();
-            bodyobj.set(2)
             _4cnvctx.refresh();
         }});
 
@@ -4079,7 +4082,6 @@ function menuenabled()
 
 function menuhide()
 {
-    bodyobj.set(0)
     var k = menuenabled();
     _2cnvctx.enabled = 0;
     _3cnvctx.enabled = 0;
@@ -4114,7 +4116,6 @@ function resize()
     setevents(_4cnvctx, eventlst[n])
     pageresize();
     _4cnvctx.tapping = 0;
-    bodyobj.set(0)
     _4cnvctx.refresh();
 }
 
@@ -4128,7 +4129,6 @@ function escape()
     menuhide();
     var n = eventlst.findIndex(function(a){return a.name == "_4cnvctx";})
     setevents(_4cnvctx, eventlst[n])
-    bodyobj.set(0)
     _4cnvctx.setcolumncomplete = 0;
     reset();
     pageresize();
@@ -4280,7 +4280,6 @@ var headlst =
             {
                 _8cnvctx.timeobj.set((1-galleryobj.berp())*TIMEOBJ);
                 menushow(_8cnvctx)
-                bodyobj.set(_8cnvctx.enabled?1:0);
                 _4cnvctx.refresh();
             }
             else if (context.prevpage.hitest(x,y))
@@ -4289,7 +4288,6 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                bodyobj.set(bodyobj.current()?0:3)
                 _4cnvctx.refresh();
             }
             else if (context.nextpage.hitest(x,y))
@@ -4298,7 +4296,6 @@ var headlst =
             }
             else if (context.option.hitest(x,y))
             {
-                bodyobj.set(0);
                 _4cnvctx.refresh();
                 menushow(_9cnvctx);
             }
@@ -4929,14 +4926,12 @@ function masterhide(x, y)
     if (menuenabled())
     {
         menuhide();
-        bodyobj.set(0)
         context.refresh();
     }
     else
     {
         context.tapping = 0;
         thumbpos.set(thumbpos.data.hitest(x,y))
-        bodyobj.set(0)
         headobj.enabled = headobj.enabled?0:1;
         footobj.enabled = headobj.enabled;
         pageresize();
