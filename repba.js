@@ -3818,17 +3818,31 @@ var ContextObj = (function ()
                     {
                         var k;
                         if (this.aspect < 0.5)
+                        {
                             k = "TALL"
+                            zoomobj.set(50);
+                        }
                         else if (this.aspect < 1.0)
+                        {
                             k = "PORTRAIT"
-                        else if (this.aspect < 2.0)
+                            zoomobj.set(50);
+                        }
+                        else if (this.aspect < 2.5)
+                        {
                             k = "LANDSCAPE"
-                        else if (this.aspect < 6.0)
+                            zoomobj.set(25);
+                        }
+                        else if (this.aspect < 5.0)
+                        {
                             k = "WIDE"
+                            zoomobj.set(0);
+                        }
                         else
+                        {
                             k = "ULTRAWIDE"
+                            zoomobj.set(0);
+                        }
 
-                        zoomobj.set(50);
                         var j = templatelst.findIndex(function(a){return a.name == k;})
                         templateobj.set(j);
                         templateobj.getcurrent().init();
