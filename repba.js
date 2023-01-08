@@ -2371,6 +2371,7 @@ var taplst =
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+            context.refresh();
             var context = _4cnvctx;
             context.tapindex = 1;
             context.refresh();
@@ -2389,6 +2390,7 @@ var taplst =
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+            context.refresh();
             var context = _4cnvctx;
             context.tapindex = 3;
             context.refresh();
