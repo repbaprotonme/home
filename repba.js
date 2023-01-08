@@ -4391,7 +4391,7 @@ var headlst =
                             0,
                             new Layer(
                             [
-                                (headobj.popup == 2) ?new Fill(HEADBACK):0,
+                                headobj.popup ? new Fill(HEADBACK):0,
                                 new Shrink(new Text("white", "center", "middle",0,0,1),20,20),
                             ]),
                             0,
@@ -4696,8 +4696,16 @@ var bodylst =
                                         context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    new Layer(
+                                    [
+                                        new Rectangle(),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
                                 ])
                             ]),
                             0,
