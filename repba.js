@@ -59,17 +59,6 @@ url.virtualcols = url.searchParams.has("v") ? Number(url.searchParams.get("v")) 
 url.autostart = url.searchParams.has("a") ? Number(url.searchParams.get("a")) : 1;
 url.timemain = url.searchParams.has("n") ? Number(url.searchParams.get("n")) : 12;
 
-url.path = "HOME";
-url.project = 0;
-if (url.searchParams.has("p"))
-{
-    var e = url.searchParams.get("p");
-    let k = e.split(".");
-    url.path = k[0].toUpperCase();
-    if (k.length == 2)
-        url.project = Number(k[1]);
-}
-
 url.filepath = function() { return url.origin + "/data/"; }
 
 Math.clamp = function (min, max, val)
@@ -526,9 +515,9 @@ function drawslices()
         {
             bodyobj.set(2)
         }
-        else if (headobj.popup)
+        else if (bodyobj.enabled)
         {
-            bodyobj.set(4)
+            bodyobj.set(bodyobj.enabled)
         }
         else if (!context.pressed && !headobj.enabled)
         {
@@ -4319,7 +4308,7 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                headobj.popup = headobj.popup?0:1;
+                bodyobj.enabled = bodyobj.enabled?0:4;
                 _4cnvctx.refresh();
             }
             else if (context.nextpage.hitest(x,y))
@@ -4393,7 +4382,7 @@ var headlst =
                             0,
                             new Layer(
                             [
-                                headobj.popup ? new Fill(HEADBACK):0,
+                                bodyobj.enabled == 4 ? new Fill(HEADBACK):0,
                                 new Shrink(new Text("white", "center", "middle",0,0,1),20,20),
                             ]),
                             0,
@@ -4722,7 +4711,7 @@ var bodylst =
                         context.ignores,
                         "Free 8k-32K Image Viewer",
                     ],
-                    "Open Image...",
+                    "Open Image ...",
                     "Drop Images Here",
                     "images@repba.com"
                 ],
@@ -4733,6 +4722,18 @@ var bodylst =
 ];
 
 var bodyobj = new makeoption("", bodylst);
+bodyobj.enabled = 4;
+url.path = "HOME";
+url.project = 0;
+if (url.searchParams.has("p"))
+{
+    bodyobj.enabled = 0;
+    var e = url.searchParams.get("p");
+    let k = e.split(".");
+    url.path = k[0].toUpperCase();
+    if (k.length == 2)
+        url.project = Number(k[1]);
+}
 
 var footlst =
 [
@@ -4971,6 +4972,7 @@ function masterhide(x, y)
     }
     else
     {
+        bodyobj.enabled = 0;
         context.tapping = 0;
         thumbpos.set(thumbpos.data.hitest(x,y))
         headobj.enabled = headobj.enabled?0:1;
