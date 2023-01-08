@@ -3140,8 +3140,8 @@ fetch(path)
         loomobj.set(url.zoom);
         pretchobj.split(60, "40-90", pretchobj.length());
         letchobj.split(60, "40-90", letchobj.length());
-        speedxobj.split(3, "1-20", speedxobj.length());
-        speedyobj.split(3, "1-20", speedyobj.length());
+        speedxobj.split(1.5, "1-20", speedxobj.length());
+        speedyobj.split(1.5, "1-20", speedyobj.length());
 
         if (typeof galleryobj.quality  === "undefined")
             galleryobj.quality = 75;
