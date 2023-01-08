@@ -524,6 +524,10 @@ function drawslices()
         {
             bodyobj.set(2)
         }
+        else if (bodyobj.popup)
+        {
+            bodyobj.set(4)
+        }
         else if (!context.pressed && !headobj.enabled)
         {
             thumbobj.getcurrent().draw(context, rect, 0, 0);
@@ -4313,6 +4317,7 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
+                headobj.popup = headobj.popup?0:1;
                 _4cnvctx.refresh();
             }
             else if (context.nextpage.hitest(x,y))
@@ -4386,7 +4391,7 @@ var headlst =
                             0,
                             new Layer(
                             [
-                                (bodyobj.current() == 2) ?new Fill(HEADBACK):0,
+                                (headobj.popup == 2) ?new Fill(HEADBACK):0,
                                 new Shrink(new Text("white", "center", "middle",0,0,1),20,20),
                             ]),
                             0,
