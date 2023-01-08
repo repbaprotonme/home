@@ -3846,7 +3846,6 @@ var ContextObj = (function ()
                         var j = templatelst.findIndex(function(a){return a.name == k;})
                         templateobj.set(j);
                         templateobj.getcurrent().init();
-                        delete globalobj.promptedfile;
                     }
 
                     clearInterval(context.timemain);
