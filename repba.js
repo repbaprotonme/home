@@ -3416,7 +3416,7 @@ var bodylst =
                 [
                     [
                         context.ignores,
-                        "Free 8k-32K Image Viewer",
+                        "reportbase.com",
                     ],
                     "Open Image ...",
                     "Drop Images Here",
@@ -3656,6 +3656,7 @@ fetch(path)
 
         slices.data.push({ title:"Add Image", path: "ADDIMG", func: function()
         {
+            bodyobj.enabled = 3;
             menuhide();
             _4cnvctx.refresh();
         }});
@@ -4460,6 +4461,7 @@ function resize()
 function escape()
 {
     clearInterval(_4cnvctx.timemain);
+    bodyobj.enabled = 0;
     _4cnvctx.tapping = 0;
     _4cnvctx.timemain = 0;
     menuhide();
