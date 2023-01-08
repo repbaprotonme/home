@@ -4530,19 +4530,19 @@ var bodylst =
                                 new Rectangles(),
                                 new Layer(
                                 [
-                                    context.tapindex == 1 ? new Fill("rgba(0,0,150,0.75)") : MENUCOLOR,
+                                    new Fill(context.tapindex == 1 ? "rgba(0,0,150,0.75)" : MENUCOLOR),
                                     new Rectangle(context.menudown),
                                     new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
                                 new Layer(
                                 [
-                                    context.tapindex == 2 ? new Fill("rgba(0,0,150,0.75)") : MENUCOLOR,
+                                    new Fill(context.tapindex == 2 ? "rgba(0,0,150,0.75)" : MENUCOLOR),
                                     new Rectangle(context.menuhome),
                                     new Shrink(new Circle("white"),20,20)
                                 ]),
                                 new Layer(
                                 [
-                                    context.tapindex == 3 ? new Fill("rgba(0,0,150,0.75)") : MENUCOLOR,
+                                    new Fill(context.tapindex == 3 ? "rgba(0,0,150,0.75)" : MENUCOLOR),
                                     new Rectangle(context.menuup),
                                     new Shrink(new Arrow(ARROWFILL,180),20,20),
                                 ]),
