@@ -2966,8 +2966,8 @@ var templatelst =
         rowobj.enabled = 1;
         galleryobj.maxmegapix = 4000000;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 5;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 144;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "35-85", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2979,8 +2979,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 5;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 144;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "70-95", loomobj.length());
         poomobj.split(url.zoom, "35-95", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -2992,8 +2992,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 512;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 48;
         loomobj.split(url.zoom, "0-50", loomobj.length());
         poomobj.split(url.zoom, "0-50", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3005,8 +3005,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 512;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 48;
         loomobj.split(url.zoom, "0-50", loomobj.length());
         poomobj.split(url.zoom, "0-50", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3018,8 +3018,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 512;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 48;
         loomobj.split(url.zoom, "25-80", loomobj.length());
         poomobj.split(url.zoom, "0-80", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3031,8 +3031,8 @@ var templatelst =
     init: function (j)
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 512;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 48;
         loomobj.split(url.zoom, "35-90", loomobj.length());
         poomobj.split(url.zoom, "0-90", poomobj.length());
         traitobj.split(100, "0.1-1.0", traitobj.length());
@@ -3044,8 +3044,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 144;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -3057,8 +3057,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 144;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "80-90", loomobj.length());
         poomobj.split(url.zoom, "50-90", poomobj.length());
         traitobj.split(70, "0.1-1.0", traitobj.length());
@@ -3070,8 +3070,8 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 2;
-        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 144;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         guideobj.set(1);
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
