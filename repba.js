@@ -4116,6 +4116,8 @@ function resize()
 function escape()
 {
     clearInterval(_4cnvctx.timemain);
+    headobj.enabled = headobj.enabled?0:1;
+    footobj.enabled = headobj.enabled;
     _4cnvctx.tapping = 0;
     _4cnvctx.timemain = 0;
     menuhide();
