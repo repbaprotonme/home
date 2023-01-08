@@ -2524,9 +2524,9 @@ var thumblst =
         context.shadowOffsetY = 0;
 
         var blackfill = new Fill(THUMBFILL);
-        var blackfill2 = new Fill(context.freepan?"rgba(255,155,0,0.3)":"rgba(0,0,0,0.4)");
+        var blackfill2 = new Fill(context.freepan?"rgba(0,0,255,0.4)":"rgba(0,0,0,0.4)");
 
-        if (context.isthumbrect && (jp))// || context.panning))
+        if (context.isthumbrect && jp)
         {
             if (!context.pressed)
             {
@@ -2966,7 +2966,7 @@ var templatelst =
         rowobj.enabled = 1;
         galleryobj.maxmegapix = 4000000;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 48;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "35-85", poomobj.length());
@@ -2979,7 +2979,7 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 48;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "70-95", loomobj.length());
         poomobj.split(url.zoom, "35-95", poomobj.length());
@@ -2992,7 +2992,7 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 36;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "0-50", loomobj.length());
         poomobj.split(url.zoom, "0-50", poomobj.length());
@@ -3005,7 +3005,7 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 72;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "0-50", loomobj.length());
         poomobj.split(url.zoom, "0-50", poomobj.length());
@@ -3018,7 +3018,7 @@ var templatelst =
     init: function ()
     {
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
-        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
+        url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 72;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 24;
         loomobj.split(url.zoom, "25-80", loomobj.length());
         poomobj.split(url.zoom, "0-80", poomobj.length());
@@ -3333,7 +3333,7 @@ fetch(path)
             authClient.redirectToAccountPage()
         }});
 
-        slices.data.push({ title:"Config", path: "CONFIG", func: function()
+        slices.data.push({ title:"Gallery", path: "GALLERY", func: function()
         {
             var path = "https://reportbase.com/gallery/" + url.path;
             window.location.href = path;
