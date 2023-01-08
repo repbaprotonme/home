@@ -2371,13 +2371,14 @@ var taplst =
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+            var context = _4cnvctx;
             context.tapindex = 1;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
             {
-                _4cnvctx.tapindex = 0;
-                _4cnvctx.refresh();
+                context.tapindex = 0;
+                context.refresh();
             }, 400)
         }
         else if (context.menuup && context.menuup.hitest(x,y))
@@ -2388,13 +2389,14 @@ var taplst =
             context.slidereduce = context.slideshow/15;
             clearInterval(context.timemain);
             context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+            var context = _4cnvctx;
             context.tapindex = 3;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
             {
-                _4cnvctx.tapindex = 0;
-                _4cnvctx.refresh();
+                context.tapindex = 0;
+                context.refresh();
             }, 400)
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
