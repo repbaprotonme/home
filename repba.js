@@ -2354,7 +2354,7 @@ var taplst =
 	{
         clearInterval(context.timemain);
         context.timemain = 0;
-
+//todo list
         if (context.moveprev && context.moveprev.hitest(x,y))
         {
             _4cnvctx.movepage(-1);
@@ -2365,21 +2365,37 @@ var taplst =
         }
         else if (context.menudown && context.menudown.hitest(x,y))
         {
-            var context = _8cnvctx;
-            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
-            context.swipetype = "swipedown";
-            context.slidereduce = context.slideshow/15;
-            clearInterval(context.timemain);
-            context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+            context.tapindex = 3;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                var context = _8cnvctx;
+                context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
+                context.swipetype = "swipedown";
+                context.slidereduce = context.slideshow/15;
+                clearInterval(context.timemain);
+                context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+                context.refresh();
+            }, 400)
         }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
-            var context = _8cnvctx;
-            context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
-            context.swipetype = "swipeup";
-            context.slidereduce = context.slideshow/15;
-            clearInterval(context.timemain);
-            context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+            context.tapindex = 1;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                var context = _8cnvctx;
+                context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
+                context.swipetype = "swipeup";
+                context.slidereduce = context.slideshow/15;
+                clearInterval(context.timemain);
+                context.timemain = setInterval(function () { context.refresh(); }, globalobj.timemain);
+                context.refresh();
+            }, 400)
         }
         else if (context.ignores && context.ignores.hitest(x,y)>=0)
         {
@@ -2426,10 +2442,17 @@ var taplst =
         }
         else if (context.menuhome && context.menuhome.hitest(x,y))
         {
-            var obj = _8cnvctx.timeobj;
-            var j = obj.berp() == 0 ? (1-galleryobj.berp())*TIMEOBJ : 0;
-            obj.set(j);
-            _4cnvctx.refresh();
+            context.tapindex = 2;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                var obj = _8cnvctx.timeobj;
+                var j = obj.berp() == 0 ? (1-galleryobj.berp())*TIMEOBJ : 0;
+                obj.set(j);
+                _4cnvctx.refresh();
+            }, 400)
         }
         else if (!headobj.enabled && context.thumbrect && context.thumbrect.hitest(x,y))
         {
@@ -4122,8 +4145,6 @@ function resize()
 function escape()
 {
     clearInterval(_4cnvctx.timemain);
-    headobj.enabled = headobj.enabled?0:1;
-    footobj.enabled = headobj.enabled;
     _4cnvctx.tapping = 0;
     _4cnvctx.timemain = 0;
     menuhide();
@@ -4509,20 +4530,20 @@ var bodylst =
                                 new Rectangles(),
                                 new Layer(
                                 [
+                                    context.tapindex == 1 ? new Fill("rgba(0,0,150,0.75)") : MENUCOLOR,
                                     new Rectangle(context.menudown),
-                                    new Fill(MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,0),20,20),
                                 ]),
                                 new Layer(
                                 [
+                                    context.tapindex == 2 ? new Fill("rgba(0,0,150,0.75)") : MENUCOLOR,
                                     new Rectangle(context.menuhome),
-                                    new Fill(MENUCOLOR),
                                     new Shrink(new Circle("white"),20,20)
                                 ]),
                                 new Layer(
                                 [
+                                    context.tapindex == 3 ? new Fill("rgba(0,0,150,0.75)") : MENUCOLOR,
                                     new Rectangle(context.menuup),
-                                    new Fill(MENUCOLOR),
                                     new Shrink(new Arrow(ARROWFILL,180),20,20),
                                 ]),
                                 new Rectangles(),
