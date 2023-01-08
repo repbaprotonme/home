@@ -1104,6 +1104,7 @@ CanvasRenderingContext2D.prototype.movepage = function(j)
     galleryobj.rotate(-j);
     if (_4cnvctx.movingpage || !loaded.has(path) || galleryobj.length() == 1)
     {
+        masterload()
         _4cnvctx.movingpage = 0;
         this.refresh();
         return;
@@ -3416,7 +3417,7 @@ var bodylst =
                 [
                     [
                         context.ignores,
-                        "reportbase.com",
+                        "Image Viewer",
                     ],
                     "Open Image ...",
                     "Drop Images Here",
