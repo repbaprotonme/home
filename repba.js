@@ -524,7 +524,7 @@ function drawslices()
         {
             bodyobj.set(2)
         }
-        else if (bodyobj.popup)
+        else if (headobj.popup)
         {
             bodyobj.set(4)
         }
