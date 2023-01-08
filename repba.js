@@ -3126,6 +3126,322 @@ var templateobj = new makeoption("TEMPLATE", templatelst);
 var describeobj = new makeoption("", 0);
 describeobj.positions = [0,0,0];
 
+var bodylst =
+[
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+        }
+    },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.save();
+            context.font = "1rem Archivo Black";
+            context.moveprev = new rectangle()
+            context.movenext = new rectangle()
+            var zoom = zoomobj.getcurrent();
+            var j = headcnv.height;
+            var a =
+                    new Col([60,0,60],
+                    [
+                        j?0:new Row([90,60,0],
+                        [
+                            0,
+                            new Layer(
+                            [
+                                new Rectangle(context.moveprev),
+                                new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
+                                new Shrink(new Arrow(ARROWFILL,270),22,22),
+                            ]),
+                            0,
+                        ]),
+                        debugobj.enabled?new Row([0,30*6,0],
+                        [
+                            0,
+                            new RowA([0,30,30,30,30,30,30,0],
+                            [
+                                0,
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                0,
+                           ]),
+                            0,
+                        ]):0,
+                        j?0:new Row([90,60,0],
+                        [
+                            0,
+                            new Layer(
+                            [
+                                new Rectangle(context.movenext),
+                                new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
+                                new Shrink(new Arrow(ARROWFILL,90),22,22),
+                            ]),
+                            0,
+                        ]),
+                    ]);
+
+            var width = 0;
+            var visibles = 0;
+            var slicelst = context.sliceobj.data;
+            for (var m = 0; m < slicelst.length; ++m)
+            {
+                if (!slicelst[m].visible)
+                    continue;
+                visibles += 1;
+                var w = slicelst[m].stretchwidth;
+                width += w;
+            }
+
+            var eff = width/rect.width;
+            a.draw(context, rect,
+                    [
+                        0,
+                        window.rect.width+"X"+window.rect.height,
+                        photo.image.width+"X"+photo.image.height,
+                        context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
+                        visibles.toFixed(0)+"-"+context.sliceobj.length(),
+                        context.slicewidth.toFixed(0),
+                        eff.toFixed(4),
+                        0,
+                    ],
+                0);
+            context.restore();
+        }
+    },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.save();
+            context.ignores = [];
+            context.menuup = new rectangle()
+            context.menuhome = new rectangle()
+            context.menudown = new rectangle()
+            context.font = "1rem Archivo Black";
+            var a =
+                    new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
+                    [
+                        0,
+                        0,
+                        0,
+                        new Row([0,30,ALIEXTENT,ALIEXTENT,ALIEXTENT,30,0],
+                            [
+                                0,
+                                new Rectangles(),
+                                new Layer(
+                                [
+                                    new Fill(context.tapindex == 1 ? "rgba(0,0,150,0.75)" : MENUCOLOR),
+                                    new Rectangle(context.menudown),
+                                    new Shrink(new Arrow(ARROWFILL,0),20,20),
+                                ]),
+                                new Layer(
+                                [
+                                    new Fill(context.tapindex == 2 ? "rgba(0,0,150,0.75)" : MENUCOLOR),
+                                    new Rectangle(context.menuhome),
+                                    new Shrink(new Circle("white"),20,20)
+                                ]),
+                                new Layer(
+                                [
+                                    new Fill(context.tapindex == 3 ? "rgba(0,0,150,0.75)" : MENUCOLOR),
+                                    new Rectangle(context.menuup),
+                                    new Shrink(new Arrow(ARROWFILL,180),20,20),
+                                ]),
+                                new Rectangles(),
+                                0,
+                            ]),
+                        0,
+                    ]);
+
+            a.draw(context, rect, context.ignores, 0);
+            context.restore();
+        }
+    },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.movenext = new rectangle()
+            context.moveprev = new rectangle()
+            context.addimage = new rectangle()
+            context.delimage = new rectangle()
+            context.ignores = [];
+            context.save();
+            context.font = "1rem Archivo Black";
+            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
+            var a = new Col([0,w,0],
+                    [
+                        0,
+                        new Row([0,ALIEXTENT+40*2,0],
+                        [
+                            0,
+                            new Layer(
+                            [
+                                new Fill(MENUCOLOR),
+                                new RowA([0,40,40],
+                                [
+                                    new Layer(
+                                    [
+                                        new Fill(MENUCOLOR),
+                                        new Col([ALIEXTENT,0,ALIEXTENT],
+                                        [
+                                            new Layer(
+                                            [
+                                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                                new Rectangle(context.moveprev),
+                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
+                                            ]),
+                                            new LayerA(
+                                            [
+                                                new Rectangles(),
+                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            ]),
+                                            new Layer(
+                                            [
+                                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                                new Rectangle(context.movenext),
+                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                                            ]),
+                                        ])
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.addimage),
+                                        context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.delimage),
+                                        context.tapindex == 2 ? new Fill("rgba(0,0,150,0.5)") : 0,
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                ])
+                            ]),
+                            0,
+                        ]),
+                        0,
+                    ]);
+
+                a.draw(context, rect,
+                [
+                    [
+                        context.ignores,
+                        galleryobj.getcurrent().title,
+                    ],
+                    "Add Image",
+                    "Delete Image",
+                ],
+                0);
+            context.restore();
+        }
+    },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.movenext = new rectangle()
+            context.moveprev = new rectangle()
+            context.email = new rectangle()
+            context.dropimage = new rectangle()
+            context.openimage = new rectangle()
+            context.ignores = [];
+            context.save();
+            context.font = "1rem Archivo Black";
+            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
+            var a = new Col([0,w,0],
+                    [
+                        0,
+                        new Row([0,ALIEXTENT+40*3,0],
+                        [
+                            0,
+                            new Layer(
+                            [
+                                new Fill(MENUCOLOR),
+                                new RowA([0,40,40,40],
+                                [
+                                    new Layer(
+                                    [
+                                        new Fill(MENUCOLOR),
+                                        new Col([ALIEXTENT,0,ALIEXTENT],
+                                        [
+                                            new Layer(
+                                            [
+                                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                                new Rectangle(context.moveprev),
+                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
+                                            ]),
+                                            new LayerA(
+                                            [
+                                                new Rectangles(),
+                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            ]),
+                                            new Layer(
+                                            [
+                                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                                new Rectangle(context.movenext),
+                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                                            ]),
+                                        ])
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.openimage),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.dropimage),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.email),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                ])
+                            ]),
+                            0,
+                        ]),
+                        0,
+                    ]);
+
+                a.draw(context, rect,
+                [
+                    [
+                        context.ignores,
+                        "Free 8k-32K Image Viewer",
+                    ],
+                    "Open Image ...",
+                    "Drop Images Here",
+                    "images@repba.com"
+                ],
+                0);
+            context.restore();
+        }
+    },
+];
+
+var bodyobj = new makeoption("", bodylst);
+bodyobj.enabled = 4;
+url.path = "HOME";
+url.project = 0;
+if (url.searchParams.has("p"))
+{
+    bodyobj.enabled = 0;
+    var e = url.searchParams.get("p");
+    let k = e.split(".");
+    url.path = k[0].toUpperCase();
+    if (k.length == 2)
+        url.project = Number(k[1]);
+}
+
 var galleryobj = new makeoption("", 0);
 galleryobj.mode = 0;
 galleryobj.path = function()
@@ -4419,321 +4735,6 @@ var headlst =
 	},
 ];
 
-var bodylst =
-[
-    new function()
-    {
-        this.draw = function (context, rect, user, time)
-        {
-        }
-    },
-    new function()
-    {
-        this.draw = function (context, rect, user, time)
-        {
-            context.save();
-            context.font = "1rem Archivo Black";
-            context.moveprev = new rectangle()
-            context.movenext = new rectangle()
-            var zoom = zoomobj.getcurrent();
-            var j = headcnv.height;
-            var a =
-                    new Col([60,0,60],
-                    [
-                        j?0:new Row([90,60,0],
-                        [
-                            0,
-                            new Layer(
-                            [
-                                new Rectangle(context.moveprev),
-                                new Shrink(new Circle(_4cnvctx.movingpage == -1?"red":SCROLLNAB,"white",3),10,10),
-                                new Shrink(new Arrow(ARROWFILL,270),22,22),
-                            ]),
-                            0,
-                        ]),
-                        debugobj.enabled?new Row([0,30*6,0],
-                        [
-                            0,
-                            new RowA([0,30,30,30,30,30,30,0],
-                            [
-                                0,
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                0,
-                           ]),
-                            0,
-                        ]):0,
-                        j?0:new Row([90,60,0],
-                        [
-                            0,
-                            new Layer(
-                            [
-                                new Rectangle(context.movenext),
-                                new Shrink(new Circle(_4cnvctx.movingpage == 1?"red":SCROLLNAB,"white",3),10,10),
-                                new Shrink(new Arrow(ARROWFILL,90),22,22),
-                            ]),
-                            0,
-                        ]),
-                    ]);
-
-            var width = 0;
-            var visibles = 0;
-            var slicelst = context.sliceobj.data;
-            for (var m = 0; m < slicelst.length; ++m)
-            {
-                if (!slicelst[m].visible)
-                    continue;
-                visibles += 1;
-                var w = slicelst[m].stretchwidth;
-                width += w;
-            }
-
-            var eff = width/rect.width;
-            a.draw(context, rect,
-                    [
-                        0,
-                        window.rect.width+"X"+window.rect.height,
-                        photo.image.width+"X"+photo.image.height,
-                        context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
-                        visibles.toFixed(0)+"-"+context.sliceobj.length(),
-                        context.slicewidth.toFixed(0),
-                        eff.toFixed(4),
-                        0,
-                    ],
-                0);
-            context.restore();
-        }
-    },
-    new function()
-    {
-        this.draw = function (context, rect, user, time)
-        {
-            context.save();
-            context.ignores = [];
-            context.menuup = new rectangle()
-            context.menuhome = new rectangle()
-            context.menudown = new rectangle()
-            context.font = "1rem Archivo Black";
-            var a =
-                    new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
-                    [
-                        0,
-                        0,
-                        0,
-                        new Row([0,30,ALIEXTENT,ALIEXTENT,ALIEXTENT,30,0],
-                            [
-                                0,
-                                new Rectangles(),
-                                new Layer(
-                                [
-                                    new Fill(context.tapindex == 1 ? "rgba(0,0,150,0.75)" : MENUCOLOR),
-                                    new Rectangle(context.menudown),
-                                    new Shrink(new Arrow(ARROWFILL,0),20,20),
-                                ]),
-                                new Layer(
-                                [
-                                    new Fill(context.tapindex == 2 ? "rgba(0,0,150,0.75)" : MENUCOLOR),
-                                    new Rectangle(context.menuhome),
-                                    new Shrink(new Circle("white"),20,20)
-                                ]),
-                                new Layer(
-                                [
-                                    new Fill(context.tapindex == 3 ? "rgba(0,0,150,0.75)" : MENUCOLOR),
-                                    new Rectangle(context.menuup),
-                                    new Shrink(new Arrow(ARROWFILL,180),20,20),
-                                ]),
-                                new Rectangles(),
-                                0,
-                            ]),
-                        0,
-                    ]);
-
-            a.draw(context, rect, context.ignores, 0);
-            context.restore();
-        }
-    },
-    new function()
-    {
-        this.draw = function (context, rect, user, time)
-        {
-            context.movenext = new rectangle()
-            context.moveprev = new rectangle()
-            context.addimage = new rectangle()
-            context.delimage = new rectangle()
-            context.ignores = [];
-            context.save();
-            context.font = "1rem Archivo Black";
-            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var a = new Col([0,w,0],
-                    [
-                        0,
-                        new Row([0,ALIEXTENT+40*2,0],
-                        [
-                            0,
-                            new Layer(
-                            [
-                                new Fill(MENUCOLOR),
-                                new RowA([0,40,40],
-                                [
-                                    new Layer(
-                                    [
-                                        new Fill(MENUCOLOR),
-                                        new Col([ALIEXTENT,0,ALIEXTENT],
-                                        [
-                                            new Layer(
-                                            [
-                                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                                new Rectangle(context.moveprev),
-                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
-                                            ]),
-                                            new LayerA(
-                                            [
-                                                new Rectangles(),
-                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            ]),
-                                            new Layer(
-                                            [
-                                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                                new Rectangle(context.movenext),
-                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
-                                            ]),
-                                        ])
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.addimage),
-                                        context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.delimage),
-                                        context.tapindex == 2 ? new Fill("rgba(0,0,150,0.5)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                ])
-                            ]),
-                            0,
-                        ]),
-                        0,
-                    ]);
-
-                a.draw(context, rect,
-                [
-                    [
-                        context.ignores,
-                        galleryobj.getcurrent().title,
-                    ],
-                    "Add Image",
-                    "Delete Image",
-                ],
-                0);
-            context.restore();
-        }
-    },
-    new function()
-    {
-        this.draw = function (context, rect, user, time)
-        {
-            context.movenext = new rectangle()
-            context.moveprev = new rectangle()
-            context.email = new rectangle()
-            context.dropimage = new rectangle()
-            context.openimage = new rectangle()
-            context.ignores = [];
-            context.save();
-            context.font = "1rem Archivo Black";
-            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var a = new Col([0,w,0],
-                    [
-                        0,
-                        new Row([0,ALIEXTENT+40*3,0],
-                        [
-                            0,
-                            new Layer(
-                            [
-                                new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40],
-                                [
-                                    new Layer(
-                                    [
-                                        new Fill(MENUCOLOR),
-                                        new Col([ALIEXTENT,0,ALIEXTENT],
-                                        [
-                                            new Layer(
-                                            [
-                                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                                new Rectangle(context.moveprev),
-                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
-                                            ]),
-                                            new LayerA(
-                                            [
-                                                new Rectangles(),
-                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            ]),
-                                            new Layer(
-                                            [
-                                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                                new Rectangle(context.movenext),
-                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
-                                            ]),
-                                        ])
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.openimage),
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.dropimage),
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.email),
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                ])
-                            ]),
-                            0,
-                        ]),
-                        0,
-                    ]);
-
-                a.draw(context, rect,
-                [
-                    [
-                        context.ignores,
-                        "Free 8k-32K Image Viewer",
-                    ],
-                    "Open Image ...",
-                    "Drop Images Here",
-                    "images@repba.com"
-                ],
-                0);
-            context.restore();
-        }
-    },
-];
-
-var bodyobj = new makeoption("", bodylst);
-bodyobj.enabled = 4;
-url.path = "HOME";
-url.project = 0;
-if (url.searchParams.has("p"))
-{
-    bodyobj.enabled = 0;
-    var e = url.searchParams.get("p");
-    let k = e.split(".");
-    url.path = k[0].toUpperCase();
-    if (k.length == 2)
-        url.project = Number(k[1]);
-}
 
 var footlst =
 [
