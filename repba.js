@@ -508,6 +508,8 @@ function drawslices()
         delete context.addimage;
         delete context.selectrect;
         delete context.openimage;
+        delete context.dropimage;
+        delete context.email;
         delete context.delimage;
         delete context.moveprev;
         delete context.movenext;
@@ -2425,17 +2427,17 @@ var taplst =
                 promptFile().then(function(files) { dropfiles(files); })
             },400)
         }
+        else if (context.email && context.email.hitest(x,y))
+        {
+            promptFile().then(function(files) { dropfiles(files); })
+        }
+        else if (context.dropimage && context.dropimage.hitest(x,y))
+        {
+            promptFile().then(function(files) { dropfiles(files); })
+        }
         else if (context.openimage && context.openimage.hitest(x,y))
         {
-            context.tapindex = 1;
-            context.refresh();
-            clearInterval(globalobj.tapthumb);
-            globalobj.tapthumb = setTimeout(function()
-            {
-                context.tapindex = 0;
-                context.refresh();
-                promptFile().then(function(files) { dropfiles(files); })
-            }, 400)
+            promptFile().then(function(files) { dropfiles(files); })
         }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
@@ -4650,6 +4652,8 @@ var bodylst =
         {
             context.movenext = new rectangle()
             context.moveprev = new rectangle()
+            context.email = new rectangle()
+            context.dropimage = new rectangle()
             context.openimage = new rectangle()
             context.ignores = [];
             context.save();
@@ -4693,17 +4697,16 @@ var bodylst =
                                     new Layer(
                                     [
                                         new Rectangle(context.openimage),
-                                        context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                     new Layer(
                                     [
-                                        new Rectangle(),
+                                        new Rectangle(context.dropimage),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                     new Layer(
                                     [
-                                        new Rectangle(),
+                                        new Rectangle(context.email),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
                                 ])
@@ -4719,8 +4722,8 @@ var bodylst =
                         context.ignores,
                         "Free 8k-32K Image Viewer",
                     ],
-                    "Open Image",
-                    "Drop Image Here",
+                    "Open Image...",
+                    "Drop Images Here",
                     "images@repba.com"
                 ],
                 0);
