@@ -2365,13 +2365,13 @@ var taplst =
         }
         else if (context.menudown && context.menudown.hitest(x,y))
         {
-            context.tapindex = 3;
+            context.tapindex = 1;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
             {
-                context.tapindex = 0;
                 var context = _8cnvctx;
+                context.tapindex = 0;
                 context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
                 context.swipetype = "swipedown";
                 context.slidereduce = context.slideshow/15;
@@ -2382,13 +2382,13 @@ var taplst =
         }
         else if (context.menuup && context.menuup.hitest(x,y))
         {
-            context.tapindex = 1;
+            context.tapindex = 3;
             context.refresh();
             clearInterval(globalobj.tapthumb);
             globalobj.tapthumb = setTimeout(function()
             {
-                context.tapindex = 0;
                 var context = _8cnvctx;
+                context.tapindex = 0;
                 context.slideshow = (context.timeobj.length()/context.virtualheight)*context.rvalue*18;
                 context.swipetype = "swipeup";
                 context.slidereduce = context.slideshow/15;
