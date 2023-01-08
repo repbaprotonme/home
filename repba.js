@@ -519,8 +519,13 @@ function drawslices()
             headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
         if (!context.pressed && footcnv.height)
             footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
+        bodyobj.set(0)
         if (!context.pressed && !headobj.enabled)
+        {
             thumbobj.getcurrent().draw(context, rect, 0, 0);
+            bodyobj.set(1)
+        }
+
         bodyobj.getcurrent().draw(context, rect, 0, 0);
         context.setcolumncomplete = 1;
     }
