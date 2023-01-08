@@ -507,6 +507,8 @@ function drawslices()
         context.restore();
         delete context.addimage;
         delete context.selectrect;
+        delete context.dragdrop;
+        delete context.openimage;
         delete context.delimage;
         delete context.moveprev;
         delete context.movenext;
@@ -2394,6 +2396,29 @@ var taplst =
                 promptFile().then(function(files) { dropfiles(files); })
             },400)
         }
+        else if (context.openimage && context.openimage.hitest(x,y))
+        {
+            context.tapindex = 1;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                context.refresh();
+                promptFile().then(function(files) { dropfiles(files); })
+            }, 400)
+        }
+        else if (context.dragdrop && context.dragdrop.hitest(x,y))
+        {
+            context.tapindex = 2;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                context.refresh();
+            }, 400)
+        }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
             context.tapindex = 2;
@@ -4279,7 +4304,7 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                bodyobj.set(bodyobj.current()?0:2)
+                bodyobj.set(bodyobj.current()?0:3)
                 _4cnvctx.refresh();
             }
             else if (context.nextpage.hitest(x,y))
@@ -4596,6 +4621,85 @@ var bodylst =
                     ],
                     "Add Image",
                     "Delete Image",
+                ],
+                0);
+            context.restore();
+        }
+    },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.movenext = new rectangle()
+            context.moveprev = new rectangle()
+            context.openimage = new rectangle()
+            context.dragdrop = new rectangle()
+            context.ignores = [];
+            context.save();
+            context.font = "1rem Archivo Black";
+            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
+            var a = new Col([0,w,0],
+                    [
+                        0,
+                        new Row([0,ALIEXTENT+40*2,0],
+                        [
+                            0,
+                            new Layer(
+                            [
+                                new Fill(MENUCOLOR),
+                                new RowA([0,40,40],
+                                [
+                                    new Layer(
+                                    [
+                                        new Fill(MENUCOLOR),
+                                        new Col([ALIEXTENT,0,ALIEXTENT],
+                                        [
+                                            new Layer(
+                                            [
+                                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                                new Rectangle(context.moveprev),
+                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
+                                            ]),
+                                            new LayerA(
+                                            [
+                                                new Rectangles(),
+                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            ]),
+                                            new Layer(
+                                            [
+                                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                                new Rectangle(context.movenext),
+                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                                            ]),
+                                        ])
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.openimage),
+                                        context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(context.dragdrop),
+                                        context.tapindex == 2 ? new Fill("rgba(0,0,150,0.5)") : 0,
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                ])
+                            ]),
+                            0,
+                        ]),
+                        0,
+                    ]);
+
+                a.draw(context, rect,
+                [
+                    [
+                        context.ignores,
+                        "Free 8k-32K Image Viewer",
+                    ],
+                    "Open Image",
+                    "Drag and Drop"
                 ],
                 0);
             context.restore();
