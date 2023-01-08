@@ -4926,7 +4926,7 @@ window.addEventListener("keydown", function (evt)
 function masterhide(x, y)
 {
     var context = _4cnvctx;
-    if (menuenabled() || bodyobj.current())
+    if (menuenabled())
     {
         menuhide();
         bodyobj.set(0)
