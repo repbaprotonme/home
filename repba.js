@@ -3474,9 +3474,9 @@ var bodylst =
             a.draw(context, rect,
             [
                 0,
+                context.ignores,
                 [
                     galleryobj.getcurrent().title,
-                    context.ignores,
                     [
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
