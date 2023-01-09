@@ -3403,9 +3403,10 @@ var bodylst =
                         new Row([0,ALIEXTENT+40*6,0],
                         [
                             0,
-                            new Layer(
+                            new LayerA(
                             [
                                 new Fill(MENUCOLOR),
+                                new Rectangle(),
                                 new RowA([0,40*6],
                                 [
                                     new Layer(
@@ -3419,11 +3420,7 @@ var bodylst =
                                                 new Rectangle(context.moveprev),
                                                 new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
                                             ]),
-                                            new LayerA(
-                                            [
-                                                new Rectangle(),
-                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            ]),
+                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                             new Layer(
                                             [
                                                 context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
@@ -3432,18 +3429,14 @@ var bodylst =
                                             ]),
                                         ])
                                     ]),
-                                    new LayerA(
+                                    new RowA([0,0,0,0,0,0],
                                     [
-                                        new Rectangle(),
-                                        new RowA([0,0,0,0,0,0],
-                                        [
-                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                        ])
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ])
                                 ])
                             ]),
@@ -3467,12 +3460,10 @@ var bodylst =
             var eff = width/rect.width;
             a.draw(context, rect,
             [
+                0,
+                context.ignores,
                 [
-                    context.ignores,
                     galleryobj.getcurrent().title,
-                ],
-                [
-                    context.ignores,
                     [
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
@@ -3481,7 +3472,7 @@ var bodylst =
                         context.slicewidth.toFixed(0),
                         eff.toFixed(4),
                     ]
-                ]
+                ],
             ],
             0);
          }
