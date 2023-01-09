@@ -3422,6 +3422,7 @@ var bodylst =
                     new LayerA(
                     [
                         new Fill(MENUCOLOR),
+                        new Rectangles()
                         new RowA([0,40*6],
                         [
                             new Layer(
@@ -3475,6 +3476,7 @@ var bodylst =
                 0,
                 [
                     galleryobj.getcurrent().title,
+                    context.ignores,
                     [
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
