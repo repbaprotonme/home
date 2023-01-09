@@ -3478,12 +3478,12 @@ var bodylst =
                 [
                     galleryobj.getcurrent().title,
                     [
-                        window.rect.width+"X"+window.rect.height,
-                        photo.image.width+"X"+photo.image.height,
-                        context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
-                        visibles.toFixed(0)+"-"+context.sliceobj.length(),
-                        context.slicewidth.toFixed(0),
-                        eff.toFixed(4),
+                        "Image Size: "+photo.image.width+"X"+photo.image.height,
+                        "Virtual Size: "+context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
+                        "Visibles: "+visibles.toFixed(0)+"-"+context.sliceobj.length(),
+                        "Slice Width: "+context.slicewidth.toFixed(0),
+                        "Efficiency: "+eff.toFixed(4),
+                        "Window: "+window.rect.width+"X"+window.rect.height,
                     ]
                 ],
             ],
@@ -4541,6 +4541,7 @@ function resize()
 function escape()
 {
     clearInterval(_4cnvctx.timemain);
+    colorobj.enabled = 0;
     bodyobj.enabled = 0;
     _4cnvctx.tapping = 0;
     _4cnvctx.timemain = 0;
