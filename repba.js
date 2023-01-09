@@ -3406,7 +3406,7 @@ var bodylst =
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new RowA([0,40,40,40,40,40,40],
+                                new RowA([0,40*6],
                                 [
                                     new Layer(
                                     [
@@ -3428,12 +3428,19 @@ var bodylst =
                                             ]),
                                         ])
                                     ]),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    new LayerA(
+                                    [
+                                        new Rectangle(),
+                                        new RowA([0,0,0,0,0,0])
+                                        [
+                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                        ])
+                                    ])
                                 ])
                             ]),
                             0,
@@ -3455,16 +3462,21 @@ var bodylst =
 
             var eff = width/rect.width;
             a.draw(context, rect,
+            [
+                galleryobj.getcurrent().title,
+                [
+                    context.ignores
                     [
-                        galleryobj.getcurrent().title,
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
                         visibles.toFixed(0)+"-"+context.sliceobj.length(),
                         context.slicewidth.toFixed(0),
                         eff.toFixed(4),
-                    ],
-                0);
+                    ]
+                ]
+            ],
+            0);
          }
     },
 ];
