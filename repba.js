@@ -1113,6 +1113,7 @@ var addressobj = {}
 addressobj.full = function ()
 {
     var zoom = zoomobj.getcurrent();
+    var height = heightobj.getcurrent();
     var out = url.origin;
     out +=
         "/?p="+galleryobj.getcurrent().title+
@@ -1122,6 +1123,7 @@ addressobj.full = function ()
         "&n="+url.timemain+
         "&s="+url.slidetop+
         "&f="+url.slidefactor+
+        "&o="+Number(height.current()).toFixed(2)+
         "&z="+Number(zoom.current()).toFixed(2)+
         "&r="+(100*rowobj.berp()).toFixed(2)+
         "&t="+_4cnvctx.timeobj.current().toFixed(4);
@@ -3077,118 +3079,127 @@ var templatelst =
     {
         rowobj.enabled = 1;
         galleryobj.maxmegapix = 4000000;
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 70;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
         loomobj.split(url.zoom, "70-85", loomobj.length());
         poomobj.split(url.zoom, "35-85", poomobj.length());
-        traitobj.split(70, "0.1-1.0", traitobj.length());
-        scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        traitobj.split(url.height, "0.1-1.0", traitobj.length());
+        scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
     }
 },
 {
     name: "PORTRAIT",
     init: function ()
     {
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 70;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
         loomobj.split(url.zoom, "70-95", loomobj.length());
         poomobj.split(url.zoom, "35-95", poomobj.length());
-        traitobj.split(70, "0.1-1.0", traitobj.length());
-        scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        traitobj.split(url.height, "0.1-1.0", traitobj.length());
+        scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
     }
 },
 {
     name: "SIDESCROLL",
     init: function ()
     {
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 100;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 48;
         loomobj.split(url.zoom, "0-50", loomobj.length());
         poomobj.split(url.zoom, "0-50", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
-        scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        traitobj.split(url.height, "0.1-1.0", traitobj.length());
+        scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
     }
 },
 {
     name: "ULTRAWIDE",
     init: function ()
     {
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 100;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 72;
         loomobj.split(url.zoom, "0-50", loomobj.length());
         poomobj.split(url.zoom, "0-50", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
-        scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        traitobj.split(url.height, "0.1-1.0", traitobj.length());
+        scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
     }
 },
 {
     name: "WIDE",
     init: function ()
     {
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 75;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 56;
         loomobj.split(url.zoom, "25-80", loomobj.length());
         poomobj.split(url.zoom, "0-80", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
-        scapeobj.split(50, "0.1-1.0", scapeobj.length());
+        traitobj.split(url.height, "0.1-1.0", traitobj.length());
+        scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
     }
 },
 {
     name: "LANDSCAPE",
     init: function (j)
     {
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 75;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 48;
         loomobj.split(url.zoom, "35-90", loomobj.length());
         poomobj.split(url.zoom, "0-90", poomobj.length());
-        traitobj.split(100, "0.1-1.0", traitobj.length());
-        scapeobj.split(50, "0.1-1.0", scapeobj.length());
+        traitobj.split(url.height, "0.1-1.0", traitobj.length());
+        scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
    }
 },
 {
     name: "EXTRATALL",
     init: function ()
     {
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 75;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
-        traitobj.split(70, "0.1-1.0", traitobj.length());
-        scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        traitobj.split(url.height, "0.1-1.0", traitobj.length());
+        scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
     }
 },
 {
     name: "TALL",
     init: function ()
     {
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 75;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
         loomobj.split(url.zoom, "80-90", loomobj.length());
         poomobj.split(url.zoom, "50-90", poomobj.length());
-        traitobj.split(70, "0.1-1.0", traitobj.length());
-        scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        traitobj.split(url.height, "0.1-1.0", traitobj.length());
+        scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
     }
 },
 {
     name: "LEGEND",
     init: function ()
     {
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 75;
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 36;
         guideobj.set(1);
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
-        traitobj.split(70, "0.1-1.0", traitobj.length());
-        scapeobj.split(100, "0.1-1.0", scapeobj.length());
+        traitobj.split(url.height "0.1-1.0", traitobj.length());
+        scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
     }
 },
 ];
@@ -3474,6 +3485,8 @@ fetch(path)
         templateobj.set(j);
         templateobj.getcurrent().init();
 
+        traitobj.set(url.height);
+        scapeobj.set(url.height);
         poomobj.set(url.zoom);
         loomobj.set(url.zoom);
         pretchobj.split(60, "40-90", pretchobj.length());
