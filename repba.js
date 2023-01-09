@@ -3484,14 +3484,13 @@ var bodylst =
             var eff = width/rect.width;
             a.draw(context, rect,
                     [
-                        0,
+                        ignores,
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
                         visibles.toFixed(0)+"-"+context.sliceobj.length(),
                         context.slicewidth.toFixed(0),
                         eff.toFixed(4),
-                        0,
                     ],
                 0);
          }
