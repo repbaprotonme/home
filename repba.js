@@ -3298,79 +3298,32 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
-            context.movenext = new rectangle()
-            context.moveprev = new rectangle()
             context.addimage = new rectangle()
             context.delimage = new rectangle()
-            context.ignores = [];
-            context.save();
-            context.font = "1rem Archivo Black";
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var a = new Col([0,w,0],
-                    [
-                        0,
-                        new Row([0,ALIEXTENT+40*2,0],
-                        [
-                            0,
-                            new Layer(
-                            [
-                                new Fill(MENUCOLOR),
-                                new RowA([0,40,40],
-                                [
-                                    new Layer(
-                                    [
-                                        new Fill(MENUCOLOR),
-                                        new Col([ALIEXTENT,0,ALIEXTENT],
-                                        [
-                                            new Layer(
-                                            [
-                                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                                new Rectangle(context.moveprev),
-                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
-                                            ]),
-                                            new LayerA(
-                                            [
-                                                new Rectangles(),
-                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            ]),
-                                            new Layer(
-                                            [
-                                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                                new Rectangle(context.movenext),
-                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
-                                            ]),
-                                        ])
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.addimage),
-                                        context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                    new Layer(
-                                    [
-                                        new Rectangle(context.delimage),
-                                        context.tapindex == 2 ? new Fill("rgba(0,0,150,0.5)") : 0,
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ]),
-                                ])
-                            ]),
-                            0,
-                        ]),
-                        0,
-                    ]);
-
-                a.draw(context, rect,
+            var h =  40*2;
+            var a = new Message(w,h,galleryobj.getcurrent().title,new RowA([0,0],
                 [
+                    new Layer(
                     [
-                        context.ignores,
-                        galleryobj.getcurrent().title,
-                    ],
-                    "Add Image",
-                    "Delete Image",
-                ],
-                0);
-            context.restore();
+                        new Rectangle(context.addimage),
+                        context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                    ]),
+                    new Layer(
+                    [
+                        new Rectangle(context.delimage),
+                        context.tapindex == 2 ? new Fill("rgba(0,0,150,0.5)") : 0,
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                    ]),
+                ]));
+
+            a.draw(context, rect,
+            [
+                "Add Image",
+                "Delete Image",
+            ],
+            0);
         }
     },
     new function()
@@ -3380,7 +3333,6 @@ var bodylst =
             context.email = new rectangle()
             context.dropimage = new rectangle()
             context.openimage = new rectangle()
-            context.font = "1rem Archivo Black";
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
             var h = 40*3;
             var a = new Message(w,h,"Image Viewer",new RowA([0,0,0],
