@@ -3357,7 +3357,7 @@ var bodylst =
                     new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     new Layer(
                     [
-                        screenfull.isFullscreen ? new Fill("rgba(0,0,0,0.5)"):0,
+                        screenfull.isFullscreen ? new Fill("rgba(0,0,255,0.5)"):0,
                         new Rectangle(context.fullscreen),
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     ]),
@@ -3367,7 +3367,8 @@ var bodylst =
                 [
                     "Open ...",
                     "Drop Here",
-                    "images@repba.com"
+                    "images@repba.com",
+                    "Fullscreen",
                 ],
                 0);
         }
