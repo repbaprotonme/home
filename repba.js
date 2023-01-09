@@ -3422,7 +3422,6 @@ var bodylst =
                     new LayerA(
                     [
                         new Fill(MENUCOLOR),
-                        new Rectangle(),
                         0,
                         /*
                         new RowA([0,40*6],
@@ -3477,7 +3476,6 @@ var bodylst =
             a.draw(context, rect,
             [
                 0,
-                context.ignores,
                 [
                     galleryobj.getcurrent().title,
                     [
