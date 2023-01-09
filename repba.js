@@ -3465,7 +3465,7 @@ var bodylst =
             context.font = "1rem Archivo Black";
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
             var h = 40*6;
-            var title = galleryobj.getcurrent().title,
+            var title = galleryobj.getcurrent().title;
             var a = new Message(w,h,title,new RowA([0,0,0,0,0,0],
                     [
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
