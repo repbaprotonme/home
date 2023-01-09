@@ -3422,8 +3422,6 @@ var bodylst =
                     new LayerA(
                     [
                         new Fill(MENUCOLOR),
-                        0,
-                        /*
                         new RowA([0,40*6],
                         [
                             new Layer(
@@ -3456,7 +3454,6 @@ var bodylst =
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                             ])
                         ])
-                        */
                     ])
                 );
 
