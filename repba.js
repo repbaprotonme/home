@@ -3651,7 +3651,7 @@ fetch(path)
             headobj.enabled = 1;
             footobj.enabled = 1;
             colorobj.enabled=colorobj.enabled?0:1;
-            bodyobj.enbabled = 1;
+            bodyobj.enabled = 1;
             pageresize()
             contextobj.reset();
         }})
