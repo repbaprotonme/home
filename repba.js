@@ -3432,32 +3432,32 @@ var bodylst =
                                             ]),
                                         ])
                                     ]),
-                                    new Layer(
+                                    new LayerA(
                                     [
                                         new Rectangle(),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Layer(
+                                    new LayerA(
                                     [
                                         new Rectangle(),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Layer(
+                                    new LayerA(
                                     [
                                         new Rectangle(),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Layer(
+                                    new LayerA(
                                     [
                                         new Rectangle(),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Layer(
+                                    new LayerA(
                                     [
                                         new Rectangle(),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ]),
-                                    new Layer(
+                                    new LayerA(
                                     [
                                         new Rectangle(),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
@@ -3485,12 +3485,30 @@ var bodylst =
             a.draw(context, rect,
                     [
                         context.ignores,
-                        window.rect.width+"X"+window.rect.height,
-                        photo.image.width+"X"+photo.image.height,
-                        context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
-                        visibles.toFixed(0)+"-"+context.sliceobj.length(),
-                        context.slicewidth.toFixed(0),
-                        eff.toFixed(4),
+                        [
+                            context.ignores,
+                            window.rect.width+"X"+window.rect.height,
+                        ],
+                        [
+                            context.ignores,
+                            photo.image.width+"X"+photo.image.height,
+                        ],
+                        [
+                            context.ignores,
+                            context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
+                        ],
+                        [
+                            context.ignores,
+                            visibles.toFixed(0)+"-"+context.sliceobj.length(),
+                        ],
+                        [
+                            context.ignores,
+                            context.slicewidth.toFixed(0),
+                        ],
+                        [
+                            context.ignores,
+                            eff.toFixed(4),
+                        ]
                     ],
                 0);
          }
