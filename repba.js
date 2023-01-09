@@ -349,7 +349,7 @@ var guidelst =
     },
 ]
 
-var debuglst =
+var colorlst =
     [
       'green', 'blue', 'orange', 'purple', 'brown',
       '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -363,7 +363,7 @@ var debuglst =
       '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF',
     ];
 
-var debugobj = new makeoption("COLOR", [...debuglst, ...debuglst, ...debuglst, ...debuglst]);
+var colorobj = new makeoption("COLOR", [...colorlst, ...colorlst, ...colorlst, ...colorlst]);
 var speedxobj = new makeoption("SPEEDX", 100);
 var speedyobj = new makeoption("SPEEDY", 100);
 var guideobj = new makeoption("GUIDE", guidelst);
@@ -464,10 +464,10 @@ function drawslices()
             context.drawImage(slice.canvas, slice.x, 0, context.colwidth, rect.height,
               slice.bx, 0, stretchwidth, rect.height);
 
-            if (debugobj.enabled)
+            if (colorobj.enabled)
             {
                 context.globalAlpha = 0.5;
-                var a = new Fill(debugobj.data[m]);
+                var a = new Fill(colorobj.data[m]);
                 a.draw(context, new rectangle(slice.bx,0,stretchwidth,rect.height), 0, 0);
                 context.globalAlpha = 1.0;
             }
@@ -484,10 +484,10 @@ function drawslices()
             slice.strechwidth = w;
             context.drawImage(slice.canvas, 0, 0, context.colwidth, rect.height,
                   x, 0, w, rect.height);
-            if (debugobj.enabled)
+            if (colorobj.enabled)
             {
                 context.globalAlpha = 0.5;
-                var a = new Fill(debugobj.data[0]);
+                var a = new Fill(colorobj.data[0]);
                 a.draw(context, new rectangle(x,0,w,rect.height), 0, 0);
                 context.globalAlpha = 1.0;
             }
@@ -2278,7 +2278,7 @@ var keylst =
         {
             headobj.enabled = 1;
             footobj.enabled = 1;
-            debugobj.enabled=debugobj.enabled?0:1;
+            colorobj.enabled=colorobj.enabled?0:1;
             pageresize()
             context.refresh();
         }
@@ -2798,7 +2798,7 @@ var drawlst =
         }
         else if (user.path == "DEBUG")
         {
-            if (debugobj.enabled)
+            if (colorobj.enabled)
                 clr = MENUSELECT;
         }
         else if (user.path == "FULLSCREEN")
@@ -3158,7 +3158,7 @@ var bodylst =
                             ]),
                             0,
                         ]),
-                        debugobj.enabled?new Row([0,30*6,0],
+                        colorobj.enabled?new Row([0,30*6,0],
                         [
                             0,
                             new RowA([0,30,30,30,30,30,30,0],
@@ -3650,7 +3650,8 @@ fetch(path)
         {
             headobj.enabled = 1;
             footobj.enabled = 1;
-            debugobj.enabled=debugobj.enabled?0:1;
+            colorobj.enabled=colorobj.enabled?0:1;
+            bodyobj.enbabled = 1;
             pageresize()
             contextobj.reset();
         }})
@@ -4748,11 +4749,11 @@ var headlst =
             var s = (galleryobj.current()+1)+" of "+galleryobj.length()
             if (infobj.current() == 1)
                 s = galleryobj.getcurrent().title;
-            else if (infobj.current() == 1)
+            else if (infobj.current() == 2)
                 s = galleryobj.getcurrent().width + "x"+ galleryobj.getcurrent().width;
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
             var e = globalobj.promptedfile?"1 of 1":j;
-            a.draw(context, rect, [0,0,0,debugobj.enabled?e:s,0,0,0], time);
+            a.draw(context, rect, [0,0,0,colorobj.enabled?e:s,0,0,0], time);
             context.restore()
 		};
 	},
