@@ -832,7 +832,12 @@ var Centered = function (width, height, func)
         var a = new Col([0,width,0],
             [
                 0,
-                new Row([0,height,0],func),
+                new Row([0,height,0],
+                [
+                    0,
+                    func,
+                    0,
+                ]),
                 0,
             ]);
         a.draw(context, rect, user, time);
@@ -3418,12 +3423,13 @@ var bodylst =
                     [
                         new Fill(MENUCOLOR),
                         new Rectangle(),
+                        0,
+                        /*
                         new RowA([0,40*6],
                         [
                             new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                /*
                                 new Col([ALIEXTENT,0,ALIEXTENT],
                                 [
                                     new Layer(
@@ -3440,10 +3446,7 @@ var bodylst =
                                         new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
                                     ]),
                                 ])
-                                */
                             ]),
-                            0,
-                            /*
                             new RowA([0,0,0,0,0,0],
                             [
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
@@ -3453,8 +3456,8 @@ var bodylst =
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                             ])
-                            */
                         ])
+                        */
                     ])
                 );
 
