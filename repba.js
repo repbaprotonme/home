@@ -3716,8 +3716,8 @@ fetch(path)
             footobj.enabled = 1;
             colorobj.enabled=colorobj.enabled?0:1;
             bodyobj.enabled = 5;
-            pageresize()
-            contextobj.reset();
+            menuhide();
+            _4cnvctx.refresh();
         }})
 
         slices.data.push({ title:"Add Image", path: "ADDIMG", func: function()
@@ -5062,6 +5062,7 @@ function masterhide(x, y)
     }
     else
     {
+        colorobj.enabled = 0;
         bodyobj.enabled = 0;
         context.tapping = 0;
         thumbpos.set(thumbpos.data.hitest(x,y))
