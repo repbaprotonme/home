@@ -852,12 +852,12 @@ var Message = function (width, height, title, func)
         context.moveprev = new rectangle()
         context.ignores = [];
         context.font = "1rem Archivo Black";
-        var a = new Centered(width,ALIEXTENT+height,
+        var a = new Centered(width,ALIEXTENT+height+h,
             new LayerA(
             [
                 new Fill(MENUCOLOR),
                 new Rectangles(),
-                new RowA([0,height],
+                new RowA([0,height,10],
                 [
                     new Layer(
                     [
@@ -879,7 +879,8 @@ var Message = function (width, height, title, func)
                             ]),
                         ])
                     ]),
-                    func
+                    func,
+                    0
                 ])
             ])
         );
@@ -891,6 +892,7 @@ var Message = function (width, height, title, func)
             [
                 title,
                 user,
+                0,
             ]
         ], time);
     };
