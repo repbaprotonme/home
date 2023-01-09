@@ -844,6 +844,56 @@ var Centered = function (width, height, func)
     };
 };
 
+var Message = function (width, height, title, func)
+{
+    this.draw = function (context, rect, user, time)
+    {
+        context.movenext = new rectangle()
+        context.moveprev = new rectangle()
+        context.ignores = [];
+        var a = new Centered(width,ALIEXTENT+height,
+            new LayerA(
+            [
+                new Fill(MENUCOLOR),
+                new Rectangles(),
+                new RowA([0,height],
+                [
+                    new Layer(
+                    [
+                        new Fill(MENUCOLOR),
+                        new Col([ALIEXTENT,0,ALIEXTENT],
+                        [
+                            new Layer(
+                            [
+                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                new Rectangle(context.moveprev),
+                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
+                            ]),
+                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                            new Layer(
+                            [
+                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                new Rectangle(context.movenext),
+                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                            ]),
+                        ])
+                    ]),
+                    func
+                ])
+            ])
+        );
+
+        a.draw(context, rect,
+        [
+            0,
+            context.ignores,
+            [
+                title,
+                user,
+            ]
+        ], time);
+    };
+};
 
 var Fill = function (color)
 {
@@ -2816,7 +2866,7 @@ var drawlst =
             if (user.id == thumbpos.current())
                 clr = MENUSELECT;
         }
-        else if (user.path == "DEBUG")
+        else if (user.path == "INFO")
         {
             if (colorobj.enabled)
                 clr = MENUSELECT;
@@ -3411,52 +3461,20 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
-            context.movenext = new rectangle()
-            context.moveprev = new rectangle()
-            context.ignores = [];
             context.save();
             context.font = "1rem Archivo Black";
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var h = ALIEXTENT+40*6;
-            var a = new Centered(w,h,
-                    new LayerA(
+            var h = 40*6;
+            var title = galleryobj.getcurrent().title,
+            var a = new Message(w,h,title,new RowA([0,0,0,0,0,0],
                     [
-                        new Fill(MENUCOLOR),
-                        new Rectangles(),
-                        new RowA([0,40*6],
-                        [
-                            new Layer(
-                            [
-                                new Fill(MENUCOLOR),
-                                new Col([ALIEXTENT,0,ALIEXTENT],
-                                [
-                                    new Layer(
-                                    [
-                                        context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                        new Rectangle(context.moveprev),
-                                        new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
-                                    ]),
-                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    new Layer(
-                                    [
-                                        context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                        new Rectangle(context.movenext),
-                                        new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
-                                    ]),
-                                ])
-                            ]),
-                            new RowA([0,0,0,0,0,0],
-                            [
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                            ])
-                        ])
-                    ])
-                );
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                    ]));
 
             var width = 0;
             var visibles = 0;
@@ -3476,7 +3494,6 @@ var bodylst =
                 0,
                 context.ignores,
                 [
-                    galleryobj.getcurrent().title,
                     [
                         "Image Size: "+photo.image.width+"X"+photo.image.height,
                         "Virtual Size: "+context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
@@ -3710,7 +3727,7 @@ fetch(path)
 
         slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
 
-        slices.data.push({title:"Debug", path: "DEBUG", func: function(rect, x, y)
+        slices.data.push({title:"Info", path: "INFO", func: function(rect, x, y)
         {
             headobj.enabled = 1;
             footobj.enabled = 1;
