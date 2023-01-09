@@ -3419,7 +3419,11 @@ var bodylst =
                                                 new Rectangle(context.moveprev),
                                                 new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
                                             ]),
-                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            new LayerA
+                                            [
+                                                new Rectangle(),
+                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            ]),
                                             new Layer(
                                             [
                                                 context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
@@ -3463,9 +3467,12 @@ var bodylst =
             var eff = width/rect.width;
             a.draw(context, rect,
             [
-                galleryobj.getcurrent().title,
                 [
-                    context.ignores
+                    context.ignores,
+                    galleryobj.getcurrent().title,
+                ],
+                [
+                    context.ignores,
                     [
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
