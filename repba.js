@@ -496,9 +496,8 @@ function drawslices()
         context.restore();
         delete context.addimage;
         delete context.selectrect;
+        delete context.fullscreen;
         delete context.openimage;
-        delete context.dropimage;
-        delete context.email;
         delete context.delimage;
         delete context.moveprev;
         delete context.movenext;
@@ -2486,13 +2485,10 @@ var taplst =
                 promptFile().then(function(files) { dropfiles(files); })
             },400)
         }
-        else if (context.email && context.email.hitest(x,y))
+        else if (context.fullscreen && context.fullscreen.hitest(x,y))
         {
-            promptFile().then(function(files) { dropfiles(files); })
-        }
-        else if (context.dropimage && context.dropimage.hitest(x,y))
-        {
-            promptFile().then(function(files) { dropfiles(files); })
+            if (screenfull.isEnabled)
+                screenfull.toggle();
         }
         else if (context.openimage && context.openimage.hitest(x,y))
         {
@@ -3336,8 +3332,8 @@ var bodylst =
 
             a.draw(context, rect,
             [
-                "Image",
-                "Folder",
+                "Image ...",
+                "Folder ...",
             ],
             0);
         }
@@ -3346,26 +3342,23 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
-            context.email = new rectangle()
-            context.dropimage = new rectangle()
+            context.fullscreen = new rectangle()
             context.openimage = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var h = 40*3;
-            var a = new Message(w,h,"Image Viewer",new RowA([0,0,0],
+            var h = 40*4;
+            var a = new Message(w,h,"Images",new RowA([0,0,0,0],
                 [
                     new Layer(
                     [
                         new Rectangle(context.openimage),
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     ]),
+                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     new Layer(
                     [
-                        new Rectangle(context.dropimage),
-                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                    ]),
-                    new Layer(
-                    [
-                        new Rectangle(context.email),
+                        screenfull.isFullscreen ? new Fill("rgba(0,0,0,0.5)"):0,
+                        new Rectangle(context.fullscreen),
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     ]),
                 ]));
@@ -4746,6 +4739,8 @@ var headlst =
                 ]);
 
             var s = (galleryobj.current()+1)+" of "+galleryobj.length()
+            if (rect.width <= 400)
+                s = galleryobj.current()+1;
             if (infobj.current() == 1)
                 s = galleryobj.getcurrent().title;
             else if (infobj.current() == 2)
@@ -4881,6 +4876,7 @@ footobj.enabled = j;
 
 function menushow(context)
 {
+    bodyobj.set(0);
     _4cnvctx.slideshow = 0;
     var enabled = context.enabled;
     _2cnvctx.hide();
