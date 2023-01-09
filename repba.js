@@ -851,6 +851,7 @@ var Message = function (width, height, title, func)
         context.movenext = new rectangle()
         context.moveprev = new rectangle()
         context.ignores = [];
+        context.font = "1rem Archivo Black";
         var a = new Centered(width,ALIEXTENT+height,
             new LayerA(
             [
@@ -3256,8 +3257,7 @@ var bodylst =
             context.menuhome = new rectangle()
             context.menudown = new rectangle()
             context.font = "1rem Archivo Black";
-            var a =
-                    new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
+            var a = new Col([0,ALIEXTENT,_8cnv.width,ALIEXTENT,0],
                     [
                         0,
                         0,
@@ -3335,7 +3335,7 @@ var bodylst =
             context.openimage = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
             var h = 40*3;
-            var a = new Message(w,h,"Image Viewer",new RowA([0,0,0],
+            var a = new Message(w,h,"reportbase.com",new RowA([0,0,0],
                 [
                     new Layer(
                     [
@@ -3357,7 +3357,7 @@ var bodylst =
                 a.draw(context, rect,
                 [
                     "Open Image ...",
-                    "Drag and Drop Here",
+                    "Drag/Drop Images Here",
                     "images@repba.com"
                 ],
                 0);
@@ -4855,7 +4855,7 @@ var footlst =
 
 var footobj = new makeoption("", footlst);
 var headobj = new makeoption("", headlst);
-var infobj = new makeoption("", 2);
+var infobj = new makeoption("", 3);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
 thumbpos.set(1);
 var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
