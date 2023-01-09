@@ -3318,7 +3318,7 @@ var bodylst =
             context.delimage = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
             var h =  40*2;
-            var a = new Message(w,h,galleryobj.getcurrent().title,new RowA([0,0],
+            var a = new Message(w,h,"Upload",new RowA([0,0],
                 [
                     new Layer(
                     [
@@ -3336,8 +3336,8 @@ var bodylst =
 
             a.draw(context, rect,
             [
-                "Add Image",
-                "Delete Image",
+                "Image",
+                "Folder",
             ],
             0);
         }
@@ -3655,12 +3655,11 @@ fetch(path)
             _4cnvctx.refresh();
         }})
 
-        slices.data.push({ title:"Add ...", path: "ADDIMG", func: function()
+        slices.data.push({ title:"Upload ...", path: "ADDIMG", func: function()
         {
-            //bodyobj.enabled = 3;
-            //menuhide();
-            //_4cnvctx.refresh();
-            window.location.href = "https://image.reportbase.com";
+            bodyobj.enabled = 3;
+            menuhide();
+            _4cnvctx.refresh();
         }});
 
         slices.data.push({ title:"Download", path: "DOWNLOAD", func: function()
