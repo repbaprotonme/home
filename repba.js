@@ -3435,7 +3435,7 @@ var bodylst =
                                     new LayerA(
                                     [
                                         new Rectangle(),
-                                        new RowA([0,0,0,0,0,0])
+                                        new RowA([0,0,0,0,0,0],
                                         [
                                             new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                             new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
