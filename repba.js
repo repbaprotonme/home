@@ -3158,22 +3158,7 @@ var bodylst =
                             ]),
                             0,
                         ]),
-                        colorobj.enabled?new Row([0,30*6,0],
-                        [
-                            0,
-                            new RowA([0,30,30,30,30,30,30,0],
-                            [
-                                0,
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                0,
-                           ]),
-                            0,
-                        ]):0,
+                        0,
                         j?0:new Row([90,60,0],
                         [
                             0,
@@ -3426,6 +3411,105 @@ var bodylst =
             context.restore();
         }
     },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.movenext = new rectangle()
+            context.moveprev = new rectangle()
+            context.ignores = [];
+            context.save();
+            context.font = "1rem Archivo Black";
+            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
+            var a = new Col([0,w,0],
+                    [
+                        0,
+                        new Row([0,ALIEXTENT+40*6,0],
+                        [
+                            0,
+                            new Layer(
+                            [
+                                new Fill(MENUCOLOR),
+                                new RowA([0,40,40,40,40,40,40],
+                                [
+                                    new Layer(
+                                    [
+                                        new Fill(MENUCOLOR),
+                                        new Col([ALIEXTENT,0,ALIEXTENT],
+                                        [
+                                            new Layer(
+                                            [
+                                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                                new Rectangle(context.moveprev),
+                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
+                                            ]),
+                                            new LayerA(
+                                            [
+                                                new Rectangles(),
+                                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                            ]),
+                                            new Layer(
+                                            [
+                                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                                new Rectangle(context.movenext),
+                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                                            ]),
+                                        ])
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                    new Layer(
+                                    [
+                                        new Rectangle(),
+                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    ]),
+                                ])
+                            ]),
+                            0,
+                        ]),
+                        0,
+                    ]);
+
+                var eff = width/rect.width;
+                a.draw(context, rect,
+                [
+                    [
+                        context.ignores,
+                        galleryobj.getcurrent().title,
+                    ],
+                    window.rect.width+"X"+window.rect.height,
+                    photo.image.width+"X"+photo.image.height,
+                    context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
+                    visibles.toFixed(0)+"-"+context.sliceobj.length(),
+                    context.slicewidth.toFixed(0),
+                    eff.toFixed(4),
+                ],
+                0);
+        }
+    },
 ];
 
 var bodyobj = new makeoption("", bodylst);
@@ -3651,7 +3735,7 @@ fetch(path)
             headobj.enabled = 1;
             footobj.enabled = 1;
             colorobj.enabled=colorobj.enabled?0:1;
-            bodyobj.enabled = 1;
+            bodyobj.enabled = 5;
             pageresize()
             contextobj.reset();
         }})
