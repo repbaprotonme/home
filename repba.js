@@ -3400,7 +3400,7 @@ var bodylst =
                         new Rectangle(context.email),
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     ]),
-                ]);
+                ]));
 
                 a.draw(context, rect,
                 [
