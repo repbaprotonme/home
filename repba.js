@@ -2489,6 +2489,7 @@ var taplst =
         {
             if (screenfull.isEnabled)
                 screenfull.toggle();
+            context.refresh();
         }
         else if (context.openimage && context.openimage.hitest(x,y))
         {
@@ -3345,8 +3346,8 @@ var bodylst =
             context.fullscreen = new rectangle()
             context.openimage = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var h = 40*4;
-            var a = new Message(w,h,"Images",new RowA([0,0,0,0],
+            var h = 40*3;
+            var a = new Message(w,h,"Images",new RowA([0,0,0],
                 [
                     new Layer(
                     [
@@ -3354,10 +3355,9 @@ var bodylst =
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     ]),
                     new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     new Layer(
                     [
-                        screenfull.isFullscreen ? new Fill("rgba(0,0,255,0.5)"):0,
+                        screenfull.isFullscreen ? new Fill("rgba(0,0,180,0.5)"):0,
                         new Rectangle(context.fullscreen),
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     ]),
@@ -3367,7 +3367,6 @@ var bodylst =
                 [
                     "Open ...",
                     "Drop Here",
-                    "images@repba.com",
                     "Fullscreen",
                 ],
                 0);
@@ -4741,7 +4740,7 @@ var headlst =
 
             var s = (galleryobj.current()+1)+" of "+galleryobj.length()
             if (rect.width <= 400)
-                s = galleryobj.current()+1;
+                s = (galleryobj.current()+1).toFixed(0);
             if (infobj.current() == 1)
                 s = galleryobj.getcurrent().title;
             else if (infobj.current() == 2)
@@ -4998,6 +4997,7 @@ function masterhide(x, y)
         bodyobj.enabled = 0;
         context.tapping = 0;
         thumbpos.set(thumbpos.data.hitest(x,y))
+        //todo
         headobj.enabled = headobj.enabled?0:1;
         footobj.enabled = headobj.enabled;
         pageresize();
