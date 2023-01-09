@@ -2396,14 +2396,6 @@ var taplst =
                 context.refresh();
             }, 400)
         }
-        else if (context.ignores && context.ignores.hitest(x,y)>=0)
-        {
-             authClient.getAuthenticationInfoOrNull(false)
-                .then(function(client)
-                {
-                     globalobj.user = client.user;
-                })
-        }
         else if (context.addimage && context.addimage.hitest(x,y))
         {
             context.tapindex = 1;
@@ -2471,6 +2463,14 @@ var taplst =
                 context.tapping = 1;
                 context.refresh();
             }
+        }
+        else if (context.ignores && context.ignores.hitest(x,y)>=0)
+        {
+             authClient.getAuthenticationInfoOrNull(false)
+                .then(function(client)
+                {
+                     globalobj.user = client.user;
+                })
         }
         else
         {
@@ -3429,6 +3429,8 @@ var bodylst =
                                             ]),
                                         ])
                                     ]),
+                                    0,
+                                    /*
                                     new RowA([0,0,0,0,0,0],
                                     [
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
@@ -3438,6 +3440,7 @@ var bodylst =
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                                     ])
+                                    */
                                 ])
                             ]),
                             0,
