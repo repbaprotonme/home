@@ -3636,6 +3636,8 @@ fetch(path)
 
         var slices = _9cnvctx.sliceobj;
         slices.data= [];
+        slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
+
         slices.data.push({title:"Open ...", path: "OPEN", func: function()
         {
             bodyobj.enabled = 4;
@@ -3643,9 +3645,7 @@ fetch(path)
             _4cnvctx.refresh();
         }});
 
-        slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
-
-        slices.data.push({title:"Info", path: "INFO", func: function(rect, x, y)
+        slices.data.push({title:"Info ...", path: "INFO", func: function(rect, x, y)
         {
             headobj.enabled = 1;
             footobj.enabled = 1;
@@ -3657,9 +3657,10 @@ fetch(path)
 
         slices.data.push({ title:"Add ...", path: "ADDIMG", func: function()
         {
-            bodyobj.enabled = 3;
-            menuhide();
-            _4cnvctx.refresh();
+            //bodyobj.enabled = 3;
+            //menuhide();
+            //_4cnvctx.refresh();
+            window.location.href = "https://image.reportbase.com";
         }});
 
         slices.data.push({ title:"Download", path: "DOWNLOAD", func: function()
@@ -3686,8 +3687,7 @@ fetch(path)
 
         slices.data.push({ title:"Gallery", path: "GALLERY", func: function()
         {
-            var path = "https://reportbase.com/gallery/" + url.path;
-            window.location.href = path;
+            window.location.href = "https://gallery.reportbase.com";
         }});
 
         slices.data.push({title:"Help", path: "HELP", func: function(){menushow(_7cnvctx); }})
