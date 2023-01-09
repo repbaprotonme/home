@@ -3484,7 +3484,7 @@ var bodylst =
             var eff = width/rect.width;
             a.draw(context, rect,
                     [
-                        ignores,
+                        context.ignores,
                         window.rect.width+"X"+window.rect.height,
                         photo.image.width+"X"+photo.image.height,
                         context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
