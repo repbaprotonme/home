@@ -34,3 +34,8 @@ cat /proc/cpuinfo
 #replace all strings in folder
 sed -i 's/list/data/g' *
 
+#resize images no bigger than 60000000
+for file in *.webp; do convert $file -resize '6000000@>' $file; done
+
+#animated gif
+convert -resize 50% -delay 100 -loop 0 001*.jpg anim.gif
