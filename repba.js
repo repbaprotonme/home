@@ -3491,18 +3491,12 @@ var bodylst =
             var eff = width/rect.width;
             a.draw(context, rect,
             [
-                0,
-                context.ignores,
-                [
-                    [
-                        "Image Size: "+photo.image.width+"X"+photo.image.height,
-                        "Virtual Size: "+context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
-                        "Visibles: "+visibles.toFixed(0)+"-"+context.sliceobj.length(),
-                        "Slice Width: "+context.slicewidth.toFixed(0),
-                        "Efficiency: "+eff.toFixed(4),
-                        "Window: "+window.rect.width+"X"+window.rect.height,
-                    ]
-                ],
+                "Image Size: "+photo.image.width+"X"+photo.image.height,
+                "Virtual Size: "+context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
+                "Visibles: "+visibles.toFixed(0)+"-"+context.sliceobj.length(),
+                "Slice Width: "+context.slicewidth.toFixed(0),
+                "Efficiency: "+eff.toFixed(4),
+                "Window: "+window.rect.width+"X"+window.rect.height,
             ],
             0);
          }
