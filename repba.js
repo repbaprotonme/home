@@ -3419,7 +3419,7 @@ var bodylst =
                                                 new Rectangle(context.moveprev),
                                                 new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
                                             ]),
-                                            new LayerA
+                                            new LayerA(
                                             [
                                                 new Rectangle(),
                                                 new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
