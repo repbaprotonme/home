@@ -3422,7 +3422,7 @@ var bodylst =
                     new LayerA(
                     [
                         new Fill(MENUCOLOR),
-                        new Rectangles()
+                        new Rectangles(),
                         new RowA([0,40*6],
                         [
                             new Layer(
