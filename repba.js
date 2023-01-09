@@ -4747,9 +4747,9 @@ var headlst =
 
             var s = (galleryobj.current()+1)+" of "+galleryobj.length()
             if (infobj.current() == 1)
-                s = gallerobj.getcurrent().title;
+                s = galleryobj.getcurrent().title;
             else if (infobj.current() == 1)
-                s = gallerobj.getcurrent().width + "x"+ gallerobj.getcurrent().width;
+                s = galleryobj.getcurrent().width + "x"+ galleryobj.getcurrent().width;
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
             var e = globalobj.promptedfile?"1 of 1":j;
             a.draw(context, rect, [0,0,0,debugobj.enabled?e:s,0,0,0], time);
