@@ -825,6 +825,21 @@ var ScrollPanel = function(obj, rev)
     }
 }
 
+var Centered = function (width, height, func)
+{
+    this.draw = function (context, rect, user, time)
+    {
+        var a = new Col([0,width,0],
+            [
+                0,
+                new Row([0,height,0],func),
+                0,
+            ]);
+        a.draw(context, rect, user, time);
+    };
+};
+
+
 var Fill = function (color)
 {
     this.draw = function (context, rect, user, time)
@@ -3397,56 +3412,51 @@ var bodylst =
             context.save();
             context.font = "1rem Archivo Black";
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var a = new Col([0,w,0],
+            var h = ALIEXTENT+40*6;
+            var a = new Centered(w,h,
+                    new LayerA(
                     [
-                        0,
-                        new Row([0,ALIEXTENT+40*6,0],
+                        new Fill(MENUCOLOR),
+                        new Rectangle(),
+                        new RowA([0,40*6],
                         [
-                            0,
-                            new LayerA(
+                            new Layer(
                             [
                                 new Fill(MENUCOLOR),
-                                new Rectangle(),
-                                new RowA([0,40*6],
+                                /*
+                                new Col([ALIEXTENT,0,ALIEXTENT],
                                 [
                                     new Layer(
                                     [
-                                        new Fill(MENUCOLOR),
-                                        new Col([ALIEXTENT,0,ALIEXTENT],
-                                        [
-                                            new Layer(
-                                            [
-                                                context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                                new Rectangle(context.moveprev),
-                                                new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
-                                            ]),
-                                            new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                            new Layer(
-                                            [
-                                                context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
-                                                new Rectangle(context.movenext),
-                                                new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
-                                            ]),
-                                        ])
+                                        context.movingpage == -1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                        new Rectangle(context.moveprev),
+                                        new Shrink(new Arrow(ARROWFILL,270),ARROWBORES,ARROWBORES),
                                     ]),
-                                    0,
-                                    /*
-                                    new RowA([0,0,0,0,0,0],
+                                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                    new Layer(
                                     [
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                                    ])
-                                    */
+                                        context.movingpage == 1 ? new Fill("rgba(0,0,150,0.75)") : 0,
+                                        new Rectangle(context.movenext),
+                                        new Shrink(new Arrow(ARROWFILL,90),ARROWBORES,ARROWBORES),
+                                    ]),
                                 ])
+                                */
                             ]),
                             0,
-                        ]),
-                        0,
-                    ]);
+                            /*
+                            new RowA([0,0,0,0,0,0],
+                            [
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                                new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                            ])
+                            */
+                        ])
+                    ])
+                );
 
             var width = 0;
             var visibles = 0;
