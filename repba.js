@@ -3172,31 +3172,7 @@ var bodylst =
                         ]),
                     ]);
 
-            var width = 0;
-            var visibles = 0;
-            var slicelst = context.sliceobj.data;
-            for (var m = 0; m < slicelst.length; ++m)
-            {
-                if (!slicelst[m].visible)
-                    continue;
-                visibles += 1;
-                var w = slicelst[m].stretchwidth;
-                width += w;
-            }
-
-            var eff = width/rect.width;
-            a.draw(context, rect,
-                    [
-                        0,
-                        window.rect.width+"X"+window.rect.height,
-                        photo.image.width+"X"+photo.image.height,
-                        context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
-                        visibles.toFixed(0)+"-"+context.sliceobj.length(),
-                        context.slicewidth.toFixed(0),
-                        eff.toFixed(4),
-                        0,
-                    ],
-                0);
+            a.draw(context, rect, 0, 0);
             context.restore();
         }
     },
@@ -3493,22 +3469,32 @@ var bodylst =
                         0,
                     ]);
 
-                var eff = width/rect.width;
-                a.draw(context, rect,
-                [
+            var width = 0;
+            var visibles = 0;
+            var slicelst = context.sliceobj.data;
+            for (var m = 0; m < slicelst.length; ++m)
+            {
+                if (!slicelst[m].visible)
+                    continue;
+                visibles += 1;
+                var w = slicelst[m].stretchwidth;
+                width += w;
+            }
+
+            var eff = width/rect.width;
+            a.draw(context, rect,
                     [
-                        context.ignores,
-                        galleryobj.getcurrent().title,
+                        0,
+                        window.rect.width+"X"+window.rect.height,
+                        photo.image.width+"X"+photo.image.height,
+                        context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
+                        visibles.toFixed(0)+"-"+context.sliceobj.length(),
+                        context.slicewidth.toFixed(0),
+                        eff.toFixed(4),
+                        0,
                     ],
-                    window.rect.width+"X"+window.rect.height,
-                    photo.image.width+"X"+photo.image.height,
-                    context.virtualwidth.toFixed(0)+"X"+context.virtualheight,
-                    visibles.toFixed(0)+"-"+context.sliceobj.length(),
-                    context.slicewidth.toFixed(0),
-                    eff.toFixed(4),
-                ],
                 0);
-        }
+         }
     },
 ];
 
