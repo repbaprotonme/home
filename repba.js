@@ -4619,14 +4619,13 @@ var headlst =
 [
     new function ()
     {
-        infobj.rotate(1);
-        _4cnvctx.refresh();
     },
 	new function ()
 	{
     	this.press = function (context, rect, x, y)
         {
-            headobj.format
+            infobj.rotate(1);
+            _4cnvctx.refresh();
         }
 
     	this.tap = function (context, rect, x, y)
