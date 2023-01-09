@@ -3198,7 +3198,7 @@ var templatelst =
         guideobj.set(1);
         loomobj.split(url.zoom, "90-95", loomobj.length());
         poomobj.split(url.zoom, "60-90", poomobj.length());
-        traitobj.split(url.height "0.1-1.0", traitobj.length());
+        traitobj.split(url.height, "0.1-1.0", traitobj.length());
         scapeobj.split(url.height, "0.1-1.0", scapeobj.length());
     }
 },
