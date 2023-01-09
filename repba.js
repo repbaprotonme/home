@@ -506,26 +506,30 @@ function drawslices()
         delete context.menuup;
         delete context.menuhome;
         delete context.menudown;
-        if (!context.pressed && headcnv.height)
-            headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
-        if (!context.pressed && footcnv.height)
-            footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
-        bodyobj.set(0)
-        if (_8cnvctx.enabled)
+        if (context.setcolumncomplete)
         {
-            bodyobj.set(2)
-        }
-        else if (bodyobj.enabled)
-        {
-            bodyobj.set(bodyobj.enabled)
-        }
-        else if (!context.pressed && !headobj.enabled)
-        {
-            thumbobj.getcurrent().draw(context, rect, 0, 0);
-            bodyobj.set(1)
+            if (!context.pressed && headcnv.height)
+                headobj.getcurrent().draw(headcnvctx, headcnvctx.rect(), 0);
+            if (!context.pressed && footcnv.height)
+                footobj.getcurrent().draw(footcnvctx, footcnvctx.rect(), 0);
+            bodyobj.set(0)
+            if (_8cnvctx.enabled)
+            {
+                bodyobj.set(2)
+            }
+            else if (bodyobj.enabled)
+            {
+                bodyobj.set(bodyobj.enabled)
+            }
+            else if (!context.pressed && !headobj.enabled)
+            {
+                thumbobj.getcurrent().draw(context, rect, 0, 0);
+                bodyobj.set(1)
+            }
+
+            bodyobj.getcurrent().draw(context, rect, 0, 0);
         }
 
-        bodyobj.getcurrent().draw(context, rect, 0, 0);
         context.setcolumncomplete = 1;
     }
 
@@ -3347,7 +3351,7 @@ var bodylst =
             context.openimage = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
             var h = 40*3;
-            var a = new Message(w,h,"reportbase.com",new RowA([0,0,0],
+            var a = new Message(w,h,"Image Viewer",new RowA([0,0,0],
                 [
                     new Layer(
                     [
@@ -3368,8 +3372,8 @@ var bodylst =
 
                 a.draw(context, rect,
                 [
-                    "Open Image ...",
-                    "Drag/Drop Images Here",
+                    "Open ...",
+                    "Drop Here",
                     "images@repba.com"
                 ],
                 0);
@@ -3632,7 +3636,7 @@ fetch(path)
 
         var slices = _9cnvctx.sliceobj;
         slices.data= [];
-        slices.data.push({title:"Open", path: "OPEN", func: function()
+        slices.data.push({title:"Open ...", path: "OPEN", func: function()
         {
             bodyobj.enabled = 4;
             menuhide();
@@ -3651,7 +3655,7 @@ fetch(path)
             _4cnvctx.refresh();
         }})
 
-        slices.data.push({ title:"Add Image", path: "ADDIMG", func: function()
+        slices.data.push({ title:"Add ...", path: "ADDIMG", func: function()
         {
             bodyobj.enabled = 3;
             menuhide();
@@ -4746,7 +4750,7 @@ var headlst =
             if (infobj.current() == 1)
                 s = galleryobj.getcurrent().title;
             else if (infobj.current() == 2)
-                s = galleryobj.getcurrent().width + "x"+ galleryobj.getcurrent().width;
+                s = galleryobj.getcurrent().width + "x"+ galleryobj.getcurrent().height;
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
             var e = globalobj.promptedfile?"1 of 1":j;
             a.draw(context, rect, [0,0,0,colorobj.enabled?e:s,0,0,0], time);
