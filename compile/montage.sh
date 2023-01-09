@@ -1,2 +1,2 @@
-montage *.jpg -tile 7x4 -mode Concatenate fabl.jpg 
+montage *.webp -tile 9x7 -mode Concatenate body/BODY.jpg 
 

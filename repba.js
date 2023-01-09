@@ -1,7 +1,7 @@
 //todo: https://obfuscator.io
 //todo: safari max size
 
-/* +=
+/* ++ += +=
 Copyright 2017 Tom Brinkman
 http://www.reportbase.comk
 */
@@ -2350,7 +2350,6 @@ var taplst =
 	{
         clearInterval(context.timemain);
         context.timemain = 0;
-//todo list
         if (context.moveprev && context.moveprev.hitest(x,y))
         {
             _4cnvctx.movepage(-1);
@@ -3420,7 +3419,7 @@ var bodylst =
                         "Image Viewer",
                     ],
                     "Open Image ...",
-                    "Drop Images Here",
+                    "Drag and Drop Here",
                     "images@repba.com"
                 ],
                 0);
@@ -3640,8 +3639,9 @@ fetch(path)
         slices.data= [];
         slices.data.push({title:"Open", path: "OPEN", func: function()
         {
+            bodyobj.enabled = 4;
             menuhide();
-            promptFile().then(function(files) { dropfiles(files); })
+            _4cnvctx.refresh();
         }});
 
         slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
@@ -4619,12 +4619,14 @@ var headlst =
 [
     new function ()
     {
-
+        infobj.rotate(1);
+        _4cnvctx.refresh();
     },
 	new function ()
 	{
     	this.press = function (context, rect, x, y)
         {
+            headobj.format
         }
 
     	this.tap = function (context, rect, x, y)
@@ -4745,8 +4747,13 @@ var headlst =
                 ]);
 
             var s = (galleryobj.current()+1)+" of "+galleryobj.length()
+            if (infobj.current() == 1)
+                s = gallerobj.getcurrent().title;
+            else if (infobj.current() == 1)
+                s = gallerobj.getcurrent().width + "x"+ gallerobj.getcurrent().width;
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
-            a.draw(context, rect, [0,0,0,debugobj.enabled?j:s,0,0,0], time);
+            var e = globalobj.promptedfile?"1 of 1":j;
+            a.draw(context, rect, [0,0,0,debugobj.enabled?e:s,0,0,0], time);
             context.restore()
 		};
 	},
@@ -4866,6 +4873,7 @@ var footlst =
 
 var footobj = new makeoption("", footlst);
 var headobj = new makeoption("", headlst);
+var infobj = new makeoption("", 2);
 var thumbpos = new makeoption("THUMBNAIL", [0,0,0,0,0,0,0,0,0]);
 thumbpos.set(1);
 var j = url.searchParams.has("h") ? Number(url.searchParams.get("h")) : 0;
