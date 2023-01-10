@@ -191,15 +191,6 @@ let makeoption = function (title, data)
     }
 };
 
-function iscached(src)
-{
-    const img = new Image();
-    img.src = src;
-    const complete = img.complete;
-    img.src = "";
-    return complete;
-}
-
 var guidelst =
 [
     {
@@ -3963,8 +3954,6 @@ function masterload()
     for (var n = 0; n < size; ++n)
     {
         galleryobj.rotate(1);
-        if (iscached(galleryobj.path()))
-            continue;
         imglst[n] = new Image();
         imglst[n].src = galleryobj.path();
         imglst[n].title = galleryobj.getcurrent().title
