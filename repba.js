@@ -653,7 +653,7 @@ var eventlst =
     {name: "_2cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", contextmenu: "DEFAULT", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_3cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", contextmenu: "DEFAULT", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_4cnvctx", mouse: "BOSS", guide: "GUIDE", thumb: "BOSS",  tap: "BOSS", pan: "BOSS", swipe: "BOSS", draw: "BOSS", wheel: "BOSS", contextmenu: "BOSS", drop: "BOSS", key: "BOSS", press: "BOSS", pinch: "BOSS"},
-    {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "PMENU", wheel:  "MENU", contextmenu: "DEFAULT", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
+    {name: "_5cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel:  "MENU", contextmenu: "DEFAULT", drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_6cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "MENU", wheel: "MENU", contextmenu: "DEFAULT",  drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_7cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "EMENU", wheel: "MENU", contextmenu: "DEFAULT",  drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
     {name: "_8cnvctx", mouse: "MENU", guide: "DEFAULT", thumb: "DEFAULT", tap: "MENU", pan: "MENU", swipe: "MENU", draw: "GMENU", wheel: "MENU", contextmenu: "DEFAULT",  drop: "DEFAULT", key: "MENU", press: "DEFAULT", pinch: "DEFAULT"},
@@ -2920,76 +2920,15 @@ var drawlst =
         a.draw(context, rect, user.title, time);
         context.restore();
     }
-},
-{
-    name: "PMENU",
-    draw: function (context, rect, user, time)
-    {/*
-        context.save();
-        rect.height = context.buttonheight;
-        rect.width -= 40;
-        context.translate(-rect.width/2, -rect.height/2);
-        user.fitwidth = rect.width;
-        user.fitheight = rect.height+70;
-        var clr = "rgba(0,0,0,0.5)";
-        var tap = "rgba(200,0,0,0.75)";
-        var select = "rgba(200,0,0,0.75)";
-
-        context.font = "0.9rem Archivo Black";
-        var hh = photo.menu.height/galleryobj.length();
-        var r = calculateAspectRatioFit(photo.menu.width, hh, rect.width-20, rect.height+120-20);
-        var x = rect.x+(rect.width-r.width)/2;
-        var y = (rect.height-r.height)/2;
-
-        if (user.tap)
-        {
-            clr = tap;
-        }
-        else if (user.path == "PROJECT")
-        {
-            if (user.index == galleryobj.current())
-                clr = MENUSELECT;
-        }
-
-        var a = new Expand(new Rounded(clr, 2, "white", 8, 8), 0, 60);
-        a.draw(context, rect, 0, 0);
-
-        var yy = user.index*hh;
-        context.globalAlpha = 0.5;
-        var aspect = r.width/r.height;
-        var h = (rect.width-20)/aspect;
-        context.drawImage(photo.menu, 0, yy, photo.menu.width, hh, rect.x+10, y, rect.width-20, r.height);
-        context.globalAlpha = 1.0;
-        context.drawImage(photo.menu, 0, yy, photo.menu.width, hh, x, y, r.width, r.height);
-        var a = new RowA([40,0,ALIEXTENT,0,40],
-        [
-            new Text("white", "center", "middle",0, 0, 1),
-            0,
-            new Row([0,ALIEXTENT,0],
-            [
-                0,
-                new Layer(
-                [
-                    new Circle(SCROLLNAB,"white",3),
-                    new Text("white", "center", "middle",0, 0, 1),
-                ]),
-                0,
-            ]),
-            0,
-            new Text("white", "center", "middle",0, 0, 1),
-        ]);
-
-        a.draw(context, rect, [user.title[0],0,(user.index+1)+"",0,user.title[1]+"x"+user.title[2]], time);
-        context.restore();
-        */
-    }
-},
+}
+ /*,
 {
     name: "BOSS",
     draw: function (unused, rect, user, time)
     {
 	}
 },
+*/
 ];
 
 function resetcanvas()
@@ -3503,14 +3442,15 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
-            var w = ALIEXTENT*3;
+            var w = ALIEXTENT*2;
             var h = rect.height-ALIEXTENT*3;
             var a = new Centered(w,h, new Layer(
                 [
-                    new Fill("red"),
+                    new Fill("rgba(0,0,0,0.5)"),
+                    new CurrentVPanel(new Fill("rgba(0,0,0,0.5"), ALIEXTENT, 0),
                 ]));
 
-                a.draw(context, rect, 0, 0);
+                a.draw(context, rect, zoomobj.getcurrent(), 0);
         }
     },
 ];
