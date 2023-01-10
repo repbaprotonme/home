@@ -3347,7 +3347,7 @@ var bodylst =
             context.openimage = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
             var h = 40*3;
-            var a = new Message(w,h,"Images",new RowA([0,0,0],
+            var a = new Message(w,h,galleryobj.getcurrent().title,new RowA([0,0,0],
                 [
                     new Layer(
                     [
@@ -3365,8 +3365,8 @@ var bodylst =
 
                 a.draw(context, rect,
                 [
-                    "Open ...",
-                    "Drop Here",
+                    "Open Image ...",
+                    "Drop Image Here",
                     "Fullscreen",
                 ],
                 0);
