@@ -3627,6 +3627,13 @@ fetch(path)
             _4cnvctx.refresh();
         }});
 
+        slices.data.push({title:"Delete", path: "DELETE", func: function()
+        {
+            bodyobj.enabled = 4;//todo
+            menuhide();
+            _4cnvctx.refresh();
+        }});
+
         slices.data.push({title:"Info ...", path: "INFO", func: function(rect, x, y)
         {
             headobj.enabled = 1;
