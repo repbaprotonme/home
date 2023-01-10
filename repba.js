@@ -4857,6 +4857,8 @@ var footlst =
         {
             if (context.progresscircle.hitest(x,y))
             {
+                context.autodirect = -1;
+                context.tab();
             }
             else if (context.keyzoomup && context.keyzoomup.hitest(x,y))
             {
@@ -5105,7 +5107,7 @@ function pageresize()
     headcnvctx.show(0,0,window.innerWidth,h);
     headobj.set(h?1:0);
     headham.panel = headobj.getcurrent();
-    var h = footobj.enabled ? 80 : 0;
+    var h = footobj.enabled ? (SAFARI?90:ALIEXTENT) : 0;
     footcnvctx.show(0,window.innerHeight-h, window.innerWidth, h);
     footobj.set(h?1:0);
     footham.panel = footobj.getcurrent();
