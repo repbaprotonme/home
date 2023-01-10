@@ -4882,6 +4882,7 @@ var footlst =
                 context.zooming = 1;
                 setTimeout(function(){context.zooming = 0; _4cnvctx.refresh();},400)
                 zoom.add(4);
+                bodyobj.enabled = 8;
                 contextobj.reset()
             }
             else if (context.keyzoomdown && context.keyzoomdown.hitest(x,y))
@@ -4889,25 +4890,11 @@ var footlst =
                 var zoom = zoomobj.getcurrent();
                 if (!zoom.current())
                     return;
-                 context.zooming = -1;
+                context.zooming = -1;
                 setTimeout(function(){context.zooming = 0; _4cnvctx.refresh();},400)
                 zoom.add(-4);
-                contextobj.reset()
-            }
-            else if (context.down.hitest(x,y))
-            {
-                if (rowobj.current() >= rowobj.length()-1)
-                    return;
-                _4cnvctx.movedown();
-                contextobj.reset();
-            }
-            else if (context.up.hitest(x,y))
-            {
-                if (!rowobj.current())
-                    return;
                 bodyobj.enabled = 8;
-                _4cnvctx.moveup();
-                contextobj.reset();
+                contextobj.reset()
             }
             else if (context.leftab.hitest(x,y))
             {
@@ -4931,8 +4918,6 @@ var footlst =
             context.progresscircle = new rectangle();
             context.keyzoomup = new rectangle()
             context.keyzoomdown = new rectangle()
-            context.up = new rectangle()
-            context.down = new rectangle()
             context.leftab = new rectangle()
             context.rightab = new rectangle()
 
