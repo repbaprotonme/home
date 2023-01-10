@@ -3462,7 +3462,7 @@ var bodylst =
                     new Rectangle(context.zoomctrl),
                     new Fill(THUMBFILL),
                     new Stroke(THUMBSTROKE,7),
-                    new Shrink(new CurrentVPanel(new Fill(THUMBSTROKE), ALIEXTENT, 1),5,10),
+                    new Shrink(new CurrentVPanel(new Fill(THUMBSTROKE), ALIEXTENT, 1),5,8),
                 ]));
 
             a.draw(context, rect, zoomobj.getcurrent(), 0);
@@ -4832,20 +4832,22 @@ var footlst =
             }
             else if (context.keyzoomup && context.keyzoomup.hitest(x,y))
             {
+                bodyobj.enabled = 8;
+                context.refesh();
                 var zoom = zoomobj.getcurrent();
                 if (zoom.current() >= zoom.length()-1)
                     return;
                 zoom.add(4);
-                bodyobj.enabled = 8;
                 contextobj.reset()
             }
             else if (context.keyzoomdown && context.keyzoomdown.hitest(x,y))
             {
+                bodyobj.enabled = 8;
+                context.refesh();
                 var zoom = zoomobj.getcurrent();
                 if (!zoom.current())
                     return;
                 zoom.add(-4);
-                bodyobj.enabled = 8;
                 contextobj.reset()
             }
             else if (context.leftab.hitest(x,y))
