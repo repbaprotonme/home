@@ -915,17 +915,6 @@ var Fill = function (color)
     };
 };
 
-var Stroke = function (color)
-{
-    this.draw = function (context, rect, user, time)
-    {
-        context.save();
-        context.fillStyle = color?color:user;
-        context.strokeRect(rect.x, rect.y, rect.width, rect.height);
-        context.restore();
-    };
-};
-
 var ProgressCircle = function (rev)
 {
     this.draw = function (context, rect, user, time)
@@ -966,7 +955,7 @@ var ProgressCircle = function (rev)
     };
 };
 
-var StrokeRect = function (color)
+var Stroke = function (color)
 {
     this.draw = function (context, rect, user, time)
     {
@@ -3451,7 +3440,8 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
-            var w = ALIEXTENT*2;
+            context.save();
+            var w = 90;
             var h = rect.height-ALIEXTENT*3;
             var a = new Centered(w,h, new Layer(
                 [
@@ -3460,7 +3450,8 @@ var bodylst =
                     new CurrentVPanel(new Fill("white"), ALIEXTENT, 1),
                 ]));
 
-                a.draw(context, rect, zoomobj.getcurrent(), 0);
+            a.draw(context, rect, zoomobj.getcurrent(), 0);
+            context.restore();
         }
     },
 ];
