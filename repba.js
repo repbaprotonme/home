@@ -506,6 +506,7 @@ function drawslices()
         delete context.menudown;
         delete context.login;
         delete context.logout;
+        delete context.deleteimage;
         delete context.account;
         if (context.setcolumncomplete)
         {
@@ -2441,6 +2442,10 @@ var taplst =
         {
             authClient.redirectToLoginPage()
         }
+        else if (context.deleteimage && context.deleteimage.hitest(x,y))
+        {
+            //todo
+        }
         else if (context.logout && context.logout.hitest(x,y))
         {
             authClient.logout(false)
@@ -3429,7 +3434,7 @@ var bodylst =
             context.account = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
             var h = 40*3;
-            var a = new Message(w,h,galleryobj.getcurrent().title,new RowA([0,0,0],
+            var a = new Message(w,h,"Login",new RowA([0,0,0],
                 [
                     new Layer(
                     [
@@ -3453,6 +3458,29 @@ var bodylst =
                     "Login",
                     "Logout",
                     "Account",
+                ],
+                0);
+        }
+    },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.deleteimage = new rectangle()
+            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
+            var h = 40*1;
+            var a = new Message(w,h,"Delete",new RowA([0],
+                [
+                    new Layer(
+                    [
+                        new Rectangle(context.deleteimage),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                    ]),
+                ]));
+
+                a.draw(context, rect,
+                [
+                    "Confirm",
                 ],
                 0);
         }
@@ -3681,12 +3709,12 @@ fetch(path)
 
         slices.data.push({title:"Delete", path: "DELETE", func: function()
         {
-            bodyobj.enabled = 7;//todo
+            bodyobj.enabled = 7;
             menuhide();
             _4cnvctx.refresh();
         }});
 
-        slices.data.push({title:"Info ...", path: "INFO", func: function(rect, x, y)
+        slices.data.push({title:"Information", path: "INFO", func: function(rect, x, y)
         {
             headobj.enabled = 1;
             footobj.enabled = 1;
@@ -3696,7 +3724,7 @@ fetch(path)
             _4cnvctx.refresh();
         }})
 
-        slices.data.push({ title:"Upload ...", path: "ADDIMG", func: function()
+        slices.data.push({ title:"Upload", path: "ADDIMG", func: function()
         {
             bodyobj.enabled = 3;
             menuhide();
