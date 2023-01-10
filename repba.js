@@ -191,7 +191,7 @@ let makeoption = function (title, data)
     }
 };
 
-function isCached(src)
+function iscached(src)
 {
     const img = new Image();
     img.src = src;
@@ -3174,7 +3174,7 @@ var templatelst =
     name: "WIDE",
     init: function ()
     {
-        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 75;
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : (window.innerWidth>window.innerHeight?75:100);
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 0;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 56;
@@ -3188,7 +3188,7 @@ var templatelst =
     name: "LANDSCAPE",
     init: function (j)
     {
-        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : 75;
+        url.height = url.searchParams.has("o") ? Number(url.searchParams.get("o")) : (window.innerWidth>window.innerHeight?75:100);
         url.zoom = url.searchParams.has("z") ? Number(url.searchParams.get("z")) : 50;
         url.slidetop = url.searchParams.has("s") ? Number(url.searchParams.get("s")) : 24;
         url.slidefactor = url.searchParams.has("f") ? Number(url.searchParams.get("f")) : 48;
@@ -3963,6 +3963,8 @@ function masterload()
     for (var n = 0; n < size; ++n)
     {
         galleryobj.rotate(1);
+        if (iscached(galleryobj.path())
+            continue;
         if (loaded.has(galleryobj.getcurrent().title))
             continue;
         imglst[n] = new Image();
@@ -4820,13 +4822,26 @@ var headlst =
                     ])
                 ]);
 
-            var s = (galleryobj.current()+1)+" of "+galleryobj.length()
-            if (rect.width <= 400)
+            var s;
+            if (globalobj.promptedfile)
+            {
+                    s = "...";
+            }
+            else if (infobj.current() == 0)
+            {
                 s = (galleryobj.current()+1).toFixed(0);
-            if (infobj.current() == 1)
+                if (rect.width >= 400)
+                    s += " of "+galleryobj.length()
+            }
+            else if (infobj.current() == 1)
+            {
                 s = galleryobj.getcurrent().title;
+            }
             else if (infobj.current() == 2)
+            {
                 s = galleryobj.getcurrent().width + "x"+ galleryobj.getcurrent().height;
+            }
+
             var j = _4cnvctx.timeobj.getcurrent().toFixed(1);
             var e = globalobj.promptedfile?"1 of 1":j;
             a.draw(context, rect, [0,0,0,colorobj.enabled?e:s,0,0,0], time);
