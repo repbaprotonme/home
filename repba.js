@@ -191,6 +191,15 @@ let makeoption = function (title, data)
     }
 };
 
+function isCached(src)
+{
+    const img = new Image();
+    img.src = src;
+    const complete = img.complete;
+    img.src = "";
+    return complete;
+}
+
 var guidelst =
 [
     {
@@ -1182,6 +1191,7 @@ CanvasRenderingContext2D.prototype.movepage = function(j)
     galleryobj.rotate(j);
     var path = galleryobj.getcurrent().title;
     galleryobj.rotate(-j);
+
     if (_4cnvctx.movingpage || !loaded.has(path) || galleryobj.length() == 1)
     {
         masterload()
@@ -1606,8 +1616,8 @@ var wheelst =
         }
         else if (shift)
         {
-            _4cnvctx.timeobj.rotate(TIMEOBJ*0.01);
-            context.refresh();
+            rowobj.add(-rowobj.length()*0.01);
+            contextobj.reset();
         }
         else if (ctrl)
         {
@@ -1618,8 +1628,8 @@ var wheelst =
         }
         else
         {
-            rowobj.add(rowobj.length()*0.01);
-            contextobj.reset();
+            _4cnvctx.timeobj.rotate(TIMEOBJ*0.01);
+            context.refresh();
         }
 	},
  	down: function (context, x, y, ctrl, shift)
@@ -1641,8 +1651,8 @@ var wheelst =
         }
         else if (shift)
         {
-            _4cnvctx.timeobj.rotate(-TIMEOBJ*0.01);
-            context.refresh();
+            rowobj.add(rowobj.length()*0.01);
+            contextobj.reset();
         }
         else if (ctrl)
         {
@@ -1653,8 +1663,8 @@ var wheelst =
         }
         else
         {
-            rowobj.add(-rowobj.length()*0.01);
-            contextobj.reset();
+            _4cnvctx.timeobj.rotate(-TIMEOBJ*0.01);
+            context.refresh();
         }
 	},
 },
@@ -3893,14 +3903,15 @@ var ContextObj = (function ()
                         templateobj.getcurrent().init();
                     }
 
+                    var zoom = zoomobj.getcurrent();
                     if (this.aspect < 0.5)
-                        zoomobj.set(50);
+                        zoom.set(50);
                     else if (this.aspect < 1.0)
-                        zoomobj.set(50);
+                        zoom.set(50);
                     else if (this.aspect < 2.0)
-                        zoomobj.set(25);
+                        zoom.set(25);
                     else
-                        zoomobj.set(0);
+                        zoom.set(0);
 
                     clearInterval(context.timemain);
                     context.timemain = 0;
