@@ -3965,8 +3965,6 @@ function masterload()
         galleryobj.rotate(1);
         if (iscached(galleryobj.path())
             continue;
-        if (loaded.has(galleryobj.getcurrent().title))
-            continue;
         imglst[n] = new Image();
         imglst[n].src = galleryobj.path();
         imglst[n].title = galleryobj.getcurrent().title
