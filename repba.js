@@ -2690,10 +2690,10 @@ var thumblst =
         }
 
         context.lineWidth = context.isthumbrect?2:THUMBORDER;
-        var whitestroke = new StrokeRect(THUMBSTROKE);
+        var whitestroke = new Stroke(THUMBSTROKE);
         var r = new rectangle(x,y,w,h);
         whitestroke.draw(context, r, 0, 0);
-        var whitestroke = new StrokeRect(THUMBSTROKE);
+        var whitestroke = new Stroke(THUMBSTROKE);
 
         var region = new Path2D();
         region.rect(x,y,w,h);
