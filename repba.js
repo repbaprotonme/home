@@ -1838,7 +1838,12 @@ var panlst =
 
         if (context.iszoomrect)
         {
-
+            var zoom = zoomobj.getcurrent()
+            var k = panvert(zoom, y);
+            if (k == -1)
+                return;
+            zoom.set(Math.floor(k));
+            contextobj.reset();
         }
         else if (context.isthumbrect && !headobj.enabled)
         {
@@ -1919,7 +1924,7 @@ var panlst =
         delete zoom.offset;
         delete rowobj.offset;
         delete describeobj.offset;
-        pageresize();
+        kpageresize();
         contextobj.reset();
         addressobj.update();
     }
@@ -2376,6 +2381,8 @@ var keylst =
         }
         else if (evt.key == "[" || evt.key == "-")
         {
+            bodyobj.enabled = 8;
+            context.refresh();
             var zoom = zoomobj.getcurrent();
             if (!zoom.current())
                 return;
@@ -2384,6 +2391,8 @@ var keylst =
         }
         else if (evt.key == "]" || evt.key == "+")
         {
+            bodyobj.enabled = 8;
+            context.refresh();
             var zoom = zoomobj.getcurrent();
             if (zoom.current() >= zoom.length()-1)
                 return;
