@@ -1839,10 +1839,10 @@ var panlst =
         if (context.iszoomrect)
         {
             var zoom = zoomobj.getcurrent()
-            var k = panvert(zoom, y);
+            var j = (y/rect.height)*context.zoomctrl.height;
+            var k = panvert(zoom,context.zoomctrl.y+j)
             if (k == -1)
                 return;
-            k *= context.zoomctrl.height/rect.height;
             zoom.set(1-Math.floor(k));
             contextobj.reset();
         }
