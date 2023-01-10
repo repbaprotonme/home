@@ -3455,8 +3455,8 @@ var bodylst =
                 [
                     new Rectangle(context.zoomctrl),
                     new Fill("rgba(0,0,0,0.5)"),
-                    new Stroke("rgb(255,255,255)",8),
-                    new Shrink(new CurrentVPanel(new Fill("rgb(255,255,255)"), ALIEXTENT, 1),5,10),
+                    new Stroke("rgba(255,255,255,0.75)",7),
+                    new Shrink(new CurrentVPanel(new Fill("rgba(255,255,255,0.75)"), ALIEXTENT, 1),5,10),
                 ]));
 
             a.draw(context, rect, zoomobj.getcurrent(), 0);
