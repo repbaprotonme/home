@@ -2659,7 +2659,7 @@ var thumblst =
         context.shadowOffsetY = 0;
 
         var blackfill = new Fill(THUMBFILL);
-        var blackfill2 = new Fill(context.freepan?"rgba(0,0,255,0.4)":"rgba(0,0,0,0.4)");
+        var blackfill2 = new Fill(context.freepan?"rgba(0,0,0,0.4)":"rgba(0,0,255,0.4)");
 
         if (context.isthumbrect && jp)
         {
@@ -3571,6 +3571,7 @@ fetch(path)
             var context = contextlst[n];
             context.index = n;
             context.imageSmoothingEnabled = false;
+            context.freepan = 1;
             context.enabled = 0;
             context.canvas.width = 1;
             context.canvas.height = 1;
