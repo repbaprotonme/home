@@ -4857,8 +4857,8 @@ var footlst =
         {
             if (context.progresscircle.hitest(x,y))
             {
-                context.autodirect = -1;
-                context.tab();
+                _4cnvctx.autodirect = -1;
+                _4cnvctx.tab();
             }
             else if (context.keyzoomup && context.keyzoomup.hitest(x,y))
             {
