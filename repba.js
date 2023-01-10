@@ -2448,7 +2448,7 @@ var taplst =
         {
             var zoom = zoomobj.getcurrent();
             var a = (y-context.zoomctrl.y)/rect.height;
-            var b = zoom.length()*(1-a);
+            var b = Math.floor(zoom.length()*(1-a));
             zoom.set(b);
             contextobj.reset()
         }
