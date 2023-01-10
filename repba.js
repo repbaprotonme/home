@@ -38,7 +38,7 @@ const BUTTONBACK = "rgba(0,0,0,0.25)";
 const OPTIONFILL = "rgb(255,255,255)";
 const THUMBFILL = "rgba(0,0,0,0.35)";
 const THUMBFILL2 = "rgba(0,0,0,0.40)";
-const THUMBSTROKE = "rgba(255,255,255,0.5)";
+const THUMBSTROKE = "rgba(255,255,255,0.75)";
 const ARROWFILL = "white";
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
