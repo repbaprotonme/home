@@ -3499,6 +3499,20 @@ var bodylst =
                 0);
         }
     },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            var w = ALIEXTENT*3;
+            var h = rect.height-ALIEXTENT*3;
+            var a = new Centered(w,h, new Layer(
+                [
+                    new Fill("red"),
+                ]));
+
+                a.draw(context, rect, 0, 0);
+        }
+    },
 ];
 
 var bodyobj = new makeoption("", bodylst);
@@ -4891,6 +4905,7 @@ var footlst =
             {
                 if (!rowobj.current())
                     return;
+                bodyobj.enabled = 8;
                 _4cnvctx.moveup();
                 contextobj.reset();
             }
