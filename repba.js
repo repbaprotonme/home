@@ -2447,7 +2447,7 @@ var taplst =
         else if (context.zoomctrl && context.zoomctrl.hitest(x,y))
         {
             var zoom = zoomobj.getcurrent();
-            var a = (y-context.zoomctrl.y)/rect.height;
+            var a = (y-context.zoomctrl.y)/context.zoomctrl.height;
             var b = Math.floor(zoom.length()*(1-a));
             zoom.set(b);
             contextobj.reset()
