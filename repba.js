@@ -2373,8 +2373,6 @@ var keylst =
             var zoom = zoomobj.getcurrent();
             if (!zoom.current())
                 return;
-            context.zooming = -1;
-            setTimeout(function(){context.zooming = 0; context.refresh();},400)
             zoom.add(-5);
             contextobj.reset()
         }
@@ -2383,8 +2381,6 @@ var keylst =
             var zoom = zoomobj.getcurrent();
             if (zoom.current() >= zoom.length()-1)
                 return;
-            context.zooming = 1;
-            setTimeout(function(){context.zooming = 0; context.refresh();},400)
             zoom.add(5);
             contextobj.reset()
         }
@@ -2452,7 +2448,7 @@ var taplst =
         {
             var zoom = zoomobj.getcurrent();
             var a = (y-context.zoomctrl.y)/rect.height;
-            var b = zoom.length()*a;
+            var b = zoom.length()*(1-a);
             zoom.set(b);
             contextobj.reset()
         }
@@ -4833,8 +4829,6 @@ var footlst =
                 var zoom = zoomobj.getcurrent();
                 if (zoom.current() >= zoom.length()-1)
                     return;
-                context.zooming = 1;
-                setTimeout(function(){context.zooming = 0; _4cnvctx.refresh();},400)
                 zoom.add(4);
                 bodyobj.enabled = 8;
                 contextobj.reset()
@@ -4844,8 +4838,6 @@ var footlst =
                 var zoom = zoomobj.getcurrent();
                 if (!zoom.current())
                     return;
-                context.zooming = -1;
-                setTimeout(function(){context.zooming = 0; _4cnvctx.refresh();},400)
                 zoom.add(-4);
                 bodyobj.enabled = 8;
                 contextobj.reset()
