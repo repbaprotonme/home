@@ -3946,6 +3946,15 @@ var ContextObj = (function ()
 
 var contextobj = new ContextObj();
 
+function iscached(src)
+{
+    const img = new Image();
+    img.src = src;
+    const complete = img.complete;
+    img.src = "";
+    return complete;
+}
+
 function masterload()
 {
     var imglst = [];
