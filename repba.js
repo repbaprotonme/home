@@ -3887,12 +3887,12 @@ var ContextObj = (function ()
                             k = "PORTRAIT"
                             zoomobj.set(50);
                         }
-                        else if (this.aspect < 2.5)
+                        else if (this.aspect < 2.0)
                         {
                             k = "LANDSCAPE"
                             zoomobj.set(25);
                         }
-                        else if (this.aspect < 5.0)
+                        else if (this.aspect < 3.0)
                         {
                             k = "WIDE"
                             zoomobj.set(0);
