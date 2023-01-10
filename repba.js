@@ -3434,7 +3434,7 @@ var bodylst =
             context.account = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
             var h = 40*3;
-            var a = new Message(w,h,"Login",new RowA([0,0,0],
+            var a = new Message(w,h,"User Account",new RowA([0,0,0],
                 [
                     new Layer(
                     [
