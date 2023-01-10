@@ -3346,15 +3346,14 @@ var bodylst =
             context.fullscreen = new rectangle()
             context.openimage = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var h = 40*3;
-            var a = new Message(w,h,galleryobj.getcurrent().title,new RowA([0,0,0],
+            var h = 40*2;
+            var a = new Message(w,h,galleryobj.getcurrent().title,new RowA([0,0],
                 [
                     new Layer(
                     [
                         new Rectangle(context.openimage),
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     ]),
-                    new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     new Layer(
                     [
                         screenfull.isFullscreen ? new Fill("rgba(0,0,180,0.5)"):0,
@@ -3365,8 +3364,7 @@ var bodylst =
 
                 a.draw(context, rect,
                 [
-                    "Open Image ...",
-                    "Drop Image Here",
+                    "Open ...",
                     "Fullscreen",
                 ],
                 0);
