@@ -504,6 +504,9 @@ function drawslices()
         delete context.menuup;
         delete context.menuhome;
         delete context.menudown;
+        delete context.login;
+        delete context.logout;
+        delete context.account;
         if (context.setcolumncomplete)
         {
             if (!context.pressed && headcnv.height)
@@ -2434,6 +2437,18 @@ var taplst =
         {
             _4cnvctx.movepage(1);
         }
+        else if (context.login && context.login.hitest(x,y))
+        {
+            authClient.redirectToLoginPage()
+        }
+        else if (context.logout && context.logout.hitest(x,y))
+        {
+            authClient.logout(false)
+        }
+        else if (context.account && context.account.hitest(x,y))
+        {
+            authClient.redirectToAccountPage()
+        }
         else if (context.menudown && context.menudown.hitest(x,y))
         {
             var context = _8cnvctx;
@@ -3405,6 +3420,43 @@ var bodylst =
             0);
          }
     },
+    new function()
+    {
+        this.draw = function (context, rect, user, time)
+        {
+            context.login = new rectangle()
+            context.logout = new rectangle()
+            context.account = new rectangle()
+            var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
+            var h = 40*3;
+            var a = new Message(w,h,galleryobj.getcurrent().title,new RowA([0,0,0],
+                [
+                    new Layer(
+                    [
+                        new Rectangle(context.login),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                    ]),
+                    new Layer(
+                    [
+                        new Rectangle(context.logout),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                    ]),
+                    new Layer(
+                    [
+                        new Rectangle(context.account),
+                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
+                    ]),
+                ]));
+
+                a.draw(context, rect,
+                [
+                    "Login",
+                    "Logout",
+                    "Account",
+                ],
+                0);
+        }
+    },
 ];
 
 var bodyobj = new makeoption("", bodylst);
@@ -3629,7 +3681,7 @@ fetch(path)
 
         slices.data.push({title:"Delete", path: "DELETE", func: function()
         {
-            bodyobj.enabled = 4;//todo
+            bodyobj.enabled = 7;//todo
             menuhide();
             _4cnvctx.refresh();
         }});
@@ -3660,17 +3712,9 @@ fetch(path)
 
         slices.data.push({ title:"Login", path: "LOGIN", func: function()
         {
-            authClient.redirectToLoginPage()
-        }});
-
-        slices.data.push({ title:"Logout", path: "LOGOUT", func: function()
-        {
-            authClient.logout(true);
-        }});
-
-        slices.data.push({ title:"Account", path: "ACCOUNT", func: function()
-        {
-            authClient.redirectToAccountPage()
+            bodyobj.enabled = 6;
+            menuhide();
+            _4cnvctx.refresh();
         }});
 
         slices.data.push({ title:"Gallery", path: "GALLERY", func: function()
