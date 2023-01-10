@@ -959,8 +959,11 @@ var Stroke = function (color)
 {
     this.draw = function (context, rect, user, time)
     {
+        context.save()
+        context.lineWidth = 3;
         context.strokeStyle = color;
         context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+        context.restore();
     }
 }
 
