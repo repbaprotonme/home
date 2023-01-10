@@ -4833,7 +4833,7 @@ var footlst =
             else if (context.keyzoomup && context.keyzoomup.hitest(x,y))
             {
                 bodyobj.enabled = 8;
-                _4cntctx.refresh();
+                _4cnvctx.refresh();
                 var zoom = zoomobj.getcurrent();
                 if (zoom.current() >= zoom.length()-1)
                     return;
@@ -4843,7 +4843,7 @@ var footlst =
             else if (context.keyzoomdown && context.keyzoomdown.hitest(x,y))
             {
                 bodyobj.enabled = 8;
-                _4cntctx.refresh();
+                _4cnvctx.refresh();
                 var zoom = zoomobj.getcurrent();
                 if (!zoom.current())
                     return;
