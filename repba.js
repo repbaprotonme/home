@@ -2448,7 +2448,7 @@ var taplst =
         {
             var zoom = zoomobj.getcurrent();
             var a = (y-context.zoomctrl.y)/context.zoomctrl.height;
-            var b = Math.floor(zoom.length()*(1-a));
+            var b = Math.floor(zoom.length()*a);
             zoom.set(b);
             contextobj.reset()
         }
@@ -3449,9 +3449,6 @@ var bodylst =
         {
             context.zoomctrl = new rectangle()
             context.save();
-            context.shadowOffsetX = 1;
-            context.shadowOffsetY = 1;
-            context.shadowColor = "black"
             var w = ALIEXTENT;
             var h = Math.min(640,rect.height-ALIEXTENT*4);
             var a = new Centered(w,h, new Layer(
@@ -3459,7 +3456,7 @@ var bodylst =
                     new Rectangle(context.zoomctrl),
                     new Fill("rgba(0,0,0,0.75)"),
                     new Stroke("rgb(255,255,255)",8),
-                    new Shrink(new CurrentVPanel(new Fill("rgb(255,255,255)"), ALIEXTENT, 1),5,0),
+                    new Shrink(new CurrentVPanel(new Fill("rgb(255,255,255)"), ALIEXTENT, 1),5,5),
                 ]));
 
             a.draw(context, rect, zoomobj.getcurrent(), 0);
