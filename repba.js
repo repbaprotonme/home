@@ -858,6 +858,7 @@ var Message = function (width, height, title, func)
         context.moveprev = new rectangle()
         context.ignores = [];
         context.font = "1rem Archivo Black";
+
         var a = new Centered(width,ALIEXTENT+height+10,
             new LayerA(
             [
@@ -3398,9 +3399,12 @@ var bodylst =
             context.save();
             context.font = "1rem Archivo Black";
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var h = 40*6;
+            var rowlst = [0,0,0,0,0,0];
+            var rowheight = 40;
+            rowlst.length = Math.min(rowlst.length,(rect.height-ALIEXTENT*3)/rowheight)
+            var h = rowheight*rowlst.length;
             var title = galleryobj.getcurrent().title;
-            var a = new Message(w,h,title,new RowA([0,0,0,0,0,0],
+            var a = new Message(w,h,title,new RowA(rowlst,
                     [
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
@@ -3945,15 +3949,6 @@ var ContextObj = (function ()
 })();
 
 var contextobj = new ContextObj();
-
-function iscached(src)
-{
-    const img = new Image();
-    img.src = src;
-    const complete = img.complete;
-    img.src = "";
-    return complete;
-}
 
 function masterload()
 {
