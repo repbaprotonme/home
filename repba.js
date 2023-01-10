@@ -3454,9 +3454,9 @@ var bodylst =
             var a = new Centered(w,h, new Layer(
                 [
                     new Rectangle(context.zoomctrl),
-                    new Fill("rgba(0,0,0,0.75)"),
+                    new Fill("rgba(0,0,0,0.5)"),
                     new Stroke("rgb(255,255,255)",8),
-                    new Shrink(new CurrentVPanel(new Fill("rgb(255,255,255)"), ALIEXTENT, 1),5,5),
+                    new Shrink(new CurrentVPanel(new Fill("rgb(255,255,255)"), ALIEXTENT, 1),5,10),
                 ]));
 
             a.draw(context, rect, zoomobj.getcurrent(), 0);
