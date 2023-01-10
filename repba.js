@@ -2920,7 +2920,7 @@ var drawlst =
         a.draw(context, rect, user.title, time);
         context.restore();
     }
-}
+},
 {
     name: "BOSS",
     draw: function (unused, rect, user, time)
