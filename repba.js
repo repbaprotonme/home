@@ -2452,7 +2452,7 @@ var taplst =
         {
             var zoom = zoomobj.getcurrent();
             var a = (y-context.zoomctrl.y)/rect.height;
-            zoom.set(zoomobj.length()*a);
+            zoom.set(zoom.length()*a);
             contextobj.reset()
         }
         else if (context.deleteimage && context.deleteimage.hitest(x,y))
