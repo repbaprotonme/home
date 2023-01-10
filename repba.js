@@ -2921,14 +2921,12 @@ var drawlst =
         context.restore();
     }
 }
- /*,
 {
     name: "BOSS",
     draw: function (unused, rect, user, time)
     {
 	}
 },
-*/
 ];
 
 function resetcanvas()
