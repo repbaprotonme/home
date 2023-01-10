@@ -3460,7 +3460,7 @@ var bodylst =
             var a = new Centered(w,h, new Layer(
                 [
                     new Rectangle(context.zoomctrl),
-                    new Fill("THUMBFILL"),
+                    new Fill(THUMBFILL),
                     new Stroke(THUMBSTROKE,7),
                     new Shrink(new CurrentVPanel(new Fill(THUMBSTROKE), ALIEXTENT, 1),5,10),
                 ]));
