@@ -2522,7 +2522,15 @@ var taplst =
         }
         else if (context.openimage && context.openimage.hitest(x,y))
         {
-            promptFile().then(function(files) { dropfiles(files); })
+            context.tapindex = 1;
+            context.refresh();
+            clearInterval(globalobj.tapthumb);
+            globalobj.tapthumb = setTimeout(function()
+            {
+                context.tapindex = 0;
+                context.refresh();
+                promptFile().then(function(files) { dropfiles(files); })
+            }, 400)
         }
         else if (context.delimage && context.delimage.hitest(x,y))
         {
@@ -3379,6 +3387,7 @@ var bodylst =
                 [
                     new Layer(
                     [
+                        context.tapindex == 1 ? new Fill("rgba(0,0,150,0.5)") : 0,
                         new Rectangle(context.openimage),
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     ]),
