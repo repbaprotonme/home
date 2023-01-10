@@ -915,6 +915,17 @@ var Fill = function (color)
     };
 };
 
+var Stroke = function (color)
+{
+    this.draw = function (context, rect, user, time)
+    {
+        context.save();
+        context.fillStyle = color?color:user;
+        context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+        context.restore();
+    };
+};
+
 var ProgressCircle = function (rev)
 {
     this.draw = function (context, rect, user, time)
@@ -3444,8 +3455,9 @@ var bodylst =
             var h = rect.height-ALIEXTENT*3;
             var a = new Centered(w,h, new Layer(
                 [
-                    new Fill("rgba(0,0,0,0.5)"),
-                    new CurrentVPanel(new Fill("rgba(0,0,0,0.5"), ALIEXTENT, 0),
+                    new Fill("rgba(0,0,0,0.4)"),
+                    new Stroke("white"),
+                    new CurrentVPanel(new Fill("white", ALIEXTENT, 1),
                 ]));
 
                 a.draw(context, rect, zoomobj.getcurrent(), 0);
