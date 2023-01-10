@@ -36,9 +36,9 @@ const HEADBACK = "rgba(0,0,0,0.4)";
 const MENUCOLOR = "rgba(0,0,0,0.50)";
 const BUTTONBACK = "rgba(0,0,0,0.25)";
 const OPTIONFILL = "rgb(255,255,255)";
-const THUMBFILL = "rgba(0,0,0,0.25)";
+const THUMBFILL = "rgba(0,0,0,0.35)";
 const THUMBFILL2 = "rgba(0,0,0,0.40)";
-const THUMBSTROKE = "rgba(255,255,235,0.35)";
+const THUMBSTROKE = "rgba(255,255,255,0.5)";
 const ARROWFILL = "white";
 const SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
@@ -1836,7 +1836,11 @@ var panlst =
         x = pt?pt.x:x;
         y = pt?pt.y:y;
 
-        if (context.isthumbrect && !headobj.enabled)
+        if (context.iszoomrect)
+        {
+
+        }
+        else if (context.isthumbrect && !headobj.enabled)
         {
             var k = guideobj.getcurrent();
             if (context.freepan)
@@ -1895,6 +1899,7 @@ var panlst =
         context.startt = context.timeobj.current();
         var zoom = zoomobj.getcurrent()
         context.isthumbrect = context.thumbrect && context.thumbrect.hitest(x,y);
+        context.iszoomrect = context.zoomctrl && context.zoomctrl.hitest(x,y);
         clearInterval(context.timemain);
         context.timemain = 0;
         context.panning = 1;
@@ -1906,6 +1911,7 @@ var panlst =
         context.pressed = 0;
         context.panning = 0;
         context.isthumbrect = 0;
+        context.iszoomrect = 0;
         var zoom = zoomobj.getcurrent()
         delete context.startx;
         delete context.starty;
@@ -2448,7 +2454,7 @@ var taplst =
         {
             var zoom = zoomobj.getcurrent();
             var a = (y-context.zoomctrl.y)/context.zoomctrl.height;
-            var b = Math.floor(zoom.length()*a);
+            var b = Math.floor(zoom.length()*(1-a));
             zoom.set(b);
             contextobj.reset()
         }
@@ -2676,7 +2682,7 @@ var thumblst =
         context.shadowOffsetY = 0;
 
         var blackfill = new Fill(THUMBFILL);
-        var blackfill2 = new Fill(context.freepan?"rgba(0,0,0,0.3)":"rgba(255,0,0,0.3)");
+        var blackfill2 = new Fill(context.freepan?THUMBFILL:"rgba(255,0,0,0.5)");
 
         if (context.isthumbrect && jp)
         {
@@ -3454,9 +3460,9 @@ var bodylst =
             var a = new Centered(w,h, new Layer(
                 [
                     new Rectangle(context.zoomctrl),
-                    new Fill("rgba(0,0,0,0.5)"),
-                    new Stroke("rgba(255,255,255,0.75)",7),
-                    new Shrink(new CurrentVPanel(new Fill("rgba(255,255,255,0.75)"), ALIEXTENT, 1),5,10),
+                    new Fill("THUMBFILL"),
+                    new Stroke(THUMBSTROKE,7),
+                    new Shrink(new CurrentVPanel(new Fill(THUMBSTROKE), ALIEXTENT, 1),5,10),
                 ]));
 
             a.draw(context, rect, zoomobj.getcurrent(), 0);
