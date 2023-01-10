@@ -1924,6 +1924,7 @@ var panlst =
         delete context.startt;
         delete zoom.offset;
         delete rowobj.offset;
+        delete context.zoomctrl.offset;
         pageresize();
         contextobj.reset();
         addressobj.update();
