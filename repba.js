@@ -3700,7 +3700,7 @@ fetch(path)
         slices.data= [];
         slices.data.push({title:"Refresh", path: "REFRESH", func: function(){location.reload();}})
 
-        slices.data.push({title:"Open ...", path: "OPEN", func: function()
+        slices.data.push({title:"Open", path: "OPEN", func: function()
         {
             bodyobj.enabled = 4;
             menuhide();
@@ -5059,13 +5059,20 @@ function masterhide(x, y)
         menuhide();
         context.refresh();
     }
+    else if (bodyobj.enabled)
+    {
+        bodyobj.enabled = 0;
+        colorobj.enabled = 0;
+        context.tapping = 0;
+        pageresize();
+        context.refresh();
+        reset();
+    }
     else
     {
         colorobj.enabled = 0;
-        bodyobj.enabled = 0;
         context.tapping = 0;
         thumbpos.set(thumbpos.data.hitest(x,y))
-        //todo
         headobj.enabled = headobj.enabled?0:1;
         footobj.enabled = headobj.enabled;
         pageresize();
