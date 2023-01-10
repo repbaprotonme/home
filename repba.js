@@ -3449,12 +3449,15 @@ var bodylst =
         {
             context.zoomctrl = new rectangle()
             context.save();
+            context.shadowOffsetX = 1;
+            context.shadowOffsetY = 1;
+            context.shadowColor = "black"
             var w = ALIEXTENT;
             var h = Math.min(640,rect.height-ALIEXTENT*4);
             var a = new Centered(w,h, new Layer(
                 [
                     new Rectangle(context.zoomctrl),
-                    new Fill("rgb(0,0,0)"),
+                    new Fill("rgba(0,0,0.0.75)"),
                     new Stroke("rgb(255,255,255)",8),
                     new Shrink(new CurrentVPanel(new Fill("rgb(255,255,255)"), ALIEXTENT, 1),3,0),
                 ]));
