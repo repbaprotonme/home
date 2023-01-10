@@ -1,7 +1,7 @@
 //todo: https://obfuscator.io
 //todo: safari max size
 
-/* ++ += +=
+/* ++ += ==
 Copyright 2017 Tom Brinkman
 http://www.reportbase.comk
 */
@@ -508,6 +508,7 @@ function drawslices()
         delete context.logout;
         delete context.deleteimage;
         delete context.account;
+        delete context.zoomctrl;
         if (context.setcolumncomplete)
         {
             if (!context.pressed && headcnv.height)
@@ -960,7 +961,7 @@ var Stroke = function (color)
     this.draw = function (context, rect, user, time)
     {
         context.save()
-        context.lineWidth = 3;
+        context.lineWidth = 10;
         context.strokeStyle = color;
         context.strokeRect(rect.x, rect.y, rect.width, rect.height);
         context.restore();
@@ -2447,9 +2448,15 @@ var taplst =
         {
             authClient.redirectToLoginPage()
         }
+        else if (context.zoomctrl && context.zoomctrl.hitest(x,y))
+        {
+            var zoom = zoomobj.getcurrent();
+            var a = (y-context.zoomctrl.y)/rect.height;
+            zoom.set(zoomobj.length()*a);
+            contextobj.reset()
+        }
         else if (context.deleteimage && context.deleteimage.hitest(x,y))
         {
-            //todo
         }
         else if (context.logout && context.logout.hitest(x,y))
         {
@@ -3443,11 +3450,13 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
+            context.zoomctrl = new rectangle()
             context.save();
-            var w = 90;
-            var h = rect.height-ALIEXTENT*3;
+            var w = ALIEXTENT;
+            var h = Math.min(640,rect.height-ALIEXTENT*3);
             var a = new Centered(w,h, new Layer(
                 [
+                    new Rectangle(context.zoomctrl),
                     new Fill("rgba(0,0,0,0.4)"),
                     new Stroke("white"),
                     new CurrentVPanel(new Fill("white"), ALIEXTENT, 1),
