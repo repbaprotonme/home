@@ -1842,7 +1842,7 @@ var panlst =
             var k = panvert(zoom, y);
             if (k == -1)
                 return;
-            zoom.set(Math.floor(k));
+            zoom.set(1-Math.floor(k));
             contextobj.reset();
         }
         else if (context.isthumbrect && !headobj.enabled)
@@ -1923,8 +1923,7 @@ var panlst =
         delete context.startt;
         delete zoom.offset;
         delete rowobj.offset;
-        delete describeobj.offset;
-        kpageresize();
+        pageresize();
         contextobj.reset();
         addressobj.update();
     }
@@ -3195,8 +3194,6 @@ var templatelst =
 ];
 
 var templateobj = new makeoption("TEMPLATE", templatelst);
-var describeobj = new makeoption("", 0);
-describeobj.positions = [0,0,0];
 
 var bodylst =
 [
