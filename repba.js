@@ -1841,7 +1841,10 @@ var panlst =
             var zoom = zoomobj.getcurrent()
             var j = (y/rect.height)*context.zoomctrl.height;
             var m = j - context.zoomctrl.y;
-            zoom.set(1-Math.floor(m));
+            var k = panvert(zoom,y)
+            if (k == -1)
+                return;
+            zoom.set(1-Math.floor(k));
             contextobj.reset();
         }
         else if (context.isthumbrect && !headobj.enabled)
