@@ -496,7 +496,6 @@ function drawslices()
         context.restore();
         delete context.addimage;
         delete context.selectrect;
-        delete context.fullscreen;
         delete context.openimage;
         delete context.delimage;
         delete context.moveprev;
@@ -3343,21 +3342,14 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
-            context.fullscreen = new rectangle()
             context.openimage = new rectangle()
             var w = Math.min(ALIEXTENT*8,rect.width-ALIEXTENT);
-            var h = 40*2;
-            var a = new Message(w,h,galleryobj.getcurrent().title,new RowA([0,0],
+            var h = 40*1;
+            var a = new Message(w,h,galleryobj.getcurrent().title,new RowA([0],
                 [
                     new Layer(
                     [
                         new Rectangle(context.openimage),
-                        new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
-                    ]),
-                    new Layer(
-                    [
-                        screenfull.isFullscreen ? new Fill("rgba(0,0,180,0.5)"):0,
-                        new Rectangle(context.fullscreen),
                         new Shrink(new Text("white", "center", "middle",0, 0, 1),20,0),
                     ]),
                 ]));
@@ -3365,7 +3357,6 @@ var bodylst =
                 a.draw(context, rect,
                 [
                     "Open ...",
-                    "Fullscreen",
                 ],
                 0);
         }
@@ -4874,7 +4865,7 @@ footobj.enabled = j;
 
 function menushow(context)
 {
-    bodyobj.set(0);
+    bodyobj.enabled = 0;
     _4cnvctx.slideshow = 0;
     var enabled = context.enabled;
     _2cnvctx.hide();
