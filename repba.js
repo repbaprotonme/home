@@ -1844,6 +1844,8 @@ var panlst =
             var k = panvert(zoom,y)
             if (k == -1)
                 return;
+            if (k == zoom.anchor())
+                return;
             zoom.set(1-Math.floor(k));
             contextobj.reset();
         }
