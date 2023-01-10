@@ -3963,12 +3963,13 @@ function masterload()
     for (var n = 0; n < size; ++n)
     {
         galleryobj.rotate(1);
-        if (iscached(galleryobj.path())
-            continue;
-        imglst[n] = new Image();
-        imglst[n].src = galleryobj.path();
-        imglst[n].title = galleryobj.getcurrent().title
-        imglst[n].onload = function() { loaded.add(this.title); }
+        if (!iscached(galleryobj.path())
+        {
+            imglst[n] = new Image();
+            imglst[n].src = galleryobj.path();
+            imglst[n].title = galleryobj.getcurrent().title
+            imglst[n].onload = function() { loaded.add(this.title); }
+        }
     }
 
     galleryobj.rotate(-5);
