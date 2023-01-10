@@ -1618,7 +1618,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(-rowobj.length()*0.01);
+            rowobj.add(rowobj.length()*0.01);
             contextobj.reset();
         }
 	},
@@ -1653,7 +1653,7 @@ var wheelst =
         }
         else
         {
-            rowobj.add(rowobj.length()*0.01);
+            rowobj.add(-rowobj.length()*0.01);
             contextobj.reset();
         }
 	},
@@ -2659,7 +2659,7 @@ var thumblst =
         context.shadowOffsetY = 0;
 
         var blackfill = new Fill(THUMBFILL);
-        var blackfill2 = new Fill(context.freepan?"rgba(0,0,0,0.4)":"rgba(0,0,255,0.4)");
+        var blackfill2 = new Fill(context.freepan?"rgba(0,0,0,0.3)":"rgba(255,0,0,0.3)");
 
         if (context.isthumbrect && jp)
         {
@@ -3558,8 +3558,8 @@ fetch(path)
         loomobj.set(url.zoom);
         pretchobj.split(60, "40-90", pretchobj.length());
         letchobj.split(60, "40-90", letchobj.length());
-        speedxobj.split(1.5, "1-20", speedxobj.length());
-        speedyobj.split(1.5, "1-20", speedyobj.length());
+        speedxobj.split(1.25, "1-20", speedxobj.length());
+        speedyobj.split(1.25, "1-20", speedyobj.length());
 
         if (typeof galleryobj.quality  === "undefined")
             galleryobj.quality = 75;
@@ -3879,35 +3879,28 @@ var ContextObj = (function ()
                     {
                         var k;
                         if (this.aspect < 0.5)
-                        {
                             k = "TALL"
-                            zoomobj.set(50);
-                        }
                         else if (this.aspect < 1.0)
-                        {
                             k = "PORTRAIT"
-                            zoomobj.set(50);
-                        }
                         else if (this.aspect < 2.0)
-                        {
                             k = "LANDSCAPE"
-                            zoomobj.set(25);
-                        }
                         else if (this.aspect < 3.0)
-                        {
                             k = "WIDE"
-                            zoomobj.set(0);
-                        }
                         else
-                        {
                             k = "ULTRAWIDE"
-                            zoomobj.set(0);
-                        }
-
                         var j = templatelst.findIndex(function(a){return a.name == k;})
                         templateobj.set(j);
                         templateobj.getcurrent().init();
                     }
+
+                    if (this.aspect < 0.5)
+                        zoomobj.set(50);
+                    else if (this.aspect < 1.0)
+                        zoomobj.set(50);
+                    else if (this.aspect < 2.0)
+                        zoomobj.set(25);
+                    else
+                        zoomobj.set(0);
 
                     clearInterval(context.timemain);
                     context.timemain = 0;
@@ -4901,13 +4894,12 @@ var footlst =
             context.rightab = new rectangle()
 
             var a =
-               new Col([0,20,ALIEXTENT,20,ALIEXTENT-16,20,ALIEXTENT,20,0],
+               new Col([0,20,90,20,ALIEXTENT-16,20,90,20,0],
                [
                     new Rectangle(context.leftab),
                     0,
                     new Layer(
                     [
-                     //   new Fill("red"),
                         new Rectangle(context.keyzoomdown),
                         new Minus(ARROWFILL),
                     ]),
@@ -4920,7 +4912,6 @@ var footlst =
                     0,
                     new Layer(
                     [
-                    //    new Fill("red"),
                         new Rectangle(context.keyzoomup),
                         new Plus(ARROWFILL),
                     ]),
@@ -5117,6 +5108,7 @@ function setfavicon()
 
 window.addEventListener("visibilitychange", (evt) =>
 {
+    reset();
 });
 
 window.addEventListener("load", async () =>
