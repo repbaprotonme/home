@@ -956,12 +956,12 @@ var ProgressCircle = function (rev)
     };
 };
 
-var Stroke = function (color)
+var Stroke = function (color,width)
 {
     this.draw = function (context, rect, user, time)
     {
         context.save()
-        context.lineWidth = 10;
+        context.lineWidth = 6;
         context.strokeStyle = color;
         context.strokeRect(rect.x, rect.y, rect.width, rect.height);
         context.restore();
@@ -3450,13 +3450,13 @@ var bodylst =
             context.zoomctrl = new rectangle()
             context.save();
             var w = ALIEXTENT;
-            var h = Math.min(640,rect.height-ALIEXTENT*3);
+            var h = Math.min(640,rect.height-ALIEXTENT*4);
             var a = new Centered(w,h, new Layer(
                 [
                     new Rectangle(context.zoomctrl),
                     new Fill("rgba(0,0,0,0.5)"),
-                    new Stroke("rgba(255,255,255,0.5)"),
-                    new CurrentVPanel(new Fill("rgba(255,255,255,0.5)"), ALIEXTENT, 1),
+                    new Stroke("rgba(255,255,255,0.5)",6),
+                    new CurrentVPanel(new Fill("rgba(255,155,0,0.85)"), ALIEXTENT, 1),
                 ]));
 
             a.draw(context, rect, zoomobj.getcurrent(), 0);
