@@ -3457,7 +3457,7 @@ var bodylst =
                 [
                     new Fill("rgba(0,0,0,0.4)"),
                     new Stroke("white"),
-                    new CurrentVPanel(new Fill("white", ALIEXTENT, 1),
+                    new CurrentVPanel(new Fill("white"), ALIEXTENT, 1),
                 ]));
 
                 a.draw(context, rect, zoomobj.getcurrent(), 0);
