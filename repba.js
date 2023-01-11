@@ -2685,7 +2685,6 @@ var thumblst =
         context.shadowOffsetY = 0;
 
         var blackfill = new Fill(THUMBFILL);
-        var blackfill2 = new Fill(context.freepan?THUMBFILL:"rgba(255,0,0,0.5)");
 
         if (context.isthumbrect && jp)
         {
@@ -2705,8 +2704,14 @@ var thumblst =
             context.drawImage(photo.image, x, y, w, h);
         }
 
-        var whitestroke = new Stroke(THUMBSTROKE,THUMBORDER);
         var r = new rectangle(x,y,w,h);
+        if (context.freepan)
+        {
+            var blackstroke = new Stroke("black",THUMBORDER*2);
+            blackstroke.draw(context, r, 0, 0);
+        }
+
+        var whitestroke = new Stroke(THUMBSTROKE,THUMBORDER);
         whitestroke.draw(context, r, 0, 0);
         var region = new Path2D();
         region.rect(x,y,w,h);
@@ -2732,7 +2737,7 @@ var thumblst =
         var r = new rectangle(xx,yy,ww,hh);
         context.selectrect = []
         context.selectrect.push(r);
-        blackfill2.draw(context, r, 0, 0);
+        blackfill.draw(context, r, 0, 0);
         var whitestroke = new Stroke(THUMBSTROKE,THUMBORDER/2);
         whitestroke.draw(context, r, 0, 0);
 
@@ -2740,14 +2745,14 @@ var thumblst =
         {
             var r = new rectangle(xx-w,yy,ww,hh);
             context.selectrect.push(r);
-            blackfill2.draw(context, r, 0, 0);
+            blackfill.draw(context, r, 0, 0);
             whitestroke.draw(context, r, 0, 0);
         }
         else if (xx < x)//right side
         {
             var r = new rectangle(w+xx,yy,ww,hh);
             context.selectrect.push(r);
-            blackfill2.draw(context, r, 0, 0);
+            blackfill.draw(context, r, 0, 0);
             whitestroke.draw(context, r, 0, 0);
         }
 
@@ -4681,7 +4686,7 @@ var headlst =
             }
             else if (context.picture.hitest(x,y))
             {
-                bodyobj.enabled = bodyobj.enabled?0:4;
+                bodyobj.enabled = (bodyobj.enabled==4)?0:4;
                 _4cnvctx.refresh();
             }
             else if (context.nextpage.hitest(x,y))
