@@ -1839,9 +1839,8 @@ var panlst =
         if (context.iszoomrect)
         {
             var zoom = zoomobj.getcurrent()
-            var j = (y/rect.height)*context.zoomctrl.height;
-            var m = j - context.zoomctrl.y;
-            var k = panvert(zoom,y)
+            var m = y - context.zoomctrl.y;
+            var k = panvert(zoom,m)
             if (k == -1)
                 return;
             if (k == zoom.anchor())
