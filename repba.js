@@ -2705,7 +2705,7 @@ var thumblst =
         }
 
         var r = new rectangle(x,y,w,h);
-        if (context.freepan)
+        if (!context.freepan)
         {
             var blackstroke = new Stroke("black",THUMBORDER*2);
             blackstroke.draw(context, r, 0, 0);
