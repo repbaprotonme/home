@@ -12,6 +12,7 @@ const IFRAME = window !== window.parent;
 const VIRTCONST = 0.8;
 const MAXVIRTUAL = 5760*2;
 const SWIPETIME = 20;
+const THUMBORDER = 6;
 const THUMBLINE = 1;
 const THUMBLINEIN = 4.0;
 const THUMBLINEOUT = 4.0;
@@ -2379,8 +2380,6 @@ var keylst =
         }
         else if (evt.key == "[" || evt.key == "-")
         {
-            bodyobj.enabled = 8;
-            context.refresh();
             var zoom = zoomobj.getcurrent();
             if (!zoom.current())
                 return;
@@ -2389,8 +2388,6 @@ var keylst =
         }
         else if (evt.key == "]" || evt.key == "+")
         {
-            bodyobj.enabled = 8;
-            context.refresh();
             var zoom = zoomobj.getcurrent();
             if (zoom.current() >= zoom.length()-1)
                 return;
@@ -2649,7 +2646,6 @@ var thumblst =
     {
         var th = heightobj.getcurrent().getcurrent();
         var headers = headcnv.height*2;
-        var THUMBORDER = 8;
         var width = rect.width-THUMBORDER*2;
         var height = rect.height-headers-THUMBORDER*2;
         if (width < 0 || height < 0)
@@ -2709,12 +2705,9 @@ var thumblst =
             context.drawImage(photo.image, x, y, w, h);
         }
 
-        context.lineWidth = context.isthumbrect?2:THUMBORDER;
-        var whitestroke = new Stroke(THUMBSTROKE);
+        var whitestroke = new Stroke(THUMBSTROKE,THUMBORDER);
         var r = new rectangle(x,y,w,h);
         whitestroke.draw(context, r, 0, 0);
-        var whitestroke = new Stroke(THUMBSTROKE);
-
         var region = new Path2D();
         region.rect(x,y,w,h);
         context.clip(region);
@@ -2740,6 +2733,7 @@ var thumblst =
         context.selectrect = []
         context.selectrect.push(r);
         blackfill2.draw(context, r, 0, 0);
+        var whitestroke = new Stroke(THUMBSTROKE,THUMBORDER/3);
         whitestroke.draw(context, r, 0, 0);
 
         if (xx > x)//leftside
@@ -3458,6 +3452,8 @@ var bodylst =
     {
         this.draw = function (context, rect, user, time)
         {
+            if (rect.height < 480)
+                return;
             context.zoomctrl = new rectangle()
             context.save();
             var w = ALIEXTENT;
@@ -3466,7 +3462,7 @@ var bodylst =
                 [
                     new Rectangle(context.zoomctrl),
                     new Fill(THUMBFILL),
-                    new Stroke(THUMBSTROKE,7),
+                    new Stroke(THUMBSTROKE,THUMBORDER),
                     new Shrink(new CurrentVPanel(new Fill(THUMBSTROKE), ALIEXTENT, 1),5,8),
                 ]));
 
