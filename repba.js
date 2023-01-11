@@ -962,7 +962,7 @@ var Stroke = function (color,width)
     this.draw = function (context, rect, user, time)
     {
         context.save()
-        context.lineWidth = 6;
+        context.lineWidth = width;
         context.strokeStyle = color;
         context.strokeRect(rect.x, rect.y, rect.width, rect.height);
         context.restore();
@@ -2733,7 +2733,7 @@ var thumblst =
         context.selectrect = []
         context.selectrect.push(r);
         blackfill2.draw(context, r, 0, 0);
-        var whitestroke = new Stroke(THUMBSTROKE,1);
+        var whitestroke = new Stroke(THUMBSTROKE,THUMBORDER/2);
         whitestroke.draw(context, r, 0, 0);
 
         if (xx > x)//leftside
