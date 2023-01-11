@@ -2733,7 +2733,7 @@ var thumblst =
         context.selectrect = []
         context.selectrect.push(r);
         blackfill2.draw(context, r, 0, 0);
-        var whitestroke = new Stroke(THUMBSTROKE,THUMBORDER/3);
+        var whitestroke = new Stroke(THUMBSTROKE,1);
         whitestroke.draw(context, r, 0, 0);
 
         if (xx > x)//leftside
